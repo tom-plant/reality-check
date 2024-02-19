@@ -2,6 +2,9 @@ from flask import Flask, session
 from flask_sqlalchemy import SQLAlchemy
 from config import API_KEY, FLASK_KEY, SQL_KEY
 import uuid #for unique user id
+from flask_migrate import Migrate
+from models import db  # Import the db instance from models.py
+
 
 app = Flask(__name__)
 
@@ -10,13 +13,15 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://reality_check_user:Eesti_$imula
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Initialize SQLAlchemy instance
-db = SQLAlchemy(app)
+db.init_app(app)
+
+# Initialize Flask-Migrate associated with app and SQLAlchemy instance
+migrate = Migrate(app, db)
 
 #Initialize session management tools
 app.secret_key = FLASK_KEY
 def generate_session_id():
     return str(uuid.uuid4())
-
 
 
 @app.route('/')
@@ -27,7 +32,7 @@ def index():
     # Store session ID in session
     session['session_id'] = session_id
 
-    # return f'Session ID generated: {session_id}'
+    return f'Session ID generated: {session_id}'
 
 @app.route('/game/select_facts', methods=['POST'])
 def select_facts():

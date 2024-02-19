@@ -4,20 +4,20 @@ from app import db
 from models import User, PrimaryNarrative, SecondaryNarrative, Fact, Event, NarrativeFactAssociation
 
 
-# User Operations
+# # User Operations
 
-def create_user(username, password):
-    new_user = User(username=username, password=password)
-    db.session.add(new_user)
-    db.session.commit()
+# def create_user(username, password):
+#     new_user = User(username=username, password=password)
+#     db.session.add(new_user)
+#     db.session.commit()
 
-def get_user_by_id(user_id):
-    return User.query.get(user_id)
+# def get_user_by_id(user_id):
+#     return User.query.get(user_id)
 
-def delete_user(user_id):
-    user = User.query.get(user_id)
-    db.session.delete(user)
-    db.session.commit()
+# def delete_user(user_id):
+#     user = User.query.get(user_id)
+#     db.session.delete(user)
+#     db.session.commit()
 
 
 # Primary Narrative Operations

@@ -1,12 +1,20 @@
 from flask_sqlalchemy import SQLAlchemy
-from app import db
+from datetime import datetime  # Import datetime for timestamp
 
-# Assuming you've already initialized Flask app and configured SQLAlchemy
 
-# Define the SQLAlchemy instance
-db = SQLAlchemy(app)
+# Initialize SQLAlchemy instance
+db = SQLAlchemy()
 
 # Define models
+
+class User(db.Model):
+    __tablename__ = 'users'
+
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
 class PrimaryNarrative(db.Model):
     __tablename__ = 'primary_narratives'
 
@@ -16,6 +24,7 @@ class PrimaryNarrative(db.Model):
     news_story = db.Column(db.Text, nullable=False)
     photo = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user = db.relationship('User', backref=db.backref('primary_narratives', lazy=True))
 
 class SecondaryNarrative(db.Model):
     __tablename__ = 'secondary_narratives'
@@ -26,7 +35,7 @@ class SecondaryNarrative(db.Model):
     narrative = db.Column(db.Text, nullable=False)
     outcome = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-
+    user = db.relationship('User', backref=db.backref('secondary_narratives', lazy=True))
 
 class Fact(db.Model):
     __tablename__ = 'facts'
@@ -48,8 +57,5 @@ class NarrativeFactAssociation(db.Model):
 
     narrative_id = db.Column(db.Integer, db.ForeignKey('primary_narratives.id'), primary_key=True)
     fact_id = db.Column(db.Integer, db.ForeignKey('facts.id'), primary_key=True)
-
-# Run this command to create the tables in the MySQL database
-db.create_all()
 
 
