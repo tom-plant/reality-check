@@ -1,73 +1,60 @@
-from flask import Flask
+from flask import Flask, session
 from flask_sqlalchemy import SQLAlchemy
+from config import API_KEY, FLASK_KEY, SQL_KEY
+import uuid #for unique user id
 
 app = Flask(__name__)
 
 # Configuration
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://reality_check_user:Eesti_$imulat10n@localhost/reality_check'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://reality_check_user:Eesti_$imulat10n@localhost/reality_check' ##Switch this eventually
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Initialize SQLAlchemy instance
 db = SQLAlchemy(app)
 
-# Routes and Business Logic
+#Initialize session management tools
+app.secret_key = FLASK_KEY
+def generate_session_id():
+    return str(uuid.uuid4())
+
+
+
 @app.route('/')
 def index():
-    return 'Hello, World!'
+    # Generate session ID for the user
+    session_id = generate_session_id()
 
-# User Authentication Routes
-@app.route('/login')
-def login():
-    print("Login route accessed")
-    # Your login logic here
-    return "Login route accessed"
+    # Store session ID in session
+    session['session_id'] = session_id
 
-@app.route('/logout')
-def logout():
-    print("Logout route accessed")
-    # Your logout logic here
-    return "Logout route accessed"
+    # return f'Session ID generated: {session_id}'
 
-@app.route('/register')
-def register():
-    print("Register route accessed")
-    # Your registration logic here
-    return "Register route accessed"
+@app.route('/game/select_facts', methods=['POST'])
+def select_facts():
+    # Handle logic for selecting important information
+    return "Selected facts received and processed"
 
-# Game Progression Routes
-@app.route('/game/start')
-def start_game():
-    print("Game started")
-    # Your game start logic here
-    return "Game started"
+@app.route('/game/select_narrative', methods=['POST'])
+def select_narrative():
+    # Handle logic for selecting narratives
+    return "Selected narrative received and stored"
 
-@app.route('/game/save')
-def save_game():
-    print("Game saved")
-    # Your game save logic here
-    return "Game saved"
+@app.route('/game/introduce_event')
+def introduce_event():
+    # Handle logic for introducing follow-up events
+    return "Follow-up event introduced"
 
-# Narrative Generation Route
-@app.route('/generate_narrative')
-def generate_narrative():
-    print("Narrative generated")
-    # Your narrative generation logic here
-    return "Narrative generated"
+@app.route('/game/identify_weaknesses', methods=['POST'])
+def identify_weaknesses():
+    # Handle logic for identifying weaknesses in narratives
+    return "Identified weaknesses in narrative"
 
-# Data Storage Routes
-@app.route('/data/store')
-def store_data():
-    print("Data stored")
-    # Your data storage logic here
-    return "Data stored"
-
-# Pull Data Route
-@app.route('/data/pull')
-def pull_data():
-    print("Data pulled")
-    # Your data pull logic here
-    return "Data pulled"
-
+@app.route('/game/save_progress', methods=['POST'])
+def save_progress():
+    # Handle logic for saving user progress
+    return "User progress saved"
+    
 # Run Flask App
 if __name__ == '__main__':
     app.run(debug=True)
+

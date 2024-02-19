@@ -1,4 +1,5 @@
 # db_operations.py
+# AKA CRUD operations
 
 from app import db
 from models import User

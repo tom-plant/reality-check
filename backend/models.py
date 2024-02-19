@@ -29,10 +29,6 @@ class Narrative(db.Model):
     article = db.Column(db.Text, nullable=False)
     photo = db.Column(db.String(255), nullable=False)
 
-class Role(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50), unique=True)
-
 class Token(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     token = db.Column(db.String(100), unique=True)
