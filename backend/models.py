@@ -7,33 +7,47 @@ from app import db
 db = SQLAlchemy(app)
 
 # Define models
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(100), unique=True, nullable=False)
-    password = db.Column(db.String(100), nullable=False)
-    session_id = db.Column(db.String(100), nullable=False)
-    role_id = db.Column(db.Integer, db.ForeignKey('role.id'))
-    role = db.relationship('Role', backref=db.backref('users', lazy=True))
-    # Define additional fields as needed
+class PrimaryNarrative(db.Model):
+    __tablename__ = 'primary_narratives'
 
-class GameProgress(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    user = db.relationship('User', backref=db.backref('game_progress', lazy=True))
-    # Define additional fields as needed
+    narrative = db.Column(db.Text, nullable=False)
+    headline = db.Column(db.Text, nullable=False)
+    news_story = db.Column(db.Text, nullable=False)
+    photo = db.Column(db.Text, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-class Narrative(db.Model):
+class SecondaryNarrative(db.Model):
+    __tablename__ = 'secondary_narratives'
+
     id = db.Column(db.Integer, primary_key=True)
-    text = db.Column(db.Text, nullable=False)
-    headline = db.Column(db.String(255), nullable=False)
-    article = db.Column(db.Text, nullable=False)
-    photo = db.Column(db.String(255), nullable=False)
+    parent_narrative_id = db.Column(db.Integer, db.ForeignKey('primary_narratives.id'))
+    event_id = db.Column(db.Integer, db.ForeignKey('events.id'))
+    narrative = db.Column(db.Text, nullable=False)
+    outcome = db.Column(db.Text, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-class Token(db.Model):
+
+class Fact(db.Model):
+    __tablename__ = 'facts'
+
     id = db.Column(db.Integer, primary_key=True)
-    token = db.Column(db.String(100), unique=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    fact = db.Column(db.Text, nullable=False)
+    language = db.Column(db.String(50), nullable=False)
+    is_key_fact = db.Column(db.Boolean, nullable=False)
 
+class Event(db.Model):
+    __tablename__ = 'events'
+
+    id = db.Column(db.Integer, primary_key=True)
+    event = db.Column(db.Text, nullable=False)
+    language = db.Column(db.String(50), nullable=False)
+
+class NarrativeFactAssociation(db.Model):
+    __tablename__ = 'narrative_fact_associations'
+
+    narrative_id = db.Column(db.Integer, db.ForeignKey('primary_narratives.id'), primary_key=True)
+    fact_id = db.Column(db.Integer, db.ForeignKey('facts.id'), primary_key=True)
 
 # Run this command to create the tables in the MySQL database
 db.create_all()
