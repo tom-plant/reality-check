@@ -1,6 +1,6 @@
-from flask import Flask, session
+from flask import Flask, session, jsonify
 from flask_sqlalchemy import SQLAlchemy
-from config import API_KEY, FLASK_KEY, SQL_KEY
+from config import FLASK_KEY, SQL_KEY
 import uuid #for unique user id
 from flask_migrate import Migrate
 from models import db  # Import the db instance from models.py
@@ -34,30 +34,67 @@ def index():
 
     return f'Session ID generated: {session_id}'
 
+# Initial Fact Selection & Narrative Generation
 @app.route('/game/select_facts', methods=['POST'])
 def select_facts():
-    # Handle logic for selecting important information
-    return "Selected facts received and processed"
+    # Receive selected facts from the frontend
+    selected_facts = request.json.get('selected_facts')
+    
+    # Call controller function to handle logic
+    response_data = select_facts_controller(selected_facts)
+    
+    # Return response to frontend
+    return jsonify(response_data)
 
+# Selecting Narratives
 @app.route('/game/select_narrative', methods=['POST'])
 def select_narrative():
-    # Handle logic for selecting narratives
-    return "Selected narrative received and stored"
+    # Receive selected narrative and facts combination from the frontend
+    selected_narrative = request.json.get('selected_narrative')
+    selected_facts = request.json.get('selected_facts')
+    
+    # Call controller function to handle logic
+    response_data = select_narrative_controller(selected_narrative, selected_facts)
+    
+    # Return response to frontend
+    return jsonify(response_data)
 
-@app.route('/game/introduce_event')
+# Introducing Follow-up Events
+@app.route('/game/introduce_event', methods=['GET'])
 def introduce_event():
-    # Handle logic for introducing follow-up events
-    return "Follow-up event introduced"
+    # Call controller function to handle logic
+    # Placeholder for controller function
+    response_data = introduce_event_controller()
+    
+    # Return response to frontend
+    return jsonify(response_data)
 
+# Identifying Weaknesses in Narratives
 @app.route('/game/identify_weaknesses', methods=['POST'])
 def identify_weaknesses():
-    # Handle logic for identifying weaknesses in narratives
-    return "Identified weaknesses in narrative"
+    # Receive new combination of facts and narrative from the frontend
+    new_facts = request.json.get('new_facts')
+    narrative = request.json.get('narrative')
+    
+    # Call controller function to handle logic
+    # Placeholder for controller function
+    response_data = identify_weaknesses_controller(new_facts, narrative)
+    
+    # Return response to frontend
+    return jsonify(response_data)
 
+# Saving User Progress
 @app.route('/game/save_progress', methods=['POST'])
 def save_progress():
-    # Handle logic for saving user progress
-    return "User progress saved"
+    # Receive user progress data from the frontend
+    user_progress = request.json.get('user_progress')
+    
+    # Call controller function to handle logic
+    # Placeholder for controller function
+    response_data = save_progress_controller(user_progress)
+    
+    # Return response to frontend
+    return jsonify(response_data)
     
 # Run Flask App
 if __name__ == '__main__':

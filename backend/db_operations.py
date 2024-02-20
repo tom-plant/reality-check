@@ -86,4 +86,26 @@ def get_events_by_language(language):
 # Read narratives associated with a given set of facts
 
 def get_narratives_by_facts(fact_ids):
-    return db.session.query(Narrative).join(NarrativeFactAssociation).filter(NarrativeFactAssociation.fact_id.in_(fact_ids)).all()
+    return db.session.query(PrimaryNarrative).\
+        filter(PrimaryNarrative.id == NarrativeFactAssociation.narrative_id).\
+        filter(NarrativeFactAssociation.fact_id.in_(fact_ids)).\
+        all()
+
+
+# # Function to update the association between a narrative and selected facts
+# def update_narrative_association(narrative_id, selected_facts):
+#     # Check if associations already exist for the given narrative
+#     existing_associations = NarrativeFactAssociation.query.filter_by(narrative_id=narrative_id).all()
+
+#     # Retrieve existing fact IDs
+#     existing_fact_ids = [association.fact_id for association in existing_associations]
+
+#     # Create new associations for the given narrative and selected facts
+#     for fact_id in selected_facts:
+#         # Only create associations for facts that are not already associated with the narrative
+#         if fact_id not in existing_fact_ids:
+#             association = NarrativeFactAssociation(narrative_id=narrative_id, fact_id=fact_id)
+#             db.session.add(association)
+
+#     # Commit changes to the database
+#     db.session.commit()
