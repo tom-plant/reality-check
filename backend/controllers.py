@@ -27,9 +27,8 @@ def select_facts_controller(selected_facts):
         return {"narratives": combined_narratives}
 
 def generate_additional_narratives(selected_facts, num_additional_narratives):
-    # Placeholder logic to generate additional narratives using ChatGPT API
-    # This is where you would call the ChatGPT API to generate narratives based on selected facts
-    # For now, we'll return a placeholder list of additional narratives
+
+    # Call the ChatGPT API
     chatGPTUrl = 'https://api.openai.com/v1/chat/completions'
     headers = {
         'Authorization': f'Bearer {API_KEY}',
@@ -42,6 +41,7 @@ def generate_additional_narratives(selected_facts, num_additional_narratives):
     for i in range(num_additional_narratives):
         if i == 0 or num_additional_narratives == 1:
             print('generating with first prompt')
+
             # Use the initial prompt for the first narrative or if only one is needed
             system_content = "You are a senior level political analyst who writes in clear, understandable, and straightforward language. Upon my submission of information to you, you must create a brief, distinct, actionable, and persuasive political narrative using the fact provided. It should stand alone and compete to define the event using the facts provided, even if in a biased way. It should lead the reader to a specific conclusion, opinion, or action."
             user_content = f"Craft your narrative based on the following information: {', '.join(selected_facts)}. It should be no more than three sentences."
@@ -76,10 +76,6 @@ def generate_additional_narratives(selected_facts, num_additional_narratives):
 
 
 
-
-
-    
-    
 
 def select_narrative_controller(selected_narrative, selected_facts):
     # Logic to store selected narrative and facts combination in the database
