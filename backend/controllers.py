@@ -4,6 +4,9 @@ import json
 import requests
 from db_operations import *
 from config import API_KEY
+from flask import session
+
+
 
 def select_facts_controller(selected_facts):
 
@@ -25,6 +28,8 @@ def select_facts_controller(selected_facts):
         combined_narratives = narratives + additional_narratives
 
         return {"narratives": combined_narratives}
+
+
 
 def generate_additional_narratives(selected_facts, num_additional_narratives):
 
@@ -75,13 +80,22 @@ def generate_additional_narratives(selected_facts, num_additional_narratives):
 
 
 
-
-
 def select_narrative_controller(selected_narrative, selected_facts):
-    # Logic to store selected narrative and facts combination in the database
-    
-    # Placeholder for now
-    return jsonify({"message": "Select narrative controller placeholder"}) #TAKE OUT JSONIFY
+    # Retrieve user_id from session
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({"error": "User not logged in"}), 401
+ 
+    # Store selected narrative and facts in session for later use
+    session['selected_narrative_id'] = narrative_id
+    session['selected_facts'] = selected_facts
+
+    # Return a success response
+    return {"message": "Narrative and facts selection processed successfully"}
+
+
+
+
 
 
 def introduce_event_controller():
@@ -92,6 +106,29 @@ def introduce_event_controller():
     
     # Placeholder for now
     return jsonify({"message": "Introduce event controller placeholder"}) #TAKE OUT JSONIFY
+
+# THis all comes in the event controller vvvv
+
+    # # Placeholder for news generation logic
+    # headline, news_story, photo = generate_news_content(selected_narrative)
+
+# def generate_news_content(selected_narrative):
+#     # Placeholder for the logic to generate news content
+#     # This function should return headline, news_story, and photo based on the selected narrative
+#     headline = "Generated Headline for " + selected_narrative
+#     news_story = "Generated News Story for " + selected_narrative
+#     photo = "Generated Photo URL for " + selected_narrative
+#     return headline, news_story, photo
+
+#    narrative_id = create_primary_narrative(selected_narrative, headline, news_story, photo, user_id)
+
+#     # Update associations in NarrativeFactAssociation table
+#     update_narrative_association(narrative_id, selected_facts)
+
+
+
+
+
 
 
 def identify_weaknesses_controller(new_facts, narrative):

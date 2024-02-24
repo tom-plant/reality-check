@@ -23,6 +23,7 @@ app.secret_key = FLASK_KEY
 def generate_session_id():
     return str(uuid.uuid4())
 
+from flask import request, jsonify
 
 @app.route('/')
 def index():

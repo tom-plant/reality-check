@@ -1,130 +1,490 @@
 # db_operations.py
 
 from app import db
-from models import User, PrimaryNarrative, SecondaryNarrative, Fact, Event, NarrativeFactAssociation
+from sqlalchemy import select
+from models import User, Fact, Event, FactCombination, PrimaryNarrative, NarrativeEvent, SecondaryNarrative
 
 
-# # User Operations
+# User Operations
 
-# def create_user(username, password):
-#     new_user = User(username=username, password=password)
-#     db.session.add(new_user)
-#     db.session.commit()
+# Create a New User
+def create_user(username, email, _session=None):
+    session = _session or db.session
+    new_user = User(username=username, email=email)
+    session.add(new_user)
+    if not _session:  # Commit only if not using an external session
+        try:
+            session.commit()
+            return new_user
+        except Exception as e:
+            session.rollback()
+            raise e
+    else:
+        return new_user  # Return the user object without committing if using an external session
 
-# def get_user_by_id(user_id):
-#     return User.query.get(user_id)
+# Read Users
+def get_user_by_id(user_id, _session=None):
+    session = _session or db.session
+    return session.get(User, user_id)
 
-# def delete_user(user_id):
-#     user = User.query.get(user_id)
-#     db.session.delete(user)
-#     db.session.commit()
+def get_all_users(_session=None):
+    session = _session or db.session
+    return session.execute(select(User)).scalars().all()
+
+def get_user_by_username(username, _session=None):
+    session = _session or db.session
+    return session.execute(select(User).filter_by(username=username)).scalars().first()
+
+
+# Update a User
+def update_user(user_id, _session=None, **kwargs):
+    session = _session or db.session
+    user = session.get(User, user_id)
+    if user:
+        for key, value in kwargs.items():
+            setattr(user, key, value)
+        if not _session:  # Commit only if not using an external session
+            try:
+                session.commit()
+                return user
+            except Exception as e:
+                session.rollback()
+                raise e
+        else:
+            return user  # Return the user object without committing if using an external session
+
+
+#Delete a User
+def delete_user(user_id, _session=None):
+    session = _session or db.session
+    user = session.get(User, user_id)
+    if user:
+        session.delete(user)
+        if not _session:  # Commit only if not using an external session
+            try:
+                session.commit()
+                return True
+            except Exception as e:
+                session.rollback()
+                return False
+        else:
+            return True  # Assume deletion is successful if using an external session
+
+
+# Fact Operations
+
+# Create a New Fact
+def create_fact(text, language, _session=None):
+    session = _session or db.session
+    new_fact = Fact(text=text, language=language)
+    session.add(new_fact)
+    if not _session:  # Commit only if not using an external session
+        try:
+            session.commit()
+            return new_fact
+        except Exception as e:
+            session.rollback()
+            raise e
+    else:
+        return new_fact  # Return the fact object without committing if using an external session
+
+# Read Facts
+def get_fact_by_id(fact_id, _session=None):
+    session = _session or db.session
+    return session.get(Fact, fact_id)
+
+def get_all_facts(_session=None):
+    session = _session or db.session
+    return session.execute(select(Fact)).scalars().all()
+
+def get_facts_by_language(language, _session=None):
+    session = _session or db.session
+    return session.execute(select(Fact).filter_by(language=language)).scalars().all()
+
+
+# Update a Fact
+def update_fact(fact_id, _session=None, **kwargs):
+    session = _session or db.session
+    fact = session.get(Fact, fact_id)
+    if fact:
+        for key, value in kwargs.items():
+            setattr(fact, key, value)
+        if not _session:  # Commit only if not using an external session
+            try:
+                session.commit()
+                return fact
+            except Exception as e:
+                session.rollback()
+                raise e
+        else:
+            return fact  # Return the fact object without committing if using an external session
+
+# Delete a Fact
+def delete_fact(fact_id, _session=None):
+    session = _session or db.session
+    fact = session.get(Fact, fact_id)
+    if fact:
+        session.delete(fact)
+        if not _session:  # Commit only if not using an external session
+            try:
+                session.commit()
+                return True
+            except Exception as e:
+                session.rollback()
+                return False
+        else:
+            return True  # Assume deletion is successful if using an external session
+
+
+
+# Event Operations
+
+# Create a New Event
+def create_event(text, language, _session=None):
+    session = _session or db.session
+    new_event = Event(text=text, language=language)
+    session.add(new_event)
+    if not _session:  # Commit only if not using an external session
+        try:
+            session.commit()
+            return new_event
+        except Exception as e:
+            session.rollback()
+            raise e
+    else:
+        return new_event  # Return the event object without committing if using an external session
+
+# Read Events
+def get_event_by_id(event_id, _session=None):
+    session = _session or db.session
+    return session.get(Event, event_id)
+
+def get_all_events(_session=None):
+    session = _session or db.session
+    return session.execute(select(Event)).scalars().all()
+
+def get_events_by_language(language, _session=None):
+    session = _session or db.session
+    return session.execute(select(Event).filter_by(language=language)).scalars().all()
+
+
+# Update an Event
+def update_event(event_id, _session=None, **kwargs):
+    session = _session or db.session
+    event = session.get(Event, event_id)
+    if event:
+        for key, value in kwargs.items():
+            setattr(event, key, value)
+        if not _session:  # Commit only if not using an external session
+            try:
+                session.commit()
+                return event
+            except Exception as e:
+                session.rollback()
+                raise e
+        else:
+            return event  # Return the event object without committing if using an external session
+
+
+# Delete an Event
+def delete_event(event_id, _session=None):
+    session = _session or db.session
+    event = session.get(Event, event_id)
+    if event:
+        session.delete(event)
+        if not _session:  # Commit only if not using an external session
+            try:
+                session.commit()
+                return True
+            except Exception as e:
+                session.rollback()
+                return False
+        else:
+            return True  # Assume deletion is successful if using an external session
+
+
+#Fact Combination Operations
+
+# Create a New Fact Combination
+def create_fact_combination(facts, _session=None):
+    session = _session or db.session
+    new_fact_combination = FactCombination(facts=facts)  # Assuming `facts` is appropriately formatted
+    session.add(new_fact_combination)
+    if not _session:  # Commit only if not using an external session
+        try:
+            session.commit()
+            return new_fact_combination
+        except Exception as e:
+            session.rollback()
+            raise e
+    else:
+        return new_fact_combination  # Return the object without committing if using an external session
+
+
+# Read Fact Combinations
+def get_fact_combination_by_id(fact_combination_id, _session=None):
+    session = _session or db.session
+    return session.get(FactCombination, fact_combination_id)
+
+def get_all_fact_combinations(_session=None):
+    session = _session or db.session
+    return session.execute(select(FactCombination)).scalars().all()
+
+
+# Update a Fact Combination
+def update_fact_combination(fact_combination_id, facts, _session=None):
+    session = _session or db.session
+    fact_combination = session.get(FactCombination, fact_combination_id)
+    if fact_combination:
+        fact_combination.facts = facts  # Ensure `facts` is correctly formatted
+        if not _session:  # Commit only if not using an external session
+            try:
+                session.commit()
+                return fact_combination
+            except Exception as e:
+                session.rollback()
+                raise e
+        else:
+            return fact_combination  # Return the object without committing if using an external session
+
+
+#Delete a Fact Combination
+def delete_fact_combination(fact_combination_id, _session=None):
+    session = _session or db.session
+    fact_combination = session.get(FactCombination, fact_combination_id)
+    if fact_combination:
+        session.delete(fact_combination)
+        if not _session:  # Commit only if not using an external session
+            try:
+                session.commit()
+                return True
+            except Exception as e:
+                session.rollback()
+                return False
+        else:
+            return True  # Assume deletion is successful if using an external session
 
 
 # Primary Narrative Operations
 
-def create_primary_narrative(narrative, headline, news_story, photo, user_id, _session=None):
+# Create a New Primary Narrative
+def create_primary_narrative(fact_combination_id, narrative_text, language, user_id, headline, story, photo_url=None, _session=None):
     session = _session or db.session
-    new_narrative = PrimaryNarrative(narrative=narrative, headline=headline, news_story=news_story, photo=photo, user_id=user_id)
-    session.add(new_narrative)
-    session.commit()
+    new_primary_narrative = PrimaryNarrative(
+        fact_combination_id=fact_combination_id,
+        narrative_text=narrative_text,
+        language=language,
+        user_id=user_id,
+        headline=headline,
+        story=story,
+        photo_url=photo_url
+    )
+    session.add(new_primary_narrative)
+    if not _session:  # Commit only if not using an external session
+        try:
+            session.commit()
+            return new_primary_narrative
+        except Exception as e:
+            session.rollback()
+            raise e
+    else:
+        return new_primary_narrative  # Return the narrative object without committing if using an external session
 
-
+# Read Primary Narrative
 def get_primary_narrative_by_id(narrative_id, _session=None):
     session = _session or db.session
     return session.get(PrimaryNarrative, narrative_id)
 
-
-def update_primary_narrative(narrative_id, new_narrative, new_headline, new_news_story, new_photo, _session=None):
+def get_all_primary_narratives(_session=None):
     session = _session or db.session
-    narrative = session.get(PrimaryNarrative, narrative_id)
-    narrative.narrative = new_narrative
-    narrative.headline = new_headline
-    narrative.news_story = new_news_story
-    narrative.photo = new_photo
-    session.commit()
- 
+    return session.execute(select(PrimaryNarrative)).scalars().all()
+
+def get_primary_narratives_by_user(user_id, _session=None):
+    session = _session or db.session
+    return session.execute(select(PrimaryNarrative).filter_by(user_id=user_id)).scalars().all()
+
+
+# Update a Primary Narrative
+def update_primary_narrative(narrative_id, _session=None, **kwargs):
+    session = _session or db.session
+    primary_narrative = session.get(PrimaryNarrative, narrative_id)
+    if primary_narrative:
+        for key, value in kwargs.items():
+            setattr(primary_narrative, key, value)
+        if not _session:  # Commit only if not using an external session
+            try:
+                session.commit()
+                return primary_narrative
+            except Exception as e:
+                session.rollback()
+                raise e
+        else:
+            return primary_narrative  # Return the narrative object without committing if using an external session
+
+# Delete a Primary Narrative
 def delete_primary_narrative(narrative_id, _session=None):
     session = _session or db.session
-    # Delete any associated NarrativeFactAssociation records
-    associations = session.query(NarrativeFactAssociation).filter_by(narrative_id=narrative_id).all()
-    for association in associations:
-        session.delete(association)
-    session.flush()  # Flush changes to ensure associations are deleted
+    primary_narrative = session.get(PrimaryNarrative, narrative_id)
+    if primary_narrative:
+        session.delete(primary_narrative)
+        if not _session:  # Commit only if not using an external session
+            try:
+                session.commit()
+                return True
+            except Exception as e:
+                session.rollback()
+                return False
+        else:
+            return True  # Assume deletion is successful if using an external session
 
-    # Delete the PrimaryNarrative
-    narrative = session.get(PrimaryNarrative, narrative_id)
-    if narrative:
-        session.delete(narrative)
-        session.commit()
+
+# Narrative Event Operations
+
+# Create A New Narrative-Event Pair
+def create_narrative_event(narrative_id, event_id, resulting_headline, resulting_story, resulting_photo_url=None, _session=None):
+    session = _session or db.session
+    new_narrative_event = NarrativeEvent(
+        narrative_id=narrative_id,
+        event_id=event_id,
+        resulting_headline=resulting_headline,
+        resulting_story=resulting_story,
+        resulting_photo_url=resulting_photo_url
+    )
+    session.add(new_narrative_event)
+    if not _session:  # Commit only if not using an external session
+        try:
+            session.commit()
+            return new_narrative_event
+        except Exception as e:
+            session.rollback()
+            raise e
+    else:
+        return new_narrative_event  # Return the narrative-event pair object without committing if using an external session
+
+
+# Read Narrative-Event Pair
+def get_narrative_event_by_id(narrative_event_id, _session=None):
+    session = _session or db.session
+    return session.get(NarrativeEvent, narrative_event_id)
+
+def get_all_narrative_events(_session=None):
+    session = _session or db.session
+    return session.execute(select(NarrativeEvent)).scalars().all()
+
+def get_narrative_events_by_narrative(narrative_id, _session=None):
+    session = _session or db.session
+    return session.execute(select(NarrativeEvent).filter_by(narrative_id=narrative_id)).scalars().all()
+
+
+# Update a Narrative-Event Pair
+def update_narrative_event(narrative_event_id, _session=None, **kwargs):
+    session = _session or db.session
+    narrative_event = session.get(NarrativeEvent, narrative_event_id)
+    if narrative_event:
+        for key, value in kwargs.items():
+            setattr(narrative_event, key, value)
+        if not _session:  # Commit only if not using an external session
+            try:
+                session.commit()
+                return narrative_event
+            except Exception as e:
+                session.rollback()
+                raise e
+        else:
+            return narrative_event  # Return the narrative-event pair object without committing if using an external session
+
+# Delete a Narrative-Event Pair
+def delete_narrative_event(narrative_event_id, _session=None):
+    session = _session or db.session
+    narrative_event = session.get(NarrativeEvent, narrative_event_id)
+    if narrative_event:
+        session.delete(narrative_event)
+        if not _session:  # Commit only if not using an external session
+            try:
+                session.commit()
+                return True
+            except Exception as e:
+                session.rollback()
+                return False
+        else:
+            return True  # Assume deletion is successful if using an external session
+
 
 # Secondary Narrative Operations
 
-def create_secondary_narrative(parent_narrative_id, event_id, narrative, outcome, _session=None):
+# Create a Secondary Narrative
+def create_secondary_narrative(original_narrative_id, updated_fact_combination, narrative_text, resulting_headline, resulting_story, resulting_photo_url=None, _session=None):
     session = _session or db.session
-    new_secondary_narrative = SecondaryNarrative(parent_narrative_id=parent_narrative_id, event_id=event_id, narrative=narrative, outcome=outcome)
+    new_secondary_narrative = SecondaryNarrative(
+        original_narrative_id=original_narrative_id,
+        updated_fact_combination=updated_fact_combination,
+        narrative_text=narrative_text,
+        resulting_headline=resulting_headline,
+        resulting_story=resulting_story,
+        resulting_photo_url=resulting_photo_url
+    )
     session.add(new_secondary_narrative)
-    session.flush()  # Ensure the object is persisted within the transaction
+    if not _session:  # Commit only if not using an external session
+        try:
+            session.commit()
+            return new_secondary_narrative
+        except Exception as e:
+            session.rollback()
+            raise e
+    else:
+        return new_secondary_narrative  # Return the narrative object without committing if using an external session
 
-def get_secondary_narrative_by_id(narrative_id, _session=None):
+# Read a Secondary Narrative
+def get_secondary_narrative_by_id(secondary_narrative_id, _session=None):
     session = _session or db.session
-    return session.get(SecondaryNarrative, narrative_id)
+    return session.get(SecondaryNarrative, secondary_narrative_id)
 
-def update_secondary_narrative(narrative_id, parent_narrative_id, event_id, narrative, outcome, _session=None):
+def get_all_secondary_narratives(_session=None):
     session = _session or db.session
-    secondary_narrative = session.get(SecondaryNarrative, narrative_id)
+    return session.execute(select(SecondaryNarrative)).scalars().all()
+
+def get_secondary_narratives_by_original_narrative(original_narrative_id, _session=None):
+    session = _session or db.session
+    return session.execute(select(SecondaryNarrative).filter_by(original_narrative_id=original_narrative_id)).scalars().all()
+
+
+# Update a Secondary Narrative
+def update_secondary_narrative(secondary_narrative_id, _session=None, **kwargs):
+    session = _session or db.session
+    secondary_narrative = session.get(SecondaryNarrative, secondary_narrative_id)
     if secondary_narrative:
-        secondary_narrative.parent_narrative_id = parent_narrative_id
-        secondary_narrative.event_id = event_id
-        secondary_narrative.narrative = narrative
-        secondary_narrative.outcome = outcome
-        session.commit()
+        for key, value in kwargs.items():
+            setattr(secondary_narrative, key, value)
+        if not _session:  # Commit only if not using an external session
+            try:
+                session.commit()
+                return secondary_narrative
+            except Exception as e:
+                session.rollback()
+                raise e
+        else:
+            return secondary_narrative  # Return the narrative object without committing if using an external session
 
-def delete_secondary_narrative(narrative_id, _session=None):
+
+# Delete a Secondary Narrative
+def delete_secondary_narrative(secondary_narrative_id, _session=None):
     session = _session or db.session
-    secondary_narrative = session.get(SecondaryNarrative, narrative_id)
+    secondary_narrative = session.get(SecondaryNarrative, secondary_narrative_id)
     if secondary_narrative:
         session.delete(secondary_narrative)
-        session.commit()
+        if not _session:  # Commit only if not using an external session
+            try:
+                session.commit()
+                return True
+            except Exception as e:
+                session.rollback()
+                return False
+        else:
+            return True  # Assume deletion is successful if using an external session
 
 
-# Facts Operations
-
-def get_facts_by_language(language, _session=None):
-    session = _session or db.session
-    return session.query(Fact).filter_by(language=language).all()
 
 
-# Events Operations for events filtered by language
-
-def get_events_by_language(language, _session=None):
-    session = _session or db.session
-    return session.query(Event).filter_by(language=language).all()
 
 
-# NarrativeFactAssociation Operations
-# Read narratives associated with a given set of facts
 
-def get_narratives_by_facts(fact_ids, _session=None):
-    session = _session or db.session
-    result = session.query(PrimaryNarrative)\
-        .join(NarrativeFactAssociation, PrimaryNarrative.id == NarrativeFactAssociation.narrative_id)\
-        .filter(NarrativeFactAssociation.fact_id.in_(fact_ids))\
-        .all()
-
-    return result if result is not None else []
-
-# Function to update the association between a narrative and selected facts
-def update_narrative_association(narrative_id, selected_facts, _session=None):
-    session = _session or db.session
-
-    # First, check for existing associations for this narrative
-    existing_associations = session.query(NarrativeFactAssociation).filter_by(narrative_id=narrative_id).all()
-    existing_fact_ids = [assoc.fact_id for assoc in existing_associations]
-
-    # Add new associations for facts not already associated with this narrative
-    for fact_id in selected_facts:
-        if fact_id not in existing_fact_ids:
-            new_association = NarrativeFactAssociation(narrative_id=narrative_id, fact_id=fact_id)
-            session.add(new_association)
-
-    session.commit()  # Commit at the end to persist all new associations
