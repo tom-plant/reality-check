@@ -11,7 +11,7 @@ from flask import session
 def select_facts_controller(selected_facts):
 
     # Check if selected facts are associated with existing narratives, and how many
-    narratives = get_narratives_by_facts(selected_facts)
+    narratives = get_narratives_by_fact_combination(selected_facts)
     num_narratives = len(narratives)
 
     # Check if there are 3 or more narratives and return only 3
@@ -79,20 +79,18 @@ def generate_additional_narratives(selected_facts, num_additional_narratives):
     return narratives
 
 
-
 def select_narrative_controller(selected_narrative, selected_facts):
     # Retrieve user_id from session
     user_id = session.get('user_id')
     if not user_id:
-        return jsonify({"error": "User not logged in"}), 401
+        return {"error": "User not logged in"}, 401
  
     # Store selected narrative and facts in session for later use
-    session['selected_narrative_id'] = narrative_id
+    session['selected_narrative'] = selected_narrative
     session['selected_facts'] = selected_facts
 
     # Return a success response
     return {"message": "Narrative and facts selection processed successfully"}
-
 
 
 

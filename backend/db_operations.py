@@ -264,6 +264,27 @@ def delete_fact_combination(fact_combination_id, _session=None):
         else:
             return True  # Assume deletion is successful if using an external session
 
+# Retrieve Narratives By Fact Combination 
+def get_narratives_by_fact_combination(fact_ids, _session=None):
+    session = _session or db.session
+
+    # Convert fact_ids to a sorted string to use as a unique identifier
+    fact_ids_str = ','.join(map(str, sorted(fact_ids)))
+
+    # Find the FactCombination that matches the sorted fact_ids_str
+    fact_combination = session.execute(
+        select(FactCombination).where(FactCombination.facts == fact_ids_str)
+    ).scalars().first()
+
+    if fact_combination:
+        # Retrieve narratives associated with this fact combination
+        narratives = session.execute(
+            select(PrimaryNarrative).where(PrimaryNarrative.fact_combination_id == fact_combination.id)
+        ).scalars().all()
+        return narratives
+
+    return []
+
 
 # Primary Narrative Operations
 

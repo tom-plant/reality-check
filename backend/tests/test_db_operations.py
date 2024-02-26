@@ -145,9 +145,13 @@ class TestCRUDOperations(unittest.TestCase):
     # Fact Combination Operation Tests
     def test_fact_combination_operations(self):
         with self.app.app_context():
-            # Create
-            fact_combination = db_ops.create_fact_combination('1,2,3', _session=self.session)  # Assuming '1,2,3' represents fact IDs
-            self.session.commit()  # Commit to persist data for read operation tests
+            # Create a User for testing
+            user = db_ops.create_user('testuser4', 'test4@example.com', _session=self.session)
+            self.session.commit()
+
+            # Create Fact Combination
+            fact_combination = db_ops.create_fact_combination('1,2,3', _session=self.session)
+            self.session.commit()
             self.assertIsNotNone(fact_combination, "Failed to create a new Fact Combination.")
             self.assertEqual(fact_combination.facts, '1,2,3', "Fact Combination facts do not match.")
 
@@ -159,14 +163,23 @@ class TestCRUDOperations(unittest.TestCase):
             all_fact_combinations = db_ops.get_all_fact_combinations(_session=self.session)
             self.assertIn(fact_combination, all_fact_combinations, "Failed to fetch all Fact Combinations.")
 
-            # Update
-            db_ops.update_fact_combination(fact_combination.id, '4,5,6', _session=self.session)  # Assuming '4,5,6' represents updated fact IDs
+            # Update Fact Combination
+            db_ops.update_fact_combination(fact_combination.id, '4,5,6', _session=self.session)
             updated_fact_combination = db_ops.get_fact_combination_by_id(fact_combination.id, _session=self.session)
             self.assertEqual(updated_fact_combination.facts, '4,5,6', "Failed to update the Fact Combination.")
 
-            # Delete
+            # Create Primary Narrative with updated Fact Combination
+            narrative = db_ops.create_primary_narrative(fact_combination_id=updated_fact_combination.id, narrative_text="Sample Narrative", language="EN", user_id=user.id, headline="Sample Headline", story="Sample Story", _session=self.session)
+            self.session.commit()
+
+            # Retrieve Narratives By Fact Combination
+            fact_ids = [int(fid) for fid in updated_fact_combination.facts.split(',')]  # Convert '4,5,6' to [4, 5, 6]
+            narratives = db_ops.get_narratives_by_fact_combination(fact_ids, _session=self.session)
+            self.assertIn(narrative, narratives, "Failed to retrieve narrative by fact combination.")
+
+            # Delete Fact Combination
             db_ops.delete_fact_combination(fact_combination.id, _session=self.session)
-            self.session.commit()  # Ensure commit here to reflect deletion
+            self.session.commit()
             deleted_fact_combination = db_ops.get_fact_combination_by_id(fact_combination.id, _session=self.session)
             self.assertIsNone(deleted_fact_combination, "Failed to delete the Fact Combination.")
 
