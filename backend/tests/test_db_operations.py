@@ -75,16 +75,33 @@ class TestCRUDOperations(unittest.TestCase):
             deleted_user = db_ops.get_user_by_id(user.id, _session=self.session)
             self.assertIsNone(deleted_user, "Failed to delete the User.")
 
+    def test_get_user_language_by_id(self):
+        with self.app.app_context():
+            # Create a new user with a specific language
+            user = db_ops.create_user('testuser5', 'testuser5@example.com', _session=self.session)
+            user.language = 'EST'  # Set the user's language to Estonian
+            self.session.commit()  # Commit the new user to the database
+
+            # Retrieve the user's language by their ID
+            user_language = db_ops.get_user_language_by_id(user.id, _session=self.session)
+
+            self.assertIsNotNone(user_language, "Failed to retrieve User's language.")
+            self.assertEqual(user_language, 'EST', "User's language does not match the expected value.")
+
+            # Test with a non-existent user ID
+            non_existent_user_language = db_ops.get_user_language_by_id(9999, _session=self.session)  # Assuming ID 9999 does not exist
+            self.assertIsNone(non_existent_user_language, "Should return None for non-existent User ID.")
+
 
     # Fact Operations Tests
     def test_fact_operations(self):
         with self.app.app_context():
             # Create
-            fact = db_ops.create_fact('Fact content', 'EN', _session=self.session)
+            fact = db_ops.create_fact('Fact content', 'ENG', _session=self.session)
             self.session.commit()  # Commit to persist data for read operation tests
             self.assertIsNotNone(fact, "Failed to create a new Fact.")
             self.assertEqual(fact.text, 'Fact content')
-            self.assertEqual(fact.language, 'EN')
+            self.assertEqual(fact.language, 'ENG')
 
             # Read by ID
             fact_by_id = db_ops.get_fact_by_id(fact.id, _session=self.session)
@@ -95,7 +112,7 @@ class TestCRUDOperations(unittest.TestCase):
             self.assertIn(fact, all_facts, "Failed to fetch all Facts.")
 
             # Read by language
-            facts_by_language = db_ops.get_facts_by_language('EN', _session=self.session)
+            facts_by_language = db_ops.get_facts_by_language('ENG', _session=self.session)
             self.assertIn(fact, facts_by_language, "Failed to fetch Facts by language.")
 
             # Update
@@ -113,11 +130,11 @@ class TestCRUDOperations(unittest.TestCase):
     def test_event_operations(self):
         with self.app.app_context():
             # Create
-            event = db_ops.create_event('Event Title', 'EN', _session=self.session)
+            event = db_ops.create_event('Event Title', 'ENG', _session=self.session)
             self.session.commit()  # Commit to persist data for read operation tests
             self.assertIsNotNone(event, "Failed to create a new Event.")
             self.assertEqual(event.text, 'Event Title')
-            self.assertEqual(event.language, 'EN')
+            self.assertEqual(event.language, 'ENG')
 
             # Read by ID
             event_by_id = db_ops.get_event_by_id(event.id, _session=self.session)
@@ -128,7 +145,7 @@ class TestCRUDOperations(unittest.TestCase):
             self.assertIn(event, all_events, "Failed to fetch all Events.")
 
             # Read by language
-            events_by_language = db_ops.get_events_by_language('EN', _session=self.session)
+            events_by_language = db_ops.get_events_by_language('ENG', _session=self.session)
             self.assertIn(event, events_by_language, "Failed to fetch Events by language.")
 
             # Update
@@ -159,7 +176,6 @@ class TestCRUDOperations(unittest.TestCase):
             narrative = db_ops.create_primary_narrative(
                 fact_combination_id=fact_combination.id,
                 narrative_text="Sample Narrative",
-                language="EN",
                 user_id=user.id,
                 headline="Sample Headline",
                 story="Sample Story",
@@ -181,7 +197,7 @@ class TestCRUDOperations(unittest.TestCase):
             self.assertEqual(updated_fact_combination.facts, '4,5,6', "Failed to update the Fact Combination.")
 
             # Create Primary Narrative with updated Fact Combination
-            narrative = db_ops.create_primary_narrative(fact_combination_id=updated_fact_combination.id, narrative_text="Sample Narrative", language="EN", user_id=user.id, headline="Sample Headline", story="Sample Story", _session=self.session)
+            narrative = db_ops.create_primary_narrative(fact_combination_id=updated_fact_combination.id, narrative_text="Sample Narrative", user_id=user.id, headline="Sample Headline", story="Sample Story", _session=self.session)
             self.session.commit()
 
             # Retrieve Narratives By Fact Combination
@@ -195,22 +211,22 @@ class TestCRUDOperations(unittest.TestCase):
             self.assertIsNone(deleted_fact_combination, "Failed to delete the Fact Combination.")
 
     # Test for Finding Fact Combination by facts
-    def test_find_fact_combination_by_facts(self):
+    def test_find_fact_combination_id_by_facts(self):
         with self.app.app_context():
             # Create a Fact Combination with a specific set of facts
             fact_combination = db_ops.create_fact_combination('Fact 1,Fact 2,Fact 3', _session=self.session)
             self.session.commit()
 
             # Test with the same order of facts
-            fact_combination_id = db_ops.find_fact_combination_by_facts(['Fact 1', 'Fact 2', 'Fact 3'], _session=self.session)
+            fact_combination_id = db_ops.find_fact_combination_id_by_facts(['Fact 1', 'Fact 2', 'Fact 3'], _session=self.session)
             self.assertEqual(fact_combination_id, fact_combination.id, "Failed to find Fact Combination with the same order of facts.")
 
             # Test with a different order of facts
-            fact_combination_id_different_order = db_ops.find_fact_combination_by_facts(['Fact 3', 'Fact 1', 'Fact 2'], _session=self.session)
+            fact_combination_id_different_order = db_ops.find_fact_combination_id_by_facts(['Fact 3', 'Fact 1', 'Fact 2'], _session=self.session)
             self.assertEqual(fact_combination_id_different_order, fact_combination.id, "Failed to find Fact Combination with a different order of facts.")
 
             # Test with a non-existent combination of facts
-            fact_combination_id_non_existent = db_ops.find_fact_combination_by_facts(['Fact 4', 'Fact 5'], _session=self.session)
+            fact_combination_id_non_existent = db_ops.find_fact_combination_id_by_facts(['Fact 4', 'Fact 5'], _session=self.session)
             self.assertIsNone(fact_combination_id_non_existent, "Incorrectly found a non-existent Fact Combination.")
     
     # Test for Counting Fact Combination Table
@@ -235,7 +251,7 @@ class TestCRUDOperations(unittest.TestCase):
             self.session.commit()  # Commit to persist data for narrative operation tests
 
             # Create
-            primary_narrative = db_ops.create_primary_narrative(fact_combination_id=fact_combination.id, narrative_text='Sample narrative', language='EN', user_id=user.id, headline='Sample headline', story='Sample story',  photo_url='photo_url.jpg', _session=self.session)
+            primary_narrative = db_ops.create_primary_narrative(fact_combination_id=fact_combination.id, narrative_text='Sample narrative', user_id=user.id, headline='Sample headline', story='Sample story',  photo_url='photo_url.jpg', _session=self.session)
             self.session.commit()  # Commit to persist data for read operation tests
             self.assertIsNotNone(primary_narrative, "Failed to create a new Primary Narrative.")
             self.assertEqual(primary_narrative.narrative_text, 'Sample narrative', "Primary Narrative text does not match.")
@@ -281,12 +297,12 @@ class TestCRUDOperations(unittest.TestCase):
             primary_narrative = db_ops.create_primary_narrative(
                 fact_combination_id=fact_combination.id, 
                 narrative_text='Previously generated primary narrative', 
-                language='EN', user_id=user.id, headline='Sample headline', 
+                user_id=user.id, headline='Sample headline', 
                 story='Sample story',  
                 photo_url='photo_url.jpg', 
                 _session=self.session
             )
-            event = db_ops.create_event('Event Title', 'EN', _session=self.session)
+            event = db_ops.create_event('Event Title', 'ENG', _session=self.session)
             self.session.commit()  # Commit to persist data for narrative event operation tests
             self.assertIsNotNone(primary_narrative, "Failed to create PrimaryNarrative.")
             self.assertIsNotNone(primary_narrative.id, "PrimaryNarrative ID is None.")
@@ -331,8 +347,7 @@ class TestCRUDOperations(unittest.TestCase):
             fact_combination = db_ops.create_fact_combination('10,11,12', _session=self.session)
             self.session.commit()  # Commit to persist data for read operation tests
             primary_narrative = db_ops.create_primary_narrative(fact_combination_id=fact_combination.id, 
-                narrative_text='Previously generated primary narrative', 
-                language='EN', 
+                narrative_text='Previously generated primary narrative',  
                 user_id=user.id, 
                 headline='Sample headline', 
                 story='Sample story', 

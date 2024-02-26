@@ -19,6 +19,13 @@ def initialize_data_controller():
 
 def select_facts_controller(selected_facts):
 
+    # Ensure 'user_data' is initialized in session
+    # if 'user_data' not in session:
+    #     return {"error": "User not logged in"}, 401     #USE THIS VERSION LATER
+    if 'user_data' not in session:
+        initialize_data_controller()  # Call the initialization function if 'user_data' doesn't exist
+
+ 
     # Use the handle_fact_combination function and store the fact_combination_id in session
     fact_combination_id = handle_fact_combination(selected_facts)
     session['user_data']['fact_combination_id'] = fact_combination_id
@@ -39,7 +46,7 @@ def select_facts_controller(selected_facts):
 
 def handle_fact_combination(selected_facts):
     # Find if the combination exists
-    fact_combination_id = find_fact_combination_by_facts(selected_facts)
+    fact_combination_id = find_fact_combination_id_by_facts(selected_facts)
     
     # If not found, create a new combination and get its ID
     if fact_combination_id is None:
@@ -58,6 +65,7 @@ def generate_additional_narratives(selected_facts, num_additional_narratives):
         'Content-Type': 'application/json'
     }
 
+    language_code = get_user_language_by_id(session['user_data']['user_id'])
     narratives = []
     previous_narrative = None
 
@@ -66,13 +74,12 @@ def generate_additional_narratives(selected_facts, num_additional_narratives):
             print('generating with first prompt')
 
             # Use the initial prompt for the first narrative or if only one is needed
-            system_content = "You are a senior level political analyst who writes in clear, understandable, and straightforward language. Upon my submission of information to you, you must create a brief, distinct, actionable, and persuasive political narrative using the fact provided. It should stand alone and compete to define the event using the facts provided, even if in a biased way. It should lead the reader to a specific conclusion, opinion, or action."
-            user_content = f"Craft your narrative based on the following information: {', '.join(selected_facts)}. It should be no more than three sentences."
+            system_content = get_text(language_code, 'generate_additional_narratives_system_content')
+            user_content = get_text(language_code, 'generate_additional_narratives_user_content')
         else:
             # Use the different prompt for subsequent narratives, referring back to the previous one
-            print('generating with second prompt')
             system_content = previous_narrative
-            user_content = f"Craft a narrative about the event that leads to a competing conclusion or recommendation compared to the previous narrative, but whatever claim MUST be based on the following information: {', '.join(selected_facts)}. Any alternative course of action must come from the supplied information, and should be expressed without explicitly putting it in contrast with the last. It should be no more than three sentences."
+            user_content = get_text(language_code, 'generate_additional_narratives_user_content_followup')
 
         payload = {
             "model": "gpt-3.5-turbo",
@@ -97,18 +104,37 @@ def generate_additional_narratives(selected_facts, num_additional_narratives):
     return narratives
 
 
-def select_narrative_controller(selected_narrative, selected_facts):
-    # Retrieve user_id from session
-    user_id = session.get('user_id')
-    if not user_id:
-        return {"error": "User not logged in"}, 401
+def select_narrative_controller(selected_narrative):
+    # Ensure 'user_data' is initialized in session
+    # if 'user_data' not in session:
+    #     return {"error": "User not logged in"}, 401     #USE THIS VERSION LATER
+    if 'user_data' not in session:
+        initialize_data_controller()  # Call the initialization function if 'user_data' doesn't exist
  
-    # Store selected narrative and facts in session for later use
-    session['selected_narrative'] = selected_narrative
-    session['selected_facts'] = selected_facts
+    # Generate News 
+    # selected_facts = get_fact_combination_by_id(fact_combination_id)
+    # newsjsonthing(full of headline,story,photo) = generate_news_content(selected_narrative, selected_facts):   
+        # *** potentially insert another variable(?) that pulls from a file storing the chatgpt api pairings so that they're all in one place
+
+    # Commit Primary Narrative to Database
+    # fact_combination_id = user_data(fact_combination_id)
+    # narrative_text = get_primary_narrative_by_id(narrative_id):
+    # user_id = user_data(user_id)
+    # headline = newsjsonthing(headline)
+    # story = newsjsonthing(story)
+    # photo_url = newsjsonthing(photo_url)
+    # create_primary_narrative(fact_combination_id, narrative_text, user_id, headline, story, photo_url)
+
+    # Store Primary Narrative ID in User Session
+    session['primary_narrative_id'] = selected_narrative
 
     # Return a success response
     return {"message": "Narrative and facts selection processed successfully"}
+
+
+
+def generate_news_content(selected_narrative):
+   pass
 
 
 
@@ -123,28 +149,6 @@ def introduce_event_controller():
     # Placeholder for now
     return jsonify({"message": "Introduce event controller placeholder"}) #TAKE OUT JSONIFY
 
-# THis all comes in the event controller vvvv
-
-    # # Placeholder for news generation logic
-    # headline, news_story, photo = generate_news_content(selected_narrative)
-
-# def generate_news_content(selected_narrative):
-#     # Placeholder for the logic to generate news content
-#     # This function should return headline, news_story, and photo based on the selected narrative
-#     headline = "Generated Headline for " + selected_narrative
-#     news_story = "Generated News Story for " + selected_narrative
-#     photo = "Generated Photo URL for " + selected_narrative
-#     return headline, news_story, photo
-
-#    narrative_id = create_primary_narrative(selected_narrative, headline, news_story, photo, user_id)
-
-#     # Update associations in NarrativeFactAssociation table
-#     update_narrative_association(narrative_id, selected_facts)
-
-
-
-
-
 
 
 def identify_weaknesses_controller(new_facts, narrative):
@@ -154,8 +158,3 @@ def identify_weaknesses_controller(new_facts, narrative):
     return jsonify({"message": "Identify weaknesses controller placeholder"}) #TAKE OUT JSONIFY
 
 
-def save_progress_controller(user_progress):
-    # Logic to save user progress data to the database
-    
-    # Placeholder for now
-    return jsonify({"message": "Save progress controller placeholder"}) #TAKE OUT JSONIFY

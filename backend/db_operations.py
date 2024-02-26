@@ -35,6 +35,10 @@ def get_user_by_username(username, _session=None):
     session = _session or db.session
     return session.execute(select(User).filter_by(username=username)).scalars().first()
 
+def get_user_language_by_id(user_id, _session=None):
+    session = _session or db.session
+    user = session.get(User, user_id)
+    return user.language if user else None
 
 # Update a User
 def update_user(user_id, _session=None, **kwargs):
@@ -281,7 +285,7 @@ def get_narratives_by_fact_combination(fact_combination_id, _session=None):
     return narratives
 
 # Retrieve Fact ID by Fact Combination
-def find_fact_combination_by_facts(facts, _session=None):
+def find_fact_combination_id_by_facts(facts, _session=None):
     session = _session or db.session
     sorted_input_facts = sorted(facts)  # Sort the input facts to ensure order doesn't matter
 
@@ -303,12 +307,11 @@ def find_fact_combination_by_facts(facts, _session=None):
 # Primary Narrative Operations
 
 # Create a New Primary Narrative
-def create_primary_narrative(fact_combination_id, narrative_text, language, user_id, headline, story, photo_url=None, _session=None):
+def create_primary_narrative(fact_combination_id, narrative_text, user_id, headline, story, photo_url=None, _session=None):
     session = _session or db.session
     new_primary_narrative = PrimaryNarrative(
         fact_combination_id=fact_combination_id,
         narrative_text=narrative_text,
-        language=language,
         user_id=user_id,
         headline=headline,
         story=story,

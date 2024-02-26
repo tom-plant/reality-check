@@ -13,6 +13,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
+    language = db.Column(db.Enum('ENG', 'EST', 'RUS', name='language_types'), default='ENG', nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
 class Fact(db.Model):
@@ -20,14 +21,14 @@ class Fact(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.String(255), nullable=False)  # Assuming text includes language-specific representation
-    language = db.Column(db.String(80), nullable=False)  # Language code (e.g., 'en', 'fr')
+    language = db.Column(db.Enum('ENG', 'EST', 'RUS', name='language_types'), default='ENG', nullable=False)
 
 class Event(db.Model):
     __tablename__ = 'events'
 
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.String(510), nullable=False)  # Assuming text includes language-specific representation
-    language = db.Column(db.String(80), nullable=False)  # Language code (e.g., 'en', 'fr')
+    language = db.Column(db.Enum('ENG', 'EST', 'RUS', name='language_types'), default='ENG', nullable=False)
 
 class FactCombination(db.Model):
     __tablename__ = 'fact_combinations'
@@ -42,7 +43,6 @@ class PrimaryNarrative(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     fact_combination_id = db.Column(db.Integer, db.ForeignKey('fact_combinations.id'), nullable=False)
     narrative_text = db.Column(db.Text, nullable=False)
-    language = db.Column(db.String(80), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     headline = db.Column(db.String(255), nullable=False)
     story = db.Column(db.Text, nullable=False)
