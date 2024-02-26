@@ -9,26 +9,67 @@ from flask import session
 
 
 def select_facts_controller(selected_facts):
+    # Ensure there is a session data container
+    if 'user_data' not in session:
+        session['user_data'] = {
+            'fact_combination_id': None,
+            'user_id': None,  # Assume there's a way to get user_id, e.g., from logged-in user info
+            'selected_narrative': None,
+            'news_stories': []
+        }
 
-    # Check if selected facts are associated with existing narratives, and how many
+    # Use the handle_fact_combination function and store the fact_combination_id in session
+    fact_combination_id = handle_fact_combination(selected_facts)
+    session['user_data']['fact_combination_id'] = fact_combination_id
+
+    # The rest of your existing logic for selecting narratives
     narratives = get_narratives_by_fact_combination(selected_facts)
     num_narratives = len(narratives)
 
-    # Check if there are 3 or more narratives and return only 3
     if num_narratives >= 3:
         random_narratives = random.sample(narratives, 3) if num_narratives > 3 else narratives
         return {"narratives": random_narratives}
-
     else:
-        # Calculate the number of additional narratives needed
         num_additional_narratives = 3 - num_narratives
-
-        # Generate additional narratives using ChatGPT API and combine with existing 
         additional_narratives = generate_additional_narratives(selected_facts, num_additional_narratives)
         combined_narratives = narratives + additional_narratives
-
         return {"narratives": combined_narratives}
 
+
+
+
+def select_facts_controller(selected_facts):
+    # Ensure there is a session data container
+    if 'user_data' not in session:
+        session['user_data'] = {
+            'fact_combination_id': None,
+            'user_id': None,  # Assume there's a way to get user_id, e.g., from logged-in user info
+            'selected_narrative': None,
+            'news_stories': []
+        }
+
+    # Use the handle_fact_combination function and store the fact_combination_id in session
+    fact_combination_id = handle_fact_combination(selected_facts)
+    session['user_data']['fact_combination_id'] = fact_combination_id
+
+    
+
+
+
+
+
+
+
+def handle_fact_combination(selected_facts):
+    # Find if the combination exists
+    fact_combination_id = find_fact_combination_by_facts(selected_facts)
+    
+    # If not found, create a new combination and get its ID
+    if fact_combination_id is None:
+        fact_combination = create_fact_combination(','.join(map(str, sorted(selected_facts))))
+        fact_combination_id = fact_combination.id
+    
+    return fact_combination_id
 
 
 def generate_additional_narratives(selected_facts, num_additional_narratives):

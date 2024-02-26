@@ -74,7 +74,7 @@ class TestCRUDOperations(unittest.TestCase):
             # Try to fetch the deleted user
             deleted_user = db_ops.get_user_by_id(user.id, _session=self.session)
             self.assertIsNone(deleted_user, "Failed to delete the User.")
-            
+
 
     # Fact Operations Tests
     def test_fact_operations(self):
@@ -155,6 +155,18 @@ class TestCRUDOperations(unittest.TestCase):
             self.assertIsNotNone(fact_combination, "Failed to create a new Fact Combination.")
             self.assertEqual(fact_combination.facts, '1,2,3', "Fact Combination facts do not match.")
 
+            # Create Primary Narrative with Fact Combination
+            narrative = db_ops.create_primary_narrative(
+                fact_combination_id=fact_combination.id,
+                narrative_text="Sample Narrative",
+                language="EN",
+                user_id=user.id,
+                headline="Sample Headline",
+                story="Sample Story",
+                _session=self.session
+            )
+            self.session.commit()
+
             # Read by ID
             fact_combination_by_id = db_ops.get_fact_combination_by_id(fact_combination.id, _session=self.session)
             self.assertEqual(fact_combination_by_id.id, fact_combination.id, "Failed to fetch Fact Combination by ID.")
@@ -173,8 +185,7 @@ class TestCRUDOperations(unittest.TestCase):
             self.session.commit()
 
             # Retrieve Narratives By Fact Combination
-            fact_ids = [int(fid) for fid in updated_fact_combination.facts.split(',')]  # Convert '4,5,6' to [4, 5, 6]
-            narratives = db_ops.get_narratives_by_fact_combination(fact_ids, _session=self.session)
+            narratives = db_ops.get_narratives_by_fact_combination(fact_combination.id, _session=self.session)
             self.assertIn(narrative, narratives, "Failed to retrieve narrative by fact combination.")
 
             # Delete Fact Combination
@@ -182,6 +193,38 @@ class TestCRUDOperations(unittest.TestCase):
             self.session.commit()
             deleted_fact_combination = db_ops.get_fact_combination_by_id(fact_combination.id, _session=self.session)
             self.assertIsNone(deleted_fact_combination, "Failed to delete the Fact Combination.")
+
+    # Test for Finding Fact Combination by facts
+    def test_find_fact_combination_by_facts(self):
+        with self.app.app_context():
+            # Create a Fact Combination with a specific set of facts
+            fact_combination = db_ops.create_fact_combination('Fact 1,Fact 2,Fact 3', _session=self.session)
+            self.session.commit()
+
+            # Test with the same order of facts
+            fact_combination_id = db_ops.find_fact_combination_by_facts(['Fact 1', 'Fact 2', 'Fact 3'], _session=self.session)
+            self.assertEqual(fact_combination_id, fact_combination.id, "Failed to find Fact Combination with the same order of facts.")
+
+            # Test with a different order of facts
+            fact_combination_id_different_order = db_ops.find_fact_combination_by_facts(['Fact 3', 'Fact 1', 'Fact 2'], _session=self.session)
+            self.assertEqual(fact_combination_id_different_order, fact_combination.id, "Failed to find Fact Combination with a different order of facts.")
+
+            # Test with a non-existent combination of facts
+            fact_combination_id_non_existent = db_ops.find_fact_combination_by_facts(['Fact 4', 'Fact 5'], _session=self.session)
+            self.assertIsNone(fact_combination_id_non_existent, "Incorrectly found a non-existent Fact Combination.")
+    
+    # Test for Counting Fact Combination Table
+    def test_count_fact_combinations(self):
+        with self.app.app_context():
+            # Create a few fact combinations for testing
+            db_ops.create_fact_combination('a,b,c', _session=self.session)
+            db_ops.create_fact_combination('d,e,f', _session=self.session)
+            self.session.commit()
+
+            # Count the fact combinations
+            count = db_ops.count_fact_combinations(_session=self.session)
+
+            self.assertEqual(count, 2, "Count of fact combinations does not match the expected value.")
 
 # Primary Narrative Operation Tests
     def test_primary_narrative_operations(self):

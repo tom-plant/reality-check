@@ -33,7 +33,7 @@ class FactCombination(db.Model):
     __tablename__ = 'fact_combinations'
 
     id = db.Column(db.Integer, primary_key=True)
-    facts = db.Column(db.String(500), nullable=False)  # This could be a JSON string or a delimited list of fact IDs
+    facts = db.Column(db.String(500), nullable=False)  # This could be a JSON string or a delimited list of fact texts
     narratives = db.relationship('PrimaryNarrative', backref='fact_combination', lazy=True, cascade="all, delete-orphan")
 
 class PrimaryNarrative(db.Model):

@@ -230,6 +230,11 @@ def get_all_fact_combinations(_session=None):
     session = _session or db.session
     return session.execute(select(FactCombination)).scalars().all()
 
+def count_fact_combinations(_session=None):
+    session = _session or db.session
+    count = session.query(FactCombination).count()
+    return count
+
 
 # Update a Fact Combination
 def update_fact_combination(fact_combination_id, facts, _session=None):
@@ -264,26 +269,35 @@ def delete_fact_combination(fact_combination_id, _session=None):
         else:
             return True  # Assume deletion is successful if using an external session
 
-# Retrieve Narratives By Fact Combination 
-def get_narratives_by_fact_combination(fact_ids, _session=None):
+# Retrieve Narratives By Fact Combination ID
+def get_narratives_by_fact_combination(fact_combination_id, _session=None):
     session = _session or db.session
+    
+    # Directly retrieve narratives associated with the fact_combination_id
+    narratives = session.execute(
+        select(PrimaryNarrative).where(PrimaryNarrative.fact_combination_id == fact_combination_id)
+    ).scalars().all()
 
-    # Convert fact_ids to a sorted string to use as a unique identifier
-    fact_ids_str = ','.join(map(str, sorted(fact_ids)))
+    return narratives
 
-    # Find the FactCombination that matches the sorted fact_ids_str
-    fact_combination = session.execute(
-        select(FactCombination).where(FactCombination.facts == fact_ids_str)
-    ).scalars().first()
+# Retrieve Fact ID by Fact Combination
+def find_fact_combination_by_facts(facts, _session=None):
+    session = _session or db.session
+    sorted_input_facts = sorted(facts)  # Sort the input facts to ensure order doesn't matter
 
-    if fact_combination:
-        # Retrieve narratives associated with this fact combination
-        narratives = session.execute(
-            select(PrimaryNarrative).where(PrimaryNarrative.fact_combination_id == fact_combination.id)
-        ).scalars().all()
-        return narratives
+    # Get all fact combinations that could potentially match by checking if they contain all the input facts
+    potential_matches = session.query(FactCombination).filter(
+        *[FactCombination.facts.contains(fact) for fact in facts]
+    ).all()
 
-    return []
+    for fact_combination in potential_matches:
+        # Split the facts string into a list, sort it, and compare with the sorted input facts
+        fact_combination_facts = sorted(fact_combination.facts.split(','))  # Assuming facts are comma-separated
+        if fact_combination_facts == sorted_input_facts:
+            return fact_combination.id  # Return the ID if a match is found
+
+    return None  # Return None if no match is found
+
 
 
 # Primary Narrative Operations

@@ -1,12 +1,14 @@
 from flask import Flask, session, jsonify
 from flask_sqlalchemy import SQLAlchemy
-from config import FLASK_KEY, SQL_KEY
+from config import Config, FLASK_KEY, SQL_KEY
 import uuid #for unique user id
 from flask_migrate import Migrate
 from models import db  # Import the db instance from models.py
-
+from flask_session import Session 
 
 app = Flask(__name__)
+app.config.from_object(Config)
+Session(app)
 
 # Configuration
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://reality_check_user:Eesti_$imulat10n@localhost/reality_check' ##Switch this eventually
