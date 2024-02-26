@@ -7,16 +7,17 @@ from config import API_KEY
 from flask import session
 
 
+def initialize_data_controller():
+    # Initialize 'user_data' in session
+    session['user_data'] = {
+        'fact_combination_id': None,
+        'user_id': 'some_user_id',
+        'primary_narrative_id': None,
+        'secondary_narrative_id': None,
+        'narrative_events_id': None,
+    }
 
 def select_facts_controller(selected_facts):
-    # Ensure there is a session data container
-    if 'user_data' not in session:
-        session['user_data'] = {
-            'fact_combination_id': None,
-            'user_id': None,  # Assume there's a way to get user_id, e.g., from logged-in user info
-            'selected_narrative': None,
-            'news_stories': []
-        }
 
     # Use the handle_fact_combination function and store the fact_combination_id in session
     fact_combination_id = handle_fact_combination(selected_facts)
@@ -34,30 +35,6 @@ def select_facts_controller(selected_facts):
         additional_narratives = generate_additional_narratives(selected_facts, num_additional_narratives)
         combined_narratives = narratives + additional_narratives
         return {"narratives": combined_narratives}
-
-
-
-
-def select_facts_controller(selected_facts):
-    # Ensure there is a session data container
-    if 'user_data' not in session:
-        session['user_data'] = {
-            'fact_combination_id': None,
-            'user_id': None,  # Assume there's a way to get user_id, e.g., from logged-in user info
-            'selected_narrative': None,
-            'news_stories': []
-        }
-
-    # Use the handle_fact_combination function and store the fact_combination_id in session
-    fact_combination_id = handle_fact_combination(selected_facts)
-    session['user_data']['fact_combination_id'] = fact_combination_id
-
-    
-
-
-
-
-
 
 
 def handle_fact_combination(selected_facts):

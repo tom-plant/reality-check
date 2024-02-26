@@ -15,10 +15,14 @@ class TestSelectFactsController(unittest.TestCase):
         self.app_context = app.app_context()
         self.app_context.push()
         db.create_all()
+        self.request_context = app.test_request_context()
+        self.request_context.push()  # Simulate a request context for your tests
 
     def tearDown(self):
         db.session.remove()
         db.drop_all()
+        if self.request_context:
+            self.request_context.pop()
         self.app_context.pop()
 
     @patch('controllers.generate_additional_narratives')
