@@ -8,6 +8,7 @@ from flask import session
 
 
 def initialize_data_controller():
+
     # Initialize 'user_data' in session
     session['user_data'] = {
         'fact_combination_id': None,
@@ -45,6 +46,7 @@ def select_facts_controller(selected_facts):
 
 
 def handle_fact_combination(selected_facts):
+
     # Find if the combination exists
     fact_combination_id = find_fact_combination_id_by_facts(selected_facts)
     
@@ -71,8 +73,6 @@ def generate_additional_narratives(selected_facts, num_additional_narratives):
 
     for i in range(num_additional_narratives):
         if i == 0 or num_additional_narratives == 1:
-            print('generating with first prompt')
-
             # Use the initial prompt for the first narrative or if only one is needed
             system_content = get_text(language_code, 'generate_additional_narratives_system_content')
             user_content = get_text(language_code, 'generate_additional_narratives_user_content')
@@ -105,6 +105,7 @@ def generate_additional_narratives(selected_facts, num_additional_narratives):
 
 
 def select_narrative_controller(selected_narrative):
+
     # Ensure 'user_data' is initialized in session
     # if 'user_data' not in session:
     #     return {"error": "User not logged in"}, 401     #USE THIS VERSION LATER
@@ -134,7 +135,17 @@ def select_narrative_controller(selected_narrative):
 
 
 def generate_news_content(selected_narrative):
-   pass
+
+    # Call the ChatGPT API
+    chatGPTUrl = 'https://api.openai.com/v1/chat/completions'
+    headers = {
+        'Authorization': f'Bearer {API_KEY}',
+        'Content-Type': 'application/json'
+    }
+
+    language_code = get_user_language_by_id(session['user_data']['user_id'])
+
+# continue logic here
 
 
 
