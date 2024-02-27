@@ -122,14 +122,13 @@ def select_narrative_controller(selected_narrative):
     }
 
     # Call the function to generate news content
-    news_data = generate_news_content(selected_narrative, prompts)
+    news_data = generate_news_content(selected_narrative, prompts, selected_facts)
 
     # Return the news data as a JSON response
     return {"news_data": news_data}
 
 
-def generate_news_content(selected_narrative, prompts):
-
+def generate_news_content(selected_narrative, prompts, selected_facts):
 
     # Function to send requests to the ChatGPT API
     def get_chatgpt_response(system_content, user_content):
@@ -199,7 +198,6 @@ def generate_news_content(selected_narrative, prompts):
 
     # Update image prompt 
     language_code = get_user_language_by_id(session['user_data']['user_id'])
-    selected_facts = get_fact_combination_by_id(session['user_data']['fact_combination_id'])
     image_prompt = get_text(language_code, 'generate_news_primary_prompt_image', replacements={"headline": headline, "selected_narrative": selected_narrative})
     prompts['image'] = image_prompt  # Add or update the image prompt in the dictionary
 
