@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import patch
 from flask import Flask, session
 from app import db
-from controllers import select_narrative_controller  # Ensure this is the correct import
+from controllers import select_narrative_controller  # Ensure this is the correct import path
 from config import TestingConfig, FLASK_KEY
 
 app = Flask(__name__)
@@ -20,19 +20,43 @@ class TestSelectNarrativeController(unittest.TestCase):
     def tearDown(self):
         self.ctx.pop()
 
-    def test_user_not_logged_in(self):
-        with app.test_request_context():
-            response = select_narrative_controller('selected_narrative', ['fact1', 'fact2'])
-            self.assertEqual(response, ({"error": "User not logged in"}, 401))
+    @patch('controllers.initialize_data_controller')
+    @patch('controllers.get_user_language_by_id')
+    @patch('controllers.get_text')
+    @patch('controllers.generate_news_content')
+    def test_select_narrative_success(self, mock_generate_news, mock_get_text, mock_get_user_language, mock_initialize_data):
+        # Mock the user language to be English
+        mock_get_user_language.return_value = 'ENG'
 
-    def test_narrative_and_facts_stored_successfully(self):
+        # Mock the get_text function to return specific prompts
+        mock_get_text.side_effect = lambda language_code, key: f"Mocked {key} in {language_code}"
+
+        # Mock the news content generation to return a predefined news data
+        mock_news_data = {'headline': 'Mocked Headline', 'story': 'Mocked Story', 'photo_url': 'mocked_url.jpg'}
+        mock_generate_news.return_value = mock_news_data
+
+        # Simulate the user session
         with app.test_request_context():
-            # Directly setting the user_id in session for this test
-            session['user_id'] = 'user_id'
-            response = select_narrative_controller('selected_narrative', ['fact1', 'fact2'])
-            self.assertEqual(response, {"message": "Narrative and facts selection processed successfully"})
-            self.assertEqual(session['selected_narrative'], 'selected_narrative')
-            self.assertEqual(session['selected_facts'], ['fact1', 'fact2'])
+            session['user_data'] = {'user_id': '1'}
+
+            # Call the controller function with a mocked narrative
+            response = select_narrative_controller('selected_narrative')
+
+            self.assertEqual(response, {"news_data": mock_news_data})
+            mock_initialize_data.assert_not_called()  # Check that the initialize_data_controller was not called
+
+    @patch('controllers.get_user_language_by_id')
+    def test_user_not_logged_in(self, mock_get_user_language):
+        mock_get_user_language.return_value = 'ENG'
+
+        with app.test_request_context():
+            # Clear session at the beginning of the test
+            with self.app as client:
+                with client.session_transaction() as sess:
+                    sess.clear()
+
+                response = select_narrative_controller('selected_narrative')
+                self.assertEqual(response, ({"error": "User not logged in"}, 401))  
 
 if __name__ == '__main__':
     unittest.main()

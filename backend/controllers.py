@@ -107,17 +107,56 @@ def generate_additional_narratives(selected_facts, num_additional_narratives):
 
 
 def select_narrative_controller(selected_narrative):
-
     # Ensure 'user_data' is initialized in session
     # if 'user_data' not in session:
     #     return {"error": "User not logged in"}, 401     #USE THIS VERSION LATER
     if 'user_data' not in session:
         initialize_data_controller()  # Call the initialization function if 'user_data' doesn't exist
  
-    # Generate News 
-    # selected_facts = get_fact_combination_by_id(fact_combination_id)
-    # newsjsonthing(full of headline,story,photo) = generate_news_content(selected_narrative, selected_facts):   
-        # *** potentially insert another variable(?) that pulls from a file storing the chatgpt api pairings so that they're all in one place
+    # Set primary narrative prompts to language code
+    language_code = get_user_language_by_id(session['user_data']['user_id'])
+    prompts = [
+        get_text(language_code, "generate_news_content_primary_system_content"),
+        get_text(language_code, "generate_news_content_primary_user_content")
+    ]
+
+    # Call the function to generate news content
+    news_data = generate_news_content(selected_narrative, prompts)
+
+    # Return the news data as a JSON response
+    return {"news_data": news_data}
+
+
+def generate_news_content(selected_narrative, prompts):
+    # Call the ChatGPT API
+    chatGPTUrl = 'https://api.openai.com/v1/chat/completions'
+    headers = {
+        'Authorization': f'Bearer {API_KEY}',
+        'Content-Type': 'application/json'
+    }
+
+    language_code = get_user_language_by_id(session['user_data']['user_id'])
+    selected_facts = get_fact_combination_by_id(fact_combination_id)  # DO I EVEN NEED THIS? 
+    
+    
+    # Placeholder: Generate an image with DALL-E 2 based on the selected narrative
+    image_url = "https://example.com/generated-image.jpg"
+
+    # Combine the generated content into a single JSON-like structure
+    news_content = {
+        "headline": headline,
+        "story": story,
+        "photo_url": image_url
+    }
+
+    return news_content
+
+
+
+# def commit_primary_narrative_controller():
+
+    # Store Primary Narrative ID in User Session
+    # session['primary_narrative_id'] = selected_narrative
 
     # Commit Primary Narrative to Database
     # fact_combination_id = user_data(fact_combination_id)
@@ -127,30 +166,6 @@ def select_narrative_controller(selected_narrative):
     # story = newsjsonthing(story)
     # photo_url = newsjsonthing(photo_url)
     # create_primary_narrative(fact_combination_id, narrative_text, user_id, headline, story, photo_url)
-
-    # Store Primary Narrative ID in User Session
-    session['primary_narrative_id'] = selected_narrative
-
-    # Return a success response
-    return {"message": "Narrative and facts selection processed successfully"}
-
-
-
-def generate_news_content(selected_narrative):
-
-    # Call the ChatGPT API
-    chatGPTUrl = 'https://api.openai.com/v1/chat/completions'
-    headers = {
-        'Authorization': f'Bearer {API_KEY}',
-        'Content-Type': 'application/json'
-    }
-
-    language_code = get_user_language_by_id(session['user_data']['user_id'])
-
-# continue logic here
-
-
-
 
 
 def introduce_event_controller():
