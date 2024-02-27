@@ -5,6 +5,7 @@ import requests
 from db_operations import *
 from config import API_KEY
 from flask import session
+from localization import get_text
 
 
 def initialize_data_controller():
@@ -71,15 +72,16 @@ def generate_additional_narratives(selected_facts, num_additional_narratives):
     narratives = []
     previous_narrative = None
 
+
     for i in range(num_additional_narratives):
         if i == 0 or num_additional_narratives == 1:
             # Use the initial prompt for the first narrative or if only one is needed
-            system_content = get_text(language_code, 'generate_additional_narratives_system_content')
-            user_content = get_text(language_code, 'generate_additional_narratives_user_content')
+            system_content = get_text(language_code, 'generate_additional_narratives_system_content', selected_facts)
+            user_content = get_text(language_code, 'generate_additional_narratives_user_content', selected_facts)
         else:
             # Use the different prompt for subsequent narratives, referring back to the previous one
             system_content = previous_narrative
-            user_content = get_text(language_code, 'generate_additional_narratives_user_content_followup')
+            user_content = get_text(language_code, 'generate_additional_narratives_user_content_followup', selected_facts)
 
         payload = {
             "model": "gpt-3.5-turbo",
