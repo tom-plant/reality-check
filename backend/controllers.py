@@ -108,17 +108,20 @@ def generate_additional_narratives(selected_facts, num_additional_narratives):
 
 def select_narrative_controller(selected_narrative):
     # Ensure 'user_data' is initialized in session
-    # if 'user_data' not in session:
-    #     return {"error": "User not logged in"}, 401     #USE THIS VERSION LATER
     if 'user_data' not in session:
-        initialize_data_controller()  # Call the initialization function if 'user_data' doesn't exist
+        return {"error": "User not logged in"}, 401     
  
     # Set primary narrative prompts to language code
     language_code = get_user_language_by_id(session['user_data']['user_id'])
-    prompts = [
-        get_text(language_code, "generate_news_content_primary_system_content"),
-        get_text(language_code, "generate_news_content_primary_user_content")
-    ]
+    selected_facts = get_fact_combination_by_id(session['user_data']['fact_combination_id'])
+
+    prompts = {
+        "headline_system": get_text(language_code, 'generate_news_primary_system_content_headline', selected_facts),
+        "headline_user": get_text(language_code, 'generate_news_primary_user_content_headline', selected_facts),
+        "story_system": get_text(language_code, 'generate_news_primary_system_content_story', selected_facts),
+        "story_user": get_text(language_code, 'generate_news_primary_user_content_story', selected_facts),
+        # Note: The image prompt might need to be generated after the headline is created, as shown below
+    }
 
     # Call the function to generate news content
     news_data = generate_news_content(selected_narrative, prompts)
@@ -128,27 +131,94 @@ def select_narrative_controller(selected_narrative):
 
 
 def generate_news_content(selected_narrative, prompts):
-    # Call the ChatGPT API
-    chatGPTUrl = 'https://api.openai.com/v1/chat/completions'
-    headers = {
-        'Authorization': f'Bearer {API_KEY}',
-        'Content-Type': 'application/json'
-    }
 
+
+    # Function to send requests to the ChatGPT API
+    def get_chatgpt_response(system_content, user_content):
+
+        # ChatGPT API settings
+        chatGPTUrl = 'https://api.openai.com/v1/chat/completions'
+        headers = {
+            'Authorization': f'Bearer {API_KEY}',
+            'Content-Type': 'application/json'
+        }
+
+        payload = {
+            "model": "gpt-3.5-turbo",
+            "messages": [
+                {"role": "system", "content": system_content},
+                {"role": "user", "content": user_content}
+            ],
+            "temperature": 0.7,
+            "max_tokens": 100
+        }
+
+        try:
+            response = requests.post(chatGPTUrl, headers=headers, data=json.dumps(payload))
+            if response.status_code == 200:
+                return response.json()['choices'][0]['message']['content']
+            else:
+                error_message = f"Failed to generate text content. API Error: {response.status_code} - {response.text}"
+                print(error_message)
+            raise Exception(error_message)  # Halting the process by raising an exception
+        except Exception as e:
+            print(f"Network or request error occurred: {str(e)}")
+            raise Exception(f"Network or request error occurred: {str(e)}")  # Re-raise to halt the process
+
+    # Function to send requests to the DALL-E-2 API 
+    def generate_image(prompt):
+
+        # DALL-E-2 API settings
+        dalleUrl = 'https://api.openai.com/v1/images/generations'
+        headers = {
+            'Authorization': f'Bearer {API_KEY}',
+            'Content-Type': 'application/json'
+        }
+        payload = {
+            "model": "dall-e-2",
+            "prompt": prompt,
+            "n": 1,
+            "size": "1024x1024"
+        }
+
+        try: 
+            response = requests.post(dalleUrl, headers=headers, data=json.dumps(payload))
+            if response.status_code == 200:
+                image_data = response.json()['data'][0]
+                return image_data.get('url')  # Assuming the API returns the URL directly
+            else:
+                error_message = f"Failed to generate image. API Error: {response.status_code} - {response.text}"
+                print(error_message)
+                raise Exception(error_message)  # Halting the process by raising an exception
+        except Exception as e:
+            print(f"Network or request error occurred: {str(e)}")
+            raise Exception(f"Network or request error occurred: {str(e)}")  # Re-raise to halt the process
+
+    # Generate headline
+    headline = get_chatgpt_response(prompts['headline_system'], prompts['headline_user'])
+    if headline is None:
+        raise Exception("Failed to generate headline, halting process.")  # Halting the process
+
+    # Update prompts dictionary with headline for the upcoming image prompt 
     language_code = get_user_language_by_id(session['user_data']['user_id'])
-    selected_facts = get_fact_combination_by_id(fact_combination_id)  # DO I EVEN NEED THIS? 
-    
-    
-    # Placeholder: Generate an image with DALL-E 2 based on the selected narrative
-    image_url = "https://example.com/generated-image.jpg"
+    image_prompt = get_text(language_code, 'generate_news_primary_prompt_image', headline)
+    prompts['image'] = image_prompt  # Add or update the image prompt in the dictionary
 
-    # Combine the generated content into a single JSON-like structure
+    # Generate story
+    story = get_chatgpt_response(prompts['story_system'], prompts['story_user'])
+    if story is None:
+        raise Exception("Failed to generate story, halting process.")  # Halting the process
+
+    # Generate image (based on the headline)
+    image_url = generate_image(prompts['image'])
+
+    # Combine the generated content
     news_content = {
         "headline": headline,
         "story": story,
-        "photo_url": image_url
+        "image_url": image_url
     }
-
+    
     return news_content
 
 
