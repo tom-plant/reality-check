@@ -76,12 +76,12 @@ def generate_additional_narratives(selected_facts, num_additional_narratives):
     for i in range(num_additional_narratives):
         if i == 0 or num_additional_narratives == 1:
             # Use the initial prompt for the first narrative or if only one is needed
-            system_content = get_text(language_code, 'generate_additional_narratives_system_content', selected_facts)
-            user_content = get_text(language_code, 'generate_additional_narratives_user_content', selected_facts)
+            system_content = get_text(language_code, 'generate_additional_narratives_system_content', replacements={"selected_facts": ', '.join(selected_facts)})
+            user_content = get_text(language_code, 'generate_additional_narratives_user_content', replacements={"selected_facts": ', '.join(selected_facts)})
         else:
             # Use the different prompt for subsequent narratives, referring back to the previous one
             system_content = previous_narrative
-            user_content = get_text(language_code, 'generate_additional_narratives_user_content_followup', selected_facts)
+            user_content_followup = get_text(language_code, 'generate_additional_narratives_user_content_followup', replacements={"selected_facts": ', '.join(selected_facts)})
 
         payload = {
             "model": "gpt-3.5-turbo",
@@ -116,11 +116,9 @@ def select_narrative_controller(selected_narrative):
     selected_facts = get_fact_combination_by_id(session['user_data']['fact_combination_id'])
 
     prompts = {
-        "headline_system": get_text(language_code, 'generate_news_primary_system_content_headline', selected_facts),
-        "headline_user": get_text(language_code, 'generate_news_primary_user_content_headline', selected_facts),
-        "story_system": get_text(language_code, 'generate_news_primary_system_content_story', selected_facts),
-        "story_user": get_text(language_code, 'generate_news_primary_user_content_story', selected_facts),
-        # Note: The image prompt might need to be generated after the headline is created, as shown below
+        "headline_system": get_text(language_code, 'generate_news_primary_system_content_headline', replacements={"selected_facts": ', '.join(selected_facts), "selected_narrative": selected_narrative}),
+        "headline_user": get_text(language_code, 'generate_news_primary_user_content_headline', replacements={"selected_facts": ', '.join(selected_facts), "selected_narrative": selected_narrative}),
+        # Note: The image prompt and story prompts are generated after the headline is created
     }
 
     # Call the function to generate news content
@@ -199,10 +197,15 @@ def generate_news_content(selected_narrative, prompts):
     if headline is None:
         raise Exception("Failed to generate headline, halting process.")  # Halting the process
 
-    # Update prompts dictionary with headline for the upcoming image prompt 
+    # Update image prompt 
     language_code = get_user_language_by_id(session['user_data']['user_id'])
-    image_prompt = get_text(language_code, 'generate_news_primary_prompt_image', headline)
+    selected_facts = get_fact_combination_by_id(session['user_data']['fact_combination_id'])
+    image_prompt = get_text(language_code, 'generate_news_primary_prompt_image', replacements={"headline": headline, "selected_narrative": selected_narrative})
     prompts['image'] = image_prompt  # Add or update the image prompt in the dictionary
+
+    #Update story prompts
+    prompts['story_system'] = get_text(language_code, 'generate_news_primary_system_content_story', replacements={"headline": headline, "selected_narrative": selected_narrative, "selected_facts": ', '.join(selected_facts)})
+    prompts['story_user'] = get_text(language_code, 'generate_news_primary_user_content_story', replacements={"headline": headline, "selected_narrative": selected_narrative, "selected_facts": ', '.join(selected_facts)})
 
     # Generate story
     story = get_chatgpt_response(prompts['story_system'], prompts['story_user'])

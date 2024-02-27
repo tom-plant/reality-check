@@ -34,7 +34,7 @@ class TestSelectNarrativeController(unittest.TestCase):
         mock_get_user_language.return_value = 'ENG'
 
         # Mock the get_text function to return specific prompts
-        mock_get_text.side_effect = lambda language_code, key, selected_facts: f"Mocked {key} in {language_code} with facts {selected_facts}"
+        mock_get_text.side_effect = lambda language_code, key, replacements=None: f"Mocked {key} in {language_code} with replacements {replacements}"
 
         # Mock the news content generation to return a predefined news data
         mock_news_data = {'headline': 'Mocked Headline', 'story': 'Mocked Story', 'photo_url': 'mocked_url.jpg'}
