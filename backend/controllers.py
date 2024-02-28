@@ -186,20 +186,24 @@ def generate_news_content(selected_narrative, prompts, selected_facts):
             else:
                 error_message = f"Failed to generate image. API Error: {response.status_code} - {response.text}"
                 print(error_message)
-                raise Exception(error_message)  # Halting the process by raising an exception
+                raise Exception(error_message)  
+
+                # Check for content policy violation specifically
+                if response.status_code == 400 and "content_policy_violation" in response.text:
+                    raise Exception("Content policy violation detected. Adjusting the prompt may be necessary.")  
         except Exception as e:
             print(f"Network or request error occurred: {str(e)}")
-            raise Exception(f"Network or request error occurred: {str(e)}")  # Re-raise to halt the process
+            raise Exception(f"Network or request error occurred: {str(e)}")  
 
     # Generate headline
     headline = get_chatgpt_response(prompts['headline_system'], prompts['headline_user'])
     if headline is None:
-        raise Exception("Failed to generate headline, halting process.")  # Halting the process
+        raise Exception("Failed to generate headline, halting process.")  
 
     # Update image prompt 
-    language_code = get_user_language_by_id(session['user_data']['user_id'])
-    image_prompt = get_text(language_code, 'generate_news_primary_prompt_image', replacements={"headline": headline, "selected_narrative": selected_narrative})
-    prompts['image'] = image_prompt  # Add or update the image prompt in the dictionary
+    language_code = get_user_language_by_id(session['user_data']['user_id']) 
+    image_prompt = get_text(language_code, 'generate_news_primary_prompt_image', replacements={"headline": headline, "selected_narrative": selected_narrative}) 
+    prompts['image'] = image_prompt  # Update the image prompt in the dictionary
 
     #Update story prompts
     prompts['story_system'] = get_text(language_code, 'generate_news_primary_system_content_story', replacements={"headline": headline, "selected_narrative": selected_narrative, "selected_facts": ', '.join(selected_facts)})
@@ -208,7 +212,7 @@ def generate_news_content(selected_narrative, prompts, selected_facts):
     # Generate story
     story = get_chatgpt_response(prompts['story_system'], prompts['story_user'])
     if story is None:
-        raise Exception("Failed to generate story, halting process.")  # Halting the process
+        raise Exception("Failed to generate story, halting process.")  
 
     # Generate image (based on the headline)
     image_url = generate_image(prompts['image'])
