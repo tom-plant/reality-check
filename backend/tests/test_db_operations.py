@@ -158,6 +158,21 @@ class TestCRUDOperations(unittest.TestCase):
             self.session.commit()  # Ensure commit here to reflect deletion
             deleted_event = db_ops.get_event_by_id(event.id, _session=self.session)
             self.assertIsNone(deleted_event, "Failed to delete the Event.")
+        
+    def test_get_random_event(self):
+        with self.app.app_context():
+            # Create multiple events to ensure randomness can be tested
+            event1 = db_ops.create_event('Event 1', 'ENG', _session=self.session)
+            event2 = db_ops.create_event('Event 2', 'ENG', _session=self.session)
+            event3 = db_ops.create_event('Event 3', 'ENG', _session=self.session)
+            self.session.commit()  # Commit to persist data for read operation tests
+
+            # Test get_random_event
+            random_event = db_ops.get_random_event(_session=self.session)
+            
+            # Verify that a random event is returned and it is one of the created events
+            self.assertIsNotNone(random_event, "Failed to retrieve a random Event.")
+            self.assertIn(random_event, [event1, event2, event3], "The random Event is not one of the created Events.")
 
     # Fact Combination Operation Tests
     def test_fact_combination_operations(self):
@@ -336,6 +351,56 @@ class TestCRUDOperations(unittest.TestCase):
             self.session.commit()  # Ensure commit here to reflect deletion
             deleted_narrative_event = db_ops.get_narrative_event_by_id(narrative_event.id, _session=self.session)
             self.assertIsNone(deleted_narrative_event, "Failed to delete the Narrative Event.")
+
+
+def test_check_narrative_event_existence(self):
+    with self.app.app_context():
+        # Create necessary FactCombination first
+        fact_combination = db_ops.create_fact_combination('Some combination', _session=self.session)
+        self.session.commit()  # Commit to ensure FactCombination is persisted
+
+        # Create a User for the PrimaryNarrative
+        user = db_ops.create_user('testuser', 'test@example.com', _session=self.session)
+        self.session.commit()  # Commit to ensure User is persisted
+
+        # Now, create a PrimaryNarrative using the newly created FactCombination and User
+        primary_narrative = db_ops.create_primary_narrative(
+            fact_combination_id=fact_combination.id,  # Use the actual id of the created FactCombination
+            narrative_text='Sample Narrative Text',
+            user_id=user.id,  # Use the actual id of the created User
+            headline='Sample Narrative Headline',
+            story='Sample Narrative Story',
+            photo_url='http://example.com/narrative.jpg',
+            _session=self.session
+        )
+
+        # Create an Event
+        event = db_ops.create_event('Sample Event Title', 'ENG', _session=self.session)
+        self.session.commit()  # Commit to persist data for narrative event existence check
+
+        # Create a NarrativeEvent linking the PrimaryNarrative and Event
+        narrative_event = db_ops.create_narrative_event(
+            narrative_id=primary_narrative.id,
+            event_id=event.id,
+            resulting_headline='Sample Headline for Narrative Event',
+            resulting_story='Sample Story for Narrative Event',
+            resulting_photo_url='http://example.com/event.jpg',
+            _session=self.session
+        )
+        self.session.commit()  # Commit to persist the NarrativeEvent
+
+        # Now use the check_narrative_event_existence function to verify the existence of the NarrativeEvent
+        existing_narrative_event = db_ops.check_narrative_event_existence(
+            selected_narrative_id=primary_narrative.id,
+            event_id=event.id,
+            _session=self.session
+        )
+
+        # Assert that the function found the existing NarrativeEvent
+        self.assertIsNotNone(existing_narrative_event, "Failed to find the existing NarrativeEvent.")
+        self.assertEqual(existing_narrative_event.id, narrative_event.id, "The found NarrativeEvent does not match the created one.")
+
+
 
 # Secondary Narrative Operations
     def test_secondary_narrative_operations(self):

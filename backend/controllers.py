@@ -240,13 +240,52 @@ def generate_news_content(selected_narrative, prompts, selected_facts):
 
 
 def introduce_event_controller():
-    # Logic to select and send randomly selected follow-up event to the frontend
-    # Check if combination of previous narrative and event exists in the database
-    # If exists, retrieve news headlines and photo from the database
-    # If not, call ChatGPT API to generate news headlines and DALL-E 2 API to generate photo
+    # Ensure 'user_data' is initialized in session
+    if 'user_data' not in session:
+        return {"error": "User not logged in"}, 401   
+
+    # Follow-up event chosen randomly from SQL event
+    event = get_random_event():
     
-    # Placeholder for now
-    return jsonify({"message": "Introduce event controller placeholder"}) #TAKE OUT JSONIFY
+    narrative_id =  session['user_data']['primary_narrative_id']
+    selected_narrative = get_primary_narrative_by_id(narrative_id)
+ 
+   # Use the handle_fact_combination function and store the fact_combination_id in session
+    narrative_events_id = handle_event_selection(selected_narrative, event)
+    session['user_data']['narrative_events_id'] = narrative_events_id
+
+    # If exists, retrieve news headlines and photo from the database
+    # If not, call ChatGPT API to generate new narrative to show how this fits within the narrative
+    # also call generate_news_content
+    # Set primary narrative prompts to language code
+    language_code = get_user_language_by_id(session['user_data']['user_id'])
+    selected_facts = get_fact_combination_by_id(session['user_data']['fact_combination_id'])
+
+    prompts = {
+        "headline_system": get_text(language_code, 'generate_news_events_system_content_headline', replacements={"selected_narrative": selected_narrative, "event": event}),
+        "headline_user": get_text(language_code, 'generate_news_events_user_content_headline', replacements={"selected_narrative": selected_narrative, "event": event}),
+        # Note: The image prompt and story prompts are generated after the headline is created
+        # Note: THE NEWS GENERATION PROMPT NEEDS TO FOCUS ON OUTCOMES AND ACTUAL CONSEQUENCES OF NARRATIVE TAKING OVER AND INFLUENCING ACTION
+    }
+
+    # Call the function to generate news content
+    news_data = generate_news_content(selected_narrative, prompts, event)
+
+    # Return the generated or retrieved news headlines and photo to the frontend.
+    return {"event_data": event_data}
+
+def handle_event_selection(selected_narrative, event):
+
+    # Find if the narrative-event combination exists    
+    # If old, pull the resulting news headlines and photo from the narrative_events table. 
+    narrative_events_id = find_narrative_events_id_by_something(selected_narrative, event) #FIX THIS LINE
+    
+    # If not found, create a new combination and get its ID
+    if narrative_events_id is None:
+        narrative_event_combination = create_fact_combination(','.join(map(str, sorted(selected_facts))))
+        narrative_events_id = narrative_events_id.id
+    
+    return narrative_events_id
 
 
 

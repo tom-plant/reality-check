@@ -1,7 +1,7 @@
 # db_operations.py
 
 from app import db
-from sqlalchemy import select
+from sqlalchemy import select, func
 from models import User, Fact, Event, FactCombination, PrimaryNarrative, NarrativeEvent, SecondaryNarrative
 
 
@@ -170,6 +170,10 @@ def get_all_events(_session=None):
 def get_events_by_language(language, _session=None):
     session = _session or db.session
     return session.execute(select(Event).filter_by(language=language)).scalars().all()
+
+def get_random_event(_session=None):
+    session = _session or db.session
+    return session.query(Event).order_by(func.random()).first()
 
 
 # Update an Event
@@ -446,6 +450,16 @@ def delete_narrative_event(narrative_event_id, _session=None):
                 return False
         else:
             return True  # Assume deletion is successful if using an external session
+
+#Check a Narrative-Event Pair Existence
+def check_narrative_event_existence(selected_narrative_id, event_id, _session=None):
+    session = _session or db.session
+    # Query the narrative_events table for an entry matching the provided narrative ID and event ID
+    narrative_event = session.query(NarrativeEvent).filter_by(narrative_id=selected_narrative_id, event_id=event_id).first()
+    
+    # If an entry exists, return it; otherwise return None
+    return narrative_event
+
 
 
 # Secondary Narrative Operations
