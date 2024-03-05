@@ -116,28 +116,48 @@ def generate_additional_narratives(selected_facts, num_additional_narratives):
 def select_narrative_controller(selected_narrative):
     # Ensure 'user_data' is initialized in session
     if 'user_data' not in session:
-        return {"error": "User not logged in"}, 401     
- 
-    # Set primary narrative prompts to language code
+        return {"error": "User not logged in"}, 401
+
+    # Set language code and selected facts
     language_code = get_user_language_by_id(session['user_data']['user_id'])
     selected_facts = get_fact_combination_by_id(session['user_data']['fact_combination_id'])
 
-    prompts = {
-        "headline_system": get_text(language_code, 'generate_news_primary_system_content_headline', replacements={"selected_facts": ', '.join(selected_facts), "selected_narrative": selected_narrative}),
-        "headline_user": get_text(language_code, 'generate_news_primary_user_content_headline', replacements={"selected_facts": ', '.join(selected_facts), "selected_narrative": selected_narrative}),
-        "image": get_text(language_code, 'generate_news_primary_prompt_image', replacements={"headline": headline, "selected_narrative": selected_narrative}),
-        "story_system": get_text(language_code, 'generate_news_primary_system_content_story', replacements={"headline": headline, "selected_narrative": selected_narrative, "selected_facts": ', '.join(selected_facts)}),
-        "story_user": get_text(language_code, 'generate_news_primary_user_content_story', replacements={"headline": headline, "selected_narrative": selected_narrative, "selected_facts": ', '.join(selected_facts)})
-    }
-
     # Call the function to generate news content
-    news_data = generate_news_content(selected_narrative, prompts, selected_facts)
+    news_data = generate_news_content(language_code, "primary_narrative", selected_narrative, selected_facts)
 
     # Return the news data as a JSON response
     return {"news_data": news_data}
 
 
-def generate_news_content(selected_narrative, prompts, selected_facts):
+
+def generate_prompts(language_code, category, context, selected_narrative, selected_facts, headline=None):
+    replacements = {
+        "selected_narrative": selected_narrative,
+        "selected_facts": ", ".join(selected_facts)
+    }
+
+    # Always generate headline prompts
+    prompts = {
+        "headline_system": get_text(language_code, category, context, "headline_system", replacements),
+        "headline_user": get_text(language_code, category, context, "headline_user", replacements)
+    }
+
+    # Generate story and image prompts only if headline is provided
+    if headline:
+        # Update replacements with the generated headline
+        replacements["headline"] = headline
+
+        # Generate story prompts
+        prompts["story_system"] = get_text(language_code, category, context, "story_system", replacements)
+        prompts["story_user"] = get_text(language_code, category, context, "story_user", replacements)
+
+        # Generate image prompt
+        prompts["image_prompt"] = get_text(language_code, category, context, "image_prompt", replacements)
+
+    return prompts
+
+
+def generate_news_content(language_code, context, selected_narrative, selected_facts):
 
     # Function to send requests to the ChatGPT API
     def get_chatgpt_response(system_content, user_content):
@@ -172,7 +192,7 @@ def generate_news_content(selected_narrative, prompts, selected_facts):
             raise Exception(f"Network or request error occurred: {str(e)}")  # Re-raise to halt the process
 
     # Function to send requests to the DALL-E-2 API 
-    def generate_image(prompt):
+    def get_dalle2_response(prompt):
 
         # DALL-E-2 API settings
         dalleUrl = 'https://api.openai.com/v1/images/generations'
@@ -192,27 +212,44 @@ def generate_news_content(selected_narrative, prompts, selected_facts):
             if response.status_code == 200:
                 image_data = response.json()['data'][0]
                 return image_data.get('url')  # Assuming the API returns the URL directly
+            elif response.status_code == 400:
+                error_info = response.json().get('error', {})
+                if error_info.get('code') == 'content_policy_violation':
+                    # Handle content policy violation specifically
+                    print("Content policy violation error: ", error_info.get('message'))
+                    # You might want to log this error, return a default 'safe' image, or handle it in some other way
+                    return "default_safe_image_url"  # Placeholder for your default safe image URL
+                else:
+                    # Handle other 400 errors
+                    error_message = f"Failed to generate image. API Error: {response.status_code} - {response.text}"
+                    raise Exception(error_message)
             else:
+                # Handle other non-200 responses
                 error_message = f"Failed to generate image. API Error: {response.status_code} - {response.text}"
-                print(error_message)
-                raise Exception(error_message)  # Halting the process by raising an exception
+                raise Exception(error_message)
         except Exception as e:
             print(f"Network or request error occurred: {str(e)}")
- 
             raise Exception(f"Network or request error occurred: {str(e)}")  # Re-raise to halt the process
 
-    # Generate headline
-    headline = get_chatgpt_response(prompts['headline_system'], prompts['headline_user'])
-    if headline is None:
-        raise Exception("Failed to generate headline, halting process.")  # Halting the process
 
-    # Generate story
-    story = get_chatgpt_response(prompts['story_system'], prompts['story_user'])
-    if story is None:
-        raise Exception("Failed to generate story, halting process.")  # Halting the process
+    # Execute Generations
 
-    # Generate image (based on the headline)
-    image_url = generate_image(prompts['image'])
+    # Gnerate only headline prompts and headline
+    headline_prompts = generate_prompts(language_code, "chatgpt_prompts", context, selected_narrative, selected_facts)
+    headline = get_chatgpt_response(headline_prompts['headline_system'], headline_prompts['headline_user'])
+    if not headline:
+        raise Exception("Failed to generate headline, halting process.")
+
+    # Generate story and image prompts using the actual headline
+    full_prompts = generate_prompts(language_code, "chatgpt_prompts", context, selected_narrative, selected_facts, headline=headline)
+
+    # Generate story using story prompts
+    story = get_chatgpt_response(full_prompts['story_system'], full_prompts['story_user'])
+    if not story:
+        raise Exception("Failed to generate story, halting process.")
+
+    # Generate image URL using the image prompt
+    image_url = get_dalle2_response(full_prompts['image_prompt'])
 
     # Combine the generated content
     news_content = {
@@ -224,16 +261,7 @@ def generate_news_content(selected_narrative, prompts, selected_facts):
     return news_content
 
 
-# def get_story_prompts(headline, selected_narrative, selected_facts, language_code):
-#     # Logic to generate story system and user prompts based on the arguments
-#     story_system = get_text(language_code, 'generate_news_primary_system_content_story', replacements={"headline": headline, "selected_narrative": selected_narrative, "selected_facts": ', '.join(selected_facts)})
-#     story_user = get_text(language_code, 'generate_news_primary_user_content_story', replacements={"headline": headline, "selected_narrative": selected_narrative, "selected_facts": ', '.join(selected_facts)})
-#     return story_system, story_user
 
-# def get_image_prompt(headline, selected_narrative, language_code):
-#     # Logic to generate image prompt based on the arguments
-#     image_prompt = get_text(language_code, 'generate_news_primary_prompt_image', replacements={"headline": headline, "selected_narrative": selected_narrative})
-#     return image_prompt
 
 
 
