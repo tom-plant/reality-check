@@ -106,13 +106,6 @@ def generate_additional_narratives(selected_facts, num_additional_narratives):
     print(narratives)
     return narratives
 
-
-
-
-
-
-
-
 def select_narrative_controller(selected_narrative):
     # Ensure 'user_data' is initialized in session
     if 'user_data' not in session:
@@ -127,8 +120,6 @@ def select_narrative_controller(selected_narrative):
 
     # Return the news data as a JSON response
     return {"news_data": news_data}
-
-
 
 def generate_prompts(language_code, category, context, selected_narrative, selected_facts, headline=None):
     replacements = {
@@ -155,7 +146,6 @@ def generate_prompts(language_code, category, context, selected_narrative, selec
         prompts["image_prompt"] = get_text(language_code, category, context, "image_prompt", replacements)
 
     return prompts
-
 
 def generate_news_content(language_code, context, selected_narrative, selected_facts):
 
@@ -218,7 +208,7 @@ def generate_news_content(language_code, context, selected_narrative, selected_f
                     # Handle content policy violation specifically
                     print("Content policy violation error: ", error_info.get('message'))
                     # You might want to log this error, return a default 'safe' image, or handle it in some other way
-                    return "default_safe_image_url"  # Placeholder for your default safe image URL
+                    return "No URL due to safety violation"  # Placeholder for your default safe image URL
                 else:
                     # Handle other 400 errors
                     error_message = f"Failed to generate image. API Error: {response.status_code} - {response.text}"
@@ -237,9 +227,7 @@ def generate_news_content(language_code, context, selected_narrative, selected_f
             print(f"Network or request error occurred: {str(e)}")
             raise Exception(f"Network or request error occurred: {str(e)}")  
 
-
     # Execute Generations
-
     # Gnerate only headline prompts and headline
     headline_prompts = generate_prompts(language_code, "chatgpt_prompts", context, selected_narrative, selected_facts)
     headline = get_chatgpt_response(headline_prompts['headline_system'], headline_prompts['headline_user'])
@@ -267,14 +255,6 @@ def generate_news_content(language_code, context, selected_narrative, selected_f
     return news_content
 
 
-
-
-
-
-
-
-
-
 def introduce_event_controller():
     # Check if user is logged in
     if 'user_data' not in session:
@@ -288,6 +268,7 @@ def introduce_event_controller():
     # Extract necessary values from session
     language_code = get_user_language_by_id(session['user_data']['user_id'])
     selected_facts = get_fact_combination_by_id(session['user_data']['fact_combination_id'])
+    context = "event_narrative"
 
     # Get selected_narrative from user data id and database search
     narrative_id = session['user_data'].get('primary_narrative_id')
@@ -300,7 +281,7 @@ def introduce_event_controller():
 
     # If the NarrativeEvent is new, generate content; otherwise, fetch existing content
     if is_new_event:
-        news_content = generate_and_store_news_content(narrative_event, selected_narrative, event, language_code, selected_facts)
+        news_content = generate_and_store_news_content(selected_narrative, context, language_code, selected_facts, narrative_event, _session=None)
         if news_content is None:
             return {"error": "Failed to generate news content"}, 500
         return {"event_news_content": news_content}, 200
@@ -308,9 +289,11 @@ def introduce_event_controller():
         news_content = get_news_content_by_narrative_events_id(narrative_event.id)
         return {"event_news_content": news_content}, 200
 
+    session.commit()  # Now commit the new NarrativeEvent with its content
+
 def handle_event_selection(selected_narrative, event, _session=None):
     session = _session or db.session
-    narrative_event = check_narrative_events_existence(selected_narrative.id, event.id, _session=session)
+    narrative_event = check_narrative_events_existence(selected_narrative.id, event.id, _session=None)
     
     if narrative_event is None:
         # Create a placeholder NarrativeEvent, but don't store news content yet
@@ -321,29 +304,34 @@ def handle_event_selection(selected_narrative, event, _session=None):
 
     return narrative_event, False  # Return the existing event and a flag indicating it's not new
 
-def generate_and_store_news_content(narrative_event, selected_narrative, event, language_code, selected_facts, _session=None):
+def generate_and_store_news_content (selected_narrative, context, language_code, selected_facts, narrative_event, _session=None):
+    print("Entering generate_and_store_news_content with args:", language_code, context, selected_narrative, selected_facts, narrative_event)
     session = _session or db.session
 
-    # Prepare prompts for content generation
-    prompts = {
-        "headline_system": get_text(language_code, 'generate_news_events_system_content_headline', replacements={"selected_narrative": selected_narrative.narrative_text, "event": event.text}),
-        "headline_user": get_text(language_code, 'generate_news_events_user_content_headline', replacements={"selected_narrative": selected_narrative.narrative_text, "event": event.text}),
-    }
-
     try:
-        # Attempt to generate news content based on the prompts
-        event_news_content = generate_news_content(selected_narrative.narrative_text, prompts, event)
+        print("Calling generate_news_content with:", language_code, context, selected_narrative, selected_facts)
+        # Attempt to generate news content based on the narrative and event
+        event_news_content = generate_news_content(language_code, context, selected_narrative, selected_facts)
+        print("generate_news_content returned:", event_news_content)
     except Exception as e:
         # Handle content generation failure
         print(f"Error generating content: {e}")
         return None
+
+    if event_news_content:
+        print("Headline:", event_news_content.get('headline'))
+        print("Story:", event_news_content.get('story'))
+        print("Image URL:", event_news_content.get('image_url'))
+    else:
+        print("event_news_content is None")
+
 
     # Update the narrative_event with the generated content
     narrative_event.resulting_headline = event_news_content['headline']
     narrative_event.resulting_story = event_news_content['story']
     narrative_event.resulting_photo_url = event_news_content.get('photo_url')
 
-    session.commit()  # Now commit the new NarrativeEvent with its content
+    print("Returning from generate_and_store_news_content:", event_news_content)
 
     return event_news_content
 

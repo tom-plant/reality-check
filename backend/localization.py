@@ -13,7 +13,7 @@ ENG = {
             "story_user": "{headline} is the headline to your story. {selected_narrative} is the narrative you're pushing, and {selected_facts} are your main evidence, but make sure it weaves that information together in a story with a relevant news hook to set the scene. Keep it around 5-6 sentences.",
             "image_prompt": "Please generate a realistic, photojournalism image to accompany a news article. {headline} is the headline and '{selected_narrative}' is the story your photograph should capture.",
         },
-        "event_narrative": {
+        "events_narrative": {
             "headline_system": "You write definitive and engaging headlines for newspapers.",
             "headline_user": "Please write a headline for a breaking news event, '{selected_facts}', based on your previous position and opinion that is captured in this narrative, '{selected_narrative}'. You are looking to push forward this narrative in the context of the breaking news.",
             "story_system": "You are a newspaper writer who writes stories in subtly biased ways, meaning that you may overlook the broader context to push a narrative.",
@@ -38,7 +38,7 @@ EST = {
             "story_user": "{headline} is the headline to your story. {selected_narrative} is the narrative you're pushing, and {selected_facts} are your main evidence, but make sure it weaves that information together in a story with a relevant news hook to set the scene. Keep it around 5-6 sentences and write in Estonian.",
             "image_prompt": "Please generate a realistic, photojournalism image to accompany a news article. {headline} is the headline and '{selected_narrative}' is the story your photograph should capture.",
         },
-        "event_narrative": {
+        "events_narrative": {
             "headline_system": "You write definitive and engaging headlines for newspapers in Estonian.",
             "headline_user": "Please write a headline in Estonian for a breaking news event, '{selected_facts}', based on your previous position and opinion that is captured in this narrative, '{selected_narrative}'. You are looking to push forward this narrative in the context of the breaking news.",
             "story_system": "You are an Estonian newspaper writer who writes stories in subtly biased ways using the Estonian language, meaning that you may overlook the broader context to push a narrative.",
@@ -63,7 +63,7 @@ RUS = {
             "story_user": "{headline} is the headline to your story. {selected_narrative} is the narrative you're pushing, and {selected_facts} are your main evidence, but make sure it weaves that information together in a story with a relevant news hook to set the scene. Keep it around 5-6 sentences and write in Russian.",
             "image_prompt": "Please generate a realistic, photojournalism image to accompany a news article. {headline} is the headline and '{selected_narrative}' is the story your photograph should capture.",
         },
-        "event_narrative": {
+        "events_narrative": {
             "headline_system": "You write definitive and engaging headlines for newspapers in Russian.",
             "headline_user": "Please write a headline in Russian for a breaking news event, '{selected_facts}', based on your previous position and opinion that is captured in this narrative, '{selected_narrative}'. You are looking to push forward this narrative in the context of the breaking news.",
             "story_system": "You are a Russian newspaper writer who writes stories in subtly biased ways using the Russian language, meaning that you may overlook the broader context to push a narrative.",
