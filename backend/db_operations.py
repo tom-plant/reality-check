@@ -405,9 +405,9 @@ def create_narrative_event(narrative_id, event_id, resulting_headline, resulting
 
 
 # Read Narrative-Event Pair
-def get_narrative_event_by_id(narrative_event_id, _session=None):
+def get_narrative_events_by_id(narrative_events_id, _session=None):
     session = _session or db.session
-    return session.get(NarrativeEvent, narrative_event_id)
+    return session.get(NarrativeEvent, narrative_events_id)
 
 def get_all_narrative_events(_session=None):
     session = _session or db.session
@@ -417,11 +417,27 @@ def get_narrative_events_by_narrative(narrative_id, _session=None):
     session = _session or db.session
     return session.execute(select(NarrativeEvent).filter_by(narrative_id=narrative_id)).scalars().all()
 
+def get_news_content_by_narrative_events_id(narrative_events_id, _session=None):
+    session = _session or db.session
+    result = session.query(NarrativeEvent)\
+        .filter(NarrativeEvent.id == narrative_events_id)\
+        .with_entities(NarrativeEvent.resulting_headline, NarrativeEvent.resulting_story, NarrativeEvent.resulting_photo_url)\
+        .first()
+
+    if result:
+        return {
+            'headline': result.resulting_headline,
+            'story': result.resulting_story,
+            'photo_url': result.resulting_photo_url
+        }
+    else:
+        return None
+
 
 # Update a Narrative-Event Pair
-def update_narrative_event(narrative_event_id, _session=None, **kwargs):
+def update_narrative_event(narrative_events_id, _session=None, **kwargs):
     session = _session or db.session
-    narrative_event = session.get(NarrativeEvent, narrative_event_id)
+    narrative_event = session.get(NarrativeEvent, narrative_events_id)
     if narrative_event:
         for key, value in kwargs.items():
             setattr(narrative_event, key, value)
@@ -436,9 +452,9 @@ def update_narrative_event(narrative_event_id, _session=None, **kwargs):
             return narrative_event  # Return the narrative-event pair object without committing if using an external session
 
 # Delete a Narrative-Event Pair
-def delete_narrative_event(narrative_event_id, _session=None):
+def delete_narrative_event(narrative_events_id, _session=None):
     session = _session or db.session
-    narrative_event = session.get(NarrativeEvent, narrative_event_id)
+    narrative_event = session.get(NarrativeEvent, narrative_events_id)
     if narrative_event:
         session.delete(narrative_event)
         if not _session:  # Commit only if not using an external session
@@ -452,14 +468,13 @@ def delete_narrative_event(narrative_event_id, _session=None):
             return True  # Assume deletion is successful if using an external session
 
 #Check a Narrative-Event Pair Existence
-def check_narrative_event_existence(selected_narrative_id, event_id, _session=None):
+def check_narrative_events_existence(selected_narrative_id, event_id, _session=None):
     session = _session or db.session
     # Query the narrative_events table for an entry matching the provided narrative ID and event ID
     narrative_event = session.query(NarrativeEvent).filter_by(narrative_id=selected_narrative_id, event_id=event_id).first()
     
-    # If an entry exists, return it; otherwise return None
-    return narrative_event
-
+    # If an entry exists, return its ID; otherwise return None
+    return narrative_event.id if narrative_event else None
 
 
 # Secondary Narrative Operations

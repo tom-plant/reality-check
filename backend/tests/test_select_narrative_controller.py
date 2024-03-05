@@ -5,6 +5,7 @@ from app import db
 from controllers import select_narrative_controller  # Ensure this is the correct import path
 from config import TestingConfig, FLASK_KEY
 
+
 app = Flask(__name__)
 app.config.from_object(TestingConfig)
 db.init_app(app)
