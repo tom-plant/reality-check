@@ -106,7 +106,7 @@ class TestGenerateAdditionalNarratives(unittest.TestCase):
     # Russian
     @patch('controllers.get_user_language_by_id')
     def test_generate_narratives_russian(self, mock_language):
-        mock_language.return_value = 'EST'
+        mock_language.return_value = 'RUS'
         selected_facts = ['power grid attacked', 'super computer compromised in China', 'Russian prisoner killed']
         num_additional_narratives = 1
 

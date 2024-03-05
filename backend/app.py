@@ -65,12 +65,12 @@ def select_narrative():
 # Introducing Follow-up Events
 @app.route('/game/introduce_event', methods=['GET'])
 def introduce_event():
-    # Call controller function to handle logic
-    # Placeholder for controller function
-    response_data = introduce_event_controller()
+    print("Route /game/introduce_event is being called")  # This should print if the route is hit
+    # Call the introduce_event_controller function to handle the logic
+    response_data, status_code = introduce_event_controller()
     
-    # Return response to frontend
-    return jsonify(response_data)
+    # Return response to frontend with the appropriate status code
+    return jsonify(response_data), status_code
 
 # Identifying Weaknesses in Narratives
 @app.route('/game/identify_weaknesses', methods=['POST'])
