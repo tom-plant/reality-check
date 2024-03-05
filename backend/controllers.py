@@ -118,7 +118,9 @@ def select_narrative_controller(selected_narrative):
     prompts = {
         "headline_system": get_text(language_code, 'generate_news_primary_system_content_headline', replacements={"selected_facts": ', '.join(selected_facts), "selected_narrative": selected_narrative}),
         "headline_user": get_text(language_code, 'generate_news_primary_user_content_headline', replacements={"selected_facts": ', '.join(selected_facts), "selected_narrative": selected_narrative}),
-        # Note: The image prompt and story prompts are generated after the headline is created
+        "image": get_text(language_code, 'generate_news_primary_prompt_image', replacements={"headline": headline, "selected_narrative": selected_narrative}),
+        "story_system": get_text(language_code, 'generate_news_primary_system_content_story', replacements={"headline": headline, "selected_narrative": selected_narrative, "selected_facts": ', '.join(selected_facts)}),
+        "story_user": get_text(language_code, 'generate_news_primary_user_content_story', replacements={"headline": headline, "selected_narrative": selected_narrative, "selected_facts": ', '.join(selected_facts)})
     }
 
     # Call the function to generate news content
@@ -189,21 +191,13 @@ def generate_news_content(selected_narrative, prompts, selected_facts):
                 raise Exception(error_message)  # Halting the process by raising an exception
         except Exception as e:
             print(f"Network or request error occurred: {str(e)}")
+ 
             raise Exception(f"Network or request error occurred: {str(e)}")  # Re-raise to halt the process
 
     # Generate headline
     headline = get_chatgpt_response(prompts['headline_system'], prompts['headline_user'])
     if headline is None:
         raise Exception("Failed to generate headline, halting process.")  # Halting the process
-
-    # Update image prompt 
-    language_code = get_user_language_by_id(session['user_data']['user_id'])
-    image_prompt = get_text(language_code, 'generate_news_primary_prompt_image', replacements={"headline": headline, "selected_narrative": selected_narrative})
-    prompts['image'] = image_prompt  # Add or update the image prompt in the dictionary
-
-    #Update story prompts
-    prompts['story_system'] = get_text(language_code, 'generate_news_primary_system_content_story', replacements={"headline": headline, "selected_narrative": selected_narrative, "selected_facts": ', '.join(selected_facts)})
-    prompts['story_user'] = get_text(language_code, 'generate_news_primary_user_content_story', replacements={"headline": headline, "selected_narrative": selected_narrative, "selected_facts": ', '.join(selected_facts)})
 
     # Generate story
     story = get_chatgpt_response(prompts['story_system'], prompts['story_user'])
@@ -223,16 +217,16 @@ def generate_news_content(selected_narrative, prompts, selected_facts):
     return news_content
 
 
-def get_story_prompts(headline, selected_narrative, selected_facts, language_code):
-    # Logic to generate story system and user prompts based on the arguments
-    story_system = get_text(language_code, 'generate_news_primary_system_content_story', replacements={"headline": headline, "selected_narrative": selected_narrative, "selected_facts": ', '.join(selected_facts)})
-    story_user = get_text(language_code, 'generate_news_primary_user_content_story', replacements={"headline": headline, "selected_narrative": selected_narrative, "selected_facts": ', '.join(selected_facts)})
-    return story_system, story_user
+# def get_story_prompts(headline, selected_narrative, selected_facts, language_code):
+#     # Logic to generate story system and user prompts based on the arguments
+#     story_system = get_text(language_code, 'generate_news_primary_system_content_story', replacements={"headline": headline, "selected_narrative": selected_narrative, "selected_facts": ', '.join(selected_facts)})
+#     story_user = get_text(language_code, 'generate_news_primary_user_content_story', replacements={"headline": headline, "selected_narrative": selected_narrative, "selected_facts": ', '.join(selected_facts)})
+#     return story_system, story_user
 
-def get_image_prompt(headline, selected_narrative, language_code):
-    # Logic to generate image prompt based on the arguments
-    image_prompt = get_text(language_code, 'generate_news_primary_prompt_image', replacements={"headline": headline, "selected_narrative": selected_narrative})
-    return image_prompt
+# def get_image_prompt(headline, selected_narrative, language_code):
+#     # Logic to generate image prompt based on the arguments
+#     image_prompt = get_text(language_code, 'generate_news_primary_prompt_image', replacements={"headline": headline, "selected_narrative": selected_narrative})
+#     return image_prompt
 
 
 

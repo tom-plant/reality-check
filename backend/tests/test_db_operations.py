@@ -338,7 +338,7 @@ class TestCRUDOperations(unittest.TestCase):
             self.assertEqual(narrative_event.resulting_headline, 'Headline', "Narrative Event headline does not match.")
 
             # Read by ID
-            narrative_event_by_id = db_ops.get_narrative_event_by_id(narrative_event.id, _session=self.session)
+            narrative_event_by_id = db_ops.get_narrative_events_by_id(narrative_event.id, _session=self.session)
             self.assertEqual(narrative_event_by_id.id, narrative_event.id, "Failed to fetch Narrative Event by ID.")
 
             # Read all narrative events
@@ -351,17 +351,17 @@ class TestCRUDOperations(unittest.TestCase):
 
             # Update
             db_ops.update_narrative_event(narrative_event.id, resulting_headline='Updated Headline', _session=self.session)
-            updated_narrative_event = db_ops.get_narrative_event_by_id(narrative_event.id, _session=self.session)
+            updated_narrative_event = db_ops.get_narrative_events_by_id(narrative_event.id, _session=self.session)
             self.assertEqual(updated_narrative_event.resulting_headline, 'Updated Headline', "Failed to update the Narrative Event.")
 
             # Delete
             db_ops.delete_narrative_event(narrative_event.id, _session=self.session)
             self.session.commit()  # Ensure commit here to reflect deletion
-            deleted_narrative_event = db_ops.get_narrative_event_by_id(narrative_event.id, _session=self.session)
+            deleted_narrative_event = db_ops.get_narrative_events_by_id(narrative_event.id, _session=self.session)
             self.assertIsNone(deleted_narrative_event, "Failed to delete the Narrative Event.")
 
 
-    def test_check_narrative_event_existence(self):
+    def test_check_narrative_events_existence(self):
         with self.app.app_context():
             # Create necessary FactCombination first
             fact_combination = db_ops.create_fact_combination('Some combination', _session=self.session)
@@ -408,7 +408,7 @@ class TestCRUDOperations(unittest.TestCase):
             self.assertIsNotNone(existing_narrative_event_id, "Failed to find the existing NarrativeEvent ID.")
             self.assertEqual(existing_narrative_event_id, narrative_event.id, "The ID of the found NarrativeEvent does not match the created one.")
 
-    def test_get_news_content_by_narrative_event_id(self):
+    def test_get_news_content_by_narrative_events_id(self):
         with self.app.app_context():
             
             # Create necessary FactCombination first
@@ -450,7 +450,7 @@ class TestCRUDOperations(unittest.TestCase):
             self.session.commit()  # Commit to ensure the NarrativeEvent is persisted
 
             # Fetch the news content for the created NarrativeEvent
-            news_content = db_ops.get_news_content_by_narrative_event_id(narrative_event.id, _session=self.session)
+            news_content = db_ops.get_news_content_by_narrative_events_id(narrative_event.id, _session=self.session)
 
             # Assert that the fetched content matches the known content of the created NarrativeEvent
             self.assertIsNotNone(news_content, "Failed to fetch news content for the NarrativeEvent.")
