@@ -76,12 +76,13 @@ def generate_additional_narratives(selected_facts, num_additional_narratives):
     for i in range(num_additional_narratives):
         if i == 0 or num_additional_narratives == 1:
             # Use the initial prompt for the first narrative or if only one is needed
-            system_content = get_text(language_code, 'generate_additional_narratives_system_content', replacements={"selected_facts": ', '.join(selected_facts)})
-            user_content = get_text(language_code, 'generate_additional_narratives_user_content', replacements={"selected_facts": ', '.join(selected_facts)})
+            system_content = get_text(language_code, "chatgpt_prompts", "additional_narratives", 'generate_additional_narratives_system_content', replacements={"selected_facts": ', '.join(selected_facts)})
+            user_content = get_text(language_code, "chatgpt_prompts", "additional_narratives", 'generate_additional_narratives_user_content', replacements={"selected_facts": ', '.join(selected_facts)})
+
         else:
             # Use the different prompt for subsequent narratives, referring back to the previous one
             system_content = previous_narrative
-            user_content_followup = get_text(language_code, 'generate_additional_narratives_user_content_followup', replacements={"selected_facts": ', '.join(selected_facts)})
+            user_content_followup = get_text(language_code, "chatgpt_prompts", "additional_narratives", 'generate_additional_narratives_user_content_followup', replacements={"selected_facts": ', '.join(selected_facts)})
 
         payload = {
             "model": "gpt-3.5-turbo",
@@ -104,6 +105,12 @@ def generate_additional_narratives(selected_facts, num_additional_narratives):
             narratives.append(f"Error generating narrative {i+1}")
     print(narratives)
     return narratives
+
+
+
+
+
+
 
 
 def select_narrative_controller(selected_narrative):
