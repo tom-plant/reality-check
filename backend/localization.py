@@ -20,6 +20,16 @@ ENG = {
             "story_user": "{headline} is the headline to your story. {selected_narrative} is the narrative you're pushing, and {selected_facts} is the breaking news event you are exploiting to push your narrative. Make sure your story weaves that information together in a story with a relevant news hook to set the scene. Keep it around 5-6 sentences.",
             "image_prompt": "Please generate a realistic, photojournalism image to accompany a news article. {headline} is the headline and '{selected_narrative}' is the story your photograph should capture.",
         }, 
+        "secondary_narrative": {
+            "system_content": "",
+            "user_content": "",
+            "headline_system": "",
+            "headline_user": "",
+            "story_system": "",
+            "story_user": "",
+            "image_prompt": "",
+            "ending_prompt": ""
+        },
     },
 }
 
@@ -45,6 +55,16 @@ EST = {
             "story_user": "{headline} is the headline to your story. {selected_narrative} is the narrative you're pushing, and {selected_facts} is the breaking news event you are exploiting to push your narrative. Make sure your story weaves that information together in a story with a relevant news hook to set the scene. Keep it around 5-6 sentences in Estonian.",
             "image_prompt": "Please generate a realistic, photojournalism image to accompany a news article. {headline} is the headline and '{selected_narrative}' is the story your photograph should capture.",
         }, 
+        "secondary_narrative": {
+            "system_content": "",
+            "user_content": "",
+            "headline_system": "",
+            "headline_user": "",
+            "story_system": "",
+            "story_user": "",
+            "image_prompt": "",
+            "ending_prompt": ""
+        }, 
     },
 }
 
@@ -69,6 +89,16 @@ RUS = {
             "story_system": "You are a Russian newspaper writer who writes stories in subtly biased ways using the Russian language, meaning that you may overlook the broader context to push a narrative.",
             "story_user": "{headline} is the headline to your story. {selected_narrative} is the narrative you're pushing, and {selected_facts} is the breaking news event you are exploiting to push your narrative. Make sure your story weaves that information together in a story with a relevant news hook to set the scene. Keep it around 5-6 sentences in Russian.",
             "image_prompt": "Please generate a realistic, photojournalism image to accompany a news article. {headline} is the headline and '{selected_narrative}' is the story your photograph should capture.",
+        }, 
+        "secondary_narrative": {
+            "system_content": "",
+            "user_content": "",
+            "headline_system": "",
+            "headline_user": "",
+            "story_system": "",
+            "story_user": "",
+            "image_prompt": "",
+            "ending_prompt": ""
         }, 
     },
 }

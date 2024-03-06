@@ -234,22 +234,22 @@ class TestCRUDOperations(unittest.TestCase):
             self.assertIsNone(deleted_fact_combination, "Failed to delete the Fact Combination.")
 
     # Test for Finding Fact Combination by facts
-    def test_find_fact_combination_id_by_facts(self):
+    def test_get_fact_combination_id_by_facts(self):
         with self.app.app_context():
             # Create a Fact Combination with a specific set of facts
             fact_combination = db_ops.create_fact_combination('Fact 1,Fact 2,Fact 3', _session=self.session)
             self.session.commit()
 
             # Test with the same order of facts
-            fact_combination_id = db_ops.find_fact_combination_id_by_facts(['Fact 1', 'Fact 2', 'Fact 3'], _session=self.session)
+            fact_combination_id = db_ops.get_fact_combination_id_by_facts(['Fact 1', 'Fact 2', 'Fact 3'], _session=self.session)
             self.assertEqual(fact_combination_id, fact_combination.id, "Failed to find Fact Combination with the same order of facts.")
 
             # Test with a different order of facts
-            fact_combination_id_different_order = db_ops.find_fact_combination_id_by_facts(['Fact 3', 'Fact 1', 'Fact 2'], _session=self.session)
+            fact_combination_id_different_order = db_ops.get_fact_combination_id_by_facts(['Fact 3', 'Fact 1', 'Fact 2'], _session=self.session)
             self.assertEqual(fact_combination_id_different_order, fact_combination.id, "Failed to find Fact Combination with a different order of facts.")
 
             # Test with a non-existent combination of facts
-            fact_combination_id_non_existent = db_ops.find_fact_combination_id_by_facts(['Fact 4', 'Fact 5'], _session=self.session)
+            fact_combination_id_non_existent = db_ops.get_fact_combination_id_by_facts(['Fact 4', 'Fact 5'], _session=self.session)
             self.assertIsNone(fact_combination_id_non_existent, "Incorrectly found a non-existent Fact Combination.")
     
     # Test for Counting Fact Combination Table
@@ -361,7 +361,7 @@ class TestCRUDOperations(unittest.TestCase):
             self.assertIsNone(deleted_narrative_event, "Failed to delete the Narrative Event.")
 
 
-    def test_check_narrative_events_existence(self):
+    def test_get_narrative_events_id_by_narrative_and_event(self):
         with self.app.app_context():
             # Create necessary FactCombination first
             fact_combination = db_ops.create_fact_combination('Some combination', _session=self.session)

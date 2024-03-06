@@ -289,7 +289,7 @@ def get_narratives_by_fact_combination(fact_combination_id, _session=None):
     return narratives
 
 # Retrieve Fact ID by Fact Combination
-def find_fact_combination_id_by_facts(facts, _session=None):
+def get_fact_combination_id_by_facts(facts, _session=None):
     session = _session or db.session
     sorted_input_facts = sorted(facts)  # Sort the input facts to ensure order doesn't matter
 
@@ -383,7 +383,7 @@ def delete_primary_narrative(narrative_id, _session=None):
 # Narrative Event Operations
 
 # Create A New Narrative-Event Pair
-def create_narrative_event(narrative_id, event_id, resulting_headline, resulting_story, resulting_photo_url=None, _session=None):
+def create_narrative_event(narrative_id, event_id, resulting_headline=None, resulting_story=None, resulting_photo_url=None, _session=None):
     session = _session or db.session
     new_narrative_event = NarrativeEvent(
         narrative_id=narrative_id,
@@ -468,10 +468,10 @@ def delete_narrative_event(narrative_events_id, _session=None):
             return True  # Assume deletion is successful if using an external session
 
 #Check a Narrative-Event Pair Existence
-def check_narrative_events_existence(selected_narrative_id, event_id, _session=None):
+def get_narrative_events_id_by_narrative_and_event(primary_narrative_id, event_id, _session=None):
     session = _session or db.session
     # Query the narrative_events table for an entry matching the provided narrative ID and event ID
-    narrative_event = session.query(NarrativeEvent).filter_by(narrative_id=selected_narrative_id, event_id=event_id).first()
+    narrative_event = session.query(NarrativeEvent).filter_by(narrative_id=primary_narrative_id, event_id=event_id).first()
     
     # If an entry exists, return its ID; otherwise return None
     return narrative_event.id if narrative_event else None
