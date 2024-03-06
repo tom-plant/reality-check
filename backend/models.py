@@ -67,7 +67,7 @@ class SecondaryNarrative(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     original_narrative_id = db.Column(db.Integer, db.ForeignKey('primary_narratives.id'), nullable=False)
     updated_fact_combination = db.Column(db.String(500), nullable=False)  # This could be a JSON string or a delimited list of updated fact IDs
-    narrative_text = db.Column(db.Text, nullable=False)
+    narrative_text = db.Column(db.Text, nullable=False) #THIS NEEDS TO CHANGE TO UPDATED_NARRATIVE
     resulting_headline = db.Column(db.String(255), nullable=False)
     resulting_story = db.Column(db.Text, nullable=False)
     resulting_photo_url = db.Column(db.String(255), nullable=True)

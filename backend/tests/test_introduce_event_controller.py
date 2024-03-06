@@ -52,28 +52,28 @@ class TestIntroduceEventController(unittest.TestCase):
     @patch('controllers.get_random_event')
     @patch('controllers.get_primary_narrative_by_id')
     @patch('controllers.handle_event_selection')
-    @patch('controllers.generate_and_store_news_content')
-    def test_news_content_generation_success(self, mock_generate_and_store, mock_handle_event, mock_get_primary_narrative, mock_get_random_event):
+    @patch('controllers.generate_event_news_content')
+    def test_news_content_generation_success(self, mock_generate_event, mock_handle_event, mock_get_primary_narrative, mock_get_random_event):
         with app.test_request_context():
             session['user_data'] = {'user_id': 1, 'primary_narrative_id': 1, 'fact_combination_id': 1}
             mock_get_random_event.return_value = "Event"
             mock_get_primary_narrative.return_value = "Narrative"
             mock_handle_event.return_value = ("narrative_event", True)
-            mock_generate_and_store.return_value = {"headline": "Headline", "story": "Story"}
+            mock_generate_event.return_value = {"headline": "Headline", "story": "Story"}
             response = introduce_event_controller()
             self.assertEqual(response, ({"event_news_content": {"headline": "Headline", "story": "Story"}}, 200))
 
     @patch('controllers.get_random_event')
     @patch('controllers.get_primary_narrative_by_id')
     @patch('controllers.handle_event_selection')
-    @patch('controllers.generate_and_store_news_content')
-    def test_news_content_generation_failure(self, mock_generate_and_store, mock_handle_event, mock_get_primary_narrative, mock_get_random_event):
+    @patch('controllers.generate_event_news_content')
+    def test_news_content_generation_failure(self, mock_generate_event, mock_handle_event, mock_get_primary_narrative, mock_get_random_event):
         with app.test_request_context():
             session['user_data'] = {'user_id': 1, 'primary_narrative_id': 1, 'fact_combination_id': 1}
             mock_get_random_event.return_value = "Event"
             mock_get_primary_narrative.return_value = "Narrative"
             mock_handle_event.return_value = ("narrative_event", True)
-            mock_generate_and_store.return_value = None
+            mock_generate_event.return_value = None
             response = introduce_event_controller()
             self.assertEqual(response, ({"error": "Failed to generate news content"}, 500))
 

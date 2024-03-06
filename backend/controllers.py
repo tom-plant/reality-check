@@ -19,6 +19,8 @@ def initialize_data_controller():
         'narrative_events_id': None,
     }
 
+
+
 def select_facts_controller(selected_facts):
 
     # Ensure 'user_data' is initialized in session
@@ -45,7 +47,6 @@ def select_facts_controller(selected_facts):
         combined_narratives = narratives + additional_narratives
         return {"narratives": combined_narratives}
 
-
 def handle_fact_combination(selected_facts):
 
     # Find if the combination exists
@@ -57,7 +58,6 @@ def handle_fact_combination(selected_facts):
         fact_combination_id = fact_combination.id
     
     return fact_combination_id
-
 
 def generate_additional_narratives(selected_facts, num_additional_narratives):
 
@@ -105,6 +105,8 @@ def generate_additional_narratives(selected_facts, num_additional_narratives):
             narratives.append(f"Error generating narrative {i+1}")
     print(narratives)
     return narratives
+
+
 
 def select_narrative_controller(selected_narrative):
     # Ensure 'user_data' is initialized in session
@@ -255,6 +257,7 @@ def generate_news_content(language_code, context, selected_narrative, selected_f
     return news_content
 
 
+
 def introduce_event_controller():
     # Check if user is logged in
     if 'user_data' not in session:
@@ -281,7 +284,7 @@ def introduce_event_controller():
 
     # If the NarrativeEvent is new, generate content; otherwise, fetch existing content
     if is_new_event:
-        news_content = generate_and_store_news_content(selected_narrative, context, language_code, selected_facts, narrative_event, _session=None)
+        news_content = generate_event_news_content(selected_narrative, context, language_code, selected_facts, narrative_event, _session=None)
         if news_content is None:
             return {"error": "Failed to generate news content"}, 500
         return {"event_news_content": news_content}, 200
@@ -290,6 +293,7 @@ def introduce_event_controller():
         return {"event_news_content": news_content}, 200
 
     session.commit()  # Now commit the new NarrativeEvent with its content
+    # Make sure primary narrative and narrative events are linked. Think they are but check
 
 def handle_event_selection(selected_narrative, event, _session=None):
     session = _session or db.session
@@ -304,77 +308,94 @@ def handle_event_selection(selected_narrative, event, _session=None):
 
     return narrative_event, False  # Return the existing event and a flag indicating it's not new
 
-def generate_and_store_news_content (selected_narrative, context, language_code, selected_facts, narrative_event, _session=None):
-    print("Entering generate_and_store_news_content with args:", language_code, context, selected_narrative, selected_facts, narrative_event)
+def generate_event_news_content(selected_narrative, context, language_code, selected_facts, narrative_event, _session=None):
     session = _session or db.session
 
     try:
-        print("Calling generate_news_content with:", language_code, context, selected_narrative, selected_facts)
         # Attempt to generate news content based on the narrative and event
         event_news_content = generate_news_content(language_code, context, selected_narrative, selected_facts)
-        print("generate_news_content returned:", event_news_content)
     except Exception as e:
         # Handle content generation failure
         print(f"Error generating content: {e}")
         return None
-
-    if event_news_content:
-        print("Headline:", event_news_content.get('headline'))
-        print("Story:", event_news_content.get('story'))
-        print("Image URL:", event_news_content.get('image_url'))
-    else:
-        print("event_news_content is None")
-
 
     # Update the narrative_event with the generated content
     narrative_event.resulting_headline = event_news_content['headline']
     narrative_event.resulting_story = event_news_content['story']
     narrative_event.resulting_photo_url = event_news_content.get('photo_url')
 
-    print("Returning from generate_and_store_news_content:", event_news_content)
-
     return event_news_content
 
 
 
+def identify_weaknesses_controller(updated_fact_combination):     # Receive Updated Fact Combination
 
+    # Retrieve Primary Narratives 
+    primary_narrative = get_primary_narrative_by_id(session['user_data']['primary_narrative_id']) 
 
-
-
-
-
-
-  
-
-
-
-            
-
-
-
-
-
-
-def identify_weaknesses_controller(new_facts, narrative):
-    # Logic to send new combination of facts and narrative to ChatGPT API to update with a new narrative and story outcome
+    # Handle event selection but do not create a new NarrativeEvent yet
+    updated_narrative, is_new_narrative = handle_narrative_update(primary_narrative, updated_fact_combination)
     
-    # Placeholder for now
-    return jsonify({"message": "Identify weaknesses controller placeholder"}) #TAKE OUT JSONIFY
+    # Prep Information for News Generation
+    context = "secondary_narrative"
+    language_code = get_user_language_by_id(session['user_data']['user_id'])
+    updated_facts = get_updated_fact_combination_by_id(session['user_data']['updated_fact_combination_id']) #NEED TO CREATE THIS CRUD OEPRATION
+
+    # If the updated_narrative  is new, generate content; otherwise, fetch existing content. 
+    if is_new_narrative:
+        # Attempt to generate news content based on the narrative and event
+        news_content = generate_secondary_news_content(selected_narrative, context, language_code, selected_facts, narrative_event, _session=None)
+        if news_content is None:
+            return {"error": "Failed to generate news content"}, 500
+        return {"event_news_content": news_content}, 200
+    else:
+        news_content = get_news_content_by_secondary_narrative_id(secondary_narrative.id)
+        return {"secondary_news_content": news_content}, 200
+
+    session.commit()  # Now commit the new NarrativeEvent with its content
+
+    return secondary_news_content
+
+
+def handle_narrative_update(updated_narrative, updated_fact_combination, _session=None):
+    session = _session or db.session
+    updated_narrative = check_updated_narrative_existence(selected_narrative.id, event.id, _session=None) # CREATE NEW CRUD OPERATION
+    
+    if updated_narrative is None:
+        # Create a placeholder UpdatedNarrative, but don't store news content yet
+        updated_narrative = UpdatedNarrative(updated_narrative.id, event.id)
+        session.add(updated_narrative)
+        session.flush()  # Flush to assign an ID to the new narrative_event, but don't commit yet
+        return updated_narrative, True  # Return the new event and a flag indicating it's new
+
+    return updated_narrative, False  # Return the existing event and a flag indicating it's not new
+
+
+def generate_secondary_news_content(updated_narrative, context, language_code, updated_facts, secondary_narrative, _session=None):
+    session = _session or db.session
+
+    try:
+        # Attempt to generate news content based on the narrative and event
+        updated_news_content = generate_news_content(language_code, context, selected_narrative, selected_facts)
+    except Exception as e:
+        # Handle content generation failure
+        print(f"Error generating content: {e}")
+        return None
+
+    # Update the narrative_event with the generated content
+    updated_narrative.resulting_headline = event_news_content['headline']
+    updated_narrative.resulting_story = event_news_content['story']
+    updated_narrative.resulting_photo_url = event_news_content.get('photo_url')
+
+    return secondary_news_content
 
 
 
+ # PART 4    # A final function that creates some kind of final storyline that wraps up not only the narrative but also the crisis in general. 
+             # This is stored in the secondary narrative table
 
-# def commit_primary_narrative_controller():
 
-    # Store Primary Narrative ID in User Session
-    # session['primary_narrative_id'] = selected_narrative
+     # Placeholder for now
+    return {"message": "Identify weaknesses controller placeholder"}
 
-    # Commit Primary Narrative to Database
-    # fact_combination_id = user_data(fact_combination_id)
-    # narrative_text = get_primary_narrative_by_id(narrative_id):
-    # user_id = user_data(user_id)
-    # headline = newsjsonthing(headline)
-    # story = newsjsonthing(story)
-    # photo_url = newsjsonthing(photo_url)
-    # create_primary_narrative(fact_combination_id, narrative_text, user_id, headline, story, photo_url)
 

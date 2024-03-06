@@ -1,7 +1,7 @@
 import unittest
 from flask import Flask, session
 from app import db  # Ensure this import matches your project structure
-from controllers import generate_and_store_news_content, generate_news_content  # Update with the correct import path
+from controllers import generate_event_news_content, generate_news_content  # Update with the correct import path
 from config import TestingConfig
 from unittest.mock import patch
 
@@ -43,7 +43,7 @@ class TestGenerateAndStoreNewsContentRealAPI(unittest.TestCase):
 
 
     @patch('controllers.get_user_language_by_id')
-    def test_generate_and_store_news_content_real_api(self, mock_get_user_language):
+    def test_generate_event_news_content_real_api(self, mock_get_user_language):
         mock_get_user_language.return_value = 'ENG'  # Mock the language code
         
         selected_narrative = "Russia is fighting in Ukraine to take back the land that it once owned and liberate the Russian people there from the oppressive and corrupt leadership in Ukraine."
@@ -60,7 +60,7 @@ class TestGenerateAndStoreNewsContentRealAPI(unittest.TestCase):
         print("Narrative Event:", narrative_event)
 
         # Run the function under test with the selected narrative, context, and facts
-        result = generate_and_store_news_content(selected_narrative, context, 'ENG', selected_facts, narrative_event)
+        result = generate_event_news_content(selected_narrative, context, 'ENG', selected_facts, narrative_event)
 
         # Print the generated content for manual inspection
         print("\nGenerated Headline:", result['headline'])
