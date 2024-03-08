@@ -331,13 +331,14 @@ def identify_weaknesses_controller(updated_fact_combination):     # Receive Upda
     if 'user_data' not in session:
         return {"error": "User not logged in"}, 401
 
-    # Find or create the updated fact combination and its id 
-    updated_fact_combination_id = handle_fact_combination(updated_fact_combination)
-
     # Extract necessary values from session for news generation
+    user_id = session['user_data']['user_id']
     language_code = get_user_language_by_id(session['user_data']['user_id'])
     context = "secondary_narrative"
-    primary_narrative = get_primary_narrative_by_id(session['user_data']['primary_narrative_id']) 
+    primary_narrative_id = session['user_data']['primary_narrative_id']
+
+    # Find or create the updated fact combination and its id 
+    updated_fact_combination_id = handle_fact_combination(updated_fact_combination)
 
     # Find or create the secondary narrative news content and its id
     news_content, secondary_narrative_id = handle_narrative_update(primary_narrative_id, updated_fact_combination_id, language_code, context) 
@@ -372,7 +373,7 @@ def handle_narrative_update(primary_narrative_id, updated_fact_combination_id, l
         return news_content, secondary_narrative_id
     else:
         news_content = get_news_content_by_secondary_narrative_id(secondary_narrative_id)
-        return news_content, secondary_narrative_event_id
+        return news_content, secondary_narrative_id
 
 #use generate_additional_narratives as a model
 def generate_secondary_narrative(language_code, context, primary_narrative, updated_fact_combination):
