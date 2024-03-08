@@ -102,7 +102,6 @@ def generate_additional_narratives(selected_facts, num_additional_narratives):
         else:
             print(f"Error in generate_additional_narratives: {response.status_code} - {response.text}")
             narratives.append(f"Error generating narrative {i+1}")
-    print(narratives)
     return narratives
 
 
@@ -123,9 +122,12 @@ def select_narrative_controller(selected_narrative):
     return {"news_data": news_data}
 
 def generate_prompts(language_code, category, context, selected_narrative, selected_facts, headline=None):
+
+    if isinstance(selected_facts, list):
+        selected_facts = ", ".join(selected_facts)  # Join if list
     replacements = {
         "selected_narrative": selected_narrative,
-        "selected_facts": ", ".join(selected_facts)
+        "selected_facts": selected_facts
     }
 
     # Always generate headline prompts
@@ -146,13 +148,18 @@ def generate_prompts(language_code, category, context, selected_narrative, selec
         # Generate image prompt
         prompts["image_prompt"] = get_text(language_code, category, context, "image_prompt", replacements)
 
+    # Generate secondary_system and secondary_user prompts for secondary_narrative context
+    if context == "secondary_narrative":
+        prompts["secondary_system"] = get_text(language_code, category, context, "secondary_system", replacements)
+        prompts["secondary_user"] = get_text(language_code, category, context, "secondary_user", replacements)
+
     return prompts
 
 def generate_news_content(language_code, context, selected_narrative, selected_facts):
 
     # Function to send requests to the ChatGPT API
     def get_chatgpt_response(system_content, user_content):
-
+        
         # ChatGPT API settings
         chatGPTUrl = 'https://api.openai.com/v1/chat/completions'
         headers = {
@@ -185,6 +192,7 @@ def generate_news_content(language_code, context, selected_narrative, selected_f
     # Function to send requests to the DALL-E-2 API 
     def get_dalle2_response(prompt):
 
+        print('THIS IS YOUR PROMPT', prompt)
         # DALL-E-2 API settings
         dalleUrl = 'https://api.openai.com/v1/images/generations'
         headers = {
@@ -331,16 +339,17 @@ def identify_weaknesses_controller(updated_fact_combination):     # Receive Upda
     if 'user_data' not in session:
         return {"error": "User not logged in"}, 401
 
+    # Extract necessary values from session for news generation
+    user_id = session['user_data']['user_id']
+    language_code = get_user_language_by_id(session['user_data']['user_id'])
+    context = "secondary_narrative"
+    primary_narrative_id = session['user_data']['primary_narrative_id']
+
     # Find or create the updated fact combination and its id 
     updated_fact_combination_id = handle_fact_combination(updated_fact_combination)
 
-    # Extract necessary values from session for news generation
-    language_code = get_user_language_by_id(session['user_data']['user_id'])
-    context = "secondary_narrative"
-    primary_narrative = get_primary_narrative_by_id(session['user_data']['primary_narrative_id']) 
-
     # Find or create the secondary narrative news content and its id
-    news_content, secondary_narrative_id = handle_narrative_update(primary_narrative_id, updated_fact_combination_id, language_code, context) 
+    news_content, secondary_narrative_id = handle_narrative_update(primary_narrative_id, updated_fact_combination_id, updated_fact_combination, language_code, context) 
     # Store secondary_narrative_id in user session
     session['user_data']['secondary_narrative_id'] = secondary_narrative_id
 
@@ -349,34 +358,36 @@ def identify_weaknesses_controller(updated_fact_combination):     # Receive Upda
     
     return {"secondary_news_content": news_content, "secondary_narrative_id": secondary_narrative_id}, 200
 
-def handle_narrative_update(primary_narrative_id, updated_fact_combination_id, language_code, context, _session=None):
+def handle_narrative_update(primary_narrative_id, updated_fact_combination_id, updated_fact_combination, language_code, context, _session=None):
     session = _session or db.session
 
     #Check if new or existing
-    secondary_narrative_id = get_secondary_narrative_id_by_fact_combination_and_primary_narrative(primary_narrative_id, updated_fact_combination_id) #UPDAET AND CREATE THIS CRUD OPERATION
+    secondary_narrative_id = get_secondary_narrative_id_by_fact_combination_and_primary_narrative(primary_narrative_id, updated_fact_combination_id) 
 
     # If secondary_narrative is new
     if secondary_narrative_id is None:
         primary_narrative = get_primary_narrative_by_id(primary_narrative_id)
         
         # Generate Secondary Narrative
-        secondary_narrative_text = generate_secondary_narrative(primary_narrative, updated_fact_combination)
+        secondary_narrative_text = generate_secondary_narrative(language_code, context, primary_narrative.narrative_text, updated_fact_combination)
 
         # Generate News for Secondary Narrative
-        news_content = generate_secondary_news_content(secondary_narrative, context, language_code, updated_fact_combination, event)
+        news_content = generate_secondary_news_content(language_code, context, secondary_narrative_text, updated_fact_combination)
+
         if news_content is None:
             return None, None
 
         # Save to Database 
-        secondary_narrative = create_secondary_narrative(primary_narrative_id, updated_fact_combination, secondary_narrative_text, news_content['headline'], news_content['story'], news_content['image_url'])
+        secondary_narrative = create_secondary_narrative(primary_narrative_id, updated_fact_combination_id, secondary_narrative_text, news_content['headline'], news_content['story'], news_content['image_url'])
         return news_content, secondary_narrative_id
     # If not new
     else:
         news_content = get_news_content_by_secondary_narrative_id(secondary_narrative_id)
-        return news_content, secondary_narrative_event_id
+        return news_content, secondary_narrative_id
 
 #use generate_additional_narratives as a model
 def generate_secondary_narrative(language_code, context, primary_narrative, updated_fact_combination):
+
     # Call the ChatGPT API
     chatGPTUrl = 'https://api.openai.com/v1/chat/completions'
     headers = {
@@ -385,13 +396,11 @@ def generate_secondary_narrative(language_code, context, primary_narrative, upda
     }
 
     # Set Up
-    narratives = []
-    secondary_narrative_prompts = generate_prompts(language_code, "chatgpt_prompts", context, primary_narrative, updated_fact_combination)
+    secondary_narrative_prompts = generate_prompts(language_code, "chatgpt_prompts", context, primary_narrative.narrative_text, updated_fact_combination)
 
     # Use the initial prompt for the first narrative or if only one is needed
-    system_content = secondary_narrative_prompts['secondary_system'], headline_prompts['secondary_user']
-    user_content = secondary_narrative_prompts['secondary_system'], headline_prompts['secondary_user']
-
+    system_content = secondary_narrative_prompts['secondary_system']
+    user_content = secondary_narrative_prompts['secondary_user']
        
     payload = {
         "model": "gpt-3.5-turbo",
@@ -403,32 +412,36 @@ def generate_secondary_narrative(language_code, context, primary_narrative, upda
         "max_tokens": 100
     }
 
+    # Initialize secondary_narrative to handle potential errors
+    secondary_narrative = None
+
     response = requests.post(chatGPTUrl, headers=headers, data=json.dumps(payload))
     if response.status_code == 200:
         response_json = response.json()
-        narrative = response_json['choices'][0]['message']['content'].strip()
-        narratives.append(narrative)
-        previous_narrative = narrative  # Save the last generated narrative for reference in the next loop iteration
+        secondary_narrative = response_json['choices'][0]['message']['content'].strip()
     else:
         print(f"Error in generate_secondary_narrative: {response.status_code} - {response.text}")
-        narratives.append(f"Error generating narrative {i+1}")
+        # Handle the error appropriately, maybe set secondary_narrative to a default value or raise an exception
 
-    print(secondary_narrative)
-    return secondary_narrative
+    # Ensure secondary_narrative has been set before returning it
+    if secondary_narrative is not None:
+        return secondary_narrative
+    else:
+        # Handle the case where secondary_narrative wasn't generated successfully
+        raise Exception("Failed to generate secondary narrative")
 
 
-def generate_secondary_news_content(language_code, context, secondary_narrative, updated_facts): 
-    session = _session or db.session
+def generate_secondary_news_content(language_code, context, secondary_narrative, updated_fact_combination): 
 
     try:
         # Attempt to generate news content based on the narrative and event
-        secondary_news_content = generate_news_content(secondary_narrative, context, language_code, updated_facts, event)
+        secondary_news_content = generate_news_content(language_code, context, secondary_narrative, updated_fact_combination)
     except Exception as e:
         # Handle content generation failure
         logging.error(f"Error generating content: {e}")
         return None
     
-    return event_news_content
+    return secondary_news_content
 
 def generate_conclusion(): 
     pass
