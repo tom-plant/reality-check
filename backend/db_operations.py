@@ -557,8 +557,22 @@ def delete_secondary_narrative(secondary_narrative_id, _session=None):
         else:
             return True  # Assume deletion is successful if using an external session
 
+# Get News Content by Secondary Narrative ID
+def get_news_content_by_secondary_narrative_id(secondary_narrative_id, _session=None):
+    session = _session or db.session
+    result = session.query(SecondaryNarrative)\
+        .filter(SecondaryNarrative.id == secondary_narrative_id)\
+        .with_entities(SecondaryNarrative.resulting_headline, SecondaryNarrative.resulting_story, SecondaryNarrative.resulting_photo_url)\
+        .first()
 
-
+    if result:
+        return {
+            'headline': result.resulting_headline,
+            'story': result.resulting_story,
+            'photo_url': result.resulting_photo_url
+        }
+    else:
+        return None
 
 
 

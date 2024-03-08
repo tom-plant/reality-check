@@ -542,6 +542,50 @@ class TestCRUDOperations(unittest.TestCase):
             self.assertIsNotNone(secondary_narrative_id, "The Secondary Narrative ID should not be None.")
             self.assertEqual(secondary_narrative_id, secondary_narrative.id, "Failed to fetch the correct Secondary Narrative ID.")
 
+    def test_get_news_content_by_secondary_narrative_id(self):
+        with self.app.app_context():
+            
+            # Create necessary FactCombination first
+            fact_combination = db_ops.create_fact_combination('Some,combination,here', _session=self.session)
+            self.session.commit()  # Commit to ensure FactCombination is persisted
+
+            # Create a User for the PrimaryNarrative
+            user = db_ops.create_user('testuser78', 'test78@example.com', _session=self.session)
+            self.session.commit()  # Commit to ensure User is persisted
+
+            # Now, create a PrimaryNarrative using the newly created FactCombination and User
+            primary_narrative = db_ops.create_primary_narrative(
+                fact_combination_id=fact_combination.id,  # Use the actual id of the created FactCombination
+                narrative_text='Sample Primary Narrative Text',
+                user_id=user.id,  # Use the actual id of the created User
+                headline='Sample Primary Narrative Headline',
+                story='Sample Primary Narrative Story',
+                photo_url='http://example.com/primary_narrative.jpg',
+                _session=self.session
+            )
+            self.session.commit()  # Commit to ensure User is persisted
+
+            # Create a SecondaryNarrative linked to the PrimaryNarrative
+            secondary_narrative = db_ops.create_secondary_narrative(
+                original_narrative_id=primary_narrative.id,
+                updated_fact_combination_id=fact_combination.id,
+                narrative_text='Sample Secondary Narrative Text',
+                resulting_headline='Test Secondary Headline',
+                resulting_story='Test Secondary Story',
+                resulting_photo_url='http://example.com/test_secondary_photo.jpg',
+                _session=self.session
+            )
+            self.session.commit()  # Commit to ensure the SecondaryNarrative is persisted
+
+            # Fetch the news content for the created SecondaryNarrative
+            news_content = db_ops.get_news_content_by_secondary_narrative_id(secondary_narrative.id, _session=self.session)
+
+            # Assert that the fetched content matches the known content of the created SecondaryNarrative
+            self.assertIsNotNone(news_content, "Failed to fetch news content for the SecondaryNarrative.")
+            self.assertEqual(news_content['headline'], 'Test Secondary Headline', "The fetched headline does not match the expected value.")
+            self.assertEqual(news_content['story'], 'Test Secondary Story', "The fetched story does not match the expected value.")
+            self.assertEqual(news_content['photo_url'], 'http://example.com/test_secondary_photo.jpg', "The fetched photo URL does not match the expected value.")
+
 
             
 if __name__ == '__main__':
