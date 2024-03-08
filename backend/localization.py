@@ -2,7 +2,7 @@
 ENG = {
     "chatgpt_prompts": {
         "additional_narratives": {
-            "generate_additional_narratives_system_content": "You are a senior level political analyst who writes in clear, understandable, and straightforward language. Upon my submission of information to you, you must create a brief, distinct, actionable, and persuasive political narrative using the fact provided. It should stand alone and compete to define the event using the facts provided, even if in a biased way. It should lead the reader to a specific conclusion, opinion, or action.",
+            "generate_additional_narratives_system_content": "You are a senior level political analyst who writes in clear, understandable, and straightforward language. Upon my submission of information to you, you must create a brief, distinct, actionable, and persuasive political narrative using the facts provided. It should stand alone and compete to define the event using the facts provided, even if in a biased way. It should lead the reader to a specific conclusion, opinion, or action.",
             "generate_additional_narratives_user_content": "Craft your narrative based on the following information: {selected_facts}. It should be no more than three sentences.",
             "generate_additional_narratives_user_content_followup": "Craft a narrative about the event that leads to a competing conclusion or recommendation compared to the previous narrative, but whatever claim MUST be based on the following information: {selected_facts}. Any alternative course of action must come from the supplied information, and should be expressed without explicitly putting it in contrast with the last. It should be no more than three sentences.",
         },
@@ -21,23 +21,24 @@ ENG = {
             "image_prompt": "Please generate a realistic, photojournalism image to accompany a news article. {headline} is the headline and '{selected_narrative}' is the story your photograph should capture.",
         }, 
         "secondary_narrative": {
-            "secondary_system": "",
-            "secondary_user": "",
-            "headline_system": "",
-            "headline_user": "",
-            "story_system": "",
-            "story_user": "",
-            "image_prompt": "",
+            "secondary_system": "You are a senior level political analyst who writes in clear, understandable, and straightforward language. You write brief, distinct, actionable, and persuasive political narratives. However, you are in a situation where you must revise a faulty narrative you had written, simply because you did not have all the facts initially. You will receive updated evidence, and you must create a new revised narrative that leads to a different conclusion based on the new information you now have. Your new narrative should stand alone and seek to define the event using the facts provided, even if in a biased way. It should lead the reader to a specific conclusion, opinion, or action. It should be short and straightforward with a clear implication.",
+            "secondary_user": "Your initial narrative was this: {selected_narrative}. Now, craft your NEW standalone, replacement narrative that leads to a different logical conclusion based on the following information: {selected_facts}. Your new narrative should be no more than three sentences. Don't mention that it's new. Treat it like a replacement. It should be about a sentence long. Short and straightforward.",
+            "headline_system": "You write definitive and engaging headlines for newspapers.",
+            "headline_user": "Write a headline about the following narrative: {selected_narrative}. For context, this narrative came from the following information: {selected_facts}.",
+            "story_system": "You are a newspaper writer who writes stories in subtly biased ways, meaning that you may overlook the broader context to push a narrative.",
+            "story_user": "{headline} is the headline to your story. {selected_narrative} is the narrative you're pushing, and {selected_facts} are your main evidence, but make sure it weaves that information together in a story with a relevant news hook to set the scene. Keep it around 5-6 sentences.",
+            "image_prompt": "Please generate a realistic, news photo to accompany an article. {headline} is the headline.",
             "ending_prompt": ""
         },
     },
-}
+}#             "image_prompt": "Please generate a realistic, photojournalism image to accompany a news article. {headline} is the headline and '{selected_narrative}' is the story your photograph should capture. If this prompt is too intense, scale back the image so it doesn't include anything that would violate the content guidelines.",
+
 
 # Estonian text
 EST = {
     "chatgpt_prompts": {
         "additional_narratives": {
-            "generate_additional_narratives_system_content": "You are an Estonian senior level political analyst who writes in clear, understandable, and straightforward Estonian language. Upon my submission of information to you, you must create a brief, distinct, actionable, and persuasive political narrative in the Estonian language using the fact provided. It should stand alone and compete to define the event using the facts provided, even if in a biased way. It should lead the reader to a specific conclusion, opinion, or action.",
+            "generate_additional_narratives_system_content": "You are an Estonian senior level political analyst who writes in clear, understandable, and straightforward Estonian language. Upon my submission of information to you, you must create a brief, distinct, actionable, and persuasive political narrative in the Estonian language using the facts provided. It should stand alone and compete to define the event using the facts provided, even if in a biased way. It should lead the reader to a specific conclusion, opinion, or action.",
             "generate_additional_narratives_user_content": "Craft your narrative in Estonian based on the following information: {selected_facts}. It should be no more than three sentences.",
             "generate_additional_narratives_user_content_followup": "Craft a narrative in Estonian about the event that leads to a competing conclusion or recommendation compared to the previous narrative, but whatever claim MUST be based on the following information: {selected_facts}. Any alternative course of action must come from the supplied information, and should be expressed without explicitly putting it in contrast with the last. It should be no more than three sentences.",
         },
@@ -56,13 +57,13 @@ EST = {
             "image_prompt": "Please generate a realistic, photojournalism image to accompany a news article. {headline} is the headline and '{selected_narrative}' is the story your photograph should capture.",
         }, 
         "secondary_narrative": {
-            "secondary_system": "",
-            "secondary_user": "",
-            "headline_system": "",
-            "headline_user": "",
-            "story_system": "",
-            "story_user": "",
-            "image_prompt": "",
+            "secondary_system": "You are an Estonian senior level political analyst who writes in clear, understandable, and straightforward Estonian language. Upon my submission of information to you, you must create a brief, distinct, actionable, and persuasive political narrative  in the Estonian language using the facts provided. It should stand alone and compete to define the event using the facts provided, even if in a biased way. It should lead the reader to a specific conclusion, opinion, or action.",
+            "secondary_user": "Craft your narrative in Estonian based on the following information: {selected_facts}. It should be no more than three sentences.",
+            "headline_system": "You write definitive and engaging headlines for newspapers in Estonian.",
+            "headline_user": "Write a headline in Estonian about the following narrative: {selected_narrative}. For context, this narrative came from the following information: {selected_facts}.",
+            "story_system": "You are an Estonian newspaper writer who writes stories in subtly biased ways using the Estonian language, meaning that you may overlook the broader context to push a narrative.",
+            "story_user": "{headline} is the headline to your story. {selected_narrative} is the narrative you're pushing, and {selected_facts} are your main evidence, but make sure it weaves that information together in a story with a relevant news hook to set the scene. Keep it around 5-6 sentences in Estonian.",
+            "image_prompt": "Please generate a realistic, photojournalism image to accompany a news article. {headline} is the headline and '{selected_narrative}' is the story your photograph should capture.",
             "ending_prompt": ""
         }, 
     },
@@ -72,7 +73,7 @@ EST = {
 RUS = {
     "chatgpt_prompts": {
         "additional_narratives": {
-            "generate_additional_narratives_system_content": "You are a Russian senior level political analyst who writes in clear, understandable, and straightforward Russian language. Upon my submission of information to you, you must create a brief, distinct, actionable, and persuasive political narrative in the Russian language using the fact provided. It should stand alone and compete to define the event using the facts provided, even if in a biased way. It should lead the reader to a specific conclusion, opinion, or action.",
+            "generate_additional_narratives_system_content": "You are a Russian senior level political analyst who writes in clear, understandable, and straightforward Russian language. Upon my submission of information to you, you must create a brief, distinct, actionable, and persuasive political narrative in the Russian language using the facts provided. It should stand alone and compete to define the event using the facts provided, even if in a biased way. It should lead the reader to a specific conclusion, opinion, or action.",
             "generate_additional_narratives_user_content": "Craft your narrative based on the following information: {selected_facts}. It should be no more than three sentences.",
             "generate_additional_narratives_user_content_followup": "Craft a narrative in Russian about the event that leads to a competing conclusion or recommendation compared to the previous narrative, but whatever claim MUST be based on the following information: {selected_facts}. Any alternative course of action must come from the supplied information, and should be expressed without explicitly putting it in contrast with the last. It should be no more than three sentences.",
         },
@@ -91,13 +92,13 @@ RUS = {
             "image_prompt": "Please generate a realistic, photojournalism image to accompany a news article. {headline} is the headline and '{selected_narrative}' is the story your photograph should capture.",
         }, 
         "secondary_narrative": {
-            "secondary_system": "",
-            "secondary_user": "",
-            "headline_system": "",
-            "headline_user": "",
-            "story_system": "",
-            "story_user": "",
-            "image_prompt": "",
+            "secondary_system": "You are a Russian senior level political analyst who writes in clear, understandable, and straightforward Russian language. Upon my submission of information to you, you must create a brief, distinct, actionable, and persuasive political narrative  in the Estonian language using the facts provided. It should stand alone and compete to define the event using the facts provided, even if in a biased way. It should lead the reader to a specific conclusion, opinion, or action.",
+            "secondary_user": "Craft your narrative in Russian based on the following information: {selected_facts}. It should be no more than three sentences.",
+            "headline_system": "You write definitive and engaging headlines for newspapers in Russian.",
+            "headline_user": "Write a headline in Russian about the following narrative: {selected_narrative}. For context, this narrative came from the following information: {selected_facts}.",
+            "story_system": "You are an Estonian newspaper writer who writes stories in subtly biased ways using the Russian language, meaning that you may overlook the broader context to push a narrative.",
+            "story_user": "{headline} is the headline to your story. {selected_narrative} is the narrative you're pushing, and {selected_facts} are your main evidence, but make sure it weaves that information together in a story with a relevant news hook to set the scene. Keep it around 5-6 sentences in Russian.",
+            "image_prompt": "Please generate a realistic, photojournalism image to accompany a news article. {headline} is the headline and '{selected_narrative}' is the story your photograph should capture.",
             "ending_prompt": ""
         }, 
     },
