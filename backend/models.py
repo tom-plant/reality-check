@@ -35,7 +35,8 @@ class FactCombination(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     facts = db.Column(db.String(500), nullable=False)  # This could be a JSON string or a delimited list of fact texts
-    narratives = db.relationship('PrimaryNarrative', backref='fact_combination', lazy=True, cascade="all, delete-orphan")
+    primary_narratives = db.relationship('PrimaryNarrative', backref='fact_combination', lazy=True, cascade="all, delete-orphan")
+    secondary_narratives = db.relationship('SecondaryNarrative', backref='updated_fact_combination', lazy=True)  # Add this line
 
 class PrimaryNarrative(db.Model):
     __tablename__ = 'primary_narratives'
@@ -66,7 +67,7 @@ class SecondaryNarrative(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     original_narrative_id = db.Column(db.Integer, db.ForeignKey('primary_narratives.id'), nullable=False)
-    updated_fact_combination = db.Column(db.String(500), nullable=False)  # This could be a JSON string or a delimited list of updated fact IDs
+    updated_fact_combination_id = db.Column(db.Integer, db.ForeignKey('fact_combinations.id'), nullable=False)  # Changed to a foreign key reference
     narrative_text = db.Column(db.Text, nullable=False) #THIS NEEDS TO CHANGE TO UPDATED_NARRATIVE
     resulting_headline = db.Column(db.String(255), nullable=False)
     resulting_story = db.Column(db.Text, nullable=False)

@@ -1,7 +1,7 @@
 # db_operations.py
 
 from app import db
-from sqlalchemy import select, func
+from sqlalchemy import select, func, and_
 from models import User, Fact, Event, FactCombination, PrimaryNarrative, NarrativeEvent, SecondaryNarrative
 
 
@@ -282,11 +282,11 @@ def get_narratives_by_fact_combination(fact_combination_id, _session=None):
     session = _session or db.session
     
     # Directly retrieve narratives associated with the fact_combination_id
-    narratives = session.execute(
+    primary_narratives = session.execute(
         select(PrimaryNarrative).where(PrimaryNarrative.fact_combination_id == fact_combination_id)
     ).scalars().all()
 
-    return narratives
+    return primary_narratives
 
 # Retrieve Fact ID by Fact Combination
 def get_fact_combination_id_by_facts(facts, _session=None):
@@ -480,11 +480,11 @@ def get_narrative_events_id_by_narrative_and_event(primary_narrative_id, event_i
 # Secondary Narrative Operations
 
 # Create a Secondary Narrative
-def create_secondary_narrative(original_narrative_id, updated_fact_combination, narrative_text, resulting_headline, resulting_story, resulting_photo_url=None, _session=None):
+def create_secondary_narrative(original_narrative_id, updated_fact_combination_id, narrative_text, resulting_headline, resulting_story, resulting_photo_url=None, _session=None):
     session = _session or db.session
     new_secondary_narrative = SecondaryNarrative(
         original_narrative_id=original_narrative_id,
-        updated_fact_combination=updated_fact_combination,
+        updated_fact_combination_id=updated_fact_combination_id,
         narrative_text=narrative_text,
         resulting_headline=resulting_headline,
         resulting_story=resulting_story,
@@ -513,6 +513,14 @@ def get_all_secondary_narratives(_session=None):
 def get_secondary_narratives_by_original_narrative(original_narrative_id, _session=None):
     session = _session or db.session
     return session.execute(select(SecondaryNarrative).filter_by(original_narrative_id=original_narrative_id)).scalars().all()
+
+def get_secondary_narrative_id_by_fact_combination_and_primary_narrative(primary_narrative_id, updated_fact_combination_id, _session=None):
+    session = _session or db.session
+    result = session.query(SecondaryNarrative.id).filter(
+        SecondaryNarrative.original_narrative_id == primary_narrative_id,
+        SecondaryNarrative.updated_fact_combination_id == updated_fact_combination_id
+    ).first()
+    return result.id if result else None
 
 
 # Update a Secondary Narrative

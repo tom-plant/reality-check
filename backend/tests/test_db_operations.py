@@ -35,14 +35,16 @@ class TestCRUDOperations(unittest.TestCase):
     def tearDown(self):
         # Rollback the nested transaction
         self.session.rollback()
-        # Optionally, if rolling back doesn't suffice, you can explicitly delete all data from relevant tables
+
+        # Delete entries in the correct order respecting foreign key constraints
+        self.session.query(SecondaryNarrative).delete()
         self.session.query(NarrativeEvent).delete()
         self.session.query(PrimaryNarrative).delete()
         self.session.query(Event).delete()
-        self.session.query(User).delete()
         self.session.query(FactCombination).delete()
-        self.session.commit()
-        self.session.close()
+        self.session.query(User).delete()
+
+        self.session.commit()  # Commit the deletions
         self.session.close()
 
     # User Operations Tests
@@ -398,8 +400,8 @@ class TestCRUDOperations(unittest.TestCase):
             self.session.commit()  # Commit to persist the NarrativeEvent
 
             # Check for the existence of the NarrativeEvent
-            existing_narrative_event_id = db_ops.check_narrative_event_existence(
-                selected_narrative_id=primary_narrative.id,
+            existing_narrative_event_id = db_ops.get_narrative_events_id_by_narrative_and_event(
+                primary_narrative_id=primary_narrative.id,
                 event_id=event.id,
                 _session=self.session
             )
@@ -412,11 +414,11 @@ class TestCRUDOperations(unittest.TestCase):
         with self.app.app_context():
             
             # Create necessary FactCombination first
-            fact_combination = db_ops.create_fact_combination('Some combination', _session=self.session)
+            fact_combination = db_ops.create_fact_combination('Some,combination,here', _session=self.session)
             self.session.commit()  # Commit to ensure FactCombination is persisted
 
             # Create a User for the PrimaryNarrative
-            user = db_ops.create_user('testuser', 'test@example.com', _session=self.session)
+            user = db_ops.create_user('testuser77', 'test77@example.com', _session=self.session)
             self.session.commit()  # Commit to ensure User is persisted
 
             # Now, create a PrimaryNarrative using the newly created FactCombination and User
@@ -480,7 +482,7 @@ class TestCRUDOperations(unittest.TestCase):
 
             # Create
             secondary_narrative = db_ops.create_secondary_narrative(
-                primary_narrative.id, 'Updated Fact Combination', 'Secondary Narrative text',
+                primary_narrative.id, fact_combination.id, 'Secondary Narrative text',
                 'Secondary Headline', 'Secondary Story', 'secondary_photo_url.jpg', _session=self.session)
             self.session.commit()  # Commit to persist data for read operation tests
             self.assertIsNotNone(secondary_narrative, "Failed to create a new Secondary Narrative.")
@@ -509,6 +511,37 @@ class TestCRUDOperations(unittest.TestCase):
             self.session.commit()  # Ensure commit here to reflect deletion
             deleted_secondary_narrative = db_ops.get_secondary_narrative_by_id(secondary_narrative.id, _session=self.session)
             self.assertIsNone(deleted_secondary_narrative, "Failed to delete the Secondary Narrative.")
+
+    def test_get_secondary_narrative_id_by_fact_combination_and_primary_narrative(self):
+        with self.app.app_context():
+            # Create necessary objects
+            user = db_ops.create_user('testuser22', 'test22@example.com', _session=self.session)
+            fact_combination = db_ops.create_fact_combination('Some,facts,here', _session=self.session)
+            self.session.commit()  # Commit to save changes to the DB
+            primary_narrative = db_ops.create_primary_narrative(
+                fact_combination_id=fact_combination.id, narrative_text='Primary Narrative text',
+                user_id=user.id, headline='Primary Headline', story='Primary Story',
+                photo_url='primary_photo_url.jpg', _session=self.session
+            )
+            self.session.commit()  # Commit to save changes to the DB
+
+            # Ensure to pass the ID of the fact_combination to the updated_fact_combination_id parameter
+            secondary_narrative = db_ops.create_secondary_narrative(
+                original_narrative_id=primary_narrative.id, updated_fact_combination_id=fact_combination.id,
+                narrative_text='Secondary Narrative text', resulting_headline='Secondary Headline',
+                resulting_story='Secondary Story', resulting_photo_url='secondary_photo_url.jpg', _session=self.session
+            )
+            self.session.commit()  # Ensure all changes are committed to the DB
+
+            # Test the CRUD operation
+            secondary_narrative_id = db_ops.get_secondary_narrative_id_by_fact_combination_and_primary_narrative(
+                primary_narrative_id=primary_narrative.id, updated_fact_combination_id=fact_combination.id, _session=self.session
+            )
+
+            # Validate the result
+            self.assertIsNotNone(secondary_narrative_id, "The Secondary Narrative ID should not be None.")
+            self.assertEqual(secondary_narrative_id, secondary_narrative.id, "Failed to fetch the correct Secondary Narrative ID.")
+
 
             
 if __name__ == '__main__':

@@ -53,11 +53,11 @@ class TestGenerateAndStoreNewsContentRealAPI(unittest.TestCase):
         # Create a dummy narrative_event for the purpose of this test
         narrative_event = MockNarrativeEvent()
 
-        print("Language Code:", 'ENG')
-        print("Context:", context)
-        print("Selected Narrative:", selected_narrative)
-        print("Selected Facts:", selected_facts)
-        print("Narrative Event:", narrative_event)
+        # print("Language Code:", 'ENG')
+        # print("Context:", context)
+        # print("Selected Narrative:", selected_narrative)
+        # print("Selected Facts:", selected_facts)
+        # print("Narrative Event:", narrative_event)
 
         # Run the function under test with the selected narrative, context, and facts
         result = generate_event_news_content(selected_narrative, context, 'ENG', selected_facts, narrative_event)
@@ -79,14 +79,6 @@ class TestGenerateAndStoreNewsContentRealAPI(unittest.TestCase):
         self.assertTrue(result['image_url'].startswith('http'))
 
         # Further assertions can be based on the expected content/format of the outputs
-
-        print("Result:", result)
-        if result is not None:
-            print("Generated Headline:", result.get('headline'))
-            print("Generated Story:", result.get('story'))
-            print("Generated Image URL:", result.get('image_url'))
-        else:
-            print("Result is None")
 
 
 if __name__ == '__main__':
