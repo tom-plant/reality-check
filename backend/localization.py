@@ -21,8 +21,8 @@ ENG = {
             "image_prompt": "Please generate a realistic, photojournalism image to accompany a news article. {headline} is the headline and '{selected_narrative}' is the story your photograph should capture.",
         }, 
         "secondary_narrative": {
-            "system_content": "",
-            "user_content": "",
+            "secondary_system": "",
+            "secondary_user": "",
             "headline_system": "",
             "headline_user": "",
             "story_system": "",
@@ -56,8 +56,8 @@ EST = {
             "image_prompt": "Please generate a realistic, photojournalism image to accompany a news article. {headline} is the headline and '{selected_narrative}' is the story your photograph should capture.",
         }, 
         "secondary_narrative": {
-            "system_content": "",
-            "user_content": "",
+            "secondary_system": "",
+            "secondary_user": "",
             "headline_system": "",
             "headline_user": "",
             "story_system": "",
@@ -91,8 +91,8 @@ RUS = {
             "image_prompt": "Please generate a realistic, photojournalism image to accompany a news article. {headline} is the headline and '{selected_narrative}' is the story your photograph should capture.",
         }, 
         "secondary_narrative": {
-            "system_content": "",
-            "user_content": "",
+            "secondary_system": "",
+            "secondary_user": "",
             "headline_system": "",
             "headline_user": "",
             "story_system": "",
