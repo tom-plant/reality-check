@@ -370,6 +370,7 @@ def handle_narrative_update(primary_narrative_id, updated_fact_combination_id, l
         # Save to Database 
         secondary_narrative = create_secondary_narrative(primary_narrative_id, updated_fact_combination, secondary_narrative_text, news_content['headline'], news_content['story'], news_content['image_url'])
         return news_content, secondary_narrative_id
+    # If not new
     else:
         news_content = get_news_content_by_secondary_narrative_id(secondary_narrative_id)
         return news_content, secondary_narrative_event_id
