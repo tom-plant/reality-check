@@ -1,3 +1,4 @@
+#models.py
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
@@ -67,9 +68,10 @@ class SecondaryNarrative(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     original_narrative_id = db.Column(db.Integer, db.ForeignKey('primary_narratives.id'), nullable=False)
-    updated_fact_combination_id = db.Column(db.Integer, db.ForeignKey('fact_combinations.id'), nullable=False)  # Changed to a foreign key reference
-    narrative_text = db.Column(db.Text, nullable=False) #THIS NEEDS TO CHANGE TO UPDATED_NARRATIVE
+    updated_fact_combination_id = db.Column(db.Integer, db.ForeignKey('fact_combinations.id'), nullable=False)  
+    narrative_text = db.Column(db.Text, nullable=False) 
     resulting_headline = db.Column(db.String(1000), nullable=False)
     resulting_story = db.Column(db.Text, nullable=False)
     resulting_photo_url = db.Column(db.String(1000), nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)  
     created_at = db.Column(db.DateTime, default=datetime.utcnow)

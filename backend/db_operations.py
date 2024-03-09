@@ -500,9 +500,11 @@ def create_secondary_narrative(original_narrative_id, updated_fact_combination_i
         narrative_text=narrative_text,
         resulting_headline=resulting_headline,
         resulting_story=resulting_story,
-        resulting_photo_url=resulting_photo_url
+        resulting_photo_url=resulting_photo_url,
+        user_id=user_id
     )
     session.add(new_secondary_narrative)
+    db.session.commit()  
     if not _session:  # Commit only if not using an external session
         try:
             session.commit()

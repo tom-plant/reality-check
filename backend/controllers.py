@@ -1,10 +1,10 @@
 # controllers.py
+
 import random
 import logging
 import json
 import requests
 from db_operations import *
-# from db_operations import get_news_content_by_secondary_narrative_id
 from config import API_KEY
 from flask import session, redirect, url_for
 from localization import get_text
@@ -21,6 +21,8 @@ def initialize_data_controller(user_id):
 def register_user(username, email):
     new_user = create_user(username=username, email=email)
     if new_user:
+        session.add(new_user)
+        db.session.commit()  
         initialize_data_controller(new_user.id)
         return redirect(url_for('dashboard'))
     else:
@@ -70,6 +72,8 @@ def handle_fact_combination(selected_facts):
     # If not found, create a new combination and get its ID
     if fact_combination_id is None:
         fact_combination = create_fact_combination(','.join(map(str, sorted(selected_facts))))
+        session.add(fact_combination)
+        db.session.commit()
         fact_combination_id = fact_combination.id
     
     return fact_combination_id
@@ -144,7 +148,8 @@ def select_narrative_controller(selected_narrative):
         photo_url=news_content["image_url"],  
         _session=None
     )
-
+    session.add(primary_narrative)
+    db.session.commit()
     session['user_data']['primary_narrative_id'] = primary_narrative.id
 
     # Return the news data as a JSON response
@@ -331,6 +336,8 @@ def handle_narrative_event(primary_narrative_id, event_id, event, language_code,
             return {"error": "Failed to handle narrative event"}, 500
 
         narrative_event = create_narrative_event(primary_narrative_id, event_id, news_content['headline'], news_content['story'], news_content['image_url'])
+        session.add(narrative_event)
+        db.session.commit()
         return news_content, narrative_event_id
         if news_content is None:
             return {"error": "Failed to handle narrative event"}, 500
@@ -399,7 +406,18 @@ def handle_narrative_update(primary_narrative_id, updated_fact_combination_id, u
             return None, None
 
         # Save to Database 
-        secondary_narrative = create_secondary_narrative(primary_narrative_id, updated_fact_combination_id, secondary_narrative_text, news_content['headline'], news_content['story'], news_content['image_url'])
+        secondary_narrative = create_secondary_narrative(
+            primary_narrative_id=primary_narrative_id, 
+            updated_fact_combination_id=updated_fact_combination_id, 
+            narrative_text=secondary_narrative_text, 
+            resulting_headline=news_content['headline'], 
+            resulting_story=news_content['story'], 
+            resulting_photo_url=news_content['image_url'],
+            user_id=primary_narrative.user_id  # Set user_id from the primary_narrative's user_id
+        )
+        session.add(secondary_narrative)
+        session.commit()  # Don't forget to commit the session
+
         return news_content, secondary_narrative_id
     # If not new
     else:

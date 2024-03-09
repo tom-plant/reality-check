@@ -1,3 +1,5 @@
+# localization.py
+
 # English text
 ENG = {
     "chatgpt_prompts": {
