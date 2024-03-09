@@ -1,17 +1,21 @@
 import unittest
 from flask import Flask, session
-from app import db
+from app import db, app
 from controllers import generate_news_content  # Ensure this is the correct import path
 from config import TestingConfig
 from unittest.mock import patch
+from dotenv import load_dotenv
+import os
 
-app = Flask(__name__)
+load_dotenv(os.path.join(os.path.dirname(__file__), '..', '.env'))
 app.config.from_object(TestingConfig)
-db.init_app(app)
 
 class TestGenerateNewsContent(unittest.TestCase):
 
     def setUp(self):
+        global app  
+        app.config.from_object('config.TestingConfig')  # Make sure TestingConfig is used
+        app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('TEST_SQLALCHEMY_DATABASE_URI')
         self.app_context = app.app_context()
         self.app_context.push()
         db.create_all()

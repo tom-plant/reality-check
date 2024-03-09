@@ -1,13 +1,14 @@
 import unittest
 from flask import Flask, session
-from app import db
+from app import db, app
 from controllers import generate_secondary_narrative, generate_secondary_news_content
 from config import TestingConfig
 from models import User, PrimaryNarrative, FactCombination
+from dotenv import load_dotenv
+import os
 
-app = Flask(__name__)
-app.config.from_object(TestingConfig)  # Ensure this points to a test config that uses a separate test database
-db.init_app(app)
+load_dotenv(os.path.join(os.path.dirname(__file__), '..', '.env'))
+app.config.from_object(TestingConfig) 
 
 class TestGenerativeFunctionsIntegration(unittest.TestCase):
 
@@ -16,6 +17,8 @@ class TestGenerativeFunctionsIntegration(unittest.TestCase):
         cls.app_context = app.app_context()
         cls.app_context.push()
         db.create_all()
+        app.config.from_object('config.TestingConfig')  # Ensure TestingConfig is used
+        app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('TEST_SQLALCHEMY_DATABASE_URI', 'your-fallback-db-uri-for-testing')
 
     @classmethod
     def tearDownClass(cls):

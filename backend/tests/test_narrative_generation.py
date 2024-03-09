@@ -1,18 +1,22 @@
 import unittest
 from unittest.mock import patch
 from flask import Flask, session
-from app import db  
+from app import db, app
 from controllers import generate_additional_narratives
 from localization import get_text
 from config import TestingConfig  # Ensure this is your actual testing configuration
+from dotenv import load_dotenv
+import os
 
-app = Flask(__name__)
+load_dotenv(os.path.join(os.path.dirname(__file__), '..', '.env'))
 app.config.from_object(TestingConfig)
-db.init_app(app)
 
 class TestGenerateAdditionalNarratives(unittest.TestCase):
 
     def setUp(self):
+        global app  
+        app.config.from_object('config.TestingConfig')  # Make sure TestingConfig is used
+        app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('TEST_SQLALCHEMY_DATABASE_URI')
         self.app_context = app.app_context()
         self.app_context.push()  # Activate the app context
         db.create_all()  # Create database schema for tests

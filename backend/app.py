@@ -6,8 +6,11 @@ from flask_migrate import Migrate
 from flask_session import Session 
 from models import db  # Import the db instance from models.py
 import uuid #for unique user id
-from config import Config, FLASK_KEY, SQL_KEY
+from config import Config, SECRET_KEY, SQL_KEY
 from controllers import * 
+from dotenv import load_dotenv
+
+load_dotenv()  # This loads the variables from .env into the environment
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -24,10 +27,13 @@ db.init_app(app)
 migrate = Migrate(app, db)
 
 #Initialize session management tools
-app.secret_key = FLASK_KEY
+app.secret_key = SECRET_KEY
 def generate_session_id():
     return str(uuid.uuid4())
 
+@app.route('/')
+def hello():
+    return "Hello, Dockerized Flask!"
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -115,5 +121,4 @@ def save_progress():
     
 # Run Flask App
 if __name__ == '__main__':
-    app.run(debug=True)
-
+    app.run(host='0.0.0.0', debug=True)

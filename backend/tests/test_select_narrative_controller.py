@@ -1,20 +1,25 @@
 import unittest
 from flask import Flask, session
-from app import db
+from app import db, app
 from controllers import select_narrative_controller  
 from config import TestingConfig
 from unittest.mock import patch
 from models import FactCombination, User
+from dotenv import load_dotenv
+import os
 
-app = Flask(__name__)
+
+load_dotenv(os.path.join(os.path.dirname(__file__), '..', '.env'))
 app.config.from_object(TestingConfig)
-db.init_app(app)
 
 class TestGenerateNewsContent(unittest.TestCase):
 
     def setUp(self):
+        global app  
         self.app_context = app.app_context()
         self.app_context.push()
+        app.config.from_object('config.TestingConfig')  # Make sure TestingConfig is used
+        app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('TEST_SQLALCHEMY_DATABASE_URI')
         db.create_all()
         self.request_context = app.test_request_context()
         self.request_context.push()

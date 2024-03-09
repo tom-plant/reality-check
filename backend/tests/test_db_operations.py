@@ -5,47 +5,39 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import scoped_session, sessionmaker
 from config import TestingConfig
+from app import app  # Importing the Flask app instance
 from models import db as alchemy_db, User, Fact, Event, FactCombination, PrimaryNarrative, NarrativeEvent, SecondaryNarrative
 import db_operations as db_ops
+from dotenv import load_dotenv
+import os
 
+load_dotenv(os.path.join(os.path.dirname(__file__), '..', '.env'))
 
 class TestCRUDOperations(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.app = Flask(__name__)
-        cls.app.config.from_object(TestingConfig)  # Ensure TestingConfig has the correct settings
-        alchemy_db.init_app(cls.app)
-
-        with cls.app.app_context():  # Push an application context
-            alchemy_db.create_all()  # Now you can safely access alchemy_db.engine
-            cls.Session = scoped_session(sessionmaker(bind=alchemy_db.engine))
+        cls.app = app  # Set the Flask app as a class attribute
+        cls.app.config.from_object(TestingConfig)
+        cls.app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('TEST_SQLALCHEMY_DATABASE_URI')
+        cls.app_context = cls.app.app_context()
+        cls.app_context.push()
+        alchemy_db.create_all()
+        cls.Session = scoped_session(sessionmaker(bind=alchemy_db.engine))
 
     @classmethod
     def tearDownClass(cls):
         cls.Session.remove()
-        with cls.app.app_context():
-            alchemy_db.drop_all()
+        alchemy_db.drop_all()
+        cls.app_context.pop()
 
     def setUp(self):
-        self.session = self.Session()
-        # Use context manager to begin a nested transaction (savepoint)
+        self.session = TestCRUDOperations.Session()
         self.trans = self.session.begin_nested()
 
     def tearDown(self):
-        # Rollback the nested transaction
-        self.session.rollback()
-
-        # Delete entries in the correct order respecting foreign key constraints
-        self.session.query(SecondaryNarrative).delete()
-        self.session.query(NarrativeEvent).delete()
-        self.session.query(PrimaryNarrative).delete()
-        self.session.query(Event).delete()
-        self.session.query(FactCombination).delete()
-        self.session.query(User).delete()
-
-        self.session.commit()  # Commit the deletions
-        self.session.close()
+        self.session.rollback()  # Rollback the transaction to clean up the database
+        self.session.close()  # Properly close the session
 
     # User Operations Tests
     def test_user_operations(self):
@@ -168,21 +160,24 @@ class TestCRUDOperations(unittest.TestCase):
             self.session.commit()  # Ensure commit here to reflect deletion
             deleted_event = db_ops.get_event_by_id(event.id, _session=self.session)
             self.assertIsNone(deleted_event, "Failed to delete the Event.")
-        
+      
     def test_get_random_event(self):
         with self.app.app_context():
             # Create multiple events to ensure randomness can be tested
-            event1 = db_ops.create_event('Event 1', 'ENG', _session=self.session)
-            event2 = db_ops.create_event('Event 2', 'ENG', _session=self.session)
-            event3 = db_ops.create_event('Event 3', 'ENG', _session=self.session)
-            self.session.commit()  # Commit to persist data for read operation tests
+            db_ops.create_event('Event 1', 'ENG', _session=self.session)
+            db_ops.create_event('Event 2', 'ENG', _session=self.session)
+            db_ops.create_event('Event 3', 'ENG', _session=self.session)
+            self.session.commit()  # Commit the events for testing
+
+            # Fetch the events back from the database to ensure consistency
+            events = db_ops.get_all_events(_session=self.session)
+            event_ids = [event.id for event in events]
 
             # Test get_random_event
             random_event = db_ops.get_random_event(_session=self.session)
             
-            # Verify that a random event is returned and it is one of the created events
-            self.assertIsNotNone(random_event, "Failed to retrieve a random Event.")
-            self.assertIn(random_event, [event1, event2, event3], "The random Event is not one of the created Events.")
+            # Verify that the ID of the random event is in the list of created event IDs
+            self.assertIn(random_event.id, event_ids, "The random Event is not one of the created Events.")
 
     # Fact Combination Operation Tests
     def test_fact_combination_operations(self):
@@ -370,7 +365,7 @@ class TestCRUDOperations(unittest.TestCase):
             self.session.commit()  # Commit to ensure FactCombination is persisted
 
             # Create a User for the PrimaryNarrative
-            user = db_ops.create_user('testuser', 'test@example.com', _session=self.session)
+            user = db_ops.create_user('testuser66', 'test66@example.com', _session=self.session)
             self.session.commit()  # Commit to ensure User is persisted
 
             # Now, create a PrimaryNarrative using the newly created FactCombination and User
@@ -466,7 +461,7 @@ class TestCRUDOperations(unittest.TestCase):
         with self.app.app_context():
 
              # Create a user and fact_combination first
-            user = db_ops.create_user('testuser3', 'test3@example.com', _session=self.session)
+            user = db_ops.create_user('testuser390', 'test390example.com', _session=self.session)
             self.session.commit()  # Commit to persist data for read operation tests
             fact_combination = db_ops.create_fact_combination('10,11,12', _session=self.session)
             self.session.commit()  # Commit to persist data for read operation tests
@@ -483,7 +478,7 @@ class TestCRUDOperations(unittest.TestCase):
             # Create
             secondary_narrative = db_ops.create_secondary_narrative(
                 primary_narrative.id, fact_combination.id, 'Secondary Narrative text',
-                'Secondary Headline', 'Secondary Story', 'secondary_photo_url.jpg', _session=self.session)
+                'Secondary Headline', 'Secondary Story', user.id, 'secondary_photo_url.jpg', _session=self.session)
             self.session.commit()  # Commit to persist data for read operation tests
             self.assertIsNotNone(secondary_narrative, "Failed to create a new Secondary Narrative.")
             self.assertEqual(secondary_narrative.narrative_text, 'Secondary Narrative text', "Secondary Narrative text does not match.")
@@ -529,7 +524,7 @@ class TestCRUDOperations(unittest.TestCase):
             secondary_narrative = db_ops.create_secondary_narrative(
                 original_narrative_id=primary_narrative.id, updated_fact_combination_id=fact_combination.id,
                 narrative_text='Secondary Narrative text', resulting_headline='Secondary Headline',
-                resulting_story='Secondary Story', resulting_photo_url='secondary_photo_url.jpg', _session=self.session
+                resulting_story='Secondary Story', user_id=user.id, resulting_photo_url='secondary_photo_url.jpg', _session=self.session
             )
             self.session.commit()  # Ensure all changes are committed to the DB
 
@@ -572,6 +567,7 @@ class TestCRUDOperations(unittest.TestCase):
                 narrative_text='Sample Secondary Narrative Text',
                 resulting_headline='Test Secondary Headline',
                 resulting_story='Test Secondary Story',
+                user_id=user.id,
                 resulting_photo_url='http://example.com/test_secondary_photo.jpg',
                 _session=self.session
             )

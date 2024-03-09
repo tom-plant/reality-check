@@ -1,11 +1,11 @@
 # controllers.py
 
 import random
+import os
 import logging
 import json
 import requests
 from db_operations import *
-from config import API_KEY
 from flask import session, redirect, url_for
 from localization import get_text
 
@@ -21,7 +21,7 @@ def initialize_data_controller(user_id):
 def register_user(username, email):
     new_user = create_user(username=username, email=email)
     if new_user:
-        session.add(new_user)
+        db.session.add(new_user)
         db.session.commit()  
         initialize_data_controller(new_user.id)
         return redirect(url_for('dashboard'))
@@ -72,13 +72,15 @@ def handle_fact_combination(selected_facts):
     # If not found, create a new combination and get its ID
     if fact_combination_id is None:
         fact_combination = create_fact_combination(','.join(map(str, sorted(selected_facts))))
-        session.add(fact_combination)
+        db.session.add(fact_combination)
         db.session.commit()
         fact_combination_id = fact_combination.id
     
     return fact_combination_id
 
 def generate_additional_narratives(selected_facts, num_additional_narratives):
+
+    API_KEY = os.environ.get('API_KEY')
 
     # Call the ChatGPT API
     chatGPTUrl = 'https://api.openai.com/v1/chat/completions'
@@ -148,7 +150,7 @@ def select_narrative_controller(selected_narrative):
         photo_url=news_content["image_url"],  
         _session=None
     )
-    session.add(primary_narrative)
+    db.session.add(primary_narrative)
     db.session.commit()
     session['user_data']['primary_narrative_id'] = primary_narrative.id
 
@@ -191,6 +193,8 @@ def generate_prompts(language_code, category, context, selected_narrative, selec
 
 def generate_news_content(language_code, context, selected_narrative, selected_facts):
 
+    API_KEY = os.environ.get('API_KEY')
+
     # Function to send requests to the ChatGPT API
     def get_chatgpt_response(system_content, user_content):
         
@@ -225,6 +229,8 @@ def generate_news_content(language_code, context, selected_narrative, selected_f
 
     # Function to send requests to the DALL-E-2 API 
     def get_dalle2_response(prompt):
+        
+        API_KEY = os.environ.get('API_KEY')
 
         # DALL-E-2 API settings
         dalleUrl = 'https://api.openai.com/v1/images/generations'
@@ -336,7 +342,7 @@ def handle_narrative_event(primary_narrative_id, event_id, event, language_code,
             return {"error": "Failed to handle narrative event"}, 500
 
         narrative_event = create_narrative_event(primary_narrative_id, event_id, news_content['headline'], news_content['story'], news_content['image_url'])
-        session.add(narrative_event)
+        db.session.add(narrative_event)
         db.session.commit()
         return news_content, narrative_event_id
         if news_content is None:
@@ -415,7 +421,7 @@ def handle_narrative_update(primary_narrative_id, updated_fact_combination_id, u
             resulting_photo_url=news_content['image_url'],
             user_id=primary_narrative.user_id  # Set user_id from the primary_narrative's user_id
         )
-        session.add(secondary_narrative)
+        db.session.add(secondary_narrative)
         session.commit()  # Don't forget to commit the session
 
         return news_content, secondary_narrative_id
@@ -426,6 +432,8 @@ def handle_narrative_update(primary_narrative_id, updated_fact_combination_id, u
 
 #use generate_additional_narratives as a model
 def generate_secondary_narrative(language_code, context, primary_narrative, updated_fact_combination):
+
+    API_KEY = os.environ.get('API_KEY')
 
     # Call the ChatGPT API
     chatGPTUrl = 'https://api.openai.com/v1/chat/completions'
