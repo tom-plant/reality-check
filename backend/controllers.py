@@ -5,29 +5,44 @@ import json
 import requests
 from db_operations import *
 from config import API_KEY
-from flask import session
+from flask import session, redirect, url_for
 from localization import get_text
 
-
-def initialize_data_controller():
-
-    # Initialize 'user_data' in session
+def initialize_data_controller(user_id):
     session['user_data'] = {
-        'user_id': None, #Need to assign this 
-        'fact_combination_id': None, #DONE
-        'primary_narrative_id': None, #MISSING
-        'secondary_narrative_id': None, #MISSING
-        'narrative_events_id': None, #DONE
+        'user_id': user_id,
+        'fact_combination_id': None,
+        'primary_narrative_id': None,#MISSING
+        'secondary_narrative_id': None,
+        'narrative_events_id': None,
     }
+
+def register_user(username, email):
+    new_user = create_user(username=username, email=email)
+    if new_user:
+        initialize_data_controller(new_user.id)
+        return redirect(url_for('dashboard'))
+    else:
+        return "Registration failed", 400
+
+def login_user(username_or_email):
+    user = get_user_by_username_or_email(username_or_email)
+    if user:
+        initialize_data_controller(user.id)
+        return redirect(url_for('dashboard'))
+    else:
+        return "Login failed", 401
+
+def logout_user():
+    session.pop('user_data', None)
+    return redirect(url_for('login'))
 
 
 def select_facts_controller(selected_facts):
 
     # Ensure 'user_data' is initialized in session
-    # if 'user_data' not in session:
-    #     return {"error": "User not logged in"}, 401     #USE THIS VERSION LATER
     if 'user_data' not in session:
-        initialize_data_controller()  # Call the initialization function if 'user_data' doesn't exist
+        return {"error": "User not logged in"}, 401     
 
     # Use the handle_fact_combination function and store the fact_combination_id in session
     fact_combination_id = handle_fact_combination(selected_facts)
@@ -75,13 +90,13 @@ def generate_additional_narratives(selected_facts, num_additional_narratives):
     for i in range(num_additional_narratives):
         if i == 0 or num_additional_narratives == 1:
             # Use the initial prompt for the first narrative or if only one is needed
-            system_content = get_text(language_code, "chatgpt_prompts", "additional_narratives", 'generate_additional_narratives_system_content', replacements={"selected_facts": ', '.join(selected_facts)})
-            user_content = get_text(language_code, "chatgpt_prompts", "additional_narratives", 'generate_additional_narratives_user_content', replacements={"selected_facts": ', '.join(selected_facts)})
+            system_content = get_text(language_code, "chatgpt_prompts", "additional_narratives", 'generate_additional_narratives_system_content', replacements={"evidence": ', '.join(selected_facts)})
+            user_content = get_text(language_code, "chatgpt_prompts", "additional_narratives", 'generate_additional_narratives_user_content', replacements={"evidence": ', '.join(selected_facts)})
 
         else:
             # Use the different prompt for subsequent narratives, referring back to the previous one
             system_content = previous_narrative
-            user_content_followup = get_text(language_code, "chatgpt_prompts", "additional_narratives", 'generate_additional_narratives_user_content_followup', replacements={"selected_facts": ', '.join(selected_facts)})
+            user_content_followup = get_text(language_code, "chatgpt_prompts", "additional_narratives", 'generate_additional_narratives_user_content_followup', replacements={"evidence": ', '.join(selected_facts)})
 
         payload = {
             "model": "gpt-3.5-turbo",
@@ -116,18 +131,31 @@ def select_narrative_controller(selected_narrative):
     selected_facts = get_fact_combination_by_id(session['user_data']['fact_combination_id'])
 
     # Call the function to generate news content
-    news_data = generate_news_content(language_code, "primary_narrative", selected_narrative, selected_facts)
+    news_content = generate_news_content(language_code, "primary_narrative", selected_narrative, selected_facts)
+
+    # Commit Primary Narrative to Database
+    primary_narrative = create_primary_narrative(
+        fact_combination_id=session['user_data']['fact_combination_id'],
+        narrative_text=selected_narrative,
+        user_id=session['user_data']['user_id'],
+        headline=news_content["headline"],
+        story=news_content["story"],
+        photo_url=news_content["image_url"],  
+        _session=None
+    )
+
+    session['user_data']['primary_narrative_id'] = primary_narrative.id
 
     # Return the news data as a JSON response
-    return {"news_data": news_data}
+    return {"news_content": news_content}
 
 def generate_prompts(language_code, category, context, selected_narrative, selected_facts, headline=None):
 
     if isinstance(selected_facts, list):
         selected_facts = ", ".join(selected_facts)  # Join if list
     replacements = {
-        "selected_narrative": selected_narrative,
-        "selected_facts": selected_facts
+        "narrative": selected_narrative,
+        "evidence": selected_facts
     }
 
     # Always generate headline prompts
@@ -324,13 +352,6 @@ def generate_event_news_content(primary_narrative, context, language_code, event
         return None
     
     return event_news_content
-
-
-
-
-
-
-
 
 
 

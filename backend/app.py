@@ -1,10 +1,11 @@
-from flask import Flask, session, jsonify
+from flask import Flask, session, jsonify, redirect, url_for, render_template, request
 from flask_sqlalchemy import SQLAlchemy
-from config import Config, FLASK_KEY, SQL_KEY
-import uuid #for unique user id
 from flask_migrate import Migrate
-from models import db  # Import the db instance from models.py
 from flask_session import Session 
+from models import db  # Import the db instance from models.py
+import uuid #for unique user id
+from config import Config, FLASK_KEY, SQL_KEY
+from controllers import * 
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -25,17 +26,28 @@ app.secret_key = FLASK_KEY
 def generate_session_id():
     return str(uuid.uuid4())
 
-from flask import request, jsonify
 
-@app.route('/')
-def index():
-    # Generate session ID for the user
-    session_id = generate_session_id()
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        email = request.form.get('email')
+        # Delegate to the controller function
+        return register_user(username, email)
+    return render_template('register.html')
 
-    # Store session ID in session
-    session['session_id'] = session_id
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username_or_email = request.form.get('username_or_email')
+        # Delegate to the controller function
+        return login_user(username_or_email)
+    return render_template('login.html')
 
-    return f'Session ID generated: {session_id}'
+@app.route('/logout')
+def logout():
+    return logout_user()
+
 
 # Initial Fact Selection & Narrative Generation
 @app.route('/game/select_facts', methods=['POST'])

@@ -1,7 +1,7 @@
 # db_operations.py
 
 from app import db
-from sqlalchemy import select, func, and_
+from sqlalchemy import select, func, and_, or_
 from models import User, Fact, Event, FactCombination, PrimaryNarrative, NarrativeEvent, SecondaryNarrative
 
 
@@ -34,6 +34,18 @@ def get_all_users(_session=None):
 def get_user_by_username(username, _session=None):
     session = _session or db.session
     return session.execute(select(User).filter_by(username=username)).scalars().first()
+
+def get_user_by_username_or_email(username_or_email, _session=None):
+    session = _session or db.session
+    user = session.execute(
+        select(User).where(
+            or_(
+                User.username == username_or_email,
+                User.email == username_or_email
+            )
+        )
+    ).scalars().first()
+    return user
 
 def get_user_language_by_id(user_id, _session=None):
     session = _session or db.session
