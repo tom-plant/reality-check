@@ -18,6 +18,17 @@ class TestSelectFactsController(unittest.TestCase):
         self.request_context = app.test_request_context()
         self.request_context.push()  # Simulate a request context for your tests
 
+        # Simulate a logged-in user by initializing 'user_data' in session
+        with self.request_context:
+            from flask import session
+            session['user_data'] = {
+                'user_id': 1,  # Assuming 1 is a valid user_id for testing purposes
+                'fact_combination_id': None,
+                'primary_narrative_id': None,
+                'secondary_narrative_id': None,
+                'narrative_events_id': None,
+            }
+
     def tearDown(self):
         db.session.remove()
         db.drop_all()

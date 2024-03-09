@@ -20,21 +20,21 @@ class Fact(db.Model):
     __tablename__ = 'facts'
 
     id = db.Column(db.Integer, primary_key=True)
-    text = db.Column(db.String(255), nullable=False)  # Assuming text includes language-specific representation
+    text = db.Column(db.String(1000), nullable=False)  # Assuming text includes language-specific representation
     language = db.Column(db.Enum('ENG', 'EST', 'RUS', name='language_types'), default='ENG', nullable=False)
 
 class Event(db.Model):
     __tablename__ = 'events'
 
     id = db.Column(db.Integer, primary_key=True)
-    text = db.Column(db.String(510), nullable=False)  # Assuming text includes language-specific representation
+    text = db.Column(db.String(1000), nullable=False)  # Assuming text includes language-specific representation
     language = db.Column(db.Enum('ENG', 'EST', 'RUS', name='language_types'), default='ENG', nullable=False)
 
 class FactCombination(db.Model):
     __tablename__ = 'fact_combinations'
 
     id = db.Column(db.Integer, primary_key=True)
-    facts = db.Column(db.String(500), nullable=False)  # This could be a JSON string or a delimited list of fact texts
+    facts = db.Column(db.String(1000), nullable=False)  # This could be a JSON string or a delimited list of fact texts
     primary_narratives = db.relationship('PrimaryNarrative', backref='fact_combination', lazy=True, cascade="all, delete-orphan")
     secondary_narratives = db.relationship('SecondaryNarrative', backref='updated_fact_combination', lazy=True)  # Add this line
 
@@ -45,9 +45,9 @@ class PrimaryNarrative(db.Model):
     fact_combination_id = db.Column(db.Integer, db.ForeignKey('fact_combinations.id'), nullable=False)
     narrative_text = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    headline = db.Column(db.String(255), nullable=False)
+    headline = db.Column(db.String(1000), nullable=False)
     story = db.Column(db.Text, nullable=False)
-    photo_url = db.Column(db.String(255), nullable=True)  # Assuming URLs are stored for photos
+    photo_url = db.Column(db.String(1000), nullable=True)  # Assuming URLs are stored for photos
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     narrative_events = db.relationship('NarrativeEvent', backref='primary_narrative', lazy=True, cascade="all, delete-orphan")
     secondary_narratives = db.relationship('SecondaryNarrative', backref='original_narrative', lazy=True, cascade="all, delete-orphan")
@@ -58,9 +58,9 @@ class NarrativeEvent(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     narrative_id = db.Column(db.Integer, db.ForeignKey('primary_narratives.id'), nullable=False)
     event_id = db.Column(db.Integer, db.ForeignKey('events.id'), nullable=False)
-    resulting_headline = db.Column(db.String(255), nullable=False)
+    resulting_headline = db.Column(db.String(1000), nullable=False)
     resulting_story = db.Column(db.Text, nullable=False)
-    resulting_photo_url = db.Column(db.String(255), nullable=True)
+    resulting_photo_url = db.Column(db.String(1000), nullable=True)
 
 class SecondaryNarrative(db.Model):
     __tablename__ = 'secondary_narratives'
@@ -69,7 +69,7 @@ class SecondaryNarrative(db.Model):
     original_narrative_id = db.Column(db.Integer, db.ForeignKey('primary_narratives.id'), nullable=False)
     updated_fact_combination_id = db.Column(db.Integer, db.ForeignKey('fact_combinations.id'), nullable=False)  # Changed to a foreign key reference
     narrative_text = db.Column(db.Text, nullable=False) #THIS NEEDS TO CHANGE TO UPDATED_NARRATIVE
-    resulting_headline = db.Column(db.String(255), nullable=False)
+    resulting_headline = db.Column(db.String(1000), nullable=False)
     resulting_story = db.Column(db.Text, nullable=False)
-    resulting_photo_url = db.Column(db.String(255), nullable=True)
+    resulting_photo_url = db.Column(db.String(1000), nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)

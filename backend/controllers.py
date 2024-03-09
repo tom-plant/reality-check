@@ -4,6 +4,7 @@ import logging
 import json
 import requests
 from db_operations import *
+# from db_operations import get_news_content_by_secondary_narrative_id
 from config import API_KEY
 from flask import session, redirect, url_for
 from localization import get_text
@@ -82,7 +83,7 @@ def generate_additional_narratives(selected_facts, num_additional_narratives):
         'Content-Type': 'application/json'
     }
 
-    language_code = get_user_language_by_id(session['user_data']['user_id'])
+    language_code = get_user_language_by_id(user_id=session['user_data']['user_id'])
     narratives = []
     previous_narrative = None
 
@@ -127,7 +128,7 @@ def select_narrative_controller(selected_narrative):
         return {"error": "User not logged in"}, 401
 
     # Set language code and selected facts
-    language_code = get_user_language_by_id(session['user_data']['user_id'])
+    language_code = get_user_language_by_id(user_id=session['user_data']['user_id'])
     selected_facts = get_fact_combination_by_id(session['user_data']['fact_combination_id'])
 
     # Call the function to generate news content
@@ -220,7 +221,6 @@ def generate_news_content(language_code, context, selected_narrative, selected_f
     # Function to send requests to the DALL-E-2 API 
     def get_dalle2_response(prompt):
 
-        print('THIS IS YOUR PROMPT', prompt)
         # DALL-E-2 API settings
         dalleUrl = 'https://api.openai.com/v1/images/generations'
         headers = {
@@ -302,7 +302,7 @@ def introduce_event_controller():
         return {"error": "No event found"}, 404
     
     # Extract necessary values from session
-    language_code = get_user_language_by_id(session['user_data']['user_id'])
+    language_code = get_user_language_by_id(user_id=session['user_data']['user_id'])
     context = "event_narrative"
     primary_narrative_id = session['user_data'].get('primary_narrative_id')
     event_id = Event.id
@@ -362,7 +362,7 @@ def identify_weaknesses_controller(updated_fact_combination):     # Receive Upda
 
     # Extract necessary values from session for news generation
     user_id = session['user_data']['user_id']
-    language_code = get_user_language_by_id(session['user_data']['user_id'])
+    language_code = get_user_language_by_id(user_id=session['user_data']['user_id'])
     context = "secondary_narrative"
     primary_narrative_id = session['user_data']['primary_narrative_id']
 

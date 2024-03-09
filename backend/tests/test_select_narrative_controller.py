@@ -4,6 +4,7 @@ from app import db
 from controllers import select_narrative_controller  
 from config import TestingConfig
 from unittest.mock import patch
+from models import FactCombination, User
 
 app = Flask(__name__)
 app.config.from_object(TestingConfig)
@@ -17,10 +18,21 @@ class TestGenerateNewsContent(unittest.TestCase):
         db.create_all()
         self.request_context = app.test_request_context()
         self.request_context.push()
+
+        # Create and commit a FactCombination instance to the database
+        test_fact_combination = FactCombination(id=8, facts="border wall incomplete, migrant crime term coined by Trump")
+        db.session.add(test_fact_combination)
+        db.session.commit()  
+
+        # Create and commit a test user to the database
+        test_user = User(id=1, username="testuser", email="testuser@example.com", language='ENG')  # Adjust the fields based on your User model
+        db.session.add(test_user)
+        db.session.commit()  
+
         # Manually set up session data needed for the test
         session['user_data'] = {
-            'user_id': '1',
-            'fact_combination_id': 'some_fact_id',  # Make sure this matches your actual data structure
+            'user_id': test_user.id,
+            'fact_combination_id': 8,  # Make sure this matches your actual data structure
             # Add other 'user_data' fields as needed
         }
 
@@ -43,9 +55,8 @@ class TestGenerateNewsContent(unittest.TestCase):
         print(result)
 
         # Assert that the result contains 'news_data'
-        self.assertIn('news_data', result)
+        self.assertIn('news_content', result)
         
-        # Further assertions can be added to test the content of 'news_data' based on expected outcomes
 
 if __name__ == '__main__':
     unittest.main()
