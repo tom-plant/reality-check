@@ -15,8 +15,8 @@ services:
     image: mysql:5.7
     environment:
       MYSQL_DATABASE: reality_check
-      MYSQL_ROOT_PASSWORD: Eesti_Simulat10n
-      MYSQL_USER: docker_user_reality_check
-      MYSQL_PASSWORD: 'SIMULATION1999'
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
       - "3306:3306"
