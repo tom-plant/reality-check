@@ -6,19 +6,23 @@ from flask_migrate import Migrate
 from flask_session import Session 
 from models import db  # Import the db instance from models.py
 import uuid #for unique user id
-from config import Config, SECRET_KEY, SQL_KEY
+from config import Config, DevelopmentConfig, TestingConfig, SECRET_KEY, SQL_KEY
 from controllers import * 
 from dotenv import load_dotenv
+import os
+
 
 load_dotenv()  # This loads the variables from .env into the environment
 
 app = Flask(__name__)
-app.config.from_object(Config)
-Session(app)
+if os.getenv('FLASK_ENV') == 'development':
+    app.config.from_object(DevelopmentConfig)
+elif os.getenv('FLASK_ENV') == 'testing':
+    app.config.from_object(TestingConfig)
+else:
+    app.config.from_object(Config)  # Default to Config if not specified
 
-# Configuration
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://reality_check_user:Eesti_$imulat10n@localhost/reality_check' ##Switch this eventually
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+Session(app)
 
 # Initialize SQLAlchemy instance
 db.init_app(app)

@@ -1,8 +1,22 @@
-version: '3'
+version: '3.8'
 services:
   web:
     build: .
+    command: gunicorn -w 3 -b :5000 app:app
+    volumes:
+      - .:/app
     ports:
       - "5000:5000"
     env_file:
       - .env
+    depends_on:
+      - db
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: reality_check
+      MYSQL_ROOT_PASSWORD: Eesti_Simulat10n
+      MYSQL_USER: docker_user_reality_check
+      MYSQL_PASSWORD: 'SIMULATION1999'
+    ports:
+      - "3306:3306"

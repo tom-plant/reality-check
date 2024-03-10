@@ -23,3 +23,10 @@ class TestingConfig(Config):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     API_KEY = os.environ.get('API_KEY')
     TEST_SQL_KEY = os.environ.get('TEST_SQL_KEY')
+
+class DevelopmentConfig(Config):
+    DEBUG = True
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_SQLALCHEMY_DATABASE_URI')
+    API_KEY = os.environ.get('API_KEY')
+    SQL_KEY = os.environ.get('SQL_KEY')
+    SECRET_KEY = os.environ.get('SECRET_KEY')  
