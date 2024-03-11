@@ -4,7 +4,8 @@ from flask import Flask, session, jsonify, redirect, url_for, render_template, r
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_session import Session 
-from models import db  # Import the db instance from models.py
+from models import db  
+from flask_cors import CORS
 import uuid #for unique user id
 from config import Config, DevelopmentConfig, TestingConfig, SECRET_KEY, SQL_KEY
 from controllers import * 
@@ -21,7 +22,7 @@ elif os.getenv('FLASK_ENV') == 'testing':
     app.config.from_object(TestingConfig)
 else:
     app.config.from_object(Config)  # Default to Config if not specified
-
+CORS(app)
 Session(app)
 
 # Initialize SQLAlchemy instance
