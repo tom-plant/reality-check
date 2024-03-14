@@ -1,0 +1,30 @@
+/* DynamicBackground.css */
+
+.dynamic-background {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  /* z-index: 1; behind the floating header */
+}
+
+.background-layer {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  bottom: 0; /* Align the city and sun at the bottom */
+}
+
+.sky {
+  /* The sky layer will likely cover the whole background, so these styles may adjust */
+  z-index: -3;
+  height: 100%;
+}
+
+.city {
+  z-index: -2;
+}
+
+.sun {
+  z-index: -1;
+  /* Specific positioning for the sun can be added here */
+}

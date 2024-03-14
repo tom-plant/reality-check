@@ -14,8 +14,8 @@ function App() {
         <div className="App">
           <nav>
             <ul>
-              <li><Link to="/">Game</Link></li>
-              <li><Link to="/about">About</Link></li>
+              {/* <li><Link to="/">Game</Link></li> */}
+              {/* <li><Link to="/about">About</Link></li> */}
             </ul>
           </nav>
 
