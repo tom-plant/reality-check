@@ -1,31 +1,64 @@
 // Game.js
 
-import React, { useState } from 'react';
-import Header from '../Header'; 
+import { useState } from 'react';
+import { useEffect } from 'react';
+import React from 'react';
+import Header from '../Header/Header'; 
 import './Game.css'; // Ensure this is imported
-import DynamicBackground from '../DynamicBackground';
-
-
-
-// Placeholder components for different game views
-// const ViewOne = () => <div>Game View 1</div>;
-// const ViewTwo = () => <div>Game View 2</div>;
-// Add more views as needed
+import DynamicBackground from '../DynamicBackground/DynamicBackground';
+import { 
+  fetchInitialFacts, 
+  selectNarrative, 
+  introduceEvent, 
+  identifyWeaknesses, 
+  saveUserProgress 
+} from '../../services/gameService';
 
 const Game = () => {
-  // const [view, setView] = useState('viewOne');
 
-  // const renderView = () => {
-  //   switch (view) {
-  //     case 'viewOne':
-  //       return <ViewOne />;
-  //     case 'viewTwo':
-  //       return <ViewTwo />;
-  //     // Add more cases as needed
-  //     default:
-  //       return <ViewOne />;
-  //   }
-  // };
+  //calling all at once is just a placeholder for now
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetch Initial Facts
+        const facts = await fetchInitialFacts();
+        console.log('Fetched Initial Facts:', facts);
+  
+        // Dummy data for selected narrative and facts
+        const selectedNarrative = 'Narrative 1';
+        const selectedFacts = ['Fact 1', 'Fact 2'];
+  
+        // Select a narrative based on selected facts
+        const narrativeResponse = await selectNarrative(selectedNarrative, selectedFacts);
+        console.log('Narrative Response:', narrativeResponse);
+  
+        // Introduce a follow-up event
+        const eventResponse = await introduceEvent();
+        console.log('Event Response:', eventResponse);
+  
+        // Dummy data for new facts and narrative
+        const newFacts = ['Fact 3', 'Fact 4'];
+        const narrative = 'Narrative 2';
+  
+        // Identify weaknesses in narratives
+        const weaknessesResponse = await identifyWeaknesses(newFacts, narrative);
+        console.log('Weaknesses Response:', weaknessesResponse);
+  
+        // Dummy data for user progress
+        const userProgress = { score: 100, level: 2 };
+  
+        // Save user progress
+        const progressResponse = await saveUserProgress(userProgress);
+        console.log('Progress Response:', progressResponse);
+  
+      } catch (error) {
+        console.error('Error in API calls:', error);
+      }
+    };
+  
+    fetchData();
+  }, []);
+
 
 
   return (

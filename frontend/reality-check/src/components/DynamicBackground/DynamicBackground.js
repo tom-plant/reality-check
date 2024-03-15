@@ -2,9 +2,9 @@
 
 import React from 'react';
 import './DynamicBackground.css';
-import skyImage from '../assets/sky.PNG'; 
-import cityImage from '../assets/city.PNG'; 
-import sunImage from '../assets/sun.PNG'; 
+import skyImage from '../../assets/sky.jpg'; 
+import cityImage from '../../assets/city.PNG'; 
+import sunImage from '../../assets/sun.PNG'; 
 
 console.log(skyImage, cityImage, sunImage);
 
