@@ -11,6 +11,7 @@ from config import Config, DevelopmentConfig, TestingConfig, SECRET_KEY, SQL_KEY
 from controllers import * 
 from dotenv import load_dotenv
 import os
+import sys
 
 
 load_dotenv()  # This loads the variables from .env into the environment
@@ -22,7 +23,7 @@ elif os.getenv('FLASK_ENV') == 'testing':
     app.config.from_object(TestingConfig)
 else:
     app.config.from_object(Config)  # Default to Config if not specified
-CORS(app, resources={r"/*": {"origins": os.environ.get('ALLOWED_ORIGINS')}})
+CORS(app, supports_credentials=True, resources={r"/*": {"origins": os.environ.get('ALLOWED_ORIGINS')}})
 Session(app)
 
 # Initialize SQLAlchemy instance
@@ -30,6 +31,9 @@ db.init_app(app)
 
 # Initialize Flask-Migrate associated with app and SQLAlchemy instance
 migrate = Migrate(app, db)
+
+print("Current SQLALCHEMY_DATABASE_URI:", app.config['SQLALCHEMY_DATABASE_URI'], file=sys.stderr)
+
 
 #Initialize session management tools
 app.secret_key = SECRET_KEY
@@ -44,25 +48,19 @@ def hello():
 def create_user():
     username = request.json.get('username')
     email = request.json.get('email')
-    # Delegate to the controller function
-    response, status = register_user(username, email)  
-    return jsonify(response), status
+    response = register_user(username, email)
+    return jsonify(response)
 
 @app.route('/auth/login', methods=['POST'])
 def login():
-    username = request.json.get('username')
-    password = request.json.get('password')
-    # Your login logic here: validate the user and create a token or session
-    token = login_user_controller(username, password)  # Ensure this controller exists and handles authentication
-    if token:
-        return jsonify({"token": token}), 200
-    else:
-        return jsonify({"error": "Invalid credentials"}), 401
+    username_or_email = request.json.get('username_or_email')
+    response = login_user(username_or_email)
+    return jsonify(response)
 
 @app.route('/auth/logout', methods=['POST'])
 def logout():
-    session.clear()  # This clears all items in the session
-    return jsonify({"message": "User logged out successfully"}), 200
+    response = logout_user()
+    return jsonify(response)
 
     
 # Initial Fact Selection & Narrative Generation

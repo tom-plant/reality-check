@@ -22,23 +22,23 @@ def register_user(username, email):
     new_user = create_user(username=username, email=email)
     if new_user:
         db.session.add(new_user)
-        db.session.commit()  
+        db.session.commit()
         initialize_data_controller(new_user.id)
-        return redirect(url_for('dashboard'))
+        return {"message": "Registration successful", "user_id": new_user.id}
     else:
-        return "Registration failed", 400
+        return {"error": "Registration failed"}
 
 def login_user(username_or_email):
     user = get_user_by_username_or_email(username_or_email)
     if user:
         initialize_data_controller(user.id)
-        return redirect(url_for('dashboard'))
+        return {"message": "Login successful", "user_id": user.id}
     else:
-        return "Login failed", 401
+        return {"error": "User not found"}
 
 def logout_user():
     session.pop('user_data', None)
-    return redirect(url_for('login'))
+    return {"message": "Logged out successfully"}
 
 
 def select_facts_controller(selected_facts):
@@ -129,9 +129,9 @@ def generate_additional_narratives(selected_facts, num_additional_narratives):
 
 
 def select_narrative_controller(selected_narrative):
-    # Ensure 'user_data' is initialized in session
-    if 'user_data' not in session:
-        return {"error": "User not logged in"}, 401
+    # # Ensure 'user_data' is initialized in session
+    # if 'user_data' not in session:
+    #     return {"error": "User not logged in"}, 401
 
     # Set language code and selected facts
     language_code = get_user_language_by_id(user_id=session['user_data']['user_id'])

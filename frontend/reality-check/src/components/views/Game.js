@@ -7,6 +7,7 @@ import Header from '../Header/Header';
 import './Game.css'; // Ensure this is imported
 import DynamicBackground from '../DynamicBackground/DynamicBackground';
 import { 
+  login,
   fetchInitialFacts, 
   selectNarrative, 
   introduceEvent, 
@@ -16,48 +17,90 @@ import {
 
 const Game = () => {
 
-  //calling all at once is just a placeholder for now
+
+  // useEffect(() => {
+  //   const testAPI = async () => {
+  //     try {
+  //       await login('testUsername', 'testPassword');  // Replace with actual credentials
+  //       const facts = await fetchInitialFacts();
+  //       console.log('Fetched Initial Facts:', facts);
+  //     } catch (error) {
+  //       console.error('Error in API calls:', error);
+  //     }
+  //   };
+  
+  //   testAPI();
+  // }, []);
+
+   
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Fetch Initial Facts
-        const facts = await fetchInitialFacts();
-        console.log('Fetched Initial Facts:', facts);
-  
-        // Dummy data for selected narrative and facts
-        const selectedNarrative = 'Narrative 1';
-        const selectedFacts = ['Fact 1', 'Fact 2'];
-  
-        // Select a narrative based on selected facts
-        const narrativeResponse = await selectNarrative(selectedNarrative, selectedFacts);
-        console.log('Narrative Response:', narrativeResponse);
-  
-        // Introduce a follow-up event
-        const eventResponse = await introduceEvent();
-        console.log('Event Response:', eventResponse);
-  
-        // Dummy data for new facts and narrative
-        const newFacts = ['Fact 3', 'Fact 4'];
-        const narrative = 'Narrative 2';
-  
-        // Identify weaknesses in narratives
-        const weaknessesResponse = await identifyWeaknesses(newFacts, narrative);
-        console.log('Weaknesses Response:', weaknessesResponse);
-  
-        // Dummy data for user progress
-        const userProgress = { score: 100, level: 2 };
-  
-        // Save user progress
-        const progressResponse = await saveUserProgress(userProgress);
-        console.log('Progress Response:', progressResponse);
-  
-      } catch (error) {
-        console.error('Error in API calls:', error);
-      }
+    const authenticateAndFetchData = async () => {
+      await login('your_username', 'your_password');  // Add error handling as needed
+      // Now call fetchInitialFacts or any other function that requires authentication
+      const facts = await fetchInitialFacts();
+      console.log('Fetched Initial Facts:', facts);
     };
   
-    fetchData();
+    authenticateAndFetchData();
   }, []);
+
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const facts = await fetchInitialFacts();
+  //       console.log('Fetched Initial Facts:', facts);
+  //     } catch (error) {
+  //       console.error('Error fetching initial facts:', error);
+  //     }
+  //   };
+  
+  //   fetchData();
+  // }, []);
+  
+
+  // //calling all at once is just a placeholder for now
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       // Fetch Initial Facts
+  //       const facts = await fetchInitialFacts();
+  //       console.log('Fetched Initial Facts:', facts);
+  
+  //       // Dummy data for selected narrative and facts
+  //       const selectedNarrative = 'Narrative 1';
+  //       const selectedFacts = ['Fact 1', 'Fact 2'];
+  
+  //       // Select a narrative based on selected facts
+  //       const narrativeResponse = await selectNarrative(selectedNarrative, selectedFacts);
+  //       console.log('Narrative Response:', narrativeResponse);
+  
+  //       // Introduce a follow-up event
+  //       const eventResponse = await introduceEvent();
+  //       console.log('Event Response:', eventResponse);
+  
+  //       // Dummy data for new facts and narrative
+  //       const newFacts = ['Fact 3', 'Fact 4'];
+  //       const narrative = 'Narrative 2';
+  
+  //       // Identify weaknesses in narratives
+  //       const weaknessesResponse = await identifyWeaknesses(newFacts, narrative);
+  //       console.log('Weaknesses Response:', weaknessesResponse);
+  
+  //       // Dummy data for user progress
+  //       const userProgress = { score: 100, level: 2 };
+  
+  //       // Save user progress
+  //       const progressResponse = await saveUserProgress(userProgress);
+  //       console.log('Progress Response:', progressResponse);
+  
+  //     } catch (error) {
+  //       console.error('Error in API calls:', error);
+  //     }
+  //   };
+  
+  //   fetchData();
+  // }, []);
 
 
 

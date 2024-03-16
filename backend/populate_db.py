@@ -29,14 +29,14 @@ facts = [
     "Hospitals report a surge in patients with stress-related conditions.",
     "School closures announced nationwide due to security concerns."
 ]
+if os.getenv('FLASK_ENV') == 'development':
+    with app.app_context():  # Use the app's context
+        # Iterate over the facts list and add each to the database
+        for fact_text in facts:
+            new_fact = Fact(text=fact_text, language='ENG')  # Assuming all facts are in English
+            db.session.add(new_fact)
 
-with app.app_context():  # Use the app's context
-    # Iterate over the facts list and add each to the database
-    for fact_text in facts:
-        new_fact = Fact(text=fact_text, language='ENG')  # Assuming all facts are in English
-        db.session.add(new_fact)
-
-    # Commit the session to save these objects to the database
-    db.session.commit()
+        # Commit the session to save these objects to the database
+        db.session.commit()
 
 print("Database populated with facts.")

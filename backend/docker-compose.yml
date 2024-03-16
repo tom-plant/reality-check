@@ -16,6 +16,7 @@ services:
   db:
     image: mysql:5.7
     environment:
+      API_KEY: ${API_KEY}
       MYSQL_DATABASE: reality_check
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_USER: ${MYSQL_USER}

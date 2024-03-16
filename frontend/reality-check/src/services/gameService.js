@@ -1,12 +1,39 @@
-// src/services/gameApi.js
+// src/services/gameService.js
 import axios from 'axios';
 
 const API_BASE_URL = 'http://localhost:5000'; // Adjust this to your actual Flask API URL
 
-// Function to fetch initial list of facts
+export const login = async (username, password) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/auth/login`, {
+      username,
+      password,
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      withCredentials: true,
+    });
+    // Handle successful login here (e.g., storing session token if applicable)
+    return response.data;
+  } catch (error) {
+    console.error('Error during login:', error);
+    throw error;
+  }
+};
+
+// Function to fetch initial list of facts with dummy data for testing
+// In your fetchInitialFacts function in gameService.js
 export const fetchInitialFacts = async () => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/game/select_facts`);
+    const response = await axios.post(`${API_BASE_URL}/game/select_facts`, {
+      selected_facts: ['Emergency broadcast systems activated, issuing vague warnings.', 'Cryptocurrency transactions spike amid bank network failures', 'Power grids targeted, causing widespread blackouts.']
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      withCredentials: true,
+    });
     return response.data;
   } catch (error) {
     console.error('Error fetching initial facts:', error);
