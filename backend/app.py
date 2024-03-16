@@ -22,7 +22,7 @@ elif os.getenv('FLASK_ENV') == 'testing':
     app.config.from_object(TestingConfig)
 else:
     app.config.from_object(Config)  # Default to Config if not specified
-CORS(app)
+CORS(app, resources={r"/*": {"origins": os.environ.get('ALLOWED_ORIGINS')}})
 Session(app)
 
 # Initialize SQLAlchemy instance
@@ -40,28 +40,31 @@ def generate_session_id():
 def hello():
     return "Hello, Dockerized Flask!"
 
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    if request.method == 'POST':
-        username = request.form.get('username')
-        email = request.form.get('email')
-        # Delegate to the controller function
-        return register_user(username, email)
-    return render_template('register.html')
+@app.route('/users', methods=['POST'])
+def create_user():
+    username = request.json.get('username')
+    email = request.json.get('email')
+    # Delegate to the controller function
+    response, status = register_user(username, email)  
+    return jsonify(response), status
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/auth/login', methods=['POST'])
 def login():
-    if request.method == 'POST':
-        username_or_email = request.form.get('username_or_email')
-        # Delegate to the controller function
-        return login_user(username_or_email)
-    return render_template('login.html')
+    username = request.json.get('username')
+    password = request.json.get('password')
+    # Your login logic here: validate the user and create a token or session
+    token = login_user_controller(username, password)  # Ensure this controller exists and handles authentication
+    if token:
+        return jsonify({"token": token}), 200
+    else:
+        return jsonify({"error": "Invalid credentials"}), 401
 
-@app.route('/logout')
+@app.route('/auth/logout', methods=['POST'])
 def logout():
-    return logout_user()
+    session.clear()  # This clears all items in the session
+    return jsonify({"message": "User logged out successfully"}), 200
 
-
+    
 # Initial Fact Selection & Narrative Generation
 @app.route('/game/select_facts', methods=['POST'])
 def select_facts():
@@ -88,7 +91,7 @@ def select_narrative():
     return jsonify(response_data)
 
 # Introducing Follow-up Events
-@app.route('/game/introduce_event', methods=['GET'])
+@app.route('/game/introduce_event', methods=['POST'])
 def introduce_event():
     print("Route /game/introduce_event is being called")  # This should print if the route is hit
     # Call the introduce_event_controller function to handle the logic
@@ -106,7 +109,7 @@ def identify_weaknesses():
     
     # Call controller function to handle logic
     # Placeholder for controller function
-    response_data = identify_weaknesses_controller(new_facts, narrative)
+    response_data = identify_weaknesses_controller(updated_fact_combination)
     
     # Return response to frontend
     return jsonify(response_data)
@@ -123,6 +126,18 @@ def save_progress():
     
     # Return response to frontend
     return jsonify(response_data)
+
+@app.errorhandler(404)
+def resource_not_found(e):
+    return jsonify(error=str(e)), 404
+
+@app.errorhandler(400)
+def bad_request(e):
+    return jsonify(error="Bad Request"), 400
+
+@app.errorhandler(500)
+def server_error(e):
+    return jsonify(error="Internal Server Error"), 500
     
 # Run Flask App
 if __name__ == '__main__':

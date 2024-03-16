@@ -13,7 +13,7 @@ def initialize_data_controller(user_id):
     session['user_data'] = {
         'user_id': user_id,
         'fact_combination_id': None,
-        'primary_narrative_id': None,#MISSING
+        'primary_narrative_id': None, 
         'secondary_narrative_id': None,
         'narrative_events_id': None,
     }
@@ -47,11 +47,11 @@ def select_facts_controller(selected_facts):
     if 'user_data' not in session:
         return {"error": "User not logged in"}, 401     
 
-    # Use the handle_fact_combination function and store the fact_combination_id in session
+    # Store the fact_combination_id in session
     fact_combination_id = handle_fact_combination(selected_facts)
     session['user_data']['fact_combination_id'] = fact_combination_id
 
-    # The rest of your existing logic for selecting narratives
+    # Present three narratives, generated or pulled from database
     narratives = get_narratives_by_fact_combination(selected_facts)
     num_narratives = len(narratives)
 
