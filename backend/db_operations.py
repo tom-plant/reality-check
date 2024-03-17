@@ -319,7 +319,6 @@ def get_fact_combination_id_by_facts(facts, _session=None):
     return None  # Return None if no match is found
 
 
-
 # Primary Narrative Operations
 
 # Create a New Primary Narrative

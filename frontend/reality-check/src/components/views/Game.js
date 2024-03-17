@@ -7,7 +7,7 @@ import Header from '../Header/Header';
 import './Game.css'; // Ensure this is imported
 import DynamicBackground from '../DynamicBackground/DynamicBackground';
 import { 
-  login,
+  register,
   fetchInitialFacts, 
   selectNarrative, 
   introduceEvent, 
@@ -16,6 +16,19 @@ import {
 } from '../../services/gameService';
 
 const Game = () => {
+
+
+   
+  useEffect(() => {
+    const authenticateAndFetchData = async () => {
+      await register('your_username', 'your_email');  // Add error handling as needed
+      // Now call fetchInitialFacts or any other function that requires authentication
+      const facts = await fetchInitialFacts();
+      console.log('Fetched Initial Facts:', facts);
+    };
+  
+    authenticateAndFetchData();
+  }, []);
 
 
   // useEffect(() => {
@@ -31,18 +44,6 @@ const Game = () => {
   
   //   testAPI();
   // }, []);
-
-   
-  useEffect(() => {
-    const authenticateAndFetchData = async () => {
-      await login('your_username', 'your_password');  // Add error handling as needed
-      // Now call fetchInitialFacts or any other function that requires authentication
-      const facts = await fetchInitialFacts();
-      console.log('Fetched Initial Facts:', facts);
-    };
-  
-    authenticateAndFetchData();
-  }, []);
 
 
   // useEffect(() => {

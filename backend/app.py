@@ -12,6 +12,9 @@ from controllers import *
 from dotenv import load_dotenv
 import os
 import sys
+from sqlalchemy.exc import SQLAlchemyError
+import logging
+
 
 
 load_dotenv()  # This loads the variables from .env into the environment
@@ -32,7 +35,10 @@ db.init_app(app)
 # Initialize Flask-Migrate associated with app and SQLAlchemy instance
 migrate = Migrate(app, db)
 
-print("Current SQLALCHEMY_DATABASE_URI:", app.config['SQLALCHEMY_DATABASE_URI'], file=sys.stderr)
+# Make sure we can read print statements for debugging
+app.debug = True
+app.logger.setLevel(logging.DEBUG)  # Set the log level to DEBUG
+
 
 
 #Initialize session management tools
@@ -44,36 +50,42 @@ def generate_session_id():
 def hello():
     return "Hello, Dockerized Flask!"
 
-@app.route('/users', methods=['POST'])
-def create_user():
-    username = request.json.get('username')
-    email = request.json.get('email')
-    response = register_user(username, email)
-    return jsonify(response)
+@app.route('/game/register', methods=['POST'])
+def register():
+    try: 
+        username = request.json.get('username')
+        email = request.json.get('email')
+        response = register_user_controller(username, email)
+        return jsonify(response)
+    except:
+        return jsonify({"error": "This email is already in use."})
+        
 
 @app.route('/auth/login', methods=['POST'])
 def login():
     username_or_email = request.json.get('username_or_email')
-    response = login_user(username_or_email)
-    return jsonify(response)
-
-@app.route('/auth/logout', methods=['POST'])
-def logout():
-    response = logout_user()
+    response = login_user_controller(username_or_email)
     return jsonify(response)
 
     
 # Initial Fact Selection & Narrative Generation
 @app.route('/game/select_facts', methods=['POST'])
 def select_facts():
-    # Receive selected facts from the frontend
-    selected_facts = request.json.get('selected_facts')
-    
-    # Call controller function to handle logic
-    response_data = select_facts_controller(selected_facts)
-    
-    # Return response to frontend
-    return jsonify(response_data)
+    try: 
+        # Receive selected facts from the frontend
+        app.logger.debug(request.json)  # This will print the received JSON data in the console
+        selected_facts = request.json.get('selected_facts')
+        # Call controller function to handle logic
+        response_data = select_facts_controller(selected_facts)
+        app.logger.debug(selected_facts)  # This will print the 'selected_facts' to ensure it's a list of strings
+        # Return response to frontend
+        return jsonify(response_data)
+    except SQLAlchemyError as e:
+        app.logger.error(f"Database error: {e}")
+        return jsonify({"error": "Database operation failed"}), 500
+    except Exception as e:
+        app.logger.error(f"Unexpected error: {e}")
+        return jsonify({"error": "An unexpected error occurred"}), 500
 
 # Selecting Narratives
 @app.route('/game/select_narrative', methods=['POST'])

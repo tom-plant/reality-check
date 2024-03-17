@@ -1,5 +1,6 @@
 from app import app, db  # Import your Flask app and db from your main app file
 from models import Fact  # Import the Fact model
+import os
 
 # Fact entries to be added
 facts = [

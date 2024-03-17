@@ -18,27 +18,35 @@ def initialize_data_controller(user_id):
         'narrative_events_id': None,
     }
 
-def register_user(username, email):
+def register_user_controller(username, email):
+    # Use the create_user function to create a new user
     new_user = create_user(username=username, email=email)
+    
     if new_user:
         db.session.add(new_user)
         db.session.commit()
-        initialize_data_controller(new_user.id)
-        return {"message": "Registration successful", "user_id": new_user.id}
-    else:
-        return {"error": "Registration failed"}
 
-def login_user(username_or_email):
+        # Initialize data for the new user
+        initialize_data_controller(new_user.id)
+        
+        # Store user ID in the session
+        session['user_id'] = new_user.id
+        
+        return {"message": "User registered successfully", "user_id": new_user.id}
+    else:
+        return {"error": "User registration failed"}
+    
+def login_user_controller(username_or_email):
+    # Check if user exists by username or email
     user = get_user_by_username_or_email(username_or_email)
+    
     if user:
-        initialize_data_controller(user.id)
-        return {"message": "Login successful", "user_id": user.id}
+        # Store user ID in the session
+        session['user_id'] = user.id
+        
+        return {"message": "User logged in successfully", "user_id": user.id}
     else:
         return {"error": "User not found"}
-
-def logout_user():
-    session.pop('user_data', None)
-    return {"message": "Logged out successfully"}
 
 
 def select_facts_controller(selected_facts):
@@ -48,21 +56,26 @@ def select_facts_controller(selected_facts):
         return {"error": "User not logged in"}, 401     
 
     # Store the fact_combination_id in session
+    print(f"Received facts: {selected_facts}")  # Log received facts
     fact_combination_id = handle_fact_combination(selected_facts)
+    print(f"Fact combination ID: {fact_combination_id}")  # Log the ID of the fact combination
     session['user_data']['fact_combination_id'] = fact_combination_id
 
-    # Present three narratives, generated or pulled from database
-    narratives = get_narratives_by_fact_combination(selected_facts)
-    num_narratives = len(narratives)
+    return {"fact_combination_id": fact_combination_id} #temproary for debugging
 
-    if num_narratives >= 3:
-        random_narratives = random.sample(narratives, 3) if num_narratives > 3 else narratives
-        return {"narratives": random_narratives}
-    else:
-        num_additional_narratives = 3 - num_narratives
-        additional_narratives = generate_additional_narratives(selected_facts, num_additional_narratives)
-        combined_narratives = narratives + additional_narratives
-        return {"narratives": combined_narratives}
+
+    # # Present three narratives, generated or pulled from database
+    # narratives = get_narratives_by_fact_combination(selected_facts)
+    # num_narratives = len(narratives)
+
+    # if num_narratives >= 3:
+    #     random_narratives = random.sample(narratives, 3) if num_narratives > 3 else narratives
+    #     return {"narratives": random_narratives}
+    # else:
+    #     num_additional_narratives = 3 - num_narratives
+    #     additional_narratives = generate_additional_narratives(selected_facts, num_additional_narratives)
+    #     combined_narratives = narratives + additional_narratives
+    #     return {"narratives": combined_narratives}
 
 def handle_fact_combination(selected_facts):
 

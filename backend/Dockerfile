@@ -9,11 +9,16 @@ RUN apt-get update && apt-get install -y \
     default-libmysqlclient-dev \
     gcc \
     pkg-config \
+    netcat-openbsd \
 && apt-get clean \
 && rm -rf /var/lib/apt/lists/*
 
 # Copy the current directory contents into the container at /app
 COPY . /app
+COPY entrypoint.sh /entrypoint.sh
+
+# Specify the script to be executed when the container starts
+ENTRYPOINT ["/entrypoint.sh"]
 
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
