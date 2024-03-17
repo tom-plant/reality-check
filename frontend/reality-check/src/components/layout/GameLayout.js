@@ -1,6 +1,5 @@
-// GameLayout.js
 import React from 'react';
-import { useGameState } from '../../contexts/GameContext'; // Assuming the correct relative path
+import { useGameState } from '../../contexts/GameContext'; // Adjust the path as needed
 import SelectFacts from '../game/SelectFacts';
 import SelectNarratives from '../game/SelectNarratives';
 import NarrativeImpact from '../game/NarrativeImpact';
@@ -10,10 +9,10 @@ import LeftContainer from '../containers/LeftContainer';
 import RightContainer from '../containers/RightContainer';
 
 const GameLayout = () => {
-    const gameState = useGameState(); // Use the hook directly to access the game state
+  const { currentView } = useGameState(); // Use the context to get the current view
 
-  const renderGamePhase = () => {
-    switch(gameState.currentView) { // Use gameState.currentView to determine the phase
+  const renderLeftContent = () => {
+    switch (currentView) { // Switch based on currentView from context
       case 'SELECT_FACTS':
         return <SelectFacts />;
       case 'SELECT_NARRATIVES':
@@ -25,20 +24,38 @@ const GameLayout = () => {
       case 'IDENTIFY_WEAKNESSES':
         return <IdentifyWeaknesses />;
       default:
-        return <SelectFacts />; // Default to SelectFacts or any other default view you prefer
+        return <div>Welcome to the game! Please select an option to start.</div>;
+    }
+  };
+
+  const renderRightContent = () => {
+    // Example implementations. Adjust according to your game design.
+    switch (currentView) {
+      case 'SELECT_FACTS':
+        return <div>Instructions for selecting facts</div>;
+      case 'SELECT_NARRATIVES':
+        return <div>Guidelines for selecting narratives</div>;
+      case 'NARRATIVE_IMPACT':
+        return <div>Impact of your narrative choices</div>;
+      case 'INTRODUCE_EVENT':
+        return <div>Details of the new event</div>;
+      case 'IDENTIFY_WEAKNESSES':
+        return <div>Identify weaknesses in the narrative</div>;
+      default:
+        return <div>Game information or instructions.</div>;
     }
   };
 
   return (
     <div className="game-layout">
-      <LeftContainer>
-        {renderGamePhase()}
-      </LeftContainer>
-      <RightContainer>
-        {/* Content for the right container, potentially based on the game phase */}
-      </RightContainer>
+      <LeftContainer>{renderLeftContent()}</LeftContainer>
+      <RightContainer>{renderRightContent()}</RightContainer>
     </div>
   );
 };
 
 export default GameLayout;
+
+
+  // Example usage
+  // goToNextPhase(SELECT_NARRATIVES);

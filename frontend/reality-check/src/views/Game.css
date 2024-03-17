@@ -10,19 +10,6 @@
   box-sizing: border-box;
 }
 
-.left-container {
-  left: 10%; /* Adjust based on your layout */
-  border: 2px solid white; /* Temporary border to indicate position */
-  border-color: transparent; /* Make border invisible, just for initial setup */
-}
-
-.right-container {
-  top: 25%;
-  right: 10%; /* Adjust based on your layout */
-  background-color: white; /* As a permanent fixture */
-  border-radius: 5px;
-}
-
 .line {
   position: absolute;
   left: 0;
