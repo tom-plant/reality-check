@@ -27,7 +27,7 @@ export const register = async (username, email) => {
 export const fetchInitialFacts = async () => {
   try {
     const response = await axios.post(`${API_BASE_URL}/game/select_facts`, {
-      selected_facts: ['Emergency broadcast systems activated, issuing vague warnings.', 'Cryptocurrency transactions spike amid bank network failures', 'Power grids targeted, causing widespread blackouts.']
+
     }, {
       headers: {
         'Content-Type': 'application/json',

@@ -2,8 +2,8 @@
 
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import About from './components/views/About';
-import Game from './components/views/Game';
+import About from './views/About';
+import Game from './views/Game';
 import GameProvider from './contexts/GameContext';
 import './App.css';
 

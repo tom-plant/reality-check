@@ -5,6 +5,7 @@ const GameStateContext = createContext();
 const GameDispatchContext = createContext();
 
 const initialState = {
+  facts: [],
   currentView: 'Briefing', // This could be 'Briefing', 'NarrativeSelection', 'NarrativeImpact', etc.
   selectedFactCombination: [], 
   updatedFactCombination: [],

@@ -78,7 +78,7 @@ def select_facts_controller(selected_facts):
     #     return {"narratives": combined_narratives}
 
 def handle_fact_combination(selected_facts):
-
+    
     # Find if the combination exists
     fact_combination_id = get_fact_combination_id_by_facts(selected_facts)
     
