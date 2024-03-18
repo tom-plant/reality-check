@@ -38,6 +38,11 @@ const gameReducer = (state, action) => {
         selectedFactCombination: state.selectedFactCombination.filter(fact => fact !== action.payload),
       };
 
+    case 'LOAD_MORE_FACTS':
+      // Placeholder for loading more facts logic
+      console.log('LOAD_MORE_FACTS action triggered. Implement logic to load more facts here.');
+      return state; // Return the current state unchanged for now
+
     case 'GENERATE_NEWS_CONTENT':
       // Assuming this action updates a state variable with more information. Adjust as needed.
       return { ...state, additionalInfo: action.payload };
@@ -78,7 +83,7 @@ const gameReducer = (state, action) => {
 
 
 const GameProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(gameReducer, { /* Initial state here */ });
+  const [state, dispatch] = useReducer(gameReducer, initialState);
 
   return (
     <GameStateContext.Provider value={state}>
