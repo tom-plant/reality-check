@@ -5,8 +5,25 @@ const GameStateContext = createContext();
 const GameDispatchContext = createContext();
 
 const initialState = {
-  facts: [],
-  currentView: 'Briefing', // This could be 'Briefing', 'NarrativeSelection', 'NarrativeImpact', etc.
+  facts: [
+    { id: 1, text: 'Fact 1' },
+    { id: 2, text: 'Fact 2' },
+    { id: 3, text: 'Fact 3' },
+    { id: 4, text: 'Fact 4' },
+    { id: 5, text: 'Fact 5' },
+    { id: 6, text: 'Fact 6' },
+    { id: 7, text: 'Fact 7' },
+    { id: 8, text: 'Fact 8' },
+    { id: 9, text: 'Fact 9' },
+    { id: 10, text: 'Fact 10' },
+    { id: 11, text: 'Fact 11' },
+    { id: 12, text: 'Fact 12' },
+    { id: 13, text: 'Fact 13' },
+    { id: 14, text: 'Fact 14' },
+    { id: 15, text: 'Fact 15' },
+    { id: 16, text: 'Fact 16' },
+  ],
+  currentView: 'SELECT_FACTS', 
   selectedFactCombination: [], 
   updatedFactCombination: [],
   narrativeOptions: [], 

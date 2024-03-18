@@ -7,9 +7,13 @@ import IntroduceEvent from '../game/IntroduceEvent';
 import IdentifyWeaknesses from '../game/IdentifyWeaknesses';
 import LeftContainer from '../containers/LeftContainer';
 import RightContainer from '../containers/RightContainer';
+import './GameLayout.css'; // Import CSS
 
 const GameLayout = () => {
-  const { currentView } = useGameState(); // Use the context to get the current view
+  const { currentView } = useGameState();
+
+  // Use currentView to determine the content for LeftContainer and RightContainer
+  // Implement renderLeftContent and renderRightContent functions as shown previously
 
   const renderLeftContent = () => {
     switch (currentView) { // Switch based on currentView from context
@@ -55,7 +59,3 @@ const GameLayout = () => {
 };
 
 export default GameLayout;
-
-
-  // Example usage
-  // goToNextPhase(SELECT_NARRATIVES);

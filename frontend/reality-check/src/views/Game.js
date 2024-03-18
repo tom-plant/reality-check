@@ -38,7 +38,7 @@ return (
     <div className="line line-4"></div>
     <div className="line line-5"></div>
     <DynamicBackground />
-    {renderGamePhase()} // Call the function to render based on the current phase
+    {renderGamePhase()} {/* Call the function to render based on the current phase */}
   </div>
 );
 };
