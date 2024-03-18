@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useGameState, useGameDispatch } from '../../contexts/GameContext'; // Adjust the path as needed
 import FactBox from '../common/FactBox'; // Adjust the path as needed
+import Counter from '../common/Counter'; // Adjust the path as needed
 import './SelectFacts.css'; // Ensure you have a CSS file for styling
 
 const SelectFacts = () => {
@@ -27,6 +28,7 @@ const SelectFacts = () => {
 
   return (
     <div className="select-facts">
+      <Counter />  
       {displayedFacts.map((fact) => (
         <FactBox 
           key={fact.id}

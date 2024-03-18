@@ -1,11 +1,15 @@
+/* FactBox.css */
+
 .fact-box {
+  border: 1px solid #fffffffc;
   padding: 10px;
-  margin: 5px;
-  border: 1px solid #ccc;
+  margin-bottom: 10px;
   cursor: pointer;
+  background-color: transparent;
+  transition: background-color 0.3s;
 }
 
 .fact-box.selected {
-  border-color: blue;
-  background-color: #f0f8ff;
+  background-color: #fff;
+  color: #000;
 }
