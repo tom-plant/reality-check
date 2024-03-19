@@ -1,15 +1,15 @@
-// SelectedFactsDisplay.js
+// SelectFactsDisplay.js
 
 import React from 'react';
 import { useGameState } from '../../contexts/GameContext';
 import FactBox from '../common/FactBox'; 
-import './SelectedFactsDisplay.css';
+import './SelectFactsDisplay.css';
 
-const SelectedFactsDisplay = () => {
+const SelectFactsDisplay = () => {
   const { selectedFactCombination, selectionEnded } = useGameState();
 
   return (
-    <div className="selected-facts-display">
+    <div className="select-facts-display">
       <div className="spacer"></div>
       <div className="facts-list">
         {selectedFactCombination.map((fact) => (
@@ -30,7 +30,7 @@ const SelectedFactsDisplay = () => {
 };
 
 
-export default SelectedFactsDisplay;
+export default SelectFactsDisplay;
 
 
 

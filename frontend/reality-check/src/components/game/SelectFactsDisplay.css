@@ -1,6 +1,6 @@
-/* SelectedFactsDisplay.css */
+/* SelectFactsDisplay.css */
 
-.selected-facts-display {
+.select-facts-display {
   display: flex;
   flex-direction: column;
   align-items: center;

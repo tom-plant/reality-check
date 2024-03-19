@@ -23,11 +23,20 @@ const initialState = {
     { id: 15, text: 'Fact 15' },
     { id: 16, text: 'Fact 16' },
   ],
-  currentView: 'SELECT_FACTS', 
-  selectedFactCombination: [], 
+  currentView: 'SELECT_NARRATIVES', 
+  selectedFactCombination: [
+    { id: 1, text: 'Fact 1' },
+    { id: 2, text: 'Fact 2' },
+    { id: 3, text: 'Fact 3' },
+  ], 
   updatedFactCombination: [],
   selectionEnded: false,
-  narrativeOptions: [], 
+  narrativeOptions: [
+    { id: 1, text: "Two glasses of milk, please."},
+    { id: 2, text: "I said, TWO GLASSES OF MILK, please."},
+    { id: 3, text: "You know what, forget it."}
+  ],
+  selectedNarrative: null,
   primaryNarrative: null, 
   secondaryNarratve: null, 
   Event: null,
@@ -61,6 +70,12 @@ const gameReducer = (state, action) => {
       console.log('LOAD_MORE_FACTS action triggered. Implement logic to load more facts here.');
       return state; // Return the current state unchanged for now
 
+    case 'SELECT_NARRATIVE':
+      return { ...state, selectedNarrative: action.payload };
+
+    case 'DESELECT_NARRATIVE':
+      return { ...state, selectedNarrative: null };
+  
     case 'SET_SELECTION_ENDED':
         return { ...state, selectionEnded: action.payload };
       default:

@@ -1,6 +1,6 @@
 /* FactBox.css */
 
-.fact-box {
+.narrative-box {
   border: 1px solid #fffffffc;
   padding: 10px;
   margin-bottom: 10px;
@@ -8,15 +8,15 @@
   background-color: transparent;
   transition: background-color 0.3s;
   width: 100%;
-  box-sizing: border-box;
+  box-sizing: border-box; 
 }
 
-.fact-box.right {
+.narrative-box.right {
   border: 1px solid black;
   color: black;
 }
 
-.fact-box.left.selected {
+.narrative-box.left.selected {
   background-color: #fff;
   color: #000;
 }
