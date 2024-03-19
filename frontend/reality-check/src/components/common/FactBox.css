@@ -1,6 +1,7 @@
 /* FactBox.css */
 
 .fact-box {
+  /* Your existing styles */
   border: 1px solid #fffffffc;
   padding: 10px;
   margin-bottom: 10px;
@@ -9,7 +10,14 @@
   transition: background-color 0.3s;
 }
 
-.fact-box.selected {
+/* New styles for right container fact boxes */
+.fact-box.right {
+  border: 1px solid black;
+  color: black;
+}
+
+/* Apply selected styles only to right container fact boxes */
+.fact-box.right.selected {
   background-color: #fff;
   color: #000;
 }

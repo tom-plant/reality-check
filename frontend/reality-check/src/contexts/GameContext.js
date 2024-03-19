@@ -26,6 +26,7 @@ const initialState = {
   currentView: 'SELECT_FACTS', 
   selectedFactCombination: [], 
   updatedFactCombination: [],
+  selectionEnded: false,
   narrativeOptions: [], 
   primaryNarrative: null, 
   secondaryNarratve: null, 
@@ -60,6 +61,11 @@ const gameReducer = (state, action) => {
       console.log('LOAD_MORE_FACTS action triggered. Implement logic to load more facts here.');
       return state; // Return the current state unchanged for now
 
+    case 'SET_SELECTION_ENDED':
+        return { ...state, selectionEnded: action.payload };
+      default:
+        return state;
+
     case 'GENERATE_NEWS_CONTENT':
       // Assuming this action updates a state variable with more information. Adjust as needed.
       return { ...state, additionalInfo: action.payload };
@@ -92,8 +98,6 @@ const gameReducer = (state, action) => {
         updatedFactCombination: state.updatedFactCombination.filter(fact => fact !== action.payload),
       };
 
-    default:
-      throw new Error(`Unhandled action type: ${action.type}`);
   }
 };
 

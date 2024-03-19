@@ -1,8 +1,9 @@
+// FactBox.js
 import React from 'react';
 import { useGameDispatch, useGameState } from '../../contexts/GameContext'; // Adjust the path as needed
 import './FactBox.css'; 
 
-const FactBox = ({ fact, isSelected, disabled }) => {
+const FactBox = ({ fact, isSelected, disabled, container}) => {
   const dispatch = useGameDispatch();
   const { selectedFactCombination } = useGameState(); // Access the selected facts from context
   // Only allow selection if the fact is already selected or if less than 5 facts are selected
@@ -26,7 +27,7 @@ const FactBox = ({ fact, isSelected, disabled }) => {
 
   return (
     <div 
-      className={`fact-box ${isSelected ? 'selected' : ''}`} 
+      className={`fact-box ${isSelected ? 'selected' : ''} ${container}`} 
       onClick={toggleFactSelection}
     >
       {fact.text}

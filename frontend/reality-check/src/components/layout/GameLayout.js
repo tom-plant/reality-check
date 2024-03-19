@@ -1,6 +1,7 @@
 import React from 'react';
-import { useGameState } from '../../contexts/GameContext'; // Adjust the path as needed
+import { useGameState } from '../../contexts/GameContext'; 
 import SelectFacts from '../game/SelectFacts';
+import SelectedFactsDisplay from '../game/SelectedFactsDisplay'; 
 import SelectNarratives from '../game/SelectNarratives';
 import NarrativeImpact from '../game/NarrativeImpact';
 import IntroduceEvent from '../game/IntroduceEvent';
@@ -10,7 +11,7 @@ import RightContainer from '../containers/RightContainer';
 import './GameLayout.css'; // Import CSS
 
 const GameLayout = () => {
-  const { currentView } = useGameState();
+  const { currentView, selectionEnded } = useGameState();
 
   // Use currentView to determine the content for LeftContainer and RightContainer
   // Implement renderLeftContent and renderRightContent functions as shown previously
@@ -36,7 +37,7 @@ const GameLayout = () => {
     // Example implementations. Adjust according to your game design.
     switch (currentView) {
       case 'SELECT_FACTS':
-        return <div>Instructions for selecting facts</div>;
+        return <SelectedFactsDisplay />;
       case 'SELECT_NARRATIVES':
         return <div>Guidelines for selecting narratives</div>;
       case 'NARRATIVE_IMPACT':
