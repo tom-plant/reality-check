@@ -38,17 +38,21 @@ const SelectFacts = () => {
 
   return (
     <div className="select-facts">
-      <Timer onTimeUp={onTimeUp} />
-      <Counter />  
-      {displayedFacts.map((fact) => (
-        <FactBox 
-          key={fact.id}
-          fact={fact}
-          isSelected={selectedFactCombination.includes(fact)}
-          disabled={selectionEnded} 
-          container= "left"
-        />
-      ))}
+      <div className="timer-counter-wrapper">
+        <Timer onTimeUp={onTimeUp} />
+        <Counter />  
+      </div> 
+      <div className="facts-list">
+        {displayedFacts.map((fact) => (
+          <FactBox 
+            key={fact.id}
+            fact={fact}
+            isSelected={selectedFactCombination.includes(fact)}
+            disabled={selectionEnded} 
+            container= "left"
+          />
+        ))}
+      </div>
       <button 
         className="load-more" 
         onClick={loadMoreFacts}

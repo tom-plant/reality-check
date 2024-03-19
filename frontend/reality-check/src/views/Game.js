@@ -32,11 +32,6 @@ const Game = () => {
 return (
   <div className="game">
     <Header />
-    <div className="line line-1"></div>
-    <div className="line line-2"></div>
-    <div className="line line-3"></div>
-    <div className="line line-4"></div>
-    <div className="line line-5"></div>
     <DynamicBackground />
     {renderGamePhase()} {/* Call the function to render based on the current phase */}
   </div>

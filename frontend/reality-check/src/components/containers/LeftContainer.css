@@ -7,8 +7,8 @@
     top: 25%; /* Adjust to position below the header */
     padding: 20px;
     box-sizing: border-box;
-    left: 10%; /* Adjust based on your layout */
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    left: 12%; /* Adjust based on your layout */
     border-radius: 5px;
+    border: 2px solid white;
   }
   

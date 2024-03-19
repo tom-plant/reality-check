@@ -8,6 +8,8 @@
   cursor: pointer;
   background-color: transparent;
   transition: background-color 0.3s;
+  width: 100%;
+  box-sizing: border-box; /* Ensures padding doesn't add to the width */
 }
 
 /* New styles for right container fact boxes */
@@ -17,7 +19,7 @@
 }
 
 /* Apply selected styles only to right container fact boxes */
-.fact-box.right.selected {
+.fact-box.left.selected {
   background-color: #fff;
   color: #000;
 }
