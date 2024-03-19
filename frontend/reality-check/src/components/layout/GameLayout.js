@@ -5,6 +5,7 @@ import SelectFactsDisplay from '../game/SelectFactsDisplay';
 import SelectNarratives from '../game/SelectNarratives';
 import SelectNarrativesDisplay from '../game/SelectNarrativesDisplay'; 
 import NarrativeImpact from '../game/NarrativeImpact';
+import NarrativeImpactDisplay from '../game/NarrativeImpactDisplay';
 import IntroduceEvent from '../game/IntroduceEvent';
 import IdentifyWeaknesses from '../game/IdentifyWeaknesses';
 import LeftContainer from '../containers/LeftContainer';
@@ -42,7 +43,7 @@ const GameLayout = () => {
       case 'SELECT_NARRATIVES':
         return <SelectNarrativesDisplay />;
       case 'NARRATIVE_IMPACT':
-        return <div>Impact of your narrative choices</div>;
+        return <NarrativeImpactDisplay />;
       case 'INTRODUCE_EVENT':
         return <div>Details of the new event</div>;
       case 'IDENTIFY_WEAKNESSES':

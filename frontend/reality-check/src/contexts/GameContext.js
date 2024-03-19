@@ -23,7 +23,7 @@ const initialState = {
     { id: 15, text: 'Fact 15' },
     { id: 16, text: 'Fact 16' },
   ],
-  currentView: 'SELECT_NARRATIVES', 
+  currentView: 'NARRATIVE_IMPACT', 
   selectedFactCombination: [
     { id: 1, text: 'Fact 1' },
     { id: 2, text: 'Fact 2' },
@@ -36,7 +36,12 @@ const initialState = {
     { id: 2, text: "I said, TWO GLASSES OF MILK, please."},
     { id: 3, text: "You know what, forget it."}
   ],
-  selectedNarrative: null,
+  selectedNarrative: ["I am a C-H-R-I-S-T-I-A-N"],
+  primaryNewsContent: {
+    headline: 'Bruh literally edged in fortnite.',
+    story: 'Late yesterday evening, bruh literally edged in a fortnite game, shocking thousands and coming amidst a time of extreme scrutiny toward edging and and overwhelming preference to gooning. Literally bruh.',
+    imageUrl: 'ayoooooplaceholder.com'
+  },
   primaryNarrative: null, 
   secondaryNarratve: null, 
   Event: null,
@@ -81,6 +86,12 @@ const gameReducer = (state, action) => {
       default:
         return state;
 
+    case 'SET_NEWS_CONTENT':
+      return {
+        ...state,
+        primaryNewsContent: action.payload // Assuming payload will be an object with headline, story, and imageUrl
+      };
+
     case 'GENERATE_NEWS_CONTENT':
       // Assuming this action updates a state variable with more information. Adjust as needed.
       return { ...state, additionalInfo: action.payload };
@@ -88,10 +99,6 @@ const gameReducer = (state, action) => {
     case 'GENERATE_NARRATIVE':
       // This would set some narrative based on previous selections or information
       return { ...state, narrativeOptions: action.payload };
-
-    case 'SELECT_NARRATIVE':
-      // Assuming you're setting a primary narrative from the options
-      return { ...state, primaryNarrative: action.payload };
 
     case 'CONFIRM_NARRATIVE_SELECTION':
       // Confirming the narrative might finalize the choice and prevent further changes
