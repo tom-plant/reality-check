@@ -23,7 +23,7 @@ const initialState = {
     { id: 15, text: 'Fact 15' },
     { id: 16, text: 'Fact 16' },
   ],
-  currentView: 'NARRATIVE_IMPACT', 
+  currentView: 'INTRODUCE_EVENT', 
   selectedFactCombination: [
     { id: 1, text: 'Fact 1' },
     { id: 2, text: 'Fact 2' },
@@ -43,8 +43,13 @@ const initialState = {
     imageUrl: 'ayoooooplaceholder.com'
   },
   primaryNarrative: null, 
+  eventOptions: [
+    { id: 1, text: "Event 1"},
+    { id: 1, text: "Event 2"},
+    { id: 1, text: "Event 3"}
+  ],
+  selectedEvent: null,
   secondaryNarratve: null, 
-  Event: null,
   buttonStatus: {},
   userLanguage: 'English', // User selected language, default to English
 };
@@ -83,14 +88,21 @@ const gameReducer = (state, action) => {
   
     case 'SET_SELECTION_ENDED':
         return { ...state, selectionEnded: action.payload };
-      default:
-        return state;
 
     case 'SET_NEWS_CONTENT':
       return {
         ...state,
         primaryNewsContent: action.payload // Assuming payload will be an object with headline, story, and imageUrl
       };
+
+    case 'SELECT_EVENT':
+      return { ...state, selectedEvent: action.payload };
+
+    case 'DESELECT_EVENT':
+      return { ...state, selectedEvent: action.payload };
+
+    case 'SET_EVENT_OPTIONS':
+      return { ...state, eventOptions: action.payload };
 
     case 'GENERATE_NEWS_CONTENT':
       // Assuming this action updates a state variable with more information. Adjust as needed.
@@ -106,7 +118,7 @@ const gameReducer = (state, action) => {
 
     case 'GENERATE_EVENT_RESPONSE':
       // This could be generating a response to an event, stored in state
-      return { ...state, eventResponse: action.payload };
+      return { ...state, eventResponse: action.payload }
 
     case 'SELECT_UPDATED_FACT':
       return {
@@ -120,7 +132,9 @@ const gameReducer = (state, action) => {
         updatedFactCombination: state.updatedFactCombination.filter(fact => fact !== action.payload),
       };
 
-  }
+      default:
+        throw new Error(`Unhandled action type: ${action.type}`);
+    }
 };
 
 

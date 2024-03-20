@@ -1,0 +1,13 @@
+/* EventBox.css */
+.event-box {
+  border: 2px solid transparent;
+  color: black; 
+  padding: 10px;
+  margin: 5px;
+  text-align: center;
+}
+
+.event-box.selected {
+  border-width: 2px;
+  border-color: black;
+}

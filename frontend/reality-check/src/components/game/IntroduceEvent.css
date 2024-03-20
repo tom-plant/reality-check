@@ -1,0 +1,25 @@
+/* IntroduceEvent.css */
+
+.introduce-event {
+  font-family: 'Times New Roman', Times, serif; /* Classic "newspaper" font */
+  max-width: 600px; /* Limit the width for readability */
+  margin: auto; /* Center the content */
+  padding: 20px; /* Add some padding around the content */
+  background-color: transparent; /* Light background color for the article */
+}
+
+.introduce-event h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.introduce-event img {
+  float: left;
+  margin-right: 20px;
+  width: 300px; /* Adjust size as needed */
+}
+
+.introduce-event p {
+  text-align: justify;
+}
+
