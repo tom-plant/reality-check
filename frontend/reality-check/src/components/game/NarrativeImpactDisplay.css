@@ -1,12 +1,21 @@
 /* NarrativeImpactDisplay.css */
 
-.narrative-impact-display {
+
+.narrative-impact-display-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
+}
+
+.narrative-impact-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
   max-height: 400px; /* Adjust the height as needed */
-  overflow-y: auto;
+  overflow-y: auto; /* Enable scrolling for the entire container */
   text-align: center; /* Center the content */
 }
 
@@ -16,31 +25,18 @@
 }
 
 .facts-list {
-  overflow-y: auto;
-  flex-grow: 1;
-  align-items: center;
-  width: 100%; /* Ensures the list takes up the full width */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow-y: auto; /* Enable scrolling if the list gets too long */
+  width: 100%; /* Ensure it takes up the full width */
 }
 
 .selected-narrative, .displayed-fact {
   padding: 10px;
   margin-bottom: 10px;
   width: 100%;
-  box-sizing: border-box;
+  box-sizing: border-box; /* Ensures padding is included in width */
   text-align: center; /* Center the text inside each fact box */
-  border: 1px solid black;
-  color: black;
-  background-color: transparent;
-  transition: background-color 0.3s;
-}
-
-.facts-list {
-  max-height: 300px; /* Adjust based on your design */
-  overflow-y: auto;
+  border: 1px solid black; /* Adjust as needed */
+  color: black; /* Adjust as needed */
+  background-color: transparent; /* Adjust as needed */
 }
 
 .continue-button {
@@ -65,3 +61,8 @@
     cursor: not-allowed;
   }
 }
+
+
+
+
+

@@ -22,18 +22,22 @@ const NarrativeImpactDisplay = () => {
 
     
   return (
-    <div className="narrative-impact-display">
-      <h2>Your Narrative</h2>
-      <div className="selected-narrative">
-        {selectedNarrative && <div>{selectedNarrative.text}</div>}
-      </div>
-      <h2>Your Facts</h2>
-      <div className="facts-list">
-        {selectedFactCombination.map((fact) => (
-          <div key={fact.id} className="displayed-fact">
-            {fact.text}
-          </div>
-        ))}
+    <div className="narrative-impact-display-container">
+      <div className="narrative-impact-display">
+        <h2>Your Narrative</h2>
+        {selectedNarrative && (
+        <div className="selected-narrative">
+          <p>{selectedNarrative}</p>
+        </div>
+      )}
+        <h2>Your Facts</h2>
+        <div className="facts-list">
+          {selectedFactCombination.map((fact) => (
+            <div key={fact.id} className="displayed-fact">
+              {fact.text}
+            </div>
+          ))}
+        </div>
       </div>
       <button
         className="continue-button"

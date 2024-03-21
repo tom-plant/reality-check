@@ -23,7 +23,7 @@ const initialState = {
     { id: 15, text: 'Fact 15' },
     { id: 16, text: 'Fact 16' },
   ],
-  currentView: 'INTRODUCE_EVENT', 
+  currentView: 'NARRATIVE_IMPACT', 
   selectedFactCombination: [
     { id: 1, text: 'Fact 1' },
     { id: 2, text: 'Fact 2' },
