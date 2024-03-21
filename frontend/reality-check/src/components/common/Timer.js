@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Timer.css'; // Make sure to create a corresponding CSS file
 
 const Timer = ({ onTimeUp }) => {
-  const [seconds, setSeconds] = useState(10);
+  const [seconds, setSeconds] = useState(5);
 
   useEffect(() => {
     if (seconds > 0) {

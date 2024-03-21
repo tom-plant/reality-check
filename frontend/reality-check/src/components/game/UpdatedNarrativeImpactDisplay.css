@@ -1,6 +1,6 @@
 /* NarrativeImpactDisplay.css */
 
-.narrative-impact-display-container {
+.updated-narrative-impact-display-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9,7 +9,7 @@
   overflow-y: auto; /* Enable scrolling for the entire container */
 }
 
-.narrative-impact-display {
+.updated-narrative-impact-display {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -18,7 +18,7 @@
   text-align: center; /* Center the content */
 }
 
-.narrative-impact-display h2 {
+.updated-narrative-impact-display h2 {
   color: #000; /* Set the header color to black */
   margin-bottom: 20px; /* Add some space below the header */
 }
@@ -27,7 +27,7 @@
   width: 100%; /* Ensure it takes up the full width */
 }
 
-.selected-narrative, .displayed-fact {
+.updated-narrative, .displayed-fact {
   padding: 10px;
   margin-bottom: 10px;
   width: 100%;

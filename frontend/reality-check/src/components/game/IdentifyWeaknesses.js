@@ -1,18 +1,27 @@
-import React from 'react';
+// IdentifyWeaknesses.js
+import React, { useEffect, useState } from 'react';
+import { useGameState, useGameDispatch } from '../../contexts/GameContext';
+import FactBox from '../common/FactBox';
+import './IdentifyWeaknesses.css'; // Ensure you have this CSS file
 
 const IdentifyWeaknesses = () => {
+  const { facts, selectedFactCombination, updatedFactCombination, selectionEnded } = useGameState();
+  const [displayedFacts, setDisplayedFacts] = useState(facts);  // Display all facts
+  const dispatch = useGameDispatch();
+
   return (
-    <div>
-      {/* Component content goes here */}
-      <h2>Identify Weaknesses</h2>
+    <div className="identify-weaknesses">
+      {displayedFacts.map(fact => (
+        <FactBox
+          key={fact.id}
+          fact={fact}
+          isSelected={updatedFactCombination.includes(fact)}
+          disabled={selectionEnded}
+          container="left"
+        />
+      ))}
     </div>
   );
 };
 
 export default IdentifyWeaknesses;
-
-
-
-//Within your game phase components (e.g., SelectFacts, SelectNarratives), 
-// use the passed goToNextPhase function to transition to the next phase upon certain actions, 
-// like selecting a fact or confirming a narrative.

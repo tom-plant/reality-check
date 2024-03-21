@@ -10,6 +10,9 @@ import IntroduceEvent from '../game/IntroduceEvent';
 import IntroduceEventDisplay from '../game/IntroduceEventDisplay';
 import EventPopup from '../popups/EventPopup';
 import IdentifyWeaknesses from '../game/IdentifyWeaknesses';
+import IdentifyWeaknessesDisplay from '../game/IdentifyWeaknessesDisplay';
+import UpdatedNarrativeImpact from '../game/UpdatedNarrativeImpact';
+import UpdatedNarrativeImpactDisplay from '../game/UpdatedNarrativeImpactDisplay';
 import LeftContainer from '../containers/LeftContainer';
 import RightContainer from '../containers/RightContainer';
 import './GameLayout.css'; // Import CSS
@@ -17,9 +20,6 @@ import './GameLayout.css'; // Import CSS
 const GameLayout = () => {
   const { currentView, eventOptions } = useGameState();
   const [isEventPopupVisible, setIsEventPopupVisible] = useState(true); // Assuming the popup should be visible initially
-
-  // Use currentView to determine the content for LeftContainer and RightContainer
-  // Implement renderLeftContent and renderRightContent functions as shown previously
 
   const renderLeftContent = () => {
     switch (currentView) { // Switch based on currentView from context
@@ -33,6 +33,8 @@ const GameLayout = () => {
         return <IntroduceEvent />;
       case 'IDENTIFY_WEAKNESSES':
         return <IdentifyWeaknesses />;
+      case 'UPDATED_NARRATIVE_IMPACT':
+        return <UpdatedNarrativeImpact />;
       default:
         return <div>Welcome to the game! Please select an option to start.</div>;
     }
@@ -50,7 +52,9 @@ const GameLayout = () => {
       case 'INTRODUCE_EVENT':
         return <IntroduceEventDisplay />;
       case 'IDENTIFY_WEAKNESSES':
-        return <div>Identify weaknesses in the narrative</div>;
+        return <IdentifyWeaknessesDisplay />;
+      case 'UPDATED_NARRATIVE_IMPACT':
+        return <UpdatedNarrativeImpactDisplay />;
       default:
         return <div>Game information or instructions.</div>;
     }

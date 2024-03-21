@@ -25,7 +25,6 @@ const initialState = {
   ],
   currentView: 'SELECT_FACTS', 
   selectedFactCombination: [], 
-  updatedFactCombination: [],
   selectionEnded: false,
   narrativeOptions: [
     { id: 1, text: "Two glasses of milk, please." },
@@ -47,6 +46,8 @@ const initialState = {
     { id: 3, text: "Event 3"}
   ],
   selectedEvent: null,
+  updatedFactCombination: [],
+
   secondaryNarratve: null, 
   buttonStatus: {},
   userLanguage: 'English', // User selected language, default to English
@@ -77,6 +78,12 @@ const gameReducer = (state, action) => {
       // Placeholder for loading more facts logic
       console.log('LOAD_MORE_FACTS action triggered. Implement logic to load more facts here.');
       return state; // Return the current state unchanged for now
+
+      case 'COPY_FACTS_TO_UPDATED':
+        return {
+          ...state,
+          updatedFactCombination: action.payload,
+        };
 
     case 'SELECT_NARRATIVE':
       console.log('Selecting narrative:', action.payload);
@@ -132,6 +139,12 @@ const gameReducer = (state, action) => {
         updatedFactCombination: state.updatedFactCombination.filter(fact => fact !== action.payload),
       };
 
+    case 'RESET_SELECTION_ENDED':
+      return {
+        ...state,
+        selectionEnded: false,
+      };
+      
       default:
         throw new Error(`Unhandled action type: ${action.type}`);
     }

@@ -1,0 +1,16 @@
+/* UpdatedNarrativeImpact.css */
+
+.updated-narrative-impact h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.updated-narrative-impact img {
+  float: left;
+  margin-right: 20px;
+  width: 300px; /* Adjust size as needed */
+}
+
+.updated-narrative-impact p {
+  text-align: justify;
+}
