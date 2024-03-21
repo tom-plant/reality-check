@@ -6,7 +6,6 @@ import './NarrativeBox.css';
 const NarrativeBox = ({ narrative, isSelected, disabled, container}) => {
   const dispatch = useGameDispatch();
   const { selectedNarrative } = useGameState(); // Access the selected facts from context
-  // Only allow selection if the fact is already selected or if less than 5 facts are selected
 
   const toggleNarrativeSelection = () => {
     if (disabled) return; // Early return if interaction is disabled

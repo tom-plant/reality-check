@@ -32,9 +32,9 @@ const initialState = {
   updatedFactCombination: [],
   selectionEnded: false,
   narrativeOptions: [
-    { id: 1, text: "Two glasses of milk, please."},
-    { id: 2, text: "I said, TWO GLASSES OF MILK, please."},
-    { id: 3, text: "You know what, forget it."}
+    { id: 1, text: "Two glasses of milk, please." },
+    { id: 2, text: "I said, TWO GLASSES OF MILK, please." },
+    { id: 3, text: "You know what, forget it." }
   ],
   selectedNarrative: ["I am a C-H-R-I-S-T-I-A-N"],
   primaryNewsContent: {
@@ -45,8 +45,8 @@ const initialState = {
   primaryNarrative: null, 
   eventOptions: [
     { id: 1, text: "Event 1"},
-    { id: 1, text: "Event 2"},
-    { id: 1, text: "Event 3"}
+    { id: 2, text: "Event 2"},
+    { id: 3, text: "Event 3"}
   ],
   selectedEvent: null,
   secondaryNarratve: null, 
@@ -81,9 +81,11 @@ const gameReducer = (state, action) => {
       return state; // Return the current state unchanged for now
 
     case 'SELECT_NARRATIVE':
+      console.log('Selecting narrative:', action.payload);
       return { ...state, selectedNarrative: action.payload };
 
     case 'DESELECT_NARRATIVE':
+      console.log('Deselecting narrative');
       return { ...state, selectedNarrative: null };
   
     case 'SET_SELECTION_ENDED':

@@ -21,29 +21,31 @@ const IntroduceEventDisplay = () => {
   }, []);
 
   return (
-    <div className="introduce-event-display">
-      <h2>Your Event</h2>
-      {selectedEvent && (
-        <div className="selected-event">
-          <h3>{selectedEvent.title}</h3>
-          <p>{selectedEvent.description}</p>
-        </div>
-      )}
-
-      <h2>Your Narrative</h2>
-      <div className="selected-narrative">
-        {selectedNarrative && <div>{selectedNarrative.text}</div>}
-      </div>
-
-      <h2>Your Facts</h2>
-      <div className="facts-list">
-        {selectedFactCombination.map((fact) => (
-          <div key={fact.id} className="displayed-fact">
-            {fact.text}
+    <div className="introduce-event-display-container">
+      <div className="introduce-event-display">
+        <h2>Your Event</h2>
+        {selectedEvent && (
+          <div className="selected-event">
+            <p>{selectedEvent.text}</p>
           </div>
-        ))}
+        )}
+  
+        <h2>Your Narrative</h2>
+        {selectedNarrative && (
+          <div className="selected-narrative">
+            <p>{selectedNarrative}</p>
+          </div>
+        )}
+  
+        <h2>Your Facts</h2>
+        <div className="facts-list">
+          {selectedFactCombination.map((fact) => (
+            <div key={fact.id} className="displayed-fact">
+              {fact.text}
+            </div>
+          ))}
+        </div>
       </div>
-
       <button className="continue-button" onClick={handleContinue} disabled={!contentLoaded}>
         Continue
       </button>

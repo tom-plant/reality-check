@@ -1,46 +1,42 @@
 /* IntroduceEventDisplay.css */
 
-.introduce-event-display {
+.introduce-event-display-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
   max-height: 400px; /* Adjust the height as needed */
-  overflow-y: auto;
+  overflow-y: auto; /* Enable scrolling for the entire container */
+}
+
+.introduce-event-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
   text-align: center; /* Center the content */
 }
 
 .introduce-event-display h2 {
   color: #000; /* Set the header color to black */
-  margin-bottom: 20px; /* Add some space below the header */
+  margin: 10px 0; /* Provide some spacing around headers */
+
 }
 
 .facts-list {
-  overflow-y: auto;
-  flex-grow: 1;
-  align-items: center;
-  width: 100%; /* Ensures the list takes up the full width */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow-y: auto; /* Enable scrolling if the list gets too long */
+  width: 100%; /* Ensure it takes up the full width */
 }
 
-.selected-narrative, .displayed-fact {
+.selected-narrative, .selected-event, .displayed-fact {
   padding: 10px;
-  margin-bottom: 10px;
+  margin: 5px 0; /* Adjust spacing between items */
   width: 100%;
-  box-sizing: border-box;
+  box-sizing: border-box; /* Ensures padding is included in width */
   text-align: center; /* Center the text inside each fact box */
-  border: 1px solid black;
-  color: black;
-  background-color: transparent;
-  transition: background-color 0.3s;
-}
-
-.facts-list {
-  max-height: 300px; /* Adjust based on your design */
-  overflow-y: auto;
+  border: 1px solid black; /* Adjust as needed */
+  color: black; /* Adjust as needed */
+  background-color: transparent; /* Adjust as needed */
 }
 
 .continue-button {
@@ -62,6 +58,7 @@
   /* Styling for disabled state */
   &:disabled {
     background-color: #cccccc;
-    cursor: not-allowed;
+    cursor: default;
   }
 }
+
