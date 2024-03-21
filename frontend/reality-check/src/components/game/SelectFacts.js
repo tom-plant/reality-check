@@ -30,11 +30,13 @@ const SelectFacts = () => {
     const newSelection = getRandomFacts(facts.filter(fact => !displayedFacts.includes(fact)), 5);
     setDisplayedFacts(prev => [...prev, ...newSelection]);
   };
-
   const onTimeUp = () => {
-    dispatch({ type: 'SET_SELECTION_ENDED', payload: true });
-    // Optional: Automatically select additional facts to meet the minimum requirement, if necessary
+    if (!selectionEnded) {
+      dispatch({ type: 'SET_SELECTION_ENDED', payload: true });
+      // Optional: Automatically select additional facts to meet the minimum requirement, if necessary
+    }
   };
+
 
   return (
     <div className="select-facts">

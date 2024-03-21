@@ -8,15 +8,14 @@ import './SelectNarratives.css';
 
 const SelectNarratives = () => {
   const { narrativeOptions, selectedNarrative } = useGameState();
-
+  const dispatch = useGameDispatch();
 
   const handleNarrativeConfirmation = () => {
     // Logic to send selectedNarrative to backend
     // Implement this functionality
-    console.log('Narrative confirmed:', selectedNarrative);
+    dispatch({ type: 'SET_CURRENT_VIEW', payload: 'NARRATIVE_IMPACT' }); // Adjust the payload to the next phase's view name
     return
   };
-
 
   return (
     <div className="select-narratives">

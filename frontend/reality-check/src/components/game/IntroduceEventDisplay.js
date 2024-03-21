@@ -10,7 +10,7 @@ const IntroduceEventDisplay = () => {
   const [contentLoaded, setContentLoaded] = useState(false);
 
   const handleContinue = () => {
-    dispatch({ type: 'INTRODUCE_EVENT', payload: 'IDENTIFY_WEAKNESSES' }); // Adjust the payload to the next phase's view name
+    dispatch({ type: 'SET_CURRENT_VIEW', payload: 'IDENTIFY_WEAKNESSES' }); // Adjust the payload to the next phase's view name
   };
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const IntroduceEventDisplay = () => {
         <h2>Your Narrative</h2>
         {selectedNarrative && (
           <div className="selected-narrative">
-            <p>{selectedNarrative}</p>
+            <p>{selectedNarrative.text}</p>
           </div>
         )}
   

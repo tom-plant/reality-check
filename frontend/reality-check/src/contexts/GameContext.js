@@ -23,12 +23,8 @@ const initialState = {
     { id: 15, text: 'Fact 15' },
     { id: 16, text: 'Fact 16' },
   ],
-  currentView: 'NARRATIVE_IMPACT', 
-  selectedFactCombination: [
-    { id: 1, text: 'Fact 1' },
-    { id: 2, text: 'Fact 2' },
-    { id: 3, text: 'Fact 3' },
-  ], 
+  currentView: 'SELECT_FACTS', 
+  selectedFactCombination: [], 
   updatedFactCombination: [],
   selectionEnded: false,
   narrativeOptions: [
@@ -36,7 +32,9 @@ const initialState = {
     { id: 2, text: "I said, TWO GLASSES OF MILK, please." },
     { id: 3, text: "You know what, forget it." }
   ],
-  selectedNarrative: ["I am a C-H-R-I-S-T-I-A-N"],
+  selectedNarrative: [
+    { id: 1, text: "I am a C-H-R-I-S-T-I-A-N"}
+  ],
   primaryNewsContent: {
     headline: 'Bruh literally edged in fortnite.',
     story: 'Late yesterday evening, bruh literally edged in a fortnite game, shocking thousands and coming amidst a time of extreme scrutiny toward edging and and overwhelming preference to gooning. Literally bruh.',

@@ -11,7 +11,7 @@ const NarrativeImpactDisplay = () => {
 
 
   const handleContinue = () => {
-    dispatch({ type: 'SET_CURRENT_VIEW', payload: 'SELECT_UPDATED_FACTS' });
+    dispatch({ type: 'SET_CURRENT_VIEW', payload: 'INTRODUCE_EVENT' });
   };
 
     // Simulate content loading completion after a delay. CHANGE THIS TO APPEAR ONLY ONCE NEWS ARTICLES HAVE LOADED IN
@@ -27,7 +27,7 @@ const NarrativeImpactDisplay = () => {
         <h2>Your Narrative</h2>
         {selectedNarrative && (
         <div className="selected-narrative">
-          <p>{selectedNarrative}</p>
+          <p>{selectedNarrative.text}</p>
         </div>
       )}
         <h2>Your Facts</h2>

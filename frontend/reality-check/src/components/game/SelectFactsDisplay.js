@@ -1,12 +1,17 @@
 // SelectFactsDisplay.js
 
-import React from 'react';
-import { useGameState } from '../../contexts/GameContext';
+import React, { useEffect, useState } from 'react';
+import { useGameState, useGameDispatch } from '../../contexts/GameContext';
 import FactBox from '../common/FactBox'; 
 import './SelectFactsDisplay.css';
 
 const SelectFactsDisplay = () => {
   const { selectedFactCombination, selectionEnded } = useGameState();
+  const dispatch = useGameDispatch();
+
+  const handleGenerateNarrative = () => {
+    dispatch({ type: 'SET_CURRENT_VIEW', payload: 'SELECT_NARRATIVES' });
+  };
 
   return (
     <div className="select-facts-display">
@@ -22,7 +27,9 @@ const SelectFactsDisplay = () => {
           />
         ))}
       </div>
-      <button className="generate-narrative" disabled={!selectionEnded}>
+      <button className="generate-narrative" 
+        disabled={!selectionEnded}
+        onClick={handleGenerateNarrative}>
         Generate Narrative
       </button>
     </div>
