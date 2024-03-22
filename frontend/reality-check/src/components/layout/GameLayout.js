@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useGameState } from '../../contexts/GameContext'; 
+import { useGameState, useGameDispatch } from '../../contexts/GameContext'; 
 import SelectFacts from '../game/SelectFacts';
 import SelectFactsDisplay from '../game/SelectFactsDisplay'; 
 import SelectNarratives from '../game/SelectNarratives';
@@ -11,6 +11,7 @@ import IntroduceEventDisplay from '../game/IntroduceEventDisplay';
 import EventPopup from '../popups/EventPopup';
 import IdentifyWeaknesses from '../game/IdentifyWeaknesses';
 import IdentifyWeaknessesDisplay from '../game/IdentifyWeaknessesDisplay';
+import UpdatedNarrativePopup from '../popups/UpdatedNarrativePopup'
 import UpdatedNarrativeImpact from '../game/UpdatedNarrativeImpact';
 import UpdatedNarrativeImpactDisplay from '../game/UpdatedNarrativeImpactDisplay';
 import LeftContainer from '../containers/LeftContainer';
@@ -18,8 +19,9 @@ import RightContainer from '../containers/RightContainer';
 import './GameLayout.css'; // Import CSS
 
 const GameLayout = () => {
-  const { currentView, eventOptions } = useGameState();
-  const [isEventPopupVisible, setIsEventPopupVisible] = useState(true); // Assuming the popup should be visible initially
+  const { currentView, eventOptions, isUpdatedNarrativePopupVisible } = useGameState();
+  const [isEventPopupVisible, setIsEventPopupVisible] = useState(true); 
+  const dispatch = useGameDispatch();
 
   const renderLeftContent = () => {
     switch (currentView) { // Switch based on currentView from context
@@ -60,8 +62,12 @@ const GameLayout = () => {
     }
   };
 
-  const closePopup = () => {
+  const closeEventPopup = () => {
     setIsEventPopupVisible(false); // This will close the popup
+  };
+
+  const closeUpdatedNarrativePopup = () => {
+    dispatch({ type: 'TOGGLE_UPDATED_NARRATIVE_POPUP' });
   };
 
   return (
@@ -69,8 +75,11 @@ const GameLayout = () => {
       <LeftContainer>{renderLeftContent()}</LeftContainer>
       <RightContainer>{renderRightContent()}</RightContainer>
       {currentView === 'INTRODUCE_EVENT' && isEventPopupVisible && (
-        <EventPopup events={eventOptions} onClose={closePopup} />
+        <EventPopup events={eventOptions} onClose={closeEventPopup} />
         )}
+      {isUpdatedNarrativePopupVisible && (
+        <UpdatedNarrativePopup onClose={closeUpdatedNarrativePopup} />
+      )}
     </div>
   );
 };

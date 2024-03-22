@@ -1,8 +1,9 @@
 // src/context/GameContext.js
-import React, { createContext, useContext, useReducer } from 'react';
+import React, { createContext, useContext, useReducer, useState } from 'react';
 
 const GameStateContext = createContext();
 const GameDispatchContext = createContext();
+const GameFunctionContext = createContext(); // Create a new context for functions
 
 const initialState = {
   facts: [
@@ -47,9 +48,8 @@ const initialState = {
   ],
   selectedEvent: null,
   updatedFactCombination: [],
-
   secondaryNarratve: null, 
-  buttonStatus: {},
+  isUpdatedNarrativePopupVisible: false,
   userLanguage: 'English', // User selected language, default to English
 };
 
@@ -144,12 +144,33 @@ const gameReducer = (state, action) => {
         ...state,
         selectionEnded: false,
       };
+
+    case 'UPDATE_FACTS':
+      return {
+        ...state,
+        updatedFactCombination: action.payload,
+      };
+    case 'GENERATE_UPDATED_NARRATIVE':
+      // Set loading state or initiate API call here
+      // For now, just setting a placeholder narrative
+      return {
+        ...state,
+        secondaryNarrative: "Generating updated narrative...",
+      };
+    // Handle the completion of narrative generation and update state with the new narrative
+    case 'SET_UPDATED_NARRATIVE':
+      return {
+        ...state,
+        secondaryNarrative: action.payload,
+      };
       
+    case 'TOGGLE_UPDATED_NARRATIVE_POPUP':
+      return { ...state, isUpdatedNarrativePopupVisible: !state.isUpdatedNarrativePopupVisible };
+
       default:
         throw new Error(`Unhandled action type: ${action.type}`);
     }
 };
-
 
 
 const GameProvider = ({ children }) => {
@@ -166,4 +187,6 @@ const GameProvider = ({ children }) => {
 
 export const useGameState = () => useContext(GameStateContext);
 export const useGameDispatch = () => useContext(GameDispatchContext);
+export const useGameFunction = () => useContext(GameFunctionContext); 
+
 export default GameProvider;

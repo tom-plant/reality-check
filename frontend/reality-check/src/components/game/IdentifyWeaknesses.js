@@ -5,9 +5,8 @@ import FactBox from '../common/FactBox';
 import './IdentifyWeaknesses.css'; // Ensure you have this CSS file
 
 const IdentifyWeaknesses = () => {
-  const { facts, selectedFactCombination, updatedFactCombination, selectionEnded } = useGameState();
+  const { facts, updatedFactCombination, selectionEnded } = useGameState();
   const [displayedFacts, setDisplayedFacts] = useState(facts);  // Display all facts
-  const dispatch = useGameDispatch();
 
   return (
     <div className="identify-weaknesses">

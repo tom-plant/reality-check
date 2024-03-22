@@ -443,7 +443,6 @@ def handle_narrative_update(primary_narrative_id, updated_fact_combination_id, u
         news_content = get_news_content_by_secondary_narrative_id(secondary_narrative_id)
         return news_content, secondary_narrative_id
 
-#use generate_additional_narratives as a model
 def generate_secondary_narrative(language_code, context, primary_narrative, updated_fact_combination):
 
     API_KEY = os.environ.get('API_KEY')
