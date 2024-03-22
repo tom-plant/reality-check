@@ -50,6 +50,11 @@ const initialState = {
   updatedFactCombination: [],
   secondaryNarrative: { id: 1, text: "kaksteist kuud" } ,
   isUpdatedNarrativePopupVisible: false,
+  secondaryNewsContent: {
+    headline: "5 tips to rizz up your crush",
+    story: '1) Let me show you what these paws can do, 2) r/nevertellmetheodds of us meeting, 3) le epic sigma mogging, 4) can I get a huh yeah? 5) gigachad. nuff said.',
+    imageUrl: 'ayoooooplaceholder.com'
+  },
   userLanguage: 'English', // User selected language, default to English
 };
 
