@@ -9,7 +9,6 @@ const NarrativeImpactDisplay = () => {
   const dispatch = useGameDispatch();
   const [contentLoaded, setContentLoaded] = useState(false); // Simulate news content loading
 
-
   const handleContinue = () => {
     dispatch({ type: 'SET_CURRENT_VIEW', payload: 'INTRODUCE_EVENT' });
   };

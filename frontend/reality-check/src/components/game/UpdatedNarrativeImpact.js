@@ -5,7 +5,9 @@ import { useGameState } from '../../contexts/GameContext';
 
 
 const UpdatedNarrativeImpact = () => {
-  const { secondaryNewsContent } = useGameState();
+  const { secondaryNewsContent, secondaryNarrative } = useGameState();
+  console.log('secondaryNarrative from context:', secondaryNarrative);
+
 
   // Assuming primaryNewsContent has headline, story, and imageUrl properties
   const { headline, story, imageUrl } = secondaryNewsContent || {}; // Add a fallback to prevent errors if secondaryNewsContent is undefined

@@ -5,13 +5,14 @@ import { useGameState, useGameDispatch } from '../../contexts/GameContext';
 import './UpdatedNarrativeImpactDisplay.css'; // Make sure to create and style this CSS file
 
 const UpdatedNarrativeImpactDisplay = () => {
-  const { selectedNarrative, selectedFactCombination } = useGameState();
+  const { selectedNarrative, secondaryNarrative, updatedFactCombination } = useGameState();
   const dispatch = useGameDispatch();
   const [contentLoaded, setContentLoaded] = useState(false); // Simulate news content loading
 
+  console.log('secondaryNarrative from context:', secondaryNarrative);
 
   const handleContinue = () => {
-    dispatch({ type: 'SET_CURRENT_VIEW', payload: 'INTRODUCE_EVENT' });
+    dispatch({ type: 'SET_CURRENT_VIEW', payload: 'IDK_YET' });
   };
 
     // Simulate content loading completion after a delay. CHANGE THIS TO APPEAR ONLY ONCE NEWS ARTICLES HAVE LOADED IN
@@ -22,17 +23,23 @@ const UpdatedNarrativeImpactDisplay = () => {
 
     
   return (
-    <div className="narrative-impact-display-container">
-      <div className="narrative-impact-display">
-        <h2>Your Narrative</h2>
+    <div className="updated-narrative-impact-display-container">
+      <div className="updated-narrative-impact-display">
+        <h2>Updated Narrative</h2>
+          {secondaryNarrative && (
+          <div className="secondary-narrative">
+            <p>{secondaryNarrative.text}</p>
+          </div>
+        )}
+        <h2>Original Narrative</h2>
         {selectedNarrative && (
         <div className="selected-narrative">
           <p>{selectedNarrative.text}</p>
         </div>
       )}
-        <h2>Your Facts</h2>
+        <h2>Updated Facts</h2>
         <div className="facts-list">
-          {selectedFactCombination.map((fact) => (
+          {updatedFactCombination.map((fact) => (
             <div key={fact.id} className="displayed-fact">
               {fact.text}
             </div>

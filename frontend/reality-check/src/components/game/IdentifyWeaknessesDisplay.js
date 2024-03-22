@@ -5,16 +5,14 @@ import FactBox from '../common/FactBox';
 import './IdentifyWeaknessesDisplay.css'; // Make sure to create a corresponding CSS file
 
 const IdentifyWeaknessesDisplay = () => {
-  const { updatedFactCombination, isUpdatedNarrativePopupVisible } = useGameState();
+  const { updatedFactCombination } = useGameState();
   const dispatch = useGameDispatch();
 
   const handleUpdateNarrative = () => {
-    console.log(updatedFactCombination);
     dispatch({ type: 'SET_SELECTION_ENDED', payload: true });
     dispatch({ type: 'UPDATE_FACTS', payload: updatedFactCombination });
-    dispatch({ type: 'GENERATE_UPDATED_NARRATIVE' });
+    // dispatch({ type: 'GENERATE_UPDATED_NARRATIVE' });
     dispatch({ type: 'TOGGLE_UPDATED_NARRATIVE_POPUP' }); // This will toggle the popup visibility
-    console.log(isUpdatedNarrativePopupVisible)
   };
 
   return (

@@ -27,7 +27,7 @@
   width: 100%; /* Ensure it takes up the full width */
 }
 
-.updated-narrative, .displayed-fact {
+.selected-narrative, .secondary-narrative, .displayed-fact {
   padding: 10px;
   margin-bottom: 10px;
   width: 100%;

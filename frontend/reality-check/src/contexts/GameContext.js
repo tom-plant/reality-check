@@ -48,7 +48,7 @@ const initialState = {
   ],
   selectedEvent: null,
   updatedFactCombination: [],
-  secondaryNarratve: null, 
+  secondaryNarrative: { id: 1, text: "kaksteist kuud" } ,
   isUpdatedNarrativePopupVisible: false,
   userLanguage: 'English', // User selected language, default to English
 };
@@ -150,14 +150,13 @@ const gameReducer = (state, action) => {
         ...state,
         updatedFactCombination: action.payload,
       };
-    case 'GENERATE_UPDATED_NARRATIVE':
-      // Set loading state or initiate API call here
-      // For now, just setting a placeholder narrative
-      return {
-        ...state,
-        secondaryNarrative: "Generating updated narrative...",
-      };
-    // Handle the completion of narrative generation and update state with the new narrative
+
+    // case 'GENERATE_UPDATED_NARRATIVE':
+    //   return {
+    //     ...state,
+    //     secondaryNarrative: action.payload,
+    //   };
+
     case 'SET_UPDATED_NARRATIVE':
       return {
         ...state,

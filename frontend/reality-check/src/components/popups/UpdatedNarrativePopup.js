@@ -1,9 +1,12 @@
 import React from 'react';
-import { useGameDispatch } from '../../contexts/GameContext';
+import { useGameDispatch, useGameState } from '../../contexts/GameContext';
 import './UpdatedNarrativePopup.css'; 
 
-const UpdatedNarrativePopup = ({ secondaryNarrative }) => {
+const UpdatedNarrativePopup = () => {
+  const { secondaryNarrative } = useGameState();
   const dispatch = useGameDispatch();
+
+  console.log('secondaryNarrative from context:', secondaryNarrative);
 
   const handleContinue = () => {
     dispatch({ type: 'TOGGLE_UPDATED_NARRATIVE_POPUP' }); // This will toggle the popup visibility
@@ -15,11 +18,11 @@ const UpdatedNarrativePopup = ({ secondaryNarrative }) => {
     <div className="popup-overlay"> 
       <div className="popup-content"> 
         <h2>Your Updated Narrative</h2>
-        <p>{secondaryNarrative || "Loading updated narrative..."}</p>
+        <p>{secondaryNarrative.text}</p>
         <button
           className="continue-button"
           onClick={handleContinue}
-          disabled={secondaryNarrative}
+          // disabled={!secondaryNarrative}
         >
           Continue
         </button>
