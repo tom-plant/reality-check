@@ -10,10 +10,10 @@ const SelectFactsDisplay = () => {
   const dispatch = useGameDispatch();
 
   const handleGenerateNarrative = () => {
+    console.log(selectedFactCombination)
     dispatch({ type: 'COPY_FACTS_TO_UPDATED', payload: selectedFactCombination }); 
     dispatch({ type: 'SET_CURRENT_VIEW', payload: 'SELECT_NARRATIVES' });
     dispatch({ type: 'RESET_SELECTION_ENDED' });
-    console.log('reset')
   };
 
   return (

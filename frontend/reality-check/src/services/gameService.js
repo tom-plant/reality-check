@@ -22,11 +22,25 @@ export const register = async (username, email) => {
   }
 };
 
-// Function to fetch initial list of facts with dummy data for testing
-// In your fetchInitialFacts function in gameService.js
-export const fetchInitialFacts = async () => {
+// Function to fetch initial list of facts
+export const getFacts = async () => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/game/select_facts`, {
+    const response = await axios.get(`${API_BASE_URL}/game/get_facts`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      withCredentials: true, // If your backend requires cookies or session
+    });
+    return response.data; // This should return the list of facts from your backend
+  } catch (error) {
+    console.error('Error fetching facts:', error);
+    throw error;
+  }
+};
+
+export const generateNarrativeFromFacts = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/game/select_facts`, {
 
     }, {
       headers: {
@@ -36,7 +50,7 @@ export const fetchInitialFacts = async () => {
     });
     return response.data;
   } catch (error) {
-    console.error('Error fetching initial facts:', error);
+    console.error('Error generating narrative from facts:', error);
     throw error;
   }
 };

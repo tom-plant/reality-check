@@ -9,7 +9,7 @@ const IdentifyWeaknessesDisplay = () => {
   const dispatch = useGameDispatch();
 
   const handleUpdateNarrative = () => {
-    dispatch({ type: 'SET_SELECTION_ENDED', payload: true });
+    dispatch({ type: 'RESET_SELECTION_ENDED', payload: true });
     dispatch({ type: 'UPDATE_FACTS', payload: updatedFactCombination });
     // dispatch({ type: 'GENERATE_UPDATED_NARRATIVE' });
     dispatch({ type: 'TOGGLE_UPDATED_NARRATIVE_POPUP' }); // This will toggle the popup visibility

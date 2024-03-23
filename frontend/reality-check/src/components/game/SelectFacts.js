@@ -7,13 +7,11 @@ import Timer from '../common/Timer'; // Import the Timer component
 import './SelectFacts.css'; // Ensure you have a CSS file for styling
 
 const SelectFacts = () => {
-  const { facts, selectedFactCombination, currentView } = useGameState();
+  const { facts, selectedFactCombination, timerHasEnded } = useGameState();
   const dispatch = useGameDispatch();
   const [displayedFacts, setDisplayedFacts] = useState(facts.slice(0, 5)); // Start with the first 5 facts
   const selectedFactsRef = useRef(selectedFactCombination); // Ref to track the latest selected facts
-  const [timerHasEnded, setTimerHasEnded] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-
 
   useEffect(() => {
     selectedFactsRef.current = selectedFactCombination;
@@ -21,11 +19,13 @@ const SelectFacts = () => {
 
   const onTimeUp = () => {
     setTimeout(() => {
-      setTimerHasEnded(true); // Indicate that the timer has ended
       setIsButtonDisabled(true); // Disable the button
+      console.log('timerHasEnded',timerHasEnded)
       dispatch({ type: 'SET_TIMER_ENDED', payload: true });
     }, 0);
   };
+
+  console.log('timerHasEnded2',timerHasEnded)
 
   useEffect(() => {
     // Initially load a random selection of 5 facts
@@ -58,10 +58,6 @@ const SelectFacts = () => {
         additionalFacts.forEach(fact => {
           dispatch({ type: 'SELECT_FACT', payload: fact });
         });
-      }
-      setTimerHasEnded(false); // Reset for next timer cycle
-      if (currentView !== 'INTRODUCE_EVENT') {
-        setTimerHasEnded(false);
       }
     }
   }, [timerHasEnded, selectedFactsRef.current, dispatch, facts]); // Add dependencies as needed

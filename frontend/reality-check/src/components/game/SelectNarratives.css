@@ -31,4 +31,9 @@
     &:hover {
       background-color: #0056b3;
     }
+  /* Styling for disabled state */
+  &:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
   }

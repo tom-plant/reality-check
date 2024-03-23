@@ -5,7 +5,7 @@ import FactBox from '../common/FactBox';
 import './IdentifyWeaknesses.css'; // Ensure you have this CSS file
 
 const IdentifyWeaknesses = () => {
-  const { facts, updatedFactCombination, selectionEnded } = useGameState();
+  const { facts, updatedFactCombination, timerHasEnded } = useGameState();
   const [displayedFacts, setDisplayedFacts] = useState(facts);  // Display all facts
 
   return (
@@ -15,7 +15,7 @@ const IdentifyWeaknesses = () => {
           key={fact.id}
           fact={fact}
           isSelected={updatedFactCombination.includes(fact)}
-          disabled={selectionEnded}
+          disabled={timerHasEnded}
           container="left"
         />
       ))}

@@ -1,29 +1,13 @@
 // src/context/GameContext.js
-import React, { createContext, useContext, useReducer, useState } from 'react';
+import React, { createContext, useContext, useReducer, useState, useEffect } from 'react';
+import { getFacts } from '../services/gameService';
 
 const GameStateContext = createContext();
 const GameDispatchContext = createContext();
 const GameFunctionContext = createContext(); // Create a new context for functions
 
 const initialState = {
-  facts: [
-    { id: 1, text: 'Fact 1' },
-    { id: 2, text: 'Fact 2' },
-    { id: 3, text: 'Fact 3' },
-    { id: 4, text: 'Fact 4' },
-    { id: 5, text: 'Fact 5' },
-    { id: 6, text: 'Fact 6' },
-    { id: 7, text: 'Fact 7' },
-    { id: 8, text: 'Fact 8' },
-    { id: 9, text: 'Fact 9' },
-    { id: 10, text: 'Fact 10' },
-    { id: 11, text: 'Fact 11' },
-    { id: 12, text: 'Fact 12' },
-    { id: 13, text: 'Fact 13' },
-    { id: 14, text: 'Fact 14' },
-    { id: 15, text: 'Fact 15' },
-    { id: 16, text: 'Fact 16' },
-  ],
+  facts: [],
   currentView: 'SELECT_FACTS', 
   selectedFactCombination: [],
   timerHasEnded: false, 
@@ -66,6 +50,12 @@ const gameReducer = (state, action) => {
 
     case 'SET_LANGUAGE':
       return { ...state, userLanguage: action.payload };
+
+    case 'SET_FACTS':
+      return {
+        ...state,
+        facts: action.payload, 
+      };
 
     case 'SELECT_FACT':
       return {
@@ -153,7 +143,7 @@ const gameReducer = (state, action) => {
     case 'RESET_SELECTION_ENDED':
       return {
         ...state,
-        selectionEnded: false,
+        timerHasEnded: false,
       };
 
     case 'UPDATE_FACTS':
@@ -186,10 +176,36 @@ const gameReducer = (state, action) => {
 const GameProvider = ({ children }) => {
   const [state, dispatch] = useReducer(gameReducer, initialState);
 
+  const fetchAndSetFacts = async () => {
+    try {
+      const response = await getFacts(); // Assuming this returns the full response
+      if (response && response.facts) {
+        const factsData = response.facts;
+        const transformedFacts = factsData.map(fact => ({
+          id: fact.id,
+          text: fact.text
+        }));
+        dispatch({ type: 'SET_FACTS', payload: transformedFacts });
+      } else {
+        console.error("Fetched data is not in the expected format:", response);
+      }
+    } catch (error) {
+      console.error("Failed to fetch facts:", error);
+    }
+  };
+
+  useEffect(() => {
+    // Call fetchAndSetFacts within useEffect
+    fetchAndSetFacts();
+  }, []); // Empty dependency array means this effect runs once on mount
+
+
   return (
     <GameStateContext.Provider value={state}>
       <GameDispatchContext.Provider value={dispatch}>
-        {children}
+        <GameFunctionContext.Provider value={{ fetchAndSetFacts }}> 
+          {children}
+          </GameFunctionContext.Provider>
       </GameDispatchContext.Provider>
     </GameStateContext.Provider>
   );
