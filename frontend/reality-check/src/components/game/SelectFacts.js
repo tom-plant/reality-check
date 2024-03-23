@@ -1,5 +1,5 @@
 // SelectedFacts.js
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useGameState, useGameDispatch } from '../../contexts/GameContext'; // Adjust the path as needed
 import FactBox from '../common/FactBox'; // Adjust the path as needed
 import Counter from '../common/Counter'; // Adjust the path as needed
@@ -7,9 +7,25 @@ import Timer from '../common/Timer'; // Import the Timer component
 import './SelectFacts.css'; // Ensure you have a CSS file for styling
 
 const SelectFacts = () => {
-  const { facts, selectedFactCombination, selectionEnded } = useGameState();
+  const { facts, selectedFactCombination, currentView } = useGameState();
   const dispatch = useGameDispatch();
   const [displayedFacts, setDisplayedFacts] = useState(facts.slice(0, 5)); // Start with the first 5 facts
+  const selectedFactsRef = useRef(selectedFactCombination); // Ref to track the latest selected facts
+  const [timerHasEnded, setTimerHasEnded] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
+
+  useEffect(() => {
+    selectedFactsRef.current = selectedFactCombination;
+  }, [selectedFactCombination]);
+
+  const onTimeUp = () => {
+    setTimeout(() => {
+      setTimerHasEnded(true); // Indicate that the timer has ended
+      setIsButtonDisabled(true); // Disable the button
+      dispatch({ type: 'SET_TIMER_ENDED', payload: true });
+    }, 0);
+  };
 
   useEffect(() => {
     // Initially load a random selection of 5 facts
@@ -23,19 +39,32 @@ const SelectFacts = () => {
   };
 
   const loadMoreFacts = () => {
-    if (selectionEnded) {
+    if (timerHasEnded) {
       return;
     }
     // Combine current displayed facts with a new random selection of 5 facts, excluding duplicates
     const newSelection = getRandomFacts(facts.filter(fact => !displayedFacts.includes(fact)), 5);
     setDisplayedFacts(prev => [...prev, ...newSelection]);
   };
-  const onTimeUp = () => {
-    if (!selectionEnded) {
-      dispatch({ type: 'SET_SELECTION_ENDED', payload: true });
-      // Optional: Automatically select additional facts to meet the minimum requirement, if necessary
+
+  // Step 3: Use useEffect to handle state updates after rendering
+  useEffect(() => {
+    if (timerHasEnded) {
+      if (selectedFactsRef.current.length < 3) {
+        const factsNeeded = 3 - selectedFactsRef.current.length;
+        const unselectedFacts = facts.filter(fact => !selectedFactsRef.current.includes(fact));
+        const additionalFacts = getRandomFacts(unselectedFacts, factsNeeded);
+
+        additionalFacts.forEach(fact => {
+          dispatch({ type: 'SELECT_FACT', payload: fact });
+        });
+      }
+      setTimerHasEnded(false); // Reset for next timer cycle
+      if (currentView !== 'INTRODUCE_EVENT') {
+        setTimerHasEnded(false);
+      }
     }
-  };
+  }, [timerHasEnded, selectedFactsRef.current, dispatch, facts]); // Add dependencies as needed
 
 
   return (
@@ -50,7 +79,7 @@ const SelectFacts = () => {
             key={fact.id}
             fact={fact}
             isSelected={selectedFactCombination.includes(fact)}
-            disabled={selectionEnded} 
+            disabled={timerHasEnded} 
             container= "left"
           />
         ))}
@@ -58,7 +87,7 @@ const SelectFacts = () => {
       <button 
         className="load-more" 
         onClick={loadMoreFacts}
-        disabled={selectionEnded} 
+        disabled={isButtonDisabled} 
       >
         More Information
       </button>

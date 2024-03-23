@@ -25,8 +25,8 @@ const initialState = {
     { id: 16, text: 'Fact 16' },
   ],
   currentView: 'SELECT_FACTS', 
-  selectedFactCombination: [], 
-  selectionEnded: false,
+  selectedFactCombination: [],
+  timerHasEnded: false, 
   narrativeOptions: [
     { id: 1, text: "Two glasses of milk, please." },
     { id: 2, text: "I said, TWO GLASSES OF MILK, please." },
@@ -84,11 +84,20 @@ const gameReducer = (state, action) => {
       console.log('LOAD_MORE_FACTS action triggered. Implement logic to load more facts here.');
       return state; // Return the current state unchanged for now
 
-      case 'COPY_FACTS_TO_UPDATED':
-        return {
-          ...state,
-          updatedFactCombination: action.payload,
-        };
+    case 'COPY_FACTS_TO_UPDATED':
+      return {
+        ...state,
+        updatedFactCombination: action.payload,
+      };
+
+    case 'ADD_FACTS':
+      return {
+        ...state,
+        selectedFactCombination: [...state.selectedFactCombination, ...action.payload],
+      };
+
+    case 'SET_TIMER_ENDED':
+      return { ...state, timerHasEnded: action.payload };  
 
     case 'SELECT_NARRATIVE':
       console.log('Selecting narrative:', action.payload);
@@ -97,9 +106,6 @@ const gameReducer = (state, action) => {
     case 'DESELECT_NARRATIVE':
       console.log('Deselecting narrative');
       return { ...state, selectedNarrative: null };
-  
-    case 'SET_SELECTION_ENDED':
-        return { ...state, selectionEnded: action.payload };
 
     case 'SET_NEWS_CONTENT':
       return {

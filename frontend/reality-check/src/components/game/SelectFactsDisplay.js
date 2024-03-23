@@ -6,7 +6,7 @@ import FactBox from '../common/FactBox';
 import './SelectFactsDisplay.css';
 
 const SelectFactsDisplay = () => {
-  const { selectedFactCombination, selectionEnded } = useGameState();
+  const { selectedFactCombination, timerHasEnded } = useGameState();
   const dispatch = useGameDispatch();
 
   const handleGenerateNarrative = () => {
@@ -25,13 +25,13 @@ const SelectFactsDisplay = () => {
             key={fact.id}
             fact={fact}
             isSelected={true} // These are always selected
-            disabled={selectionEnded} 
+            disabled={timerHasEnded} 
             container="right"
           />
         ))}
       </div>
       <button className="generate-narrative" 
-        disabled={!selectionEnded}
+        disabled={!timerHasEnded}
         onClick={handleGenerateNarrative}>
         Generate Narrative
       </button>
