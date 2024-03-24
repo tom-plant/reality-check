@@ -3,21 +3,24 @@ import axios from 'axios';
 
 const API_BASE_URL = 'http://localhost:5000'; // Adjust this to your actual Flask API URL
 
-export const register = async (username, email) => {
+
+// Function to authenticate (register or login) the user
+export const authenticateUser = async (username, email) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/game/register`, {
-      username: 'tplant',
-      email: 'tjplantt@gmail.com',
+    const response = await axios.post(`${API_BASE_URL}/auth`, {
+      username,
+      email,
     }, {
       headers: {
         'Content-Type': 'application/json',
       },
-      withCredentials: true,
+      withCredentials: true, // Ensure you're handling credentials like cookies if needed
     });
-    // Handle successful login here (e.g., storing session token if applicable)
+
+    // Handle successful authentication here (e.g., storing user_id or other relevant info)
     return response.data;
   } catch (error) {
-    console.error('Error during login:', error);
+    console.error('Error during user authentication:', error);
     throw error;
   }
 };
@@ -38,10 +41,13 @@ export const getFacts = async () => {
   }
 };
 
-export const generateNarrativeFromFacts = async () => {
+export const generateNarrativeFromFacts = async (selectedFactCombination) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/game/select_facts`, {
+    // Transform selectedFactCombination to an array of fact texts
+    const selectedFactsTexts = selectedFactCombination.map(fact => fact.text);
 
+    const response = await axios.post(`${API_BASE_URL}/game/select_facts`, {
+      selected_facts: selectedFactsTexts, // Send the transformed array
     }, {
       headers: {
         'Content-Type': 'application/json',

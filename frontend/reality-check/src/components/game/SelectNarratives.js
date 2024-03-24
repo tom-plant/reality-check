@@ -7,13 +7,21 @@ import './SelectNarratives.css';
 
 
 const SelectNarratives = () => {
-  const { narrativeOptions, selectedNarrative } = useGameState();
+  const { narrativeOptions, selectedNarrative, isLoadingNarratives } = useGameState();
   const dispatch = useGameDispatch();
+
+  if (isLoadingNarratives) {
+    console.log('loading narratives')
+    return <div>Loading narratives...</div>; // Or any other loading indicator you prefer
+  }
+
+  console.log(narrativeOptions);
 
   const handleNarrativeConfirmation = () => {
     // Logic to send selectedNarrative to backend
     // Implement this functionality
-    dispatch({ type: 'SET_CURRENT_VIEW', payload: 'NARRATIVE_IMPACT' }); // Adjust the payload to the next phase's view name
+    console.log(narrativeOptions);
+    dispatch({ type: 'SET_CURRENT_VIEW', payload: 'NARRATIVE_IMPACT' }); 
     return
   };
 
@@ -21,11 +29,11 @@ const SelectNarratives = () => {
     <div className="select-narratives">
         <h2>Select Narratives</h2>
         <div className="narratives-list">
-          {narrativeOptions.map((narrative) => (
+          {narrativeOptions && narrativeOptions.map((narrative) => (
             <NarrativeBox 
               key={narrative.id} 
               narrative={narrative}
-              isSelected={selectedNarrative && narrative.id === selectedNarrative.id}
+              isSelected={selectedNarrative && narrative === selectedNarrative}
               container="left"
             />
           ))}

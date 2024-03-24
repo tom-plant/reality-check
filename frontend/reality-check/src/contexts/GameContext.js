@@ -1,21 +1,20 @@
 // src/context/GameContext.js
 import React, { createContext, useContext, useReducer, useState, useEffect } from 'react';
-import { getFacts } from '../services/gameService';
+import { authenticateUser, getFacts, generateNarrativeFromFacts } from '../services/gameService';
 
 const GameStateContext = createContext();
 const GameDispatchContext = createContext();
 const GameFunctionContext = createContext(); // Create a new context for functions
 
 const initialState = {
+  username: 'tomtom',
+  email: 'lolita@gmail.com',
   facts: [],
   currentView: 'SELECT_FACTS', 
   selectedFactCombination: [],
   timerHasEnded: false, 
-  narrativeOptions: [
-    { id: 1, text: "Two glasses of milk, please." },
-    { id: 2, text: "I said, TWO GLASSES OF MILK, please." },
-    { id: 3, text: "You know what, forget it." }
-  ],
+  isLoadingNarratives: false,
+  narrativeOptions: [],
   selectedNarrative: [
     { id: 1, text: "I am a C-H-R-I-S-T-I-A-N"}
   ],
@@ -48,6 +47,15 @@ const gameReducer = (state, action) => {
     case 'SET_CURRENT_VIEW':
       return { ...state, currentView: action.payload };
 
+    case 'SET_USER':
+      return { ...state, user: action.payload };
+  
+    case 'SET_EMAIL':
+      return { ...state, email: action.payload };
+
+    case 'SET_AUTH_ERROR':
+      return { ...state, authError: action.payload };
+      
     case 'SET_LANGUAGE':
       return { ...state, userLanguage: action.payload };
 
@@ -96,6 +104,15 @@ const gameReducer = (state, action) => {
     case 'DESELECT_NARRATIVE':
       console.log('Deselecting narrative');
       return { ...state, selectedNarrative: null };
+
+    case 'SET_NARRATIVE_OPTIONS':
+      return {
+        ...state,
+        narrativeOptions: action.payload, 
+      };
+  
+    case 'SET_LOADING_NARRATIVES':
+      return { ...state, isLoadingNarratives: action.payload };
 
     case 'SET_NEWS_CONTENT':
       return {
@@ -195,15 +212,47 @@ const GameProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    // Call fetchAndSetFacts within useEffect
     fetchAndSetFacts();
-  }, []); // Empty dependency array means this effect runs once on mount
+  }, []); 
+
+  // Inside your GameProvider component or function where you define custom context functions
+  const loginUser = async (username, email) => {
+    try {
+      const response = await authenticateUser(username, email);
+      // Dispatch an action to update your state based on the response
+      // For example, storing the user_id in the state
+      dispatch({ type: 'SET_USER', payload: response.user_id });
+    } catch (error) {
+      console.error("Authentication error:", error);
+      // Handle error, possibly by setting an error message in your state
+      dispatch({ type: 'SET_AUTH_ERROR', payload: error.message });
+    }
+  };
+
+
+  const fetchAndSetNarratives = async (selectedFacts) => {
+    try {
+      dispatch({ type: 'SET_LOADING_NARRATIVES', payload: true });
+      const narrativesData = await generateNarrativeFromFacts(selectedFacts);
+      // Map the narratives to the expected format
+      const formattedNarratives = narrativesData.narratives.map((narrativeText, index) => ({
+        id: index, // Since there might not be unique IDs, using index as a key
+        text: narrativeText
+      }));
+      dispatch({ type: 'SET_NARRATIVE_OPTIONS', payload: formattedNarratives });
+      dispatch({ type: 'SET_LOADING_NARRATIVES', payload: false });
+    } catch (error) {
+      console.error("Failed to fetch narratives:", error);
+      dispatch({ type: 'SET_LOADING_NARRATIVES', payload: false });
+    }
+  };
+
 
 
   return (
     <GameStateContext.Provider value={state}>
       <GameDispatchContext.Provider value={dispatch}>
-        <GameFunctionContext.Provider value={{ fetchAndSetFacts }}> 
+        <GameFunctionContext.Provider value={{ fetchAndSetFacts, loginUser, fetchAndSetNarratives }}> 
           {children}
           </GameFunctionContext.Provider>
       </GameDispatchContext.Provider>

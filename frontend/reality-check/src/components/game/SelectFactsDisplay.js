@@ -1,16 +1,18 @@
 // SelectFactsDisplay.js
 
 import React, { useEffect, useState } from 'react';
-import { useGameState, useGameDispatch } from '../../contexts/GameContext';
+import { useGameState, useGameDispatch, useGameFunction } from '../../contexts/GameContext';
 import FactBox from '../common/FactBox'; 
 import './SelectFactsDisplay.css';
 
 const SelectFactsDisplay = () => {
-  const { selectedFactCombination, timerHasEnded } = useGameState();
+  const { selectedFactCombination, timerHasEnded, narrativeOptions } = useGameState();
+  const { fetchAndSetNarratives } = useGameFunction(); 
   const dispatch = useGameDispatch();
 
-  const handleGenerateNarrative = () => {
-    console.log(selectedFactCombination)
+  const handleGenerateNarrative = async () => {
+    await fetchAndSetNarratives(selectedFactCombination);
+    console.log('fetchnarrativeactivated',narrativeOptions)
     dispatch({ type: 'COPY_FACTS_TO_UPDATED', payload: selectedFactCombination }); 
     dispatch({ type: 'SET_CURRENT_VIEW', payload: 'SELECT_NARRATIVES' });
     dispatch({ type: 'RESET_SELECTION_ENDED' });
