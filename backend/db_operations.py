@@ -47,6 +47,13 @@ def get_user_by_username_or_email(username_or_email, _session=None):
     ).scalars().first()
     return user
 
+def get_user_by_email(email, _session=None):
+    session = _session or db.session
+    user = session.execute(
+        select(User).where(User.email == email)
+    ).scalars().first()
+    return user
+
 def get_user_language_by_id(user_id, _session=None):
     session = _session or db.session
     user = session.get(User, user_id)
@@ -244,7 +251,10 @@ def create_fact_combination(facts, _session=None):
 # Read Fact Combinations
 def get_fact_combination_by_id(fact_combination_id, _session=None):
     session = _session or db.session
-    return session.get(FactCombination, fact_combination_id)
+    fact_combination = session.get(FactCombination, fact_combination_id)
+    if fact_combination:
+        return fact_combination.facts  # Return just the facts string or JSON
+    return None  # Return None if the FactCombination object was not found
 
 def get_all_fact_combinations(_session=None):
     session = _session or db.session
@@ -303,20 +313,22 @@ def get_narratives_by_fact_combination(fact_combination_id, _session=None):
 # Retrieve Fact ID by Fact Combination
 def get_fact_combination_id_by_facts(facts, _session=None):
     session = _session or db.session
-    sorted_input_facts = sorted(facts)  # Sort the input facts to ensure order doesn't matter
 
-    # Get all fact combinations that could potentially match by checking if they contain all the input facts
-    potential_matches = session.query(FactCombination).filter(
-        *[FactCombination.facts.contains(fact) for fact in facts]
-    ).all()
+    # Convert the input facts list to a set for efficient comparison
+    input_facts_set = set(facts)
 
-    for fact_combination in potential_matches:
-        # Split the facts string into a list, sort it, and compare with the sorted input facts
-        fact_combination_facts = sorted(fact_combination.facts.split(','))  # Assuming facts are comma-separated
-        if fact_combination_facts == sorted_input_facts:
-            return fact_combination.id  # Return the ID if a match is found
+    # Retrieve all fact combinations
+    all_fact_combinations = session.query(FactCombination).all()
 
-    return None  # Return None if no match is found
+    for fact_combination in all_fact_combinations:
+        # Split the stored comma-separated facts string into a list and convert to a set
+        stored_facts_set = set(fact_combination.facts.split(','))
+
+        # Check if the sets are equal, indicating a match regardless of order
+        if stored_facts_set == input_facts_set:
+            return fact_combination.id  # Return the matching FactCombination ID
+
+    return None  # Return None if no matching FactCombination is found
 
 
 # Primary Narrative Operations

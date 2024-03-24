@@ -6,8 +6,11 @@ import logging
 import json
 import requests
 from db_operations import *
-from flask import session, redirect, url_for
+from flask import session, redirect, url_for, current_app
 from localization import get_text
+
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 def initialize_data_controller(user_id):
     session['user_data'] = {
@@ -17,6 +20,7 @@ def initialize_data_controller(user_id):
         'secondary_narrative_id': None,
         'narrative_events_id': None,
     }
+
 
 def register_user_controller(username, email):
     # Use the create_user function to create a new user
@@ -35,47 +39,50 @@ def register_user_controller(username, email):
         return {"message": "User registered successfully", "user_id": new_user.id}
     else:
         return {"error": "User registration failed"}
-    
-def login_user_controller(username_or_email):
-    # Check if user exists by username or email
-    user = get_user_by_username_or_email(username_or_email)
-    
-    if user:
-        # Store user ID in the session
-        session['user_id'] = user.id
-        
-        return {"message": "User logged in successfully", "user_id": user.id}
-    else:
-        return {"error": "User not found"}
+
+
+
+def get_all_facts_controller():
+    try:
+        facts = get_all_facts()
+        facts_list = [{'id': fact.id, 'text': fact.text, 'language': fact.language} for fact in facts]
+        return {"facts": facts_list}
+    except:
+        print(f"Database error")
+        return {"error": "Failed to fetch facts from the database."}, 500
+
 
 
 def select_facts_controller(selected_facts):
+    from app import app
 
     # Ensure 'user_data' is initialized in session
     if 'user_data' not in session:
         return {"error": "User not logged in"}, 401     
 
+    current_app.logger.debug(f"Received facts: {selected_facts}")
     # Store the fact_combination_id in session
-    print(f"Received facts: {selected_facts}")  # Log received facts
     fact_combination_id = handle_fact_combination(selected_facts)
-    print(f"Fact combination ID: {fact_combination_id}")  # Log the ID of the fact combination
+    current_app.logger.debug(f"Fact combination ID: {fact_combination_id}")
     session['user_data']['fact_combination_id'] = fact_combination_id
+    session.modified = True
 
-    return {"fact_combination_id": fact_combination_id} #temproary for debugging
+    # Present three narratives, generated or pulled from database
+    narratives = get_narratives_by_fact_combination(fact_combination_id)
+    num_narratives = len(narratives)
 
-
-    # # Present three narratives, generated or pulled from database
-    # narratives = get_narratives_by_fact_combination(selected_facts)
-    # num_narratives = len(narratives)
-
-    # if num_narratives >= 3:
-    #     random_narratives = random.sample(narratives, 3) if num_narratives > 3 else narratives
-    #     return {"narratives": random_narratives}
-    # else:
-    #     num_additional_narratives = 3 - num_narratives
-    #     additional_narratives = generate_additional_narratives(selected_facts, num_additional_narratives)
-    #     combined_narratives = narratives + additional_narratives
-    #     return {"narratives": combined_narratives}
+    if num_narratives >= 3:
+        random_narratives = random.sample(narratives, 3) if num_narratives > 3 else narratives
+        if not isinstance(narratives, list):
+            narratives = [f"Error: {narratives}"]
+        return {"narratives": random_narratives}
+    else:
+        num_additional_narratives = 3 - num_narratives
+        additional_narratives = generate_additional_narratives(selected_facts, num_additional_narratives)
+        combined_narratives = narratives + additional_narratives
+        if not isinstance(narratives, list):
+            combined_narratives = [f"Error: {narratives}"]
+        return {"narratives": combined_narratives}
 
 def handle_fact_combination(selected_facts):
     
@@ -142,21 +149,27 @@ def generate_additional_narratives(selected_facts, num_additional_narratives):
 
 
 def select_narrative_controller(selected_narrative):
-    # # Ensure 'user_data' is initialized in session
-    # if 'user_data' not in session:
-    #     return {"error": "User not logged in"}, 401
+    # Ensure 'user_data' is initialized in session
+    current_app.logger.debug(f"Session Data: {session}")
+    if 'user_data' not in session:
+        return {"error": "User not logged in"}, 401
 
     # Set language code and selected facts
+    current_app.logger.debug("Retrieving user language code.")
     language_code = get_user_language_by_id(user_id=session['user_data']['user_id'])
+    current_app.logger.debug(f"Language Code: {language_code}")
     selected_facts = get_fact_combination_by_id(session['user_data']['fact_combination_id'])
+    current_app.logger.debug(f"Selected Facts: {selected_facts}")
 
     # Call the function to generate news content
+    current_app.logger.debug("Calling generate_news_content")
     news_content = generate_news_content(language_code, "primary_narrative", selected_narrative, selected_facts)
+    current_app.logger.debug(f"News Content: {news_content}")
 
     # Commit Primary Narrative to Database
     primary_narrative = create_primary_narrative(
         fact_combination_id=session['user_data']['fact_combination_id'],
-        narrative_text=selected_narrative,
+        narrative_text=selected_narrative['text'],  
         user_id=session['user_data']['user_id'],
         headline=news_content["headline"],
         story=news_content["story"],
@@ -166,14 +179,16 @@ def select_narrative_controller(selected_narrative):
     db.session.add(primary_narrative)
     db.session.commit()
     session['user_data']['primary_narrative_id'] = primary_narrative.id
+    session.modified = True
 
     # Return the news data as a JSON response
     return {"news_content": news_content}
 
 def generate_prompts(language_code, category, context, selected_narrative, selected_facts, headline=None):
 
-    if isinstance(selected_facts, list):
-        selected_facts = ", ".join(selected_facts)  # Join if list
+    # if isinstance(selected_facts, list):
+    #     selected_facts = ", ".join(selected_facts)  # Join if list
+    current_app.logger.debug(f"selected_facts: {selected_facts}")
     replacements = {
         "narrative": selected_narrative,
         "evidence": selected_facts
@@ -207,6 +222,7 @@ def generate_prompts(language_code, category, context, selected_narrative, selec
 def generate_news_content(language_code, context, selected_narrative, selected_facts):
 
     API_KEY = os.environ.get('API_KEY')
+    current_app.logger.debug("Entered generate_news_content")
 
     # Function to send requests to the ChatGPT API
     def get_chatgpt_response(system_content, user_content):
@@ -291,9 +307,11 @@ def generate_news_content(language_code, context, selected_narrative, selected_f
     # Execute Generations
     # Gnerate only headline prompts and headline
     headline_prompts = generate_prompts(language_code, "chatgpt_prompts", context, selected_narrative, selected_facts)
+    current_app.logger.debug("Calling ChatGPT API for headline")
     headline = get_chatgpt_response(headline_prompts['headline_system'], headline_prompts['headline_user'])
     if not headline:
         raise Exception("Failed to generate headline, halting process.")
+    current_app.logger.debug(f"Generated Headline: {headline}")
 
     # Generate story and image prompts using the actual headline
     full_prompts = generate_prompts(language_code, "chatgpt_prompts", context, selected_narrative, selected_facts, headline=headline)
@@ -302,9 +320,13 @@ def generate_news_content(language_code, context, selected_narrative, selected_f
     story = get_chatgpt_response(full_prompts['story_system'], full_prompts['story_user'])
     if not story:
         raise Exception("Failed to generate story, halting process.")
+    current_app.logger.debug(f"Generated story: {story}")
 
     # Generate image URL using the image prompt
+    current_app.logger.debug("Calling DALL-E-2 API for image")
     image_url = get_dalle2_response(full_prompts['image_prompt'])
+    current_app.logger.debug(f"Generated imageurl: {image_url}")
+
 
     # Combine the generated content
     news_content = {

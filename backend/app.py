@@ -5,15 +5,17 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_session import Session 
 from models import db  
+from db_operations import *
 from flask_cors import CORS
 import uuid #for unique user id
 from config import Config, DevelopmentConfig, TestingConfig, SECRET_KEY, SQL_KEY
-from controllers import * 
+from controllers import initialize_data_controller, register_user_controller, get_all_facts_controller, select_facts_controller, select_narrative_controller, introduce_event_controller, identify_weaknesses_controller
 from dotenv import load_dotenv
 import os
 import sys
 from sqlalchemy.exc import SQLAlchemyError
 import logging
+
 
 
 
@@ -50,22 +52,41 @@ def generate_session_id():
 def hello():
     return "Hello, Dockerized Flask!"
 
-@app.route('/game/register', methods=['POST'])
-def register():
-    try: 
-        username = request.json.get('username')
-        email = request.json.get('email')
-        response = register_user_controller(username, email)
-        return jsonify(response)
-    except:
-        return jsonify({"error": "This email is already in use."})
-        
+@app.route('/debug/session')
+def debug_session():
+    return jsonify(dict(session))
 
-@app.route('/auth/login', methods=['POST'])
-def login():
-    username_or_email = request.json.get('username_or_email')
-    response = login_user_controller(username_or_email)
-    return jsonify(response)
+@app.route('/auth', methods=['POST'])
+def auth():
+    username = request.json.get('username')
+    email = request.json.get('email')
+
+    # Check if the user exists by email
+    existing_user = get_user_by_email(email)
+
+    if existing_user:
+        # If the user exists, check if the username matches
+        if existing_user.username == username:
+            # Proceed with login
+            initialize_data_controller(existing_user.id)
+            session['user_id'] = existing_user.id
+            return jsonify({"message": "User logged in successfully", "user_id": existing_user.id})
+        else:
+            # Username does not match the existing record
+            return jsonify({"error": "Username and email do not match."})
+    else:
+        # Proceed with registration if the user does not exist
+        try:
+            response = register_user_controller(username, email)
+            return jsonify(response)
+        except Exception as e:
+            return jsonify({"error": "User registration failed", "details": str(e)})
+
+
+@app.route('/game/get_facts', methods=['GET'])
+def get_facts():
+    response_data = get_all_facts_controller()
+    return jsonify(response_data)
 
     
 # Initial Fact Selection & Narrative Generation
@@ -73,11 +94,12 @@ def login():
 def select_facts():
     try: 
         # Receive selected facts from the frontend
-        app.logger.debug(request.json)  # This will print the received JSON data in the console
+        app.logger.debug('json:',request.json)  # This will print the received JSON data in the console
         selected_facts = request.json.get('selected_facts')
         # Call controller function to handle logic
         response_data = select_facts_controller(selected_facts)
-        app.logger.debug(selected_facts)  # This will print the 'selected_facts' to ensure it's a list of strings
+        app.logger.debug(f'facts: {selected_facts}')  # This will print the 'selected_facts' to ensure it's a list of strings
+        app.logger.debug('output:',response_data)
         # Return response to frontend
         return jsonify(response_data)
     except SQLAlchemyError as e:
@@ -92,10 +114,9 @@ def select_facts():
 def select_narrative():
     # Receive selected narrative and facts combination from the frontend
     selected_narrative = request.json.get('selected_narrative')
-    selected_facts = request.json.get('selected_facts')
     
     # Call controller function to handle logic
-    response_data = select_narrative_controller(selected_narrative, selected_facts)
+    response_data = select_narrative_controller(selected_narrative)
     
     # Return response to frontend
     return jsonify(response_data)

@@ -9,3 +9,4 @@ mysqlclient
 python-dotenv
 Flask-CORS
 pymysql>=0.9.3
+cachelib

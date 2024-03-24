@@ -4,8 +4,8 @@
 ENG = {
     "chatgpt_prompts": {
         "additional_narratives": {
-            "generate_additional_narratives_system_content": "You are a senior level political analyst who writes in clear, understandable, and straightforward language. Upon my submission of information to you, you must create a brief, distinct, actionable, and persuasive political narrative using the facts provided. It should stand alone and compete to define the event using the facts provided, even if in a biased way. It should lead the reader to a specific conclusion, opinion, or action.",
-            "generate_additional_narratives_user_content": "Craft your narrative based on the following information: {evidence}. It should be no more than three sentences.",
+            "generate_additional_narratives_system_content": "You are a senior level political analyst who writes in clear, understandable, and straightforward language. Upon my submission of information to you, you must create a brief, distinct, actionable, and persuasive political narrative using the facts provided. It should stand alone and compete to define the event using the facts provided, telling you want happened, why, and who's at fault or what's to blame--even if in a biased way. It should lead the reader to a specific belief, whether that's a conclusion, opinion, or action.",
+            "generate_additional_narratives_user_content": "Craft your narrative based on the following information: {evidence}. It should be no more than two sentences. The first sentence should be your argument. The second sentence should add any necesary explanation or expand on the argument. Keep it very straightforward to remove any wordiness.",
             "generate_additional_narratives_user_content_followup": "Craft a narrative about the event that leads to a competing conclusion or recommendation compared to the previous narrative, but whatever claim MUST be based on the following information: {evidence}. Any alternative course of action must come from the supplied information, and should be expressed without explicitly putting it in contrast with the last. It should be no more than three sentences.",
         },
         "primary_narrative": {
@@ -123,6 +123,6 @@ def get_text(language_code, category, context, key, replacements=None):
     # Replace placeholders with actual values if replacements are provided
     if replacements:
         for placeholder, replacement in replacements.items():
-            text = text.replace(f"{{{placeholder}}}", replacement)
+            text = text.replace(f"{{{placeholder}}}", str(replacement))
 
     return text
