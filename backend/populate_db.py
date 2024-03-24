@@ -30,13 +30,23 @@ facts = [
     "Hospitals report a surge in patients with stress-related conditions.",
     "School closures announced nationwide due to security concerns."
 ]
+# Event entries to be added
+events = [
+    "The President invokes an 'imperial presidency' to unify power amidst national security concerns."
+    "A high-profile whistleblower from within the government leaks documents suggesting the quantum breach was known and contained, challenging the official narrative."
+    "Terrorist group leaks set of photos shows the alleged top secret chinese quantum computing center"
+]
+
+
 if os.getenv('FLASK_ENV') == 'development':
     with app.app_context():  # Use the app's context
         # Iterate over the facts list and add each to the database
         for fact_text in facts:
             new_fact = Fact(text=fact_text, language='ENG')  # Assuming all facts are in English
             db.session.add(new_fact)
-
+        for event_text in events:
+            new_event = Event(text=event_text, language='ENG')  # Assuming all facts are in English
+            db.session.add(event_fact)
         # Commit the session to save these objects to the database
         db.session.commit()
 
