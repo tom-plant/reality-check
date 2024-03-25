@@ -19,7 +19,7 @@ import RightContainer from '../containers/RightContainer';
 import './GameLayout.css'; // Import CSS
 
 const GameLayout = () => {
-  const { currentView, eventOptions, isUpdatedNarrativePopupVisible } = useGameState();
+  const { currentView, isUpdatedNarrativePopupVisible } = useGameState();
   const [isEventPopupVisible, setIsEventPopupVisible] = useState(true); 
   const dispatch = useGameDispatch();
 
@@ -75,7 +75,7 @@ const GameLayout = () => {
       <LeftContainer>{renderLeftContent()}</LeftContainer>
       <RightContainer>{renderRightContent()}</RightContainer>
       {currentView === 'INTRODUCE_EVENT' && isEventPopupVisible && (
-        <EventPopup events={eventOptions} onClose={closeEventPopup} />
+        <EventPopup onClose={closeEventPopup} />
         )}
       {isUpdatedNarrativePopupVisible && (
         <UpdatedNarrativePopup onClose={closeUpdatedNarrativePopup} />

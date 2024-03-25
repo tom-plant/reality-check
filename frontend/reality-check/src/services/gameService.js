@@ -41,6 +41,22 @@ export const getFacts = async () => {
   }
 };
 
+// Function to fetch initial list of events
+export const getEvents = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/game/get_events`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      withCredentials: true, // If your backend requires cookies or session
+    });
+    return response.data; // This should return the list of events from your backend
+  } catch (error) {
+    console.error('Error fetching events:', error);
+    throw error;
+  }
+};
+
 export const generateNarrativeFromFacts = async (selectedFactCombination) => {
   try {
     // Transform selectedFactCombination to an array of fact texts
@@ -62,11 +78,12 @@ export const generateNarrativeFromFacts = async (selectedFactCombination) => {
 };
 
 // Function to select a narrative based on selected facts
-export const selectNarrative = async (selectedNarrative, selectedFacts) => {
+export const selectNarrative = async (selectedNarrative) => {
   try {
     const response = await axios.post(`${API_BASE_URL}/game/select_narrative`, {
-      selected_narrative: selectedNarrative,
-      selected_facts: selectedFacts,
+      selected_narrative: selectedNarrative
+    }, {
+      withCredentials: true 
     });
     return response.data;
   } catch (error) {
@@ -75,10 +92,14 @@ export const selectNarrative = async (selectedNarrative, selectedFacts) => {
   }
 };
 
-// Function to introduce a follow-up event
-export const introduceEvent = async () => {
+// Function to introduce an event and retrieve news content
+export const introduceEvent = async (selectedEvent) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/game/introduce_event`);
+    const response = await axios.post(`${API_BASE_URL}/game/introduce_event`, {
+      Event: selectedEvent
+    }, {
+      withCredentials: true
+    });
     return response.data;
   } catch (error) {
     console.error('Error introducing event:', error);

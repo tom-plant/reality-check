@@ -41,7 +41,6 @@ def register_user_controller(username, email):
         return {"error": "User registration failed"}
 
 
-
 def get_all_facts_controller():
     try:
         facts = get_all_facts()
@@ -51,6 +50,14 @@ def get_all_facts_controller():
         print(f"Database error")
         return {"error": "Failed to fetch facts from the database."}, 500
 
+def get_all_events_controller():
+    try:
+        events = get_all_events()  
+        events_list = [{'id': event.id, 'text': event.text, 'language': event.language} for event in events]
+        return {"events": events_list}
+    except Exception as e:
+        print(f"Database error: {str(e)}")
+        return {"error": "Failed to fetch events from the database."}, 500
 
 
 def select_facts_controller(selected_facts):
@@ -337,15 +344,10 @@ def generate_news_content(language_code, context, selected_narrative, selected_f
     
     return news_content
 
-def introduce_event_controller():
+def introduce_event_controller(Event):
     # Check if user is logged in
     if 'user_data' not in session:
         return {"error": "User not logged in"}, 401
-
-    # Randomly select an event
-    Event = get_random_event()
-    if not Event:
-        return {"error": "No event found"}, 404
     
     # Extract necessary values from session
     language_code = get_user_language_by_id(user_id=session['user_data']['user_id'])
@@ -360,6 +362,7 @@ def introduce_event_controller():
     if isinstance(news_content, dict) and 'error' in news_content:
         return news_content, narrative_event_id  # Directly return the error response
     session['user_data']['narrative_events_id'] = narrative_event_id
+    session.modified = True
     
     return {"event_news_content": news_content, "narrative_event_id": narrative_event_id}, 200
 
@@ -402,7 +405,6 @@ def generate_event_news_content(primary_narrative, context, language_code, event
     return event_news_content
 
 
-
 def identify_weaknesses_controller(updated_fact_combination):     # Receive Updated Fact Combination
     # Check if user is logged in
     if 'user_data' not in session:
@@ -421,6 +423,7 @@ def identify_weaknesses_controller(updated_fact_combination):     # Receive Upda
     news_content, secondary_narrative_id = handle_narrative_update(primary_narrative_id, updated_fact_combination_id, updated_fact_combination, language_code, context) 
     # Store secondary_narrative_id in user session
     session['user_data']['secondary_narrative_id'] = secondary_narrative_id
+    session.modified = True
 
     if news_content is None:
         return {"error": "Failed to handle narrative event"}, 500

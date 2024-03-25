@@ -1,26 +1,22 @@
 // SelectedNarrative.js
 
 import React from 'react';
-import { useGameState, useGameDispatch } from '../../contexts/GameContext';
+import { useGameState, useGameDispatch, useGameFunction } from '../../contexts/GameContext';
 import NarrativeBox from '../common/NarrativeBox'; 
 import './SelectNarratives.css'; 
 
 
 const SelectNarratives = () => {
-  const { narrativeOptions, selectedNarrative, isLoadingNarratives } = useGameState();
+  const { narrativeOptions, selectedNarrative, isLoadingNarratives, primaryNewsContent } = useGameState();
+  const { selectNarrativeAndSetContent } = useGameFunction(); 
   const dispatch = useGameDispatch();
 
   if (isLoadingNarratives) {
-    console.log('loading narratives')
     return <div>Loading narratives...</div>; // Or any other loading indicator you prefer
   }
 
-  console.log(narrativeOptions);
-
   const handleNarrativeConfirmation = () => {
-    // Logic to send selectedNarrative to backend
-    // Implement this functionality
-    console.log(narrativeOptions);
+    selectNarrativeAndSetContent(selectedNarrative);
     dispatch({ type: 'SET_CURRENT_VIEW', payload: 'NARRATIVE_IMPACT' }); 
     return
   };

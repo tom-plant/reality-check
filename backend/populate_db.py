@@ -1,5 +1,5 @@
 from app import app, db  # Import your Flask app and db from your main app file
-from models import Fact  # Import the Fact model
+from models import Fact, Event  # Import the Fact model
 import os
 
 # Fact entries to be added
@@ -32,9 +32,9 @@ facts = [
 ]
 # Event entries to be added
 events = [
-    "The President invokes an 'imperial presidency' to unify power amidst national security concerns."
-    "A high-profile whistleblower from within the government leaks documents suggesting the quantum breach was known and contained, challenging the official narrative."
-    "Terrorist group leaks set of photos shows the alleged top secret chinese quantum computing center"
+    "The President invokes an 'imperial presidency' to unify power amidst national security concerns.",
+    "A high-profile whistleblower from within the government leaks documents suggesting the quantum breach was known and contained.",
+    "Terrorist group leaks set of photos shows the alleged top secret chinese quantum computing center",
 ]
 
 
@@ -46,8 +46,8 @@ if os.getenv('FLASK_ENV') == 'development':
             db.session.add(new_fact)
         for event_text in events:
             new_event = Event(text=event_text, language='ENG')  # Assuming all facts are in English
-            db.session.add(event_fact)
+            db.session.add(new_event)
         # Commit the session to save these objects to the database
         db.session.commit()
 
-print("Database populated with facts.")
+print("Database populated with facts and events.")

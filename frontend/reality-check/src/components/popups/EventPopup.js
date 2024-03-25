@@ -1,13 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import EventBox from '../common/EventBox';
-import { useGameDispatch } from '../../contexts/GameContext'; // Adjust the import path as needed
+import { useGameDispatch, useGameState } from '../../contexts/GameContext';
 import './EventPopup.css';
 
-const EventPopup = ({ events, onClose }) => {
+const EventPopup = ({ onClose }) => {
+  const { events, selectedEvent } = useGameState(); 
   const dispatch = useGameDispatch();
   const [selectedEventIndex, setSelectedEventIndex] = useState(null);
   const [isCycling, setIsCycling] = useState(false);
   const [showCloseButton, setShowCloseButton] = useState(false);
+  const [displayedEvents, setDisplayedEvents] = useState(events.slice(0, 3)); // Start with the first 3 facts
+
+  useEffect(() => {
+    // Initially load a random selection of 3 events
+    setDisplayedEvents(getRandomEvents(events, 3));
+  }, [events]);
+
+  const getRandomEvents = (eventsArray, count) => {
+    // Get a random selection of facts
+      let shuffled = [...eventsArray].sort(() => 0.5 - Math.random());
+      return shuffled.slice(0, count);
+    };
+  
 
   const startCyclingEvents = () => {
     setIsCycling(true);
@@ -29,6 +43,7 @@ const EventPopup = ({ events, onClose }) => {
 
       // Dispatch the selected event to the context
       dispatch({ type: 'SELECT_EVENT', payload: events[finalIndex] });
+      // CALL NEWS GENERATION
     }, 6500); // Adjust the duration of the cycling effect as needed
   };
 
@@ -36,7 +51,7 @@ const EventPopup = ({ events, onClose }) => {
     <div className="popup-overlay">
       <div className="popup-content">
         <div className="events-container">
-          {events.map((event, index) => (
+          {displayedEvents.map((event, index) => (
             <EventBox
               key={event.id}
               event={event}

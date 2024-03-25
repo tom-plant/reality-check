@@ -9,7 +9,7 @@ from db_operations import *
 from flask_cors import CORS
 import uuid #for unique user id
 from config import Config, DevelopmentConfig, TestingConfig, SECRET_KEY, SQL_KEY
-from controllers import initialize_data_controller, register_user_controller, get_all_facts_controller, select_facts_controller, select_narrative_controller, introduce_event_controller, identify_weaknesses_controller
+from controllers import initialize_data_controller, register_user_controller, get_all_facts_controller, get_all_events_controller, select_facts_controller, select_narrative_controller, introduce_event_controller, identify_weaknesses_controller
 from dotenv import load_dotenv
 import os
 import sys
@@ -88,6 +88,11 @@ def get_facts():
     response_data = get_all_facts_controller()
     return jsonify(response_data)
 
+@app.route('/game/get_events', methods=['GET'])
+def get_events():
+    response_data = get_all_events_controller()
+    return jsonify(response_data)
+
     
 # Initial Fact Selection & Narrative Generation
 @app.route('/game/select_facts', methods=['POST'])
@@ -112,7 +117,7 @@ def select_facts():
 # Selecting Narratives
 @app.route('/game/select_narrative', methods=['POST'])
 def select_narrative():
-    # Receive selected narrative and facts combination from the frontend
+    # Receive selected narrative from the frontend
     selected_narrative = request.json.get('selected_narrative')
     
     # Call controller function to handle logic
@@ -124,7 +129,9 @@ def select_narrative():
 # Introducing Follow-up Events
 @app.route('/game/introduce_event', methods=['POST'])
 def introduce_event():
-    print("Route /game/introduce_event is being called")  # This should print if the route is hit
+    # Receive event from the frontend
+    Event = request.json.get('Event')
+    
     # Call the introduce_event_controller function to handle the logic
     response_data, status_code = introduce_event_controller()
     

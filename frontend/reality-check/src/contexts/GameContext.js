@@ -1,35 +1,26 @@
 // src/context/GameContext.js
 import React, { createContext, useContext, useReducer, useState, useEffect } from 'react';
-import { authenticateUser, getFacts, generateNarrativeFromFacts } from '../services/gameService';
+import { authenticateUser, getFacts, getEvents, generateNarrativeFromFacts, selectNarrative, introduceEvent } from '../services/gameService';
 
 const GameStateContext = createContext();
 const GameDispatchContext = createContext();
 const GameFunctionContext = createContext(); // Create a new context for functions
 
 const initialState = {
+  currentView: 'INTRODUCE_EVENT', 
   username: 'tomtom',
   email: 'lolita@gmail.com',
   facts: [],
-  currentView: 'SELECT_FACTS', 
+  events: [],
   selectedFactCombination: [],
   timerHasEnded: false, 
   isLoadingNarratives: false,
+  isLoadingNews: false,
   narrativeOptions: [],
-  selectedNarrative: [
-    { id: 1, text: "I am a C-H-R-I-S-T-I-A-N"}
-  ],
-  primaryNewsContent: {
-    headline: 'Bruh literally edged in fortnite.',
-    story: 'Late yesterday evening, bruh literally edged in a fortnite game, shocking thousands and coming amidst a time of extreme scrutiny toward edging and and overwhelming preference to gooning. Literally bruh.',
-    imageUrl: 'ayoooooplaceholder.com'
-  },
-  primaryNarrative: null, 
-  eventOptions: [
-    { id: 1, text: "Event 1"},
-    { id: 2, text: "Event 2"},
-    { id: 3, text: "Event 3"}
-  ],
-  selectedEvent: null,
+  selectedNarrative: [],
+  primaryNewsContent: null,
+  selectedEvent: [],
+  eventNewsContent: null,
   updatedFactCombination: [],
   secondaryNarrative: { id: 1, text: "kaksteist kuud" } ,
   isUpdatedNarrativePopupVisible: false,
@@ -63,6 +54,12 @@ const gameReducer = (state, action) => {
       return {
         ...state,
         facts: action.payload, 
+      };
+  
+    case 'SET_EVENTS':
+      return {
+        ...state,
+        events: action.payload, 
       };
 
     case 'SELECT_FACT':
@@ -114,12 +111,15 @@ const gameReducer = (state, action) => {
     case 'SET_LOADING_NARRATIVES':
       return { ...state, isLoadingNarratives: action.payload };
 
-    case 'SET_NEWS_CONTENT':
-      return {
-        ...state,
-        primaryNewsContent: action.payload // Assuming payload will be an object with headline, story, and imageUrl
-      };
+    case 'SET_LOADING_NEWS':
+      return { ...state, isLoadingNews: action.payload };
 
+    case 'SET_SELECTED_NARRATIVE_CONTENT':
+      return { ...state, primaryNewsContent: action.payload };
+
+    case 'SET_EVENT_NEWS_CONTENT':
+      return { ...state, eventNewsContent: action.payload };
+  
     case 'SELECT_EVENT':
       return { ...state, selectedEvent: action.payload };
 
@@ -211,8 +211,27 @@ const GameProvider = ({ children }) => {
     }
   };
 
+  const fetchAndSetEvents = async () => {
+    try {
+      const response = await getEvents(); // Assuming this returns the full response
+      if (response && response.events) {
+        const eventsData = response.events;
+        const transformedEvents = eventsData.map(event => ({
+          id: event.id,
+          text: event.text
+        }));
+        dispatch({ type: 'SET_EVENTS', payload: transformedEvents });
+      } else {
+        console.error("Fetched data is not in the expected format:", response);
+      }
+    } catch (error) {
+      console.error("Failed to fetch events:", error);
+    }
+  };
+  
   useEffect(() => {
     fetchAndSetFacts();
+    fetchAndSetEvents();
   }, []); 
 
   // Inside your GameProvider component or function where you define custom context functions
@@ -248,11 +267,36 @@ const GameProvider = ({ children }) => {
   };
 
 
+  // Context function to select a narrative
+  const selectNarrativeAndSetContent = async (selectedNarrative) => {
+    try {
+      dispatch({ type: 'SET_LOADING_NEWS', payload: true }); 
+      const content = await selectNarrative(selectedNarrative);
+      dispatch({ type: 'SET_SELECTED_NARRATIVE_CONTENT', payload: content });
+      dispatch({ type: 'SET_LOADING_NEWS', payload: false });
+    } catch (error) {
+      console.error('Failed to select narrative:', error);
+      dispatch({ type: 'SET_LOADING_NEWS', payload: false });
+    }
+  };
+
+  const selectEventAndSetContent = async (selectedEvent) => {
+    try {
+      dispatch({ type: 'SET_LOADING_NEWS', payload: true }); 
+      const response = await introduceEvent(selectedEvent);
+      dispatch({ type: 'SET_EVENT_NEWS_CONTENT', payload: response.event_news_content });
+      dispatch({ type: 'SET_LOADING_NEWS', payload: false }); 
+    } catch (error) {
+      console.error('Failed to introduce event:', error);
+      dispatch({ type: 'SET_LOADING_NEWS', payload: false }); 
+      // Handle error, e.g., by setting an error state
+    }
+  };
 
   return (
     <GameStateContext.Provider value={state}>
       <GameDispatchContext.Provider value={dispatch}>
-        <GameFunctionContext.Provider value={{ fetchAndSetFacts, loginUser, fetchAndSetNarratives }}> 
+        <GameFunctionContext.Provider value={{ fetchAndSetFacts, fetchAndSetEvents, loginUser, fetchAndSetNarratives, selectNarrativeAndSetContent, selectEventAndSetContent }}> 
           {children}
           </GameFunctionContext.Provider>
       </GameDispatchContext.Provider>
