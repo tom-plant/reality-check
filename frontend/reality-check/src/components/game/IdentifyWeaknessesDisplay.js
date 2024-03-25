@@ -1,18 +1,20 @@
 // IdentifyWeaknessesDisplay.js
 import React from 'react';
-import { useGameState, useGameDispatch } from '../../contexts/GameContext';
+import { useGameDispatch, useGameState, useGameFunction } from '../../contexts/GameContext';
 import FactBox from '../common/FactBox'; 
 import './IdentifyWeaknessesDisplay.css'; // Make sure to create a corresponding CSS file
 
 const IdentifyWeaknessesDisplay = () => {
   const { updatedFactCombination } = useGameState();
   const dispatch = useGameDispatch();
+  const { identifyWeaknessesAndSetContent } = useGameFunction(); 
 
   const handleUpdateNarrative = () => {
     dispatch({ type: 'RESET_SELECTION_ENDED', payload: true });
     dispatch({ type: 'UPDATE_FACTS', payload: updatedFactCombination });
-    // dispatch({ type: 'GENERATE_UPDATED_NARRATIVE' });
+    console.log("updatedFactCombination in IdentifyWeaknessesDisplay is: ", updatedFactCombination);
     dispatch({ type: 'TOGGLE_UPDATED_NARRATIVE_POPUP' }); // This will toggle the popup visibility
+    identifyWeaknessesAndSetContent(updatedFactCombination);
   };
 
   return (

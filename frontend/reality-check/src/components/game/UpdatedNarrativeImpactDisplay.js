@@ -9,7 +9,6 @@ const UpdatedNarrativeImpactDisplay = () => {
   const dispatch = useGameDispatch();
   const [contentLoaded, setContentLoaded] = useState(false); // Simulate news content loading
 
-  console.log('secondaryNarrative from context:', secondaryNarrative);
 
   const handleContinue = () => {
     dispatch({ type: 'SET_CURRENT_VIEW', payload: 'IDK_YET' });

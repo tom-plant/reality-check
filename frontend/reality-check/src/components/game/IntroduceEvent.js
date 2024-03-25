@@ -6,8 +6,6 @@ import './IntroduceEvent.css'; // Make sure to create a corresponding CSS file
 
 const IntroduceEvent = () => {
   const { eventNewsContent, isLoadingNews, selectedEvent } = useGameState(); // Assuming eventNewsContent and selectedEvent are stored in your context
-
-  // Local state to ensure the component updates when primaryNewsContent changes
   const [content, setContent] = useState(null);
 
   useEffect(() => {

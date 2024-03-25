@@ -99,12 +99,9 @@ def get_events():
 def select_facts():
     try: 
         # Receive selected facts from the frontend
-        app.logger.debug('json:',request.json)  # This will print the received JSON data in the console
         selected_facts = request.json.get('selected_facts')
         # Call controller function to handle logic
         response_data = select_facts_controller(selected_facts)
-        app.logger.debug(f'facts: {selected_facts}')  # This will print the 'selected_facts' to ensure it's a list of strings
-        app.logger.debug('output:',response_data)
         # Return response to frontend
         return jsonify(response_data)
     except SQLAlchemyError as e:
@@ -141,9 +138,8 @@ def introduce_event():
 # Identifying Weaknesses in Narratives
 @app.route('/game/identify_weaknesses', methods=['POST'])
 def identify_weaknesses():
-    # Receive new combination of facts and narrative from the frontend
-    new_facts = request.json.get('new_facts')
-    narrative = request.json.get('narrative')
+    # Receive new combination of facts from the frontend
+    updated_fact_combination = request.json.get('updated_fact_combination')
     
     # Call controller function to handle logic
     # Placeholder for controller function

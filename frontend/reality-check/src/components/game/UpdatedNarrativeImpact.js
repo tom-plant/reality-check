@@ -1,16 +1,30 @@
 // UpdatedNarrativeImpact.js
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useGameState } from '../../contexts/GameContext';
-
+import './UpdatedNarrativeImpact.css'; 
 
 const UpdatedNarrativeImpact = () => {
-  const { secondaryNewsContent, secondaryNarrative } = useGameState();
-  console.log('secondaryNarrative from context:', secondaryNarrative);
+  const { secondaryNewsContent, isLoadingNews } = useGameState();
+  const [content, setContent] = useState(null);
 
 
-  // Assuming primaryNewsContent has headline, story, and imageUrl properties
-  const { headline, story, imageUrl } = secondaryNewsContent || {}; // Add a fallback to prevent errors if secondaryNewsContent is undefined
+  useEffect(() => {
+    console.log('secondaryNewsContent is: ',secondaryNewsContent)
+    console.log('isLoadingNews: ',isLoadingNews)
+    if (secondaryNewsContent && !isLoadingNews) {
+      // Update local state with the new content, ensuring we're accessing the nested 'news_content'
+      setContent(secondaryNewsContent.secondary_news_content);
+    }
+  }, [secondaryNewsContent, isLoadingNews]); // Depend on isLoadingNews and primaryNewsContent
+
+  // Conditional rendering based on isLoadingNews and content availability
+  if (isLoadingNews || !content) {
+    return <div>Loading news content...</div>; // or any other loading indicator
+  }
+
+  // Destructure with correct property names, using 'image_url' instead of 'imageUrl'
+  const { headline, story, image_url: imageUrl } = content;
 
   return (
     <div className="narrative-impact">

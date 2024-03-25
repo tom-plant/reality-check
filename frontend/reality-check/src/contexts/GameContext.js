@@ -1,6 +1,6 @@
 // src/context/GameContext.js
 import React, { createContext, useContext, useReducer, useState, useEffect } from 'react';
-import { authenticateUser, getFacts, getEvents, generateNarrativeFromFacts, selectNarrative, introduceEvent } from '../services/gameService';
+import { authenticateUser, getFacts, getEvents, generateNarrativeFromFacts, selectNarrative, introduceEvent, identifyWeaknesses } from '../services/gameService';
 
 const GameStateContext = createContext();
 const GameDispatchContext = createContext();
@@ -13,22 +13,18 @@ const initialState = {
   facts: [],
   events: [],
   selectedFactCombination: [],
+  updatedFactCombination: [],
+  narrativeOptions: [],
+  selectedNarrative: [],
+  secondaryNarrative: [],
+  selectedEvent: null,
+  primaryNewsContent: null,
+  eventNewsContent: null,
+  secondaryNewsContent: null,
+  isUpdatedNarrativePopupVisible: false,
   timerHasEnded: false, 
   isLoadingNarratives: false,
   isLoadingNews: false,
-  narrativeOptions: [],
-  selectedNarrative: [],
-  primaryNewsContent: null,
-  selectedEvent: null,
-  eventNewsContent: null,
-  updatedFactCombination: [],
-  secondaryNarrative: { id: 1, text: "kaksteist kuud" } ,
-  isUpdatedNarrativePopupVisible: false,
-  secondaryNewsContent: {
-    headline: "5 tips to rizz up your crush",
-    story: '1) Let me show you what these paws can do, 2) r/nevertellmetheodds of us meeting, 3) le epic sigma mogging, 4) can I get a huh yeah? 5) gigachad. nuff said.',
-    imageUrl: 'ayoooooplaceholder.com'
-  },
   userLanguage: 'English', // User selected language, default to English
 };
 
@@ -119,7 +115,16 @@ const gameReducer = (state, action) => {
 
     case 'SET_EVENT_NEWS_CONTENT':
       return { ...state, eventNewsContent: action.payload };
+
+    case 'SET_SECONDARY_NARRATIVE_CONTENT':
+      return { 
+        ...state, 
+        secondaryNewsContent: action.payload 
+      };
   
+    case 'SET_SECONDARY_NARRATIVE':
+      return { ...state, secondaryNarrative: action.payload };
+      
     case 'SELECT_EVENT':
       return { ...state, selectedEvent: action.payload };
 
@@ -168,12 +173,6 @@ const gameReducer = (state, action) => {
         ...state,
         updatedFactCombination: action.payload,
       };
-
-    // case 'GENERATE_UPDATED_NARRATIVE':
-    //   return {
-    //     ...state,
-    //     secondaryNarrative: action.payload,
-    //   };
 
     case 'SET_UPDATED_NARRATIVE':
       return {
@@ -295,10 +294,28 @@ const GameProvider = ({ children }) => {
     }
   };
 
+  const identifyWeaknessesAndSetContent = async (updatedFactCombination) => {
+    try {
+      console.log('UpdatedFactCombination sent to context function is: ', updatedFactCombination);
+      dispatch({ type: 'SET_LOADING_NEWS', payload: true }); // Assuming you have a loading state
+        const response = await identifyWeaknesses(updatedFactCombination);
+        dispatch({
+          type: 'SET_SECONDARY_NARRATIVE_CONTENT',
+          payload: {
+            secondary_news_content: response.secondary_news_content
+          }
+        });        
+        dispatch({ type: 'SET_SECONDARY_NARRATIVE', payload: response.secondary_narrative });
+      dispatch({ type: 'SET_LOADING_NEWS', payload: false });
+    } catch (error) {
+      console.error('Failed to identify weaknesses:', error);
+      dispatch({ type: 'SET_LOADING_NEWS', payload: false }); // Ensure loading is turned off even on error
+    }
+  };
   return (
     <GameStateContext.Provider value={state}>
       <GameDispatchContext.Provider value={dispatch}>
-        <GameFunctionContext.Provider value={{ fetchAndSetFacts, fetchAndSetEvents, loginUser, fetchAndSetNarratives, selectNarrativeAndSetContent, selectEventAndSetContent }}> 
+        <GameFunctionContext.Provider value={{ fetchAndSetFacts, fetchAndSetEvents, loginUser, fetchAndSetNarratives, selectNarrativeAndSetContent, selectEventAndSetContent, identifyWeaknessesAndSetContent }}> 
           {children}
           </GameFunctionContext.Provider>
       </GameDispatchContext.Provider>
