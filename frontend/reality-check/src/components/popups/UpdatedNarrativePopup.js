@@ -1,12 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useGameDispatch, useGameState } from '../../contexts/GameContext';
 import './UpdatedNarrativePopup.css'; 
 
 const UpdatedNarrativePopup = () => {
-  const { secondaryNarrative } = useGameState();
+  const { secondaryNarrative, isLoadingNews } = useGameState();
   const dispatch = useGameDispatch();
+  const [content, setContent] = useState(null);
 
   console.log('secondaryNarrative from context:', secondaryNarrative);
+
+  useEffect(() => {
+    if (secondaryNarrative) {
+    console.log('secondary narrative is:', secondaryNarrative)
+    setContent(secondaryNarrative);
+    }
+  }, [secondaryNarrative]); 
+
+  // Conditional rendering based on isLoadingNews and content availability
+  if (isLoadingNews || !content) {
+    return <div>Loading news content...</div>; // or any other loading indicator
+  }
 
   const handleContinue = () => {
     dispatch({ type: 'TOGGLE_UPDATED_NARRATIVE_POPUP' }); // This will toggle the popup visibility

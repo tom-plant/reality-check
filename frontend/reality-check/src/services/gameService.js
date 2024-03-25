@@ -107,19 +107,27 @@ export const introduceEvent = async (selectedEvent) => {
   }
 };
 
-// Function to identify weaknesses in narratives
-export const identifyWeaknesses = async (newFacts, narrative) => {
+// API function to identify weaknesses in narratives
+export const identifyWeaknesses = async (updatedFactCombination) => {
   try {
+    // Transform newFactCombination to the required format 
+    const updatedFactsTexts = updatedFactCombination.map(fact => fact.text);
+
     const response = await axios.post(`${API_BASE_URL}/game/identify_weaknesses`, {
-      new_facts: newFacts,
-      narrative: narrative,
+      updated_fact_combination: updatedFactsTexts, 
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      withCredentials: true,
     });
     return response.data;
   } catch (error) {
-    console.error('Error identifying weaknesses:', error);
+    console.error('Error identifying weaknesses in narrative:', error);
     throw error;
   }
 };
+
 
 // Function to save user progress
 export const saveUserProgress = async (userProgress) => {

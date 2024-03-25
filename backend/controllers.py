@@ -442,6 +442,9 @@ def generate_event_news_content(primary_narrative, context, language_code, event
     return event_news_content
 
 
+
+
+
 def identify_weaknesses_controller(updated_fact_combination):     # Receive Updated Fact Combination
     # Check if user is logged in
     if 'user_data' not in session:
@@ -457,28 +460,42 @@ def identify_weaknesses_controller(updated_fact_combination):     # Receive Upda
     updated_fact_combination_id = handle_fact_combination(updated_fact_combination)
 
     # Find or create the secondary narrative news content and its id
-    news_content, secondary_narrative_id = handle_narrative_update(primary_narrative_id, updated_fact_combination_id, updated_fact_combination, language_code, context) 
+    news_content, secondary_narrative_id, secondary_narrative_text = handle_narrative_update(primary_narrative_id, updated_fact_combination_id, updated_fact_combination, language_code, context) 
     # Store secondary_narrative_id in user session
     session['user_data']['secondary_narrative_id'] = secondary_narrative_id
     session.modified = True
-
+    
     if news_content is None:
         return {"error": "Failed to handle narrative event"}, 500
+
+    # Construct secondary narrative object
+    secondary_narrative = {
+        "id": secondary_narrative_id,
+        "text": secondary_narrative_text
+    }
     
-    return {"secondary_news_content": news_content, "secondary_narrative_id": secondary_narrative_id}, 200
+    current_app.logger.debug(f"FINALFINALFAINLFIANLIFNA FINAL!!!!!!!!!! returning secondary_narrative: {secondary_narrative} and news: {news_content}")
+    return {"secondary_news_content": news_content, "secondary_narrative": secondary_narrative}
 
 def handle_narrative_update(primary_narrative_id, updated_fact_combination_id, updated_fact_combination, language_code, context, _session=None):
     session = _session or db.session
 
+    current_app.logger.debug("ENTERING HANDLE NARRATIVE UPDATE")
     #Check if new or existing
     secondary_narrative_id = get_secondary_narrative_id_by_fact_combination_and_primary_narrative(primary_narrative_id, updated_fact_combination_id) 
 
     # If secondary_narrative is new
     if secondary_narrative_id is None:
+        current_app.logger.debug("ENTERING secondarynarrative new conditional")
         primary_narrative = get_primary_narrative_by_id(primary_narrative_id)
+        current_app.logger.debug(f"primary_narrative= {primary_narrative}")
+
+        primary_narrative_text = primary_narrative.narrative_text
+        current_app.logger.debug(f"primary_narrative_text= {primary_narrative_text}")
+
         
         # Generate Secondary Narrative
-        secondary_narrative_text = generate_secondary_narrative(language_code, context, primary_narrative.narrative_text, updated_fact_combination)
+        secondary_narrative_text = generate_secondary_narrative(language_code, context, primary_narrative_text, updated_fact_combination)
 
         # Generate News for Secondary Narrative
         news_content = generate_secondary_news_content(language_code, context, secondary_narrative_text, updated_fact_combination)
@@ -488,7 +505,7 @@ def handle_narrative_update(primary_narrative_id, updated_fact_combination_id, u
 
         # Save to Database 
         secondary_narrative = create_secondary_narrative(
-            primary_narrative_id=primary_narrative_id, 
+            original_narrative_id=primary_narrative_id, 
             updated_fact_combination_id=updated_fact_combination_id, 
             narrative_text=secondary_narrative_text, 
             resulting_headline=news_content['headline'], 
@@ -499,11 +516,13 @@ def handle_narrative_update(primary_narrative_id, updated_fact_combination_id, u
         db.session.add(secondary_narrative)
         session.commit()  # Don't forget to commit the session
 
-        return news_content, secondary_narrative_id
+        return news_content, secondary_narrative_id, secondary_narrative_text
     # If not new
     else:
+        current_app.logger.debug("ENTERING secondarynarrative old conditional")
         news_content = get_news_content_by_secondary_narrative_id(secondary_narrative_id)
-        return news_content, secondary_narrative_id
+        secondary_narrative_text = secondary_narrative.narrative_text
+        return news_content, secondary_narrative_id, secondary_narrative_text
 
 def generate_secondary_narrative(language_code, context, primary_narrative, updated_fact_combination):
 
@@ -517,7 +536,7 @@ def generate_secondary_narrative(language_code, context, primary_narrative, upda
     }
 
     # Set Up
-    secondary_narrative_prompts = generate_prompts(language_code, "chatgpt_prompts", context, primary_narrative.narrative_text, updated_fact_combination)
+    secondary_narrative_prompts = generate_prompts(language_code, "chatgpt_prompts", context, primary_narrative, updated_fact_combination)
 
     # Use the initial prompt for the first narrative or if only one is needed
     system_content = secondary_narrative_prompts['secondary_system']
