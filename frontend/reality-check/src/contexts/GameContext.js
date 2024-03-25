@@ -7,7 +7,7 @@ const GameDispatchContext = createContext();
 const GameFunctionContext = createContext(); // Create a new context for functions
 
 const initialState = {
-  currentView: 'INTRODUCE_EVENT', 
+  currentView: 'SELECT_FACTS', 
   username: 'tomtom',
   email: 'lolita@gmail.com',
   facts: [],
@@ -19,7 +19,7 @@ const initialState = {
   narrativeOptions: [],
   selectedNarrative: [],
   primaryNewsContent: null,
-  selectedEvent: [],
+  selectedEvent: null,
   eventNewsContent: null,
   updatedFactCombination: [],
   secondaryNarrative: { id: 1, text: "kaksteist kuud" } ,
@@ -283,8 +283,10 @@ const GameProvider = ({ children }) => {
   const selectEventAndSetContent = async (selectedEvent) => {
     try {
       dispatch({ type: 'SET_LOADING_NEWS', payload: true }); 
-      const response = await introduceEvent(selectedEvent);
-      dispatch({ type: 'SET_EVENT_NEWS_CONTENT', payload: response.event_news_content });
+      console.log('selectedevent in the context function is: ', selectedEvent)
+      const content = await introduceEvent(selectedEvent);
+      console.log('response in context is: ',content)
+      dispatch({ type: 'SET_EVENT_NEWS_CONTENT', payload: content });
       dispatch({ type: 'SET_LOADING_NEWS', payload: false }); 
     } catch (error) {
       console.error('Failed to introduce event:', error);

@@ -1,27 +1,38 @@
-import React from 'react';
+// IntroduceEvent.js
+
+import React, { useEffect, useState } from 'react';
 import { useGameState } from '../../contexts/GameContext';
 import './IntroduceEvent.css'; // Make sure to create a corresponding CSS file
 
 const IntroduceEvent = () => {
-  const { eventNewsContent, selectedEvent } = useGameState(); // Assuming eventNewsContent and selectedEvent are stored in your context
+  const { eventNewsContent, isLoadingNews, selectedEvent } = useGameState(); // Assuming eventNewsContent and selectedEvent are stored in your context
 
-  // Destructure the necessary properties, providing fallbacks to handle undefined cases
-  const { headline, story, imageUrl } = eventNewsContent || { headline: '', story: '', imageUrl: '' };
+  // Local state to ensure the component updates when primaryNewsContent changes
+  const [content, setContent] = useState(null);
 
-  // Check if the content is still loading and an event has been selected
-  const isLoading = (!headline && !story && !imageUrl) && selectedEvent !== null;
+  useEffect(() => {
+    console.log('selectedEvent is: ',selectedEvent)
+    console.log('eventNewsContent is: ',eventNewsContent)
+    console.log('isLoadingNews: ',isLoadingNews)
+    if (eventNewsContent && !isLoadingNews) {
+      // Update local state with the new content, ensuring we're accessing the nested 'news_content'
+      setContent(eventNewsContent.event_news_content);
+    }
+  }, [eventNewsContent, isLoadingNews]); // Depend on isLoadingNews and primaryNewsContent
+
+  // Conditional rendering based on isLoadingNews and content availability
+  if (isLoadingNews || !content) {
+    return <div>Loading news content...</div>; // or any other loading indicator
+  }
+
+  // Destructure with correct property names, using 'image_url' instead of 'imageUrl'
+  const { headline, story, image_url: imageUrl } = content;
 
   return (
     <div className="introduce-event">
-      {isLoading ? (
-        <p>Generating potential outcomes if this narrative takes hold and this event occurs…</p>
-      ) : (
-        <>
-          <h1>{headline}</h1>
-          {imageUrl && <img src={imageUrl} alt="Event Visual" className="event-image" />}
-          <p>{story}</p>
-        </>
-      )}
+      <h1>{headline}</h1>
+      {imageUrl && <img src={imageUrl} alt="News Visual" />}
+      <p>{story}</p>
     </div>
   );
 };

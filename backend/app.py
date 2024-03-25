@@ -133,10 +133,10 @@ def introduce_event():
     Event = request.json.get('Event')
     
     # Call the introduce_event_controller function to handle the logic
-    response_data, status_code = introduce_event_controller()
+    response_data = introduce_event_controller(Event)
     
     # Return response to frontend with the appropriate status code
-    return jsonify(response_data), status_code
+    return jsonify(response_data)
 
 # Identifying Weaknesses in Narratives
 @app.route('/game/identify_weaknesses', methods=['POST'])

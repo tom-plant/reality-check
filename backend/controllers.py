@@ -162,16 +162,11 @@ def select_narrative_controller(selected_narrative):
         return {"error": "User not logged in"}, 401
 
     # Set language code and selected facts
-    current_app.logger.debug("Retrieving user language code.")
     language_code = get_user_language_by_id(user_id=session['user_data']['user_id'])
-    current_app.logger.debug(f"Language Code: {language_code}")
     selected_facts = get_fact_combination_by_id(session['user_data']['fact_combination_id'])
-    current_app.logger.debug(f"Selected Facts: {selected_facts}")
 
     # Call the function to generate news content
-    current_app.logger.debug("Calling generate_news_content")
     news_content = generate_news_content(language_code, "primary_narrative", selected_narrative, selected_facts)
-    current_app.logger.debug(f"News Content: {news_content}")
 
     # Commit Primary Narrative to Database
     primary_narrative = create_primary_narrative(
@@ -195,34 +190,69 @@ def generate_prompts(language_code, category, context, selected_narrative, selec
 
     # if isinstance(selected_facts, list):
     #     selected_facts = ", ".join(selected_facts)  # Join if list
-    current_app.logger.debug(f"selected_facts: {selected_facts}")
+    current_app.logger.debug(f"selected_facts: {selected_facts} and selected_narrative {selected_narrative} and context {context}")
     replacements = {
         "narrative": selected_narrative,
         "evidence": selected_facts
     }
 
     # Always generate headline prompts
+    try:
+        headline_system = get_text(language_code, category, context, "headline_system", replacements)
+    except KeyError:
+        headline_system = None  # or some default value or handling
+        current_app.logger.debug("An error occurred: 'headline_system' key not found.")
+
+    try:
+        headline_user = get_text(language_code, category, context, "headline_user", replacements)
+    except KeyError:
+        headline_user = None  # or some default value or handling
+        current_app.logger.debug("An error occurred: 'headline_user' key not found.")
+
     prompts = {
-        "headline_system": get_text(language_code, category, context, "headline_system", replacements),
-        "headline_user": get_text(language_code, category, context, "headline_user", replacements)
+        "headline_system": headline_system,
+        "headline_user": headline_user
     }
+    current_app.logger.debug(f"prompts is {prompts}")
 
     # Generate story and image prompts only if headline is provided
     if headline:
         # Update replacements with the generated headline
         replacements["headline"] = headline
 
-        # Generate story prompts
-        prompts["story_system"] = get_text(language_code, category, context, "story_system", replacements)
-        prompts["story_user"] = get_text(language_code, category, context, "story_user", replacements)
+        try:
+            # Generate story prompts
+            prompts["story_system"] = get_text(language_code, category, context, "story_system", replacements)
+        except KeyError:
+            prompts["story_system"] = None  # or some default value or handling
+            current_app.logger.debug("An error occurred: 'story_system' key not found.")
 
-        # Generate image prompt
-        prompts["image_prompt"] = get_text(language_code, category, context, "image_prompt", replacements)
+        try:
+            prompts["story_user"] = get_text(language_code, category, context, "story_user", replacements)
+        except KeyError:
+            prompts["story_user"] = None  # or some default value or handling
+            current_app.logger.debug("An error occurred: 'story_user' key not found.")
+
+        try:
+            # Generate image prompt
+            prompts["image_prompt"] = get_text(language_code, category, context, "image_prompt", replacements)
+        except KeyError:
+            prompts["image_prompt"] = None  # or some default value or handling
+            current_app.logger.debug("An error occurred: 'image_prompt' key not found.")
 
     # Generate secondary_system and secondary_user prompts for secondary_narrative context
     if context == "secondary_narrative":
-        prompts["secondary_system"] = get_text(language_code, category, context, "secondary_system", replacements)
-        prompts["secondary_user"] = get_text(language_code, category, context, "secondary_user", replacements)
+        try:
+            prompts["secondary_system"] = get_text(language_code, category, context, "secondary_system", replacements)
+        except KeyError:
+            prompts["secondary_system"] = None  # or some default value or handling
+            current_app.logger.debug("An error occurred: 'secondary_system' key not found.")
+
+        try:
+            prompts["secondary_user"] = get_text(language_code, category, context, "secondary_user", replacements)
+        except KeyError:
+            prompts["secondary_user"] = None  # or some default value or handling
+            current_app.logger.debug("An error occurred: 'secondary_user' key not found.")
 
     return prompts
 
@@ -313,8 +343,9 @@ def generate_news_content(language_code, context, selected_narrative, selected_f
 
     # Execute Generations
     # Gnerate only headline prompts and headline
+    current_app.logger.debug(f"trying to call headline prompts with {language_code}, 'chatgpt_prompts', {context}, {selected_narrative}, and {selected_facts}")
     headline_prompts = generate_prompts(language_code, "chatgpt_prompts", context, selected_narrative, selected_facts)
-    current_app.logger.debug("Calling ChatGPT API for headline")
+    current_app.logger.debug(f"Calling ChatGPT API for headline with prompts {headline_prompts}")
     headline = get_chatgpt_response(headline_prompts['headline_system'], headline_prompts['headline_user'])
     if not headline:
         raise Exception("Failed to generate headline, halting process.")
@@ -353,18 +384,20 @@ def introduce_event_controller(Event):
     language_code = get_user_language_by_id(user_id=session['user_data']['user_id'])
     context = "event_narrative"
     primary_narrative_id = session['user_data'].get('primary_narrative_id')
-    event_id = Event.id
-    event = [Event.text]
+    event_id = Event['id'] 
+    event = Event['text']
 
     # Find or create the narrative event news content and its id
     news_content, narrative_event_id = handle_narrative_event(primary_narrative_id, event_id, event, language_code, context)
     # Check if an error response was returned from handle_narrative_event
     if isinstance(news_content, dict) and 'error' in news_content:
         return news_content, narrative_event_id  # Directly return the error response
+
     session['user_data']['narrative_events_id'] = narrative_event_id
     session.modified = True
     
-    return {"event_news_content": news_content, "narrative_event_id": narrative_event_id}, 200
+    current_app.logger.debug(f'final news content in controller: {news_content}')
+    return {"event_news_content": news_content}
 
 def handle_narrative_event(primary_narrative_id, event_id, event, language_code, context):
 
@@ -372,10 +405,12 @@ def handle_narrative_event(primary_narrative_id, event_id, event, language_code,
     narrative_event_id = get_narrative_events_id_by_narrative_and_event(primary_narrative_id, event_id)
 
     if narrative_event_id is None:
+        current_app.logger.debug(f"Running new conditional for narrative_event")
         primary_narrative = get_primary_narrative_by_id(primary_narrative_id)
+        primary_narrative_text = primary_narrative.narrative_text
         if primary_narrative is None:
             return {"error": "Selected narrative not found"}, 404
-        news_content = generate_event_news_content(primary_narrative, context, language_code, event)
+        news_content = generate_event_news_content(primary_narrative_text, context, language_code, event)
         if news_content is None:
             return {"error": "Failed to handle narrative event"}, 500
 
@@ -386,6 +421,7 @@ def handle_narrative_event(primary_narrative_id, event_id, event, language_code,
         if news_content is None:
             return {"error": "Failed to handle narrative event"}, 500
     else:
+        current_app.logger.debug(f"Running existing conditional for narrative event")
         news_content = get_news_content_by_narrative_events_id(narrative_event_id)
         if news_content is None:
             return {"error": "Failed to handle narrative event"}, 500
@@ -397,6 +433,7 @@ def generate_event_news_content(primary_narrative, context, language_code, event
     try:
         # Attempt to generate news content based on the narrative and event
         event_news_content = generate_news_content(language_code, context, primary_narrative, event)
+        current_app.logger.debug(f"Finished generating news content in generate_event_news_content: {event_news_content}")
     except Exception as e:
         # Handle content generation failure
         logging.error(f"Error generating content: {e}")

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import EventBox from '../common/EventBox';
-import { useGameDispatch, useGameState } from '../../contexts/GameContext';
+import { useGameDispatch, useGameState, useGameFunction } from '../../contexts/GameContext';
 import './EventPopup.css';
 
 const EventPopup = ({ onClose }) => {
-  const { events, selectedEvent } = useGameState(); 
+  const { events, selectedEvent, eventNewsContent } = useGameState(); 
+  const { selectEventAndSetContent } = useGameFunction(); 
   const dispatch = useGameDispatch();
   const [selectedEventIndex, setSelectedEventIndex] = useState(null);
   const [isCycling, setIsCycling] = useState(false);
@@ -43,7 +44,8 @@ const EventPopup = ({ onClose }) => {
 
       // Dispatch the selected event to the context
       dispatch({ type: 'SELECT_EVENT', payload: events[finalIndex] });
-      // CALL NEWS GENERATION
+      console.log('final index is:',events[finalIndex])
+      selectEventAndSetContent(events[finalIndex]); // Pass the selected event directly
     }, 6500); // Adjust the duration of the cycling effect as needed
   };
 

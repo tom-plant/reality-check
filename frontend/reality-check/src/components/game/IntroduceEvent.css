@@ -1,25 +1,35 @@
 /* IntroduceEvent.css */
 
 .introduce-event {
-  font-family: 'Times New Roman', Times, serif; /* Classic "newspaper" font */
-  max-width: 600px; /* Limit the width for readability */
-  margin: auto; /* Center the content */
-  padding: 20px; /* Add some padding around the content */
-  background-color: transparent; /* Light background color for the article */
-}
-
-.introduce-event h1 {
-  font-size: 24px;
-  margin-bottom: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  overflow: hidden; /* Clear the float */
 }
 
 .introduce-event img {
-  float: left;
-  margin-right: 20px;
-  width: 300px; /* Adjust size as needed */
+  float: left; /* Float the image to the left */
+  margin-right: 20px; /* Add some space between the image and the text */
+  max-width: 40%; /* Adjust the width of the image */
+  height: auto;
+}
+
+.introduce-event h1 {
+  clear: both; /* Ensure the headline doesn't wrap around the floated image */
+  word-wrap: break-word;
+  font-size: 18px;
+  margin-top: 0; /* Adjust the margin to bring the headline closer to the top */
 }
 
 .introduce-event p {
   text-align: justify;
+  font-size: 15px;
+}
+
+/* After the floating elements, add a clearfix to ensure container encloses the floated elements */
+.introduce-event::after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
