@@ -1,30 +1,26 @@
 // Game.js
 
-import React, { useState } from 'react';
-import { useEffect } from 'react';
+import React from 'react';
+import { useGameState } from '../contexts/GameContext'; // Adjust the import path as needed
+import IntroView from '../components/game/IntroView'; // Adjust the import path as needed
+import GameView from '../components/game/GameView'; // Adjust the import path as needed
+import OutroView from '../components/game/OutroView'; // Adjust the import path as needed
 import Header from '../components/Header/Header'; 
 import DynamicBackground from '../components/DynamicBackground/DynamicBackground';
-import GameLayout from '../components/layout/GameLayout'; 
-import './Game.css'; 
 
 const Game = () => {
+  const { currentPhase } = useGameState(); // Use the context to get the current phase
 
-  // State to manage the current game phase, e.g., 'intro', 'game', 'outro'
-  const [currentPhase, setCurrentPhase] = useState('game'); // Defaulting to 'game' for now
-
-  // Render function to determine what to display based on the current game phase
-  const renderGamePhase = () => {
+  const renderPhase = () => {
     switch (currentPhase) {
       case 'intro':
-        // return <IntroView />;
-        break; // Placeholder for IntroView component
+        return <IntroView />;
       case 'game':
-        return <GameLayout />; // Rendering GameLayout as the main game view
+        return <GameView />;
       case 'outro':
-        // return <OutroView />;
-        break; // Placeholder for OutroView component
+        return <OutroView />;
       default:
-        return <GameLayout />; // Default to GameLayout for now
+        return <IntroView />; // Default to IntroView if currentPhase is not set
     }
   };
 
@@ -33,11 +29,10 @@ return (
   <div className="game">
     <Header />
     <DynamicBackground />
-    {renderGamePhase()} {/* Call the function to render based on the current phase */}
+    {renderPhase()} {/* Call the function to render based on the current phase */}
   </div>
 );
 };
-
 
 
 export default Game;

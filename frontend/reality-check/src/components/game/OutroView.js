@@ -1,11 +1,13 @@
 import React from 'react';
+import OutroLayout from '../layout/OutroLayout';
 
 const OutroView = () => {
+  // Function or mechanism for any desired action after the Outro phase
+  // For example, transitioning back to the Intro phase or displaying a final message
+
   return (
     <div className="outro-view">
-      {/* Placeholder content for OutroView */}
-      <h2>Outro View</h2>
-      <p>Thank you for playing! This is the conclusion of the game.</p>
+      <OutroLayout />
     </div>
   );
 };

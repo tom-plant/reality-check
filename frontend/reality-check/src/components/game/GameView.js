@@ -1,20 +1,23 @@
 //GameView.js
 
 import React, { useState } from 'react';
-import { useGameDispatch } from '../../contexts/GameContext'; // Adjust path as needed
+import { useGameDispatch, useGameState, useGameFunction } from '../../contexts/GameContext'; // Adjust path as needed
 import GameLayout from '../layout/GameLayout'; // Adjust the path as needed
 
 const GameView = () => {
   const dispatch = useGameDispatch();
+  const { setCurrentPhase } = useGameFunction(); 
+  const { currentPhase } = useGameState();
 
-  // Function to transition to the next phase
-  const goToNextPhase = (nextPhase) => {
-    dispatch({ type: 'SET_CURRENT_VIEW', payload: nextPhase });
+  // Placeholder for transition functions, adjust as needed
+  const transitionToEnd = () => {
+    setCurrentPhase('outro');
   };
 
   return (
     <div className="game-view">
-      <GameLayout goToNextPhase={goToNextPhase} />
+      {currentPhase === 'game' && <GameLayout />}
+      {/* Handle other phases like 'outro' as needed */}
     </div>
   );
 };

@@ -1,18 +1,20 @@
 // UpdatedNarrativeImpactDisplay.js
 
 import React, { useEffect, useState } from 'react';
-import { useGameState, useGameDispatch } from '../../contexts/GameContext';
+import { useGameState, useGameDispatch, useGameFunction } from '../../contexts/GameContext';
 import './UpdatedNarrativeImpactDisplay.css'; // Make sure to create and style this CSS file
 
 const UpdatedNarrativeImpactDisplay = () => {
   const { selectedNarrative, secondaryNarrative, updatedFactCombination } = useGameState();
+  const { setCurrentPhase } = useGameFunction(); // Context function to set current phase
   const dispatch = useGameDispatch();
   const [contentLoaded, setContentLoaded] = useState(false); // Simulate news content loading
 
 
   const handleContinue = () => {
-    dispatch({ type: 'SET_CURRENT_VIEW', payload: 'IDK_YET' });
+    setCurrentPhase('outro'); // Transition to the outro phase
   };
+
 
     // Simulate content loading completion after a delay. CHANGE THIS TO APPEAR ONLY ONCE NEWS ARTICLES HAVE LOADED IN
     useEffect(() => {

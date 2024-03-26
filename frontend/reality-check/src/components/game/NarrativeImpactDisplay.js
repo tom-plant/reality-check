@@ -5,19 +5,13 @@ import { useGameState, useGameDispatch } from '../../contexts/GameContext';
 import './NarrativeImpactDisplay.css'; // Make sure to create and style this CSS file
 
 const NarrativeImpactDisplay = () => {
-  const { selectedNarrative, selectedFactCombination } = useGameState();
+  const { selectedNarrative, selectedFactCombination, isLoadingNews } = useGameState();
   const dispatch = useGameDispatch();
   const [contentLoaded, setContentLoaded] = useState(false); // Simulate news content loading
 
   const handleContinue = () => {
     dispatch({ type: 'SET_CURRENT_VIEW', payload: 'INTRODUCE_EVENT' });
   };
-
-    // Simulate content loading completion after a delay. CHANGE THIS TO APPEAR ONLY ONCE NEWS ARTICLES HAVE LOADED IN
-    useEffect(() => {
-      const timer = setTimeout(() => setContentLoaded(true), 2000); // 2 seconds delay for simulation
-      return () => clearTimeout(timer);
-    }, []);
 
     
   return (
@@ -41,7 +35,7 @@ const NarrativeImpactDisplay = () => {
       <button
         className="continue-button"
         onClick={handleContinue}
-        disabled={!contentLoaded} // Button is disabled until content is loaded
+        disabled={!isLoadingNews} // Button is disabled until content is loaded
       >
         Continue
       </button>

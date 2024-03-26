@@ -7,7 +7,10 @@ const GameDispatchContext = createContext();
 const GameFunctionContext = createContext(); // Create a new context for functions
 
 const initialState = {
-  currentView: 'SELECT_FACTS', 
+  currentPhase: 'game', 
+  currentIntroView: 'AUTH_LOGIN',
+  currentOutroView: 'CONCLUSION_WRAP_UP',
+  currentView: 'NARRATIVE_IMPACT', 
   username: 'tomtom',
   email: 'lolita@gmail.com',
   facts: [],
@@ -15,7 +18,7 @@ const initialState = {
   selectedFactCombination: [],
   updatedFactCombination: [],
   narrativeOptions: [],
-  selectedNarrative: [],
+  selectedNarrative: null,
   secondaryNarrative: [],
   selectedEvent: null,
   primaryNewsContent: null,
@@ -31,6 +34,16 @@ const initialState = {
 
 const gameReducer = (state, action) => {
   switch (action.type) {
+
+    case 'SET_CURRENT_PHASE':
+      return { ...state, currentPhase: action.payload };
+
+    case 'SET_CURRENT_INTRO_VIEW':
+      return { ...state, currentIntroView: action.payload };
+
+    case 'SET_CURRENT_OUTRO_VIEW':
+      return { ...state, currentOutroView: action.payload };
+
     case 'SET_CURRENT_VIEW':
       return { ...state, currentView: action.payload };
 
@@ -192,6 +205,22 @@ const gameReducer = (state, action) => {
 const GameProvider = ({ children }) => {
   const [state, dispatch] = useReducer(gameReducer, initialState);
 
+  // Game transitioning
+
+  const setCurrentPhase = (phase) => {
+    dispatch({ type: 'SET_CURRENT_PHASE', payload: phase });
+  };
+
+  const setCurrentIntroView = (view) => {
+    dispatch({ type: 'SET_CURRENT_INTRO_VIEW', payload: view });
+  };
+
+  const setCurrentOutroView = (view) => {
+    dispatch({ type: 'SET_CURRENT_OUTRO_VIEW', payload: view });
+  };
+
+  // API Calls
+
   const fetchAndSetFacts = async () => {
     try {
       const response = await getFacts(); // Assuming this returns the full response
@@ -315,7 +344,7 @@ const GameProvider = ({ children }) => {
   return (
     <GameStateContext.Provider value={state}>
       <GameDispatchContext.Provider value={dispatch}>
-        <GameFunctionContext.Provider value={{ fetchAndSetFacts, fetchAndSetEvents, loginUser, fetchAndSetNarratives, selectNarrativeAndSetContent, selectEventAndSetContent, identifyWeaknessesAndSetContent }}> 
+        <GameFunctionContext.Provider value={{ fetchAndSetFacts, fetchAndSetEvents, loginUser, fetchAndSetNarratives, selectNarrativeAndSetContent, selectEventAndSetContent, identifyWeaknessesAndSetContent, setCurrentPhase, setCurrentOutroView, setCurrentIntroView }}> 
           {children}
           </GameFunctionContext.Provider>
       </GameDispatchContext.Provider>

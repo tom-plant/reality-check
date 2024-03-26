@@ -1,0 +1,7 @@
+/* OutroLayout.css */
+.outro-layout {
+    display: flex; /* Use flexbox for layout */
+    justify-content: center; /* Center children horizontally */
+    align-items: stretch; /* Stretch children to fill the container vertically */
+  }
+  

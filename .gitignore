@@ -25,4 +25,4 @@ yarn-error.log*
 
 __pycache__/
 *.pyc
-populate_db.py 
+populate_db.py backend/flask_session/*

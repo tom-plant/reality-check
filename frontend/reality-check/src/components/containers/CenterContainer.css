@@ -1,0 +1,14 @@
+/* CenterContainer.css */
+.center-container {
+    background-color: transparent; /* Invisible background */
+    position: absolute;
+    width: 80%; /* Adjust the width as needed */
+    height: 55%; /* Adjust based on your layout */
+    top: 25%; /* Adjust to position below the header */
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 2px solid white;
+  }
+  
+  
