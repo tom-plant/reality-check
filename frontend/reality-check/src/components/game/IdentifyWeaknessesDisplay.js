@@ -5,9 +5,17 @@ import FactBox from '../common/FactBox';
 import './IdentifyWeaknessesDisplay.css'; // Make sure to create a corresponding CSS file
 
 const IdentifyWeaknessesDisplay = () => {
-  const { updatedFactCombination } = useGameState();
+  const { updatedFactCombination, selectedFactCombination } = useGameState();
   const dispatch = useGameDispatch();
   const { identifyWeaknessesAndSetContent } = useGameFunction(); 
+
+  const arraysAreEqual = (arr1, arr2) => {
+    if (arr1.length !== arr2.length) return false;
+    for (let i = 0; i < arr1.length; i++) {
+      if (arr1[i].text !== arr2[i].text) return false; 
+    }
+    return true;
+  };  
 
   const handleUpdateNarrative = () => {
     dispatch({ type: 'RESET_SELECTION_ENDED', payload: true });
@@ -33,6 +41,7 @@ const IdentifyWeaknessesDisplay = () => {
       <button
         className="update-narrative"
         onClick={handleUpdateNarrative}
+        disabled={arraysAreEqual(updatedFactCombination, selectedFactCombination)}
       >
         Update Narrative
       </button>

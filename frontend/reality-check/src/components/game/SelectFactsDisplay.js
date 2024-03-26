@@ -11,9 +11,9 @@ const SelectFactsDisplay = () => {
   const dispatch = useGameDispatch();
 
   const handleGenerateNarrative = async () => {
+    dispatch({ type: 'SET_CURRENT_VIEW', payload: 'SELECT_NARRATIVES' });
     await fetchAndSetNarratives(selectedFactCombination);
     dispatch({ type: 'COPY_FACTS_TO_UPDATED', payload: selectedFactCombination }); 
-    dispatch({ type: 'SET_CURRENT_VIEW', payload: 'SELECT_NARRATIVES' });
     dispatch({ type: 'RESET_SELECTION_ENDED' });
   };
 

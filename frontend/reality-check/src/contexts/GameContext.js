@@ -10,7 +10,7 @@ const initialState = {
   currentPhase: 'game', 
   currentIntroView: 'AUTH_LOGIN',
   currentOutroView: 'CONCLUSION_WRAP_UP',
-  currentView: 'NARRATIVE_IMPACT', 
+  currentView: 'SELECT_FACTS', 
   username: 'tomtom',
   email: 'lolita@gmail.com',
   facts: [],
