@@ -2,28 +2,25 @@
 
 import React, { useEffect, useState } from 'react';
 import { useGameState } from '../../contexts/GameContext';
-import './IntroduceEvent.css'; // Make sure to create a corresponding CSS file
+import './IntroduceEvent.css'; 
 
 const IntroduceEvent = () => {
-  const { eventNewsContent, isLoadingNews, selectedEvent } = useGameState(); // Assuming eventNewsContent and selectedEvent are stored in your context
+  const { eventNewsContent, isLoadingNews } = useGameState(); 
   const [content, setContent] = useState(null);
 
+  // Render news content
   useEffect(() => {
-    console.log('selectedEvent is: ',selectedEvent)
-    console.log('eventNewsContent is: ',eventNewsContent)
-    console.log('isLoadingNews: ',isLoadingNews)
     if (eventNewsContent && !isLoadingNews) {
-      // Update local state with the new content, ensuring we're accessing the nested 'news_content'
       setContent(eventNewsContent.event_news_content);
     }
-  }, [eventNewsContent, isLoadingNews]); // Depend on isLoadingNews and primaryNewsContent
+  }, [eventNewsContent, isLoadingNews]); 
 
-  // Conditional rendering based on isLoadingNews and content availability
+  // Loading animation
   if (isLoadingNews || !content) {
-    return <div>Loading news content...</div>; // or any other loading indicator
+    return <div>Loading news content...</div>; 
   }
 
-  // Destructure with correct property names, using 'image_url' instead of 'imageUrl'
+  // Destructure with correct property names
   const { headline, story, image_url: imageUrl } = content;
 
   return (

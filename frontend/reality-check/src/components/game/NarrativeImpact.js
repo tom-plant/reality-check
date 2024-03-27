@@ -6,24 +6,21 @@ import './NarrativeImpact.css';
 
 const NarrativeImpact = () => {
   const { primaryNewsContent, isLoadingNews } = useGameState();
-
-  // Local state to ensure the component updates when primaryNewsContent changes
   const [content, setContent] = useState(null);
 
+  // Render news content from the backend
   useEffect(() => {
-    console.log(primaryNewsContent)
     if (primaryNewsContent && !isLoadingNews) {
-      // Update local state with the new content, ensuring we're accessing the nested 'news_content'
       setContent(primaryNewsContent.news_content);
     }
-  }, [primaryNewsContent, isLoadingNews]); // Depend on isLoadingNews and primaryNewsContent
+  }, [primaryNewsContent, isLoadingNews]); 
 
-  // Conditional rendering based on isLoadingNews and content availability
+  // Loading animation
   if (isLoadingNews || !content) {
-    return <div>Loading news content...</div>; // or any other loading indicator
+    return <div>Loading news content...</div>; 
   }
 
-  // Destructure with correct property names, using 'image_url' instead of 'imageUrl'
+  // Destructure with correct property names
   const { headline, story, image_url: imageUrl } = content;
 
   return (

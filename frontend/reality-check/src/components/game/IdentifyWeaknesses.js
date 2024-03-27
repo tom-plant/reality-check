@@ -1,12 +1,13 @@
 // IdentifyWeaknesses.js
-import React, { useEffect, useState } from 'react';
-import { useGameState, useGameDispatch } from '../../contexts/GameContext';
+
+import React, { useState } from 'react';
+import { useGameState } from '../../contexts/GameContext';
 import FactBox from '../common/FactBox';
-import './IdentifyWeaknesses.css'; // Ensure you have this CSS file
+import './IdentifyWeaknesses.css'; 
 
 const IdentifyWeaknesses = () => {
   const { facts, updatedFactCombination, timerHasEnded } = useGameState();
-  const [displayedFacts, setDisplayedFacts] = useState(facts);  // Display all facts
+  const [displayedFacts, setDisplayedFacts] = useState(facts);  
 
   return (
     <div className="identify-weaknesses">
