@@ -1,14 +1,17 @@
 // IdentifyWeaknessesDisplay.js
-import React from 'react';
+
+import React, { useState} from 'react';
 import { useGameDispatch, useGameState, useGameFunction } from '../../contexts/GameContext';
 import FactBox from '../common/FactBox'; 
-import './IdentifyWeaknessesDisplay.css'; // Make sure to create a corresponding CSS file
+import './IdentifyWeaknessesDisplay.css'; 
 
 const IdentifyWeaknessesDisplay = () => {
   const { updatedFactCombination, selectedFactCombination } = useGameState();
-  const dispatch = useGameDispatch();
   const { identifyWeaknessesAndSetContent } = useGameFunction(); 
+  const [buttonClicked, setButtonClicked] = useState(false); 
+  const dispatch = useGameDispatch();
 
+  // Check if the updated fact selection and the same as existing fact selection
   const arraysAreEqual = (arr1, arr2) => {
     if (arr1.length !== arr2.length) return false;
     for (let i = 0; i < arr1.length; i++) {
@@ -17,12 +20,15 @@ const IdentifyWeaknessesDisplay = () => {
     return true;
   };  
 
+  // Set updated facts and generate updated news content
   const handleUpdateNarrative = () => {
-    dispatch({ type: 'RESET_SELECTION_ENDED', payload: true });
-    dispatch({ type: 'UPDATE_FACTS', payload: updatedFactCombination });
-    console.log("updatedFactCombination in IdentifyWeaknessesDisplay is: ", updatedFactCombination);
-    dispatch({ type: 'TOGGLE_UPDATED_NARRATIVE_POPUP' }); // This will toggle the popup visibility
-    identifyWeaknessesAndSetContent(updatedFactCombination);
+    if (!buttonClicked) { 
+      setButtonClicked(true); 
+      dispatch({ type: 'TOGGLE_UPDATED_NARRATIVE_POPUP' }); 
+      dispatch({ type: 'RESET_SELECTION_ENDED', payload: true });
+      dispatch({ type: 'UPDATE_FACTS', payload: updatedFactCombination });
+      identifyWeaknessesAndSetContent(updatedFactCombination);
+    }
   };
 
   return (
@@ -32,8 +38,8 @@ const IdentifyWeaknessesDisplay = () => {
           <FactBox
             key={fact.id}
             fact={fact}
-            isSelected={true} // These facts are always selected in this display
-            disabled={false} 
+            isSelected={true}
+            disabled={false}
             container="right"
           />
         ))}

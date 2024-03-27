@@ -7,27 +7,25 @@ const UpdatedNarrativePopup = () => {
   const dispatch = useGameDispatch();
   const [content, setContent] = useState(null);
 
-  console.log('secondaryNarrative from context:', secondaryNarrative);
-
+  // Set content from context
   useEffect(() => {
     if (secondaryNarrative) {
-    console.log('secondary narrative is:', secondaryNarrative)
     setContent(secondaryNarrative);
     }
   }, [secondaryNarrative]); 
 
-  // Conditional rendering based on isLoadingNews and content availability
+  // Loading animation
   if (isLoadingNews || !content) {
-    return <div>Loading news content...</div>; // or any other loading indicator
+    return <div>Loading news content...</div>; 
   }
 
+  // Toggle off popup and progress to next phase
   const handleContinue = () => {
-    dispatch({ type: 'TOGGLE_UPDATED_NARRATIVE_POPUP' }); // This will toggle the popup visibility
-    dispatch({ type: 'SET_CURRENT_VIEW', payload: 'UPDATED_NARRATIVE_IMPACT' }); // Progress to the next phase
+    dispatch({ type: 'TOGGLE_UPDATED_NARRATIVE_POPUP' }); 
+    dispatch({ type: 'SET_CURRENT_VIEW', payload: 'UPDATED_NARRATIVE_IMPACT' });
   };
 
   return (
-    // Use 'popup-overlay' class to cover the entire screen
     <div className="popup-overlay"> 
       <div className="popup-content"> 
         <h2>Your Updated Narrative</h2>
@@ -35,7 +33,7 @@ const UpdatedNarrativePopup = () => {
         <button
           className="continue-button"
           onClick={handleContinue}
-          // disabled={!secondaryNarrative}
+          disabled={isLoadingNews}
         >
           Continue
         </button>

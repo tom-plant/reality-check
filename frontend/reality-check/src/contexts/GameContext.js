@@ -1,18 +1,19 @@
 // src/context/GameContext.js
-import React, { createContext, useContext, useReducer, useState, useEffect } from 'react';
+
+import React, { createContext, useContext, useReducer, useEffect } from 'react';
 import { authenticateUser, getFacts, getEvents, generateNarrativeFromFacts, selectNarrative, introduceEvent, identifyWeaknesses } from '../services/gameService';
 
 const GameStateContext = createContext();
 const GameDispatchContext = createContext();
-const GameFunctionContext = createContext(); // Create a new context for functions
+const GameFunctionContext = createContext(); 
 
 const initialState = {
-  currentPhase: 'game', 
+  currentPhase: 'intro', 
   currentIntroView: 'AUTH_LOGIN',
   currentOutroView: 'CONCLUSION_WRAP_UP',
   currentView: 'SELECT_FACTS', 
-  username: 'tomtom',
-  email: 'lolita@gmail.com',
+  username: null,
+  email: null,
   facts: [],
   events: [],
   selectedFactCombination: [],
@@ -28,7 +29,7 @@ const initialState = {
   timerHasEnded: false, 
   isLoadingNarratives: false,
   isLoadingNews: false,
-  userLanguage: 'English', // User selected language, default to English
+  userLanguage: 'English', 
 };
 
 
@@ -83,11 +84,6 @@ const gameReducer = (state, action) => {
         selectedFactCombination: state.selectedFactCombination.filter(fact => fact !== action.payload),
       };
 
-    case 'LOAD_MORE_FACTS':
-      // Placeholder for loading more facts logic
-      console.log('LOAD_MORE_FACTS action triggered. Implement logic to load more facts here.');
-      return state; // Return the current state unchanged for now
-
     case 'COPY_FACTS_TO_UPDATED':
       return {
         ...state,
@@ -104,11 +100,9 @@ const gameReducer = (state, action) => {
       return { ...state, timerHasEnded: action.payload };  
 
     case 'SELECT_NARRATIVE':
-      console.log('Selecting narrative:', action.payload);
       return { ...state, selectedNarrative: action.payload };
 
     case 'DESELECT_NARRATIVE':
-      console.log('Deselecting narrative');
       return { ...state, selectedNarrative: null };
 
     case 'SET_NARRATIVE_OPTIONS':
@@ -146,22 +140,6 @@ const gameReducer = (state, action) => {
 
     case 'SET_EVENT_OPTIONS':
       return { ...state, eventOptions: action.payload };
-
-    case 'GENERATE_NEWS_CONTENT':
-      // Assuming this action updates a state variable with more information. Adjust as needed.
-      return { ...state, additionalInfo: action.payload };
-
-    case 'GENERATE_NARRATIVE':
-      // This would set some narrative based on previous selections or information
-      return { ...state, narrativeOptions: action.payload };
-
-    case 'CONFIRM_NARRATIVE_SELECTION':
-      // Confirming the narrative might finalize the choice and prevent further changes
-      return { ...state, narrativeConfirmed: true };
-
-    case 'GENERATE_EVENT_RESPONSE':
-      // This could be generating a response to an event, stored in state
-      return { ...state, eventResponse: action.payload }
 
     case 'SELECT_UPDATED_FACT':
       return {
@@ -311,22 +289,18 @@ const GameProvider = ({ children }) => {
   const selectEventAndSetContent = async (selectedEvent) => {
     try {
       dispatch({ type: 'SET_LOADING_NEWS', payload: true }); 
-      console.log('selectedevent in the context function is: ', selectedEvent)
       const content = await introduceEvent(selectedEvent);
-      console.log('response in context is: ',content)
       dispatch({ type: 'SET_EVENT_NEWS_CONTENT', payload: content });
       dispatch({ type: 'SET_LOADING_NEWS', payload: false }); 
     } catch (error) {
       console.error('Failed to introduce event:', error);
       dispatch({ type: 'SET_LOADING_NEWS', payload: false }); 
-      // Handle error, e.g., by setting an error state
     }
   };
 
   const identifyWeaknessesAndSetContent = async (updatedFactCombination) => {
     try {
-      console.log('UpdatedFactCombination sent to context function is: ', updatedFactCombination);
-      dispatch({ type: 'SET_LOADING_NEWS', payload: true }); // Assuming you have a loading state
+      dispatch({ type: 'SET_LOADING_NEWS', payload: true }); 
         const response = await identifyWeaknesses(updatedFactCombination);
         dispatch({
           type: 'SET_SECONDARY_NARRATIVE_CONTENT',
@@ -338,7 +312,7 @@ const GameProvider = ({ children }) => {
       dispatch({ type: 'SET_LOADING_NEWS', payload: false });
     } catch (error) {
       console.error('Failed to identify weaknesses:', error);
-      dispatch({ type: 'SET_LOADING_NEWS', payload: false }); // Ensure loading is turned off even on error
+      dispatch({ type: 'SET_LOADING_NEWS', payload: false }); 
     }
   };
   return (

@@ -4,49 +4,46 @@ import { useGameDispatch, useGameState, useGameFunction } from '../../contexts/G
 import './EventPopup.css';
 
 const EventPopup = ({ onClose }) => {
-  const { events, selectedEvent, eventNewsContent } = useGameState(); 
+  const { events } = useGameState(); 
   const { selectEventAndSetContent } = useGameFunction(); 
   const dispatch = useGameDispatch();
   const [selectedEventIndex, setSelectedEventIndex] = useState(null);
   const [isCycling, setIsCycling] = useState(false);
   const [showCloseButton, setShowCloseButton] = useState(false);
-  const [displayedEvents, setDisplayedEvents] = useState(events.slice(0, 3)); // Start with the first 3 facts
+  const [displayedEvents, setDisplayedEvents] = useState(events.slice(0, 3)); 
 
+  // Initially load a random selection of 3 events
   useEffect(() => {
-    // Initially load a random selection of 3 events
     setDisplayedEvents(getRandomEvents(events, 3));
   }, [events]);
 
+  // Get a random selection of facts
   const getRandomEvents = (eventsArray, count) => {
-    // Get a random selection of facts
       let shuffled = [...eventsArray].sort(() => 0.5 - Math.random());
       return shuffled.slice(0, count);
     };
   
-
+  // Hide the close button when cycling starts
   const startCyclingEvents = () => {
     setIsCycling(true);
-    setShowCloseButton(false); // Hide the close button when cycling starts
+    setShowCloseButton(false); 
     let index = 0;
 
     const cycle = setInterval(() => {
       setSelectedEventIndex(index % events.length);
       index++;
-    }, 200); // Adjust the speed of cycling as needed
+    }, 200); 
 
     // Stop cycling after 6-7 seconds and select an event
     setTimeout(() => {
-      clearInterval(cycle); // Use the correct interval variable here
+      clearInterval(cycle); 
       setIsCycling(false);
       const finalIndex = Math.floor(Math.random() * events.length);
       setSelectedEventIndex(finalIndex);
-      setShowCloseButton(true); // Show the close button after cycling stops
-
-      // Dispatch the selected event to the context
+      setShowCloseButton(true); 
       dispatch({ type: 'SELECT_EVENT', payload: events[finalIndex] });
-      console.log('final index is:',events[finalIndex])
-      selectEventAndSetContent(events[finalIndex]); // Pass the selected event directly
-    }, 6500); // Adjust the duration of the cycling effect as needed
+      selectEventAndSetContent(events[finalIndex]); 
+    }, 6500); 
   };
 
   return (

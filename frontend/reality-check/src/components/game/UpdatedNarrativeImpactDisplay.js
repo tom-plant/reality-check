@@ -1,27 +1,17 @@
 // UpdatedNarrativeImpactDisplay.js
 
-import React, { useEffect, useState } from 'react';
-import { useGameState, useGameDispatch, useGameFunction } from '../../contexts/GameContext';
-import './UpdatedNarrativeImpactDisplay.css'; // Make sure to create and style this CSS file
+import React from 'react';
+import { useGameState, useGameFunction } from '../../contexts/GameContext';
+import './UpdatedNarrativeImpactDisplay.css'; 
 
 const UpdatedNarrativeImpactDisplay = () => {
-  const { selectedNarrative, secondaryNarrative, updatedFactCombination } = useGameState();
-  const { setCurrentPhase } = useGameFunction(); // Context function to set current phase
-  const dispatch = useGameDispatch();
-  const [contentLoaded, setContentLoaded] = useState(false); // Simulate news content loading
+  const { selectedNarrative, secondaryNarrative, updatedFactCombination, isLoadingNews } = useGameState();
+  const { setCurrentPhase } = useGameFunction(); 
 
-
+  // Progress to outro phase of the game
   const handleContinue = () => {
-    setCurrentPhase('outro'); // Transition to the outro phase
+    setCurrentPhase('outro'); 
   };
-
-
-    // Simulate content loading completion after a delay. CHANGE THIS TO APPEAR ONLY ONCE NEWS ARTICLES HAVE LOADED IN
-    useEffect(() => {
-      const timer = setTimeout(() => setContentLoaded(true), 2000); // 2 seconds delay for simulation
-      return () => clearTimeout(timer);
-    }, []);
-
     
   return (
     <div className="updated-narrative-impact-display-container">
@@ -50,7 +40,7 @@ const UpdatedNarrativeImpactDisplay = () => {
       <button
         className="continue-button"
         onClick={handleContinue}
-        disabled={!contentLoaded} // Button is disabled until content is loaded
+        disabled={isLoadingNews} 
       >
         Continue
       </button>

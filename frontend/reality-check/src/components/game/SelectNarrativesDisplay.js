@@ -1,7 +1,8 @@
 // SelectNarrativesDisplay.js
+
 import React from 'react';
 import { useGameState } from '../../contexts/GameContext';
-import './SelectNarrativesDisplay.css'; // Create a new CSS file for this component
+import './SelectNarrativesDisplay.css'; 
 
 const SelectNarrativesDisplay = () => {
   const { selectedFactCombination } = useGameState();

@@ -1,20 +1,25 @@
 // SelectFactsDisplay.js
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useGameState, useGameDispatch, useGameFunction } from '../../contexts/GameContext';
 import FactBox from '../common/FactBox'; 
 import './SelectFactsDisplay.css';
 
 const SelectFactsDisplay = () => {
-  const { selectedFactCombination, timerHasEnded, narrativeOptions } = useGameState();
+  const { selectedFactCombination, timerHasEnded } = useGameState();
   const { fetchAndSetNarratives } = useGameFunction(); 
   const dispatch = useGameDispatch();
+  const [buttonClicked, setButtonClicked] = useState(false); 
 
+  // Generate narratives and change view, assuring button can only be clicked once
   const handleGenerateNarrative = async () => {
-    dispatch({ type: 'SET_CURRENT_VIEW', payload: 'SELECT_NARRATIVES' });
-    await fetchAndSetNarratives(selectedFactCombination);
-    dispatch({ type: 'COPY_FACTS_TO_UPDATED', payload: selectedFactCombination }); 
-    dispatch({ type: 'RESET_SELECTION_ENDED' });
+    if (!buttonClicked) { 
+      setButtonClicked(true); 
+      dispatch({ type: 'SET_CURRENT_VIEW', payload: 'SELECT_NARRATIVES' });
+      await fetchAndSetNarratives(selectedFactCombination);
+      dispatch({ type: 'COPY_FACTS_TO_UPDATED', payload: selectedFactCombination }); 
+      dispatch({ type: 'RESET_SELECTION_ENDED' });
+    }
   };
 
   return (
@@ -25,7 +30,7 @@ const SelectFactsDisplay = () => {
           <FactBox 
             key={fact.id}
             fact={fact}
-            isSelected={true} // These are always selected
+            isSelected={true} 
             disabled={timerHasEnded} 
             container="right"
           />

@@ -1,6 +1,6 @@
 import React from 'react';
-import { useGameFunction } from '../../contexts/GameContext';  // Adjust path as needed
-import IntroLayout from '../layout/IntroLayout';  // Adjust the path as needed
+import { useGameFunction } from '../../contexts/GameContext';  
+import IntroLayout from '../layout/IntroLayout';  
 
 const IntroView = () => {
   const { setCurrentPhase } = useGameFunction();

@@ -1,14 +1,14 @@
 // NarrativeImpactDisplay.js
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useGameState, useGameDispatch } from '../../contexts/GameContext';
-import './NarrativeImpactDisplay.css'; // Make sure to create and style this CSS file
+import './NarrativeImpactDisplay.css'; 
 
 const NarrativeImpactDisplay = () => {
   const { selectedNarrative, selectedFactCombination, isLoadingNews } = useGameState();
   const dispatch = useGameDispatch();
-  const [contentLoaded, setContentLoaded] = useState(false); // Simulate news content loading
 
+  // Progress to next game phase
   const handleContinue = () => {
     dispatch({ type: 'SET_CURRENT_VIEW', payload: 'INTRODUCE_EVENT' });
   };
@@ -35,7 +35,7 @@ const NarrativeImpactDisplay = () => {
       <button
         className="continue-button"
         onClick={handleContinue}
-        disabled={!isLoadingNews} // Button is disabled until content is loaded
+        disabled={isLoadingNews} 
       >
         Continue
       </button>

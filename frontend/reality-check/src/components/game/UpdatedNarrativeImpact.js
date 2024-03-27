@@ -8,22 +8,19 @@ const UpdatedNarrativeImpact = () => {
   const { secondaryNewsContent, isLoadingNews } = useGameState();
   const [content, setContent] = useState(null);
 
-
+  // Render news content from the backend
   useEffect(() => {
-    console.log('secondaryNewsContent is: ',secondaryNewsContent)
-    console.log('isLoadingNews: ',isLoadingNews)
     if (secondaryNewsContent && !isLoadingNews) {
-      // Update local state with the new content, ensuring we're accessing the nested 'news_content'
       setContent(secondaryNewsContent.secondary_news_content);
     }
-  }, [secondaryNewsContent, isLoadingNews]); // Depend on isLoadingNews and primaryNewsContent
+  }, [secondaryNewsContent, isLoadingNews]); 
 
-  // Conditional rendering based on isLoadingNews and content availability
+  // Loading Animation
   if (isLoadingNews || !content) {
-    return <div>Loading news content...</div>; // or any other loading indicator
+    return <div>Loading news content...</div>; 
   }
 
-  // Destructure with correct property names, using 'image_url' instead of 'imageUrl'
+  // Destructure with correct property names
   const { headline, story, image_url: imageUrl } = content;
 
   return (

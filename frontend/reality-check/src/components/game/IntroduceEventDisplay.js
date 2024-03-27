@@ -1,15 +1,16 @@
 // IntroduceEventDisplay.js
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useGameState, useGameDispatch } from '../../contexts/GameContext';
-import './IntroduceEventDisplay.css'; // Ensure you create and style this CSS file
+import './IntroduceEventDisplay.css'; 
 
 const IntroduceEventDisplay = () => {
   const { selectedEvent, selectedNarrative, selectedFactCombination, isLoadingNews } = useGameState();
   const dispatch = useGameDispatch();
 
+  // Progress to next game phase
   const handleContinue = () => {
-    dispatch({ type: 'SET_CURRENT_VIEW', payload: 'IDENTIFY_WEAKNESSES' }); // Adjust the payload to the next phase's view name
+    dispatch({ type: 'SET_CURRENT_VIEW', payload: 'IDENTIFY_WEAKNESSES' }); 
   };
 
   return (
@@ -21,14 +22,12 @@ const IntroduceEventDisplay = () => {
             <p>{selectedEvent.text}</p>
           </div>
         )}
-  
         <h2>Your Narrative</h2>
         {selectedNarrative && (
           <div className="selected-narrative">
             <p>{selectedNarrative.text}</p>
           </div>
         )}
-  
         <h2>Your Facts</h2>
         <div className="facts-list">
           {selectedFactCombination.map((fact) => (
@@ -38,7 +37,7 @@ const IntroduceEventDisplay = () => {
           ))}
         </div>
       </div>
-      <button className="continue-button" onClick={handleContinue} disabled={!isLoadingNews}>
+      <button className="continue-button" onClick={handleContinue} disabled={isLoadingNews}>
         Continue
       </button>
     </div>

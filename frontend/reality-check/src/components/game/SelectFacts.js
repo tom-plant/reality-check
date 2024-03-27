@@ -1,49 +1,52 @@
 // SelectedFacts.js
+
 import React, { useState, useEffect, useRef } from 'react';
-import { useGameState, useGameDispatch } from '../../contexts/GameContext'; // Adjust the path as needed
-import FactBox from '../common/FactBox'; // Adjust the path as needed
-import Counter from '../common/Counter'; // Adjust the path as needed
-import Timer from '../common/Timer'; // Import the Timer component
-import './SelectFacts.css'; // Ensure you have a CSS file for styling
+import { useGameState, useGameDispatch } from '../../contexts/GameContext'; 
+import FactBox from '../common/FactBox'; 
+import Counter from '../common/Counter';
+import Timer from '../common/Timer'; 
+import './SelectFacts.css'; 
 
 const SelectFacts = () => {
-  const { facts, selectedFactCombination, timerHasEnded, username, email } = useGameState();
+  const { facts, selectedFactCombination, timerHasEnded } = useGameState();
   const dispatch = useGameDispatch();
-  const [displayedFacts, setDisplayedFacts] = useState(facts.slice(0, 5)); // Start with the first 5 facts
-  const selectedFactsRef = useRef(selectedFactCombination); // Ref to track the latest selected facts
+  const [displayedFacts, setDisplayedFacts] = useState(facts.slice(0, 5)); 
+  const selectedFactsRef = useRef(selectedFactCombination); 
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   useEffect(() => {
     selectedFactsRef.current = selectedFactCombination;
   }, [selectedFactCombination]);
 
+  // Run out timer and disable More Information button
   const onTimeUp = () => {
     setTimeout(() => {
-      setIsButtonDisabled(true); // Disable the button
+      setIsButtonDisabled(true); 
       dispatch({ type: 'SET_TIMER_ENDED', payload: true });
     }, 0);
   };
 
+  // Pre-load a random selection of 5 facts
   useEffect(() => {
-    // Initially load a random selection of 5 facts
     setDisplayedFacts(getRandomFacts(facts, 5));
   }, [facts]);
 
+// Get a random selection of facts
   const getRandomFacts = (factsArray, count) => {
-  // Get a random selection of facts
     let shuffled = [...factsArray].sort(() => 0.5 - Math.random());
     return shuffled.slice(0, count);
   };
 
+// Allow rendering of additional facts
   const loadMoreFacts = () => {
     if (timerHasEnded) {
       return;
     }
-    // Combine current displayed facts with a new random selection of 5 facts, excluding duplicates
     const newSelection = getRandomFacts(facts.filter(fact => !displayedFacts.includes(fact)), 5);
     setDisplayedFacts(prev => [...prev, ...newSelection]);
   };
 
+// Autoselect additional facts
   useEffect(() => {
     if (timerHasEnded) {
       if (selectedFactsRef.current.length < 3) {
@@ -56,7 +59,7 @@ const SelectFacts = () => {
         });
       }
     }
-  }, [timerHasEnded, selectedFactsRef.current, dispatch, facts]); // Add dependencies as needed
+  }, [timerHasEnded, selectedFactsRef.current, dispatch, facts]); 
 
 
   return (

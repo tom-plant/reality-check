@@ -1,24 +1,28 @@
 // SelectedNarrative.js
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useGameState, useGameDispatch, useGameFunction } from '../../contexts/GameContext';
 import NarrativeBox from '../common/NarrativeBox'; 
 import './SelectNarratives.css'; 
 
-
 const SelectNarratives = () => {
-  const { narrativeOptions, selectedNarrative, isLoadingNarratives, primaryNewsContent } = useGameState();
+  const { narrativeOptions, selectedNarrative, isLoadingNarratives } = useGameState();
   const { selectNarrativeAndSetContent } = useGameFunction(); 
+  const [buttonClicked, setButtonClicked] = useState(false); 
   const dispatch = useGameDispatch();
 
+  // Loading animation
   if (isLoadingNarratives) {
-    return <div>Loading narratives...</div>; // Or any other loading indicator you prefer
+    return <div>Loading narratives...</div>; 
   }
 
+  // Generate news content upon narrative selection
   const handleNarrativeConfirmation = () => {
-    selectNarrativeAndSetContent(selectedNarrative);
-    dispatch({ type: 'SET_CURRENT_VIEW', payload: 'NARRATIVE_IMPACT' }); 
-    return
+    if (!buttonClicked) { 
+      setButtonClicked(true); 
+      selectNarrativeAndSetContent(selectedNarrative);
+      dispatch({ type: 'SET_CURRENT_VIEW', payload: 'NARRATIVE_IMPACT' }); 
+    }
   };
 
   return (
@@ -36,7 +40,7 @@ const SelectNarratives = () => {
         </div>
         <button 
           className="confirm-narrative" 
-          disabled={!selectedNarrative} // Button is disabled if no narrative is selected
+          disabled={!selectedNarrative} 
           onClick={handleNarrativeConfirmation} 
         >
           Confirm Narrative
