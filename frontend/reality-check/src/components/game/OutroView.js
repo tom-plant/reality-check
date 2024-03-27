@@ -1,13 +1,15 @@
+// OutroView.js
+
 import React from 'react';
+import { useGameState } from '../../contexts/GameContext'; 
 import OutroLayout from '../layout/OutroLayout';
 
 const OutroView = () => {
-  // Function or mechanism for any desired action after the Outro phase
-  // For example, transitioning back to the Intro phase or displaying a final message
+  const { currentPhase } = useGameState();
 
   return (
     <div className="outro-view">
-      <OutroLayout />
+      {currentPhase === 'outro' && <OutroLayout />}
     </div>
   );
 };

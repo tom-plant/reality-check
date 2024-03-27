@@ -1,11 +1,10 @@
 //GameView.js
 
 import React from 'react';
-import { useGameState, useGameFunction } from '../../contexts/GameContext'; 
+import { useGameState } from '../../contexts/GameContext'; 
 import GameLayout from '../layout/GameLayout'; 
 
 const GameView = () => {
-  const { setCurrentPhase } = useGameFunction(); 
   const { currentPhase } = useGameState();
 
   return (

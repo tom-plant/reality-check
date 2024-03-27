@@ -1,16 +1,18 @@
 // UpdatedNarrativeImpactDisplay.js
 
 import React from 'react';
-import { useGameState, useGameFunction } from '../../contexts/GameContext';
+import { useGameState, useGameFunction, useGameDispatch } from '../../contexts/GameContext';
 import './UpdatedNarrativeImpactDisplay.css'; 
 
 const UpdatedNarrativeImpactDisplay = () => {
   const { selectedNarrative, secondaryNarrative, updatedFactCombination, isLoadingNews } = useGameState();
   const { setCurrentPhase } = useGameFunction(); 
+  const dispatch = useGameDispatch();
 
   // Progress to outro phase of the game
   const handleContinue = () => {
     setCurrentPhase('outro'); 
+    dispatch({ type: 'SET_CURRENT_OUTRO_VIEW', payload: 'CONCLUSION_WRAP_UP' });
   };
     
   return (

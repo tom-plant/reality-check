@@ -23,7 +23,13 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+
+# Python cache files
 __pycache__/
 *.pyc
-populate_db.py backend/flask_session/*
 
+# Your script
+populate_db.py
+
+# Flask session files
+/backend/flask_session/*

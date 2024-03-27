@@ -1,18 +1,15 @@
+// IntroView.js
+
 import React from 'react';
-import { useGameFunction } from '../../contexts/GameContext';  
+import { useGameState } from '../../contexts/GameContext';  
 import IntroLayout from '../layout/IntroLayout';  
 
 const IntroView = () => {
-  const { setCurrentPhase } = useGameFunction();
-
-  // Example function to transition to the main game
-  const goToMainGame = () => {
-    setCurrentPhase('game');
-  };
+  const { currentPhase } = useGameState();
 
   return (
     <div className="intro-view">
-      <IntroLayout />
+      {currentPhase === 'intro' && <IntroLayout />}
     </div>
   );
 };

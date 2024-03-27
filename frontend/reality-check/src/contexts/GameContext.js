@@ -10,8 +10,9 @@ const GameFunctionContext = createContext();
 const initialState = {
   currentPhase: 'intro', 
   currentIntroView: 'AUTH_LOGIN',
-  currentOutroView: 'CONCLUSION_WRAP_UP',
   currentView: 'SELECT_FACTS', 
+  currentTurnPointView: 'ALERT',
+  currentOutroView: 'CONCLUSION_WRAP_UP',
   username: null,
   email: null,
   facts: [],
@@ -41,6 +42,9 @@ const gameReducer = (state, action) => {
 
     case 'SET_CURRENT_INTRO_VIEW':
       return { ...state, currentIntroView: action.payload };
+
+    case 'SET_CURRENT_TURN_POINT_VIEW':
+      return { ...state, currentTurnPointView: action.payload };
 
     case 'SET_CURRENT_OUTRO_VIEW':
       return { ...state, currentOutroView: action.payload };
@@ -193,6 +197,10 @@ const GameProvider = ({ children }) => {
     dispatch({ type: 'SET_CURRENT_INTRO_VIEW', payload: view });
   };
 
+  const setCurrentTurnPointView = (view) => {
+    dispatch({ type: 'SET_CURRENT_TURN_POINT_VIEW', payload: view });
+  };
+
   const setCurrentOutroView = (view) => {
     dispatch({ type: 'SET_CURRENT_OUTRO_VIEW', payload: view });
   };
@@ -318,7 +326,7 @@ const GameProvider = ({ children }) => {
   return (
     <GameStateContext.Provider value={state}>
       <GameDispatchContext.Provider value={dispatch}>
-        <GameFunctionContext.Provider value={{ fetchAndSetFacts, fetchAndSetEvents, loginUser, fetchAndSetNarratives, selectNarrativeAndSetContent, selectEventAndSetContent, identifyWeaknessesAndSetContent, setCurrentPhase, setCurrentOutroView, setCurrentIntroView }}> 
+        <GameFunctionContext.Provider value={{ fetchAndSetFacts, fetchAndSetEvents, loginUser, fetchAndSetNarratives, selectNarrativeAndSetContent, selectEventAndSetContent, identifyWeaknessesAndSetContent, setCurrentPhase, setCurrentOutroView, setCurrentTurnPointView, setCurrentIntroView }}> 
           {children}
           </GameFunctionContext.Provider>
       </GameDispatchContext.Provider>

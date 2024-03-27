@@ -1,16 +1,18 @@
 // IntroduceEventDisplay.js
 
 import React from 'react';
-import { useGameState, useGameDispatch } from '../../contexts/GameContext';
+import { useGameState, useGameDispatch, useGameFunction } from '../../contexts/GameContext';
 import './IntroduceEventDisplay.css'; 
 
 const IntroduceEventDisplay = () => {
   const { selectedEvent, selectedNarrative, selectedFactCombination, isLoadingNews } = useGameState();
+  const { setCurrentPhase } = useGameFunction(); 
   const dispatch = useGameDispatch();
 
   // Progress to next game phase
   const handleContinue = () => {
-    dispatch({ type: 'SET_CURRENT_VIEW', payload: 'IDENTIFY_WEAKNESSES' }); 
+    setCurrentPhase('turn-point'); 
+    dispatch({ type: 'SET_CURRENT_TURN_POINT_VIEW', payload: 'ALERT' });
   };
 
   return (

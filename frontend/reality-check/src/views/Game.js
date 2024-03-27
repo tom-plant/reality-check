@@ -1,15 +1,16 @@
 // Game.js
 
 import React from 'react';
-import { useGameState } from '../contexts/GameContext'; // Adjust the import path as needed
-import IntroView from '../components/game/IntroView'; // Adjust the import path as needed
-import GameView from '../components/game/GameView'; // Adjust the import path as needed
-import OutroView from '../components/game/OutroView'; // Adjust the import path as needed
+import { useGameState } from '../contexts/GameContext'; 
+import IntroView from '../components/game/IntroView'; 
+import GameView from '../components/game/GameView'; 
+import TurnPointView from '../components/game/TurnPointView';
+import OutroView from '../components/game/OutroView';
 import Header from '../components/Header/Header'; 
 import DynamicBackground from '../components/DynamicBackground/DynamicBackground';
 
 const Game = () => {
-  const { currentPhase } = useGameState(); // Use the context to get the current phase
+  const { currentPhase } = useGameState();
 
   const renderPhase = () => {
     switch (currentPhase) {
@@ -17,6 +18,8 @@ const Game = () => {
         return <IntroView />;
       case 'game':
         return <GameView />;
+      case 'turn-point':
+        return <TurnPointView />;
       case 'outro':
         return <OutroView />;
       default:
@@ -27,9 +30,9 @@ const Game = () => {
 
 return (
   <div className="game">
-    <Header />
+    {currentPhase !== 'intro' && currentPhase !== 'outro' && currentPhase !== 'turn-point' && <Header />}
     <DynamicBackground />
-    {renderPhase()} {/* Call the function to render based on the current phase */}
+    {renderPhase()}
   </div>
 );
 };

@@ -1,3 +1,5 @@
+//ConclusionWrapUp.js
+
 import React from 'react';
 
 const ConclusionWrapUp = ({ setCurrentOutroView }) => {

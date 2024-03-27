@@ -16,7 +16,7 @@ import UpdatedNarrativeImpact from '../game/UpdatedNarrativeImpact';
 import UpdatedNarrativeImpactDisplay from '../game/UpdatedNarrativeImpactDisplay';
 import LeftContainer from '../containers/LeftContainer';
 import RightContainer from '../containers/RightContainer';
-import './GameLayout.css'; // Import CSS
+import './GameLayout.css'; 
 
 const GameLayout = () => {
   const { currentView, isUpdatedNarrativePopupVisible } = useGameState();

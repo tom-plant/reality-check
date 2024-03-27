@@ -1,7 +1,7 @@
 // InstructionsPopup.js
 
 import React from 'react';
-import './InstructionsPopup.css'; // Ensure you have the styling set up for this
+import './InstructionsPopup.css'; 
 
 const InstructionsPopup = ({ onClose }) => {
   return (

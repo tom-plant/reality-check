@@ -2,6 +2,7 @@ import React from 'react';
 import { useGameState, useGameFunction } from '../../contexts/GameContext';
 import ConclusionWrapUp from '../game/ConclusionWrapUp';
 import GameLesson from '../game/GameLesson';
+import CenterContainer from '../containers/CenterContainer';
 import './OutroLayout.css'; 
 
 const OutroLayout = () => {
@@ -15,13 +16,13 @@ const OutroLayout = () => {
       case 'GAME_LESSON':
         return <GameLesson setCurrentPhase={setCurrentPhase}/>;
       default:
-        return <ConclusionWrapUp setCurrentOutroView={setCurrentOutroView} />; // Default to ConclusionWrapUp if currentOutroView is not set
+        return <ConclusionWrapUp setCurrentOutroView={setCurrentOutroView} />; 
     }
   };
 
   return (
     <div className="outro-layout">
-      {renderOutroContent()}
+      <CenterContainer>{renderOutroContent()}</CenterContainer>
     </div>
   );
 };

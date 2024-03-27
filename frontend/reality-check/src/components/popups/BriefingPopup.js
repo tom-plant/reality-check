@@ -1,7 +1,7 @@
 // BriefingPopup.js
 
 import React from 'react';
-import './BriefingPopup.css'; // Ensure you have the styling set up for this
+import './BriefingPopup.css'; 
 
 const BriefingPopup = ({ onClose }) => {
   return (
