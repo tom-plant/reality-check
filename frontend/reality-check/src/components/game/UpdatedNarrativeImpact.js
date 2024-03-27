@@ -25,9 +25,11 @@ const UpdatedNarrativeImpact = () => {
 
   return (
     <div className="narrative-impact">
-      <h1>{headline}</h1>
-      {imageUrl && <img src={imageUrl} alt="News Visual" />}
-      <p>{story}</p>
+      <div className="news-content"> 
+        <h1>{headline}</h1>
+        {imageUrl && <img src={imageUrl} alt="News Visual" />}
+        <p>{story}</p>
+      </div>
     </div>
   );
 };

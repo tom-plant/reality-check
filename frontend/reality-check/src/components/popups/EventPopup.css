@@ -13,12 +13,13 @@
   
 .popup-content {
   background-color: #fff;
-  padding: 20px;
+  padding: 40px;
   padding-bottom: 40px; /* Increased padding at the bottom */
   border-radius: 5px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 80%; /* Adjust based on your preference */
-  max-width: 400px; /* Adjust based on your preference */
+  width: 100%; /* Adjust based on your preference */
+  max-width: 700px !important; /* Adjust based on your preference */
+  min-height: 180px; 
   display: flex; /* Use flex layout */
   flex-direction: column; /* Stack items vertically */
   align-items: center; /* Center items horizontally */
