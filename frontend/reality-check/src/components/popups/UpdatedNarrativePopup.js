@@ -14,11 +14,6 @@ const UpdatedNarrativePopup = () => {
     }
   }, [secondaryNarrative]); 
 
-  // Loading animation
-  if (isLoadingNews || !content) {
-    return <div>Loading news content...</div>; 
-  }
-
   // Toggle off popup and progress to next phase
   const handleContinue = () => {
     dispatch({ type: 'TOGGLE_UPDATED_NARRATIVE_POPUP' }); 
@@ -29,6 +24,7 @@ const UpdatedNarrativePopup = () => {
     <div className="popup-overlay"> 
       <div className="popup-content"> 
         <h2>Your Updated Narrative</h2>
+        {isLoadingNews && <div>Loading news content...</div>}
         <p>{secondaryNarrative.text}</p>
         <button
           className="continue-button"

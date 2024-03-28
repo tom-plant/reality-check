@@ -10,7 +10,7 @@ const GameFunctionContext = createContext();
 const initialState = {
   currentPhase: 'intro', 
   currentIntroView: 'EMAIL_RECRUITMENT',
-  currentView: 'INTRODUCE_EVENT', 
+  currentView: 'IDENTIFY_WEAKNESSES', 
   currentTurnPointView: 'ALERT',
   currentOutroView: 'CONCLUSION_WRAP_UP',
   username: null,

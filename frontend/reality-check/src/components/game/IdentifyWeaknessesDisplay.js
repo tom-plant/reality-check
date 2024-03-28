@@ -24,10 +24,12 @@ const IdentifyWeaknessesDisplay = () => {
   const handleUpdateNarrative = () => {
     if (!buttonClicked) { 
       setButtonClicked(true); 
-      dispatch({ type: 'TOGGLE_UPDATED_NARRATIVE_POPUP' }); 
+      dispatch({ type: 'TOGGLE_UPDATED_NARRATIVE_POPUP' }); // Toggle the popup first
       dispatch({ type: 'RESET_SELECTION_ENDED', payload: true });
-      dispatch({ type: 'UPDATE_FACTS', payload: updatedFactCombination });
-      identifyWeaknessesAndSetContent(updatedFactCombination);
+      setTimeout(() => {
+        dispatch({ type: 'UPDATE_FACTS', payload: updatedFactCombination });
+        identifyWeaknessesAndSetContent(updatedFactCombination);
+      }, 0); 
     }
   };
 
