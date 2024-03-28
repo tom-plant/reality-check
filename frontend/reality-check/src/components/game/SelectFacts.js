@@ -8,12 +8,13 @@ import Timer from '../common/Timer';
 import './SelectFacts.css'; 
 
 const SelectFacts = () => {
-  const { facts, selectedFactCombination, timerHasEnded } = useGameState();
-  const dispatch = useGameDispatch();
+  const { facts, selectedFactCombination, timerHasEnded, isIntroPopupVisible } = useGameState();
   const [displayedFacts, setDisplayedFacts] = useState(facts.slice(0, 5)); 
-  const selectedFactsRef = useRef(selectedFactCombination); 
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const selectedFactsRef = useRef(selectedFactCombination); 
+  const dispatch = useGameDispatch();
 
+  // Render facts
   useEffect(() => {
     selectedFactsRef.current = selectedFactCombination;
   }, [selectedFactCombination]);
@@ -65,7 +66,7 @@ const SelectFacts = () => {
   return (
     <div className="select-facts">
       <div className="timer-counter-wrapper">
-        <Timer onTimeUp={onTimeUp} />
+      <Timer onTimeUp={onTimeUp} startTimer={!isIntroPopupVisible} />
         <Counter />  
       </div> 
       <div className="facts-list">
