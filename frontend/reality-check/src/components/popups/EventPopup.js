@@ -30,7 +30,7 @@ const EventPopup = ({ onClose }) => {
     let index = 0;
 
     const cycle = setInterval(() => {
-      setSelectedEventIndex(index % events.length);
+      setSelectedEventIndex(index % displayedEvents.length);
       index++;
     }, 200); 
 
@@ -38,11 +38,11 @@ const EventPopup = ({ onClose }) => {
     setTimeout(() => {
       clearInterval(cycle); 
       setIsCycling(false);
-      const finalIndex = Math.floor(Math.random() * events.length);
+      const finalIndex = Math.floor(Math.random() * displayedEvents.length);
       setSelectedEventIndex(finalIndex);
       setShowCloseButton(true); 
-      dispatch({ type: 'SELECT_EVENT', payload: events[finalIndex] });
-      selectEventAndSetContent(events[finalIndex]); 
+      dispatch({ type: 'SELECT_EVENT', payload: displayedEvents[finalIndex] });
+      selectEventAndSetContent(displayedEvents[finalIndex]); 
     }, 6500); 
   };
 

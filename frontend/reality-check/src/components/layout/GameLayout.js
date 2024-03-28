@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useGameState, useGameDispatch } from '../../contexts/GameContext'; 
+import IntroPopup from '../popups/IntroPopup';
 import SelectFacts from '../game/SelectFacts';
 import SelectFactsDisplay from '../game/SelectFactsDisplay'; 
 import SelectNarratives from '../game/SelectNarratives';
@@ -19,7 +20,7 @@ import RightContainer from '../containers/RightContainer';
 import './GameLayout.css'; 
 
 const GameLayout = () => {
-  const { currentView, isUpdatedNarrativePopupVisible } = useGameState();
+  const { currentView, isUpdatedNarrativePopupVisible, isIntroPopupVisible } = useGameState();
   const [isEventPopupVisible, setIsEventPopupVisible] = useState(true); 
   const dispatch = useGameDispatch();
 
@@ -38,7 +39,7 @@ const GameLayout = () => {
       case 'UPDATED_NARRATIVE_IMPACT':
         return <UpdatedNarrativeImpact />;
       default:
-        return <div>Welcome to the game! Please select an option to start.</div>;
+        return <div>Uh oh... something went wrong.</div>;
     }
   };
 
@@ -58,16 +59,20 @@ const GameLayout = () => {
       case 'UPDATED_NARRATIVE_IMPACT':
         return <UpdatedNarrativeImpactDisplay />;
       default:
-        return <div>Game information or instructions.</div>;
+        return <div>Uh oh... something went wrong.</div>;
     }
   };
 
   const closeEventPopup = () => {
-    setIsEventPopupVisible(false); // This will close the popup
+    setIsEventPopupVisible(false); 
   };
 
   const closeUpdatedNarrativePopup = () => {
     dispatch({ type: 'TOGGLE_UPDATED_NARRATIVE_POPUP' });
+  };
+
+  const closeIntroPopup = () => {
+    dispatch({ type: 'TOGGLE_INTRO_POPUP' });
   };
 
   return (
@@ -79,6 +84,9 @@ const GameLayout = () => {
         )}
       {isUpdatedNarrativePopupVisible && (
         <UpdatedNarrativePopup onClose={closeUpdatedNarrativePopup} />
+      )}
+      {isIntroPopupVisible && (
+        <IntroPopup onClose={closeIntroPopup} />
       )}
     </div>
   );

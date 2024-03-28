@@ -28,7 +28,7 @@ facts = [
 ]
 # Event entries to be added
 events = [
-    "Deepfake Campaign Exposed: A new wave of deepfake videosis detected",
+    "Deepfake Campaign Exposed: A new wave of deepfake videos is unveiled, throwing the crisis into further uncertainty",
     "Protest March Organized: A large-scale march to the capital city is planned, driven by grassroots movements and fueled by social media campaigns.",
     "Diplomatic Facility Siege: Protesters besiege the embassy of Russia, demanding answers and accountability for the quantum center incident.",
     "Presidential Decree Issued: The ruling party issues a controversial decree expanding executive powers, citing national security concerns.",

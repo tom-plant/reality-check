@@ -1,0 +1,51 @@
+/* IntroPopup.css */
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure it's above other content */
+}
+
+.popup-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 60%; /* Adjust based on your preference */
+  max-width: 600px; /* Ensures it doesn't get too wide on larger screens */
+  text-align: center;
+}
+
+.popup-content p {
+  color: #333; /* Dark text for readability */
+  margin-bottom: 20px; /* Spacing between text and buttons */
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 10px; /* Spacing between buttons */
+}
+
+.start-button, .next-button {
+  background-color: #4CAF50; /* Green */
+  color: white;
+}
+
+.prev-button {
+  background-color: #f44336; /* Red */
+  color: white;
+}
+
+button:hover {
+  opacity: 0.8; /* Simple hover effect */
+}

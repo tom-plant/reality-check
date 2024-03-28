@@ -9,8 +9,8 @@ const GameFunctionContext = createContext();
 
 const initialState = {
   currentPhase: 'intro', 
-  currentIntroView: 'AUTH_LOGIN',
-  currentView: 'SELECT_FACTS', 
+  currentIntroView: 'EMAIL_RECRUITMENT',
+  currentView: 'INTRODUCE_EVENT', 
   currentTurnPointView: 'ALERT',
   currentOutroView: 'CONCLUSION_WRAP_UP',
   username: null,
@@ -27,6 +27,7 @@ const initialState = {
   eventNewsContent: null,
   secondaryNewsContent: null,
   isUpdatedNarrativePopupVisible: false,
+  isIntroPopupVisibile: true,
   timerHasEnded: false, 
   isLoadingNarratives: false,
   isLoadingNews: false,
@@ -178,6 +179,9 @@ const gameReducer = (state, action) => {
     case 'TOGGLE_UPDATED_NARRATIVE_POPUP':
       return { ...state, isUpdatedNarrativePopupVisible: !state.isUpdatedNarrativePopupVisible };
 
+    case 'TOGGLE_INTRO_POPUP':
+      return { ...state, isIntroPopupVisible: !state.isIntroPopupVisible };
+
       default:
         throw new Error(`Unhandled action type: ${action.type}`);
     }
@@ -248,16 +252,12 @@ const GameProvider = ({ children }) => {
     fetchAndSetEvents();
   }, []); 
 
-  // Inside your GameProvider component or function where you define custom context functions
   const loginUser = async (username, email) => {
     try {
       const response = await authenticateUser(username, email);
-      // Dispatch an action to update your state based on the response
-      // For example, storing the user_id in the state
       dispatch({ type: 'SET_USER', payload: response.user_id });
     } catch (error) {
       console.error("Authentication error:", error);
-      // Handle error, possibly by setting an error message in your state
       dispatch({ type: 'SET_AUTH_ERROR', payload: error.message });
     }
   };
@@ -267,9 +267,8 @@ const GameProvider = ({ children }) => {
     try {
       dispatch({ type: 'SET_LOADING_NARRATIVES', payload: true });
       const narrativesData = await generateNarrativeFromFacts(selectedFacts);
-      // Map the narratives to the expected format
       const formattedNarratives = narrativesData.narratives.map((narrativeText, index) => ({
-        id: index, // Since there might not be unique IDs, using index as a key
+        id: index, 
         text: narrativeText
       }));
       dispatch({ type: 'SET_NARRATIVE_OPTIONS', payload: formattedNarratives });
@@ -281,7 +280,6 @@ const GameProvider = ({ children }) => {
   };
 
 
-  // Context function to select a narrative
   const selectNarrativeAndSetContent = async (selectedNarrative) => {
     try {
       dispatch({ type: 'SET_LOADING_NEWS', payload: true }); 
