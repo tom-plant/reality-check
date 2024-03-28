@@ -122,15 +122,17 @@ def generate_additional_narratives(selected_facts, num_additional_narratives):
 
 
     for i in range(num_additional_narratives):
-        if i == 0 or num_additional_narratives == 1:
+        if i == 0:
             # Use the initial prompt for the first narrative or if only one is needed
             system_content = get_text(language_code, "chatgpt_prompts", "additional_narratives", 'generate_additional_narratives_system_content', replacements={"evidence": ', '.join(selected_facts)})
             user_content = get_text(language_code, "chatgpt_prompts", "additional_narratives", 'generate_additional_narratives_user_content', replacements={"evidence": ', '.join(selected_facts)})
+            current_app.logger.debug(f'SYSTEM FOR FIRST: {system_content} USER FOR FIRST: {user_content}')
 
         else:
             # Use the different prompt for subsequent narratives, referring back to the previous one
-            system_content = previous_narrative
-            user_content_followup = get_text(language_code, "chatgpt_prompts", "additional_narratives", 'generate_additional_narratives_user_content_followup', replacements={"evidence": ', '.join(selected_facts)})
+            system_content = get_text(language_code, "chatgpt_prompts", "additional_narratives", 'generate_additional_narratives_system_content', replacements={"evidence": ', '.join(selected_facts)})
+            user_content = get_text(language_code, "chatgpt_prompts", "additional_narratives", 'generate_additional_narratives_user_content_followup', replacements={"evidence": ', '.join(selected_facts)})
+            current_app.logger.debug(f'SYSTEM FOR SECOND: {system_content} USER FOR SECOND: {user_content}')
 
         payload = {
             "model": "gpt-3.5-turbo",
@@ -139,7 +141,7 @@ def generate_additional_narratives(selected_facts, num_additional_narratives):
                 {"role": "user", "content": user_content}
             ],
             "temperature": 0.7,
-            "max_tokens": 100
+            "max_tokens": 300
         }
 
         response = requests.post(chatGPTUrl, headers=headers, data=json.dumps(payload))
@@ -278,7 +280,7 @@ def generate_news_content(language_code, context, selected_narrative, selected_f
                 {"role": "user", "content": user_content}
             ],
             "temperature": 0.7,
-            "max_tokens": 100
+            "max_tokens": 300
         }
 
         try:
@@ -474,7 +476,7 @@ def identify_weaknesses_controller(updated_fact_combination):     # Receive Upda
         "text": secondary_narrative_text
     }
     
-    current_app.logger.debug(f"FINALFINALFAINLFIANLIFNA FINAL!!!!!!!!!! returning secondary_narrative: {secondary_narrative} and news: {news_content}")
+    current_app.logger.debug(f"FINAL returning secondary_narrative: {secondary_narrative} and news: {news_content}")
     return {"secondary_news_content": news_content, "secondary_narrative": secondary_narrative}
 
 def handle_narrative_update(primary_narrative_id, updated_fact_combination_id, updated_fact_combination, language_code, context, _session=None):
