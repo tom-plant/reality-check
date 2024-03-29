@@ -60,8 +60,8 @@ export const getEvents = async () => {
 export const generateNarrativeFromFacts = async (selectedFactCombination) => {
   try {
     // Transform selectedFactCombination to an array of fact texts
+    console.log(selectedFactCombination)
     const selectedFactsTexts = selectedFactCombination.map(fact => fact.text);
-
     const response = await axios.post(`${API_BASE_URL}/game/select_facts`, {
       selected_facts: selectedFactsTexts, // Send the transformed array
     }, {
@@ -72,7 +72,7 @@ export const generateNarrativeFromFacts = async (selectedFactCombination) => {
     });
     return response.data;
   } catch (error) {
-    console.error('Error generating narrative from facts:', error);
+    console.error('Error generating narrative from facts:', error.response ? error.response.data : error);
     throw error;
   }
 };

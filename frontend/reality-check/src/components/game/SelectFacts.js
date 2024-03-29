@@ -30,7 +30,9 @@ const SelectFacts = () => {
 
   // Pre-load a random selection of 5 facts
   useEffect(() => {
-    setDisplayedFacts(getRandomFacts(facts, 5));
+    if (facts && facts.length > 0) {
+      setDisplayedFacts(getRandomFacts(facts, 5));
+    }
   }, [facts]);
 
 // Get a random selection of facts
