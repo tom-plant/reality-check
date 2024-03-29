@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import i18n from '../../i18n.js'
+import React from 'react';
 import { useGameDispatch, useGameState, useGameFunction } from '../../contexts/GameContext';
 import { useTranslation } from 'react-i18next'; 
 import './EmailRecruitment.css'; 
@@ -18,7 +17,6 @@ const EmailRecruitment = ({ setCurrentPhase }) => {
   return (
     <div className="email-recruitment">
       <h2>Email Recruitment</h2>
-      <p>This is the Email Recruitment screen of the Intro phase. Here, players will be officially recruited and briefed for their mission.</p>
       <button onClick={handleStart}>
         {t('common.start')} 
       </button>

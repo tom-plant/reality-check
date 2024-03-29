@@ -20,6 +20,8 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 60%; /* Adjust based on your preference */
   max-width: 600px; /* Ensures it doesn't get too wide on larger screens */
+  max-height: 80%; /* Limits the height and allows for scrolling */
+  overflow-y: auto; /* Enables vertical scrolling if content overflows */
   text-align: center;
 }
 

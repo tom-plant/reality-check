@@ -27,8 +27,8 @@
       },
       "briefing": {
           "title": "Crisis Briefing: Overview of the Current Situation",
-          "introduction": "As you begin this simulation, it's crucial to grasp the intricacies of the unfolding crisis at hand...",
-          "note": "Please note that due to the evolving nature of the crisis, some details may be subject to change.",
+          "introduction": "As you begin this simulation, it's crucial to grasp the intricacies of the unfolding crisis at hand.",
+          "note": "This briefing provides an overview based on the most current and reliable data available, sourced directly from government agencies and trusted news outlets. Please note that due to the evolving nature of the crisis, some details may be subject to change.",
           "keyPointsTitle": "Key Points to Understand:",
           "natureOfCrisis": {
             "title": "Nature of the Crisis",
@@ -44,7 +44,7 @@
           },
           "challengesAndUnknowns": {
             "title": "Challenges and Unknowns",
-            "description": "The motivations behind these disruptions remain enigmatic, with potential involvement from multiple domestic and international actors. A notable challenge is our country's existing ethnic tensions, with the majority and minority groups viewing the crisis through the lens of long-standing distrust and historical grievances..."
+            "description": "The motivations behind these disruptions remain enigmatic, with potential involvement from multiple domestic and international actors. A notable challenge is our country's existing ethnic tensions, with the majority and minority groups viewing the crisis through the lens of long-standing distrust and historical grievances. The majority, feeling besieged both domestically and internationally, may perceive these events as targeted attacks, escalating nationalist sentiments. Conversely, the minority, often feeling marginalized, might see this as yet another instance of systemic neglect or direct aggression."
           },
           "conclusion": "This briefing aims to equip you with a foundational understanding of the current crisis landscape. As you navigate through this simulation, your decisions will play a crucial role in steering through the layers of information and perception that define our reality.",
           "reminder": "Remember: The information provided here is a snapshot within a rapidly evolving situation. Stay alert to new developments as the crisis unfolds."
