@@ -6,6 +6,7 @@ import About from './views/About';
 import Game from './views/Game';
 import GameProvider from './contexts/GameContext';
 import './App.css';
+import './i18n'
 
 function App() {
   return (
