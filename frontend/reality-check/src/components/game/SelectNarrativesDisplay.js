@@ -1,15 +1,16 @@
 // SelectNarrativesDisplay.js
-
+import { useTranslation } from 'react-i18next'; 
 import React from 'react';
 import { useGameState } from '../../contexts/GameContext';
 import './SelectNarrativesDisplay.css'; 
 
 const SelectNarrativesDisplay = () => {
   const { selectedFactCombination } = useGameState();
+  const { t } = useTranslation();
 
   return (
     <div className="select-narratives-display">
-      <h2>Selected Facts</h2>
+      <h2>{t('common.selectedFacts')}</h2>
       <div className="facts-list">
         {selectedFactCombination.map((fact) => (
           <div key={fact.id} className="displayed-fact">

@@ -1,6 +1,7 @@
 // SelectedNarrative.js
 
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next'; 
 import { useGameState, useGameDispatch, useGameFunction } from '../../contexts/GameContext';
 import NarrativeBox from '../common/NarrativeBox'; 
 import './SelectNarratives.css'; 
@@ -10,6 +11,7 @@ const SelectNarratives = () => {
   const { selectNarrativeAndSetContent } = useGameFunction(); 
   const [buttonClicked, setButtonClicked] = useState(false); 
   const dispatch = useGameDispatch();
+  const { t } = useTranslation();
 
   // Loading animation
   if (isLoadingNarratives) {
@@ -27,7 +29,7 @@ const SelectNarratives = () => {
 
   return (
     <div className="select-narratives">
-        <h2>Select Narratives</h2>
+        <h2>{t('selectNarratives.title')}</h2>
         <div className="narratives-list">
           {narrativeOptions && narrativeOptions.map((narrative) => (
             <NarrativeBox 
@@ -43,7 +45,7 @@ const SelectNarratives = () => {
           disabled={!selectedNarrative} 
           onClick={handleNarrativeConfirmation} 
         >
-          Confirm Narrative
+          {t('common.confirmNarrative')} 
       </button>
     </div>
   );

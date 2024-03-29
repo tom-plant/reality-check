@@ -1,0 +1,9 @@
+/* GameInstructions.css */
+.game-instructions {
+  text-align: center;
+  padding: 20px;
+  margin-bottom: 20px; /* Adjust as needed */
+  background-color: #f0f0f0; /* Example background */
+  border-radius: 8px;
+  /* Additional styling as needed */
+}

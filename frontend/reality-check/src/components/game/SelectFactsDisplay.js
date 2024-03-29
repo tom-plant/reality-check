@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { useGameState, useGameDispatch, useGameFunction } from '../../contexts/GameContext';
+import { useTranslation } from 'react-i18next'; 
 import FactBox from '../common/FactBox'; 
 import './SelectFactsDisplay.css';
 
@@ -10,6 +11,7 @@ const SelectFactsDisplay = () => {
   const { fetchAndSetNarratives } = useGameFunction(); 
   const dispatch = useGameDispatch();
   const [buttonClicked, setButtonClicked] = useState(false); 
+  const { t } = useTranslation();
 
   // Generate narratives and change view, assuring button can only be clicked once
   const handleGenerateNarrative = async () => {
@@ -39,7 +41,7 @@ const SelectFactsDisplay = () => {
       <button className="generate-narrative" 
         disabled={!timerHasEnded}
         onClick={handleGenerateNarrative}>
-        Generate Narrative
+        {t('common.generateNarrative')} 
       </button>
     </div>
   );

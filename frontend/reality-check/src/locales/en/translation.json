@@ -7,10 +7,12 @@
     "randomizeEvent": "Randomize Event",
     "generateNarrative": "Generate Narrative",
     "updateNarrative": "Update Narrative",
-    "moreFacts": "More Facts",
+    "moreFacts": "More Information",
     "login": "Login",
     "start": "Start",
-    "previous": "Previous"
+    "previous": "Previous",
+    "confirmNarrative": "Confirm Narrative",
+    "selectedFacts": "Selected Facts"
   },
   "expoInbox": {},
   "emailRecruitment": {},
@@ -70,9 +72,12 @@
       }
   },
   "selectNarratives": {
-      "introduction": "With the facts you've selected, we've crafted three narratives, each presenting a unique perspective on the crisis.",
-      "guidance": "Now, it's up to you to choose the narrative that speaks to you the most, considering how it resonates with your beliefs, its potential impact, and what motivates you to lean towards it.",
-      "impact": "Your choice will not only influence the direction of the simulation but also demonstrate the power of narratives in shaping our responses to crises."
+      "title": "Select Narratives",
+      "instructions" : {
+        "introduction": "With the facts you've selected, we've crafted three narratives, each presenting a unique perspective on the crisis.",
+        "guidance": "Now, it's up to you to choose the narrative that speaks to you the most, considering how it resonates with your beliefs, its potential impact, and what motivates you to lean towards it.",
+        "impact": "Your choice will not only influence the direction of the simulation but also demonstrate the power of narratives in shaping our responses to crises."
+      }
     },
   "narrativeImpact": {
   "introduction": "Your chosen narrative is now unfolding, dictating responses and shaping perceptions in the midst of the crisis.",

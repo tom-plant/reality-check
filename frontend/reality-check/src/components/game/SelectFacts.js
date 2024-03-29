@@ -1,5 +1,5 @@
 // SelectedFacts.js
-
+import { useTranslation } from 'react-i18next'; 
 import React, { useState, useEffect, useRef } from 'react';
 import { useGameState, useGameDispatch } from '../../contexts/GameContext'; 
 import FactBox from '../common/FactBox'; 
@@ -13,6 +13,7 @@ const SelectFacts = () => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const selectedFactsRef = useRef(selectedFactCombination); 
   const dispatch = useGameDispatch();
+  const { t } = useTranslation();
 
   // Render facts
   useEffect(() => {
@@ -85,7 +86,7 @@ const SelectFacts = () => {
         onClick={loadMoreFacts}
         disabled={isButtonDisabled} 
       >
-        More Information
+        {t('common.moreFacts')} 
       </button>
     </div>
   );

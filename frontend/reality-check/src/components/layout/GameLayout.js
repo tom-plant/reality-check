@@ -17,6 +17,7 @@ import UpdatedNarrativeImpact from '../game/UpdatedNarrativeImpact';
 import UpdatedNarrativeImpactDisplay from '../game/UpdatedNarrativeImpactDisplay';
 import LeftContainer from '../containers/LeftContainer';
 import RightContainer from '../containers/RightContainer';
+import GameInstructions from '../containers/GameInstructions'
 import './GameLayout.css'; 
 
 const GameLayout = () => {
@@ -25,7 +26,7 @@ const GameLayout = () => {
   const dispatch = useGameDispatch();
 
   const renderLeftContent = () => {
-    switch (currentView) { // Switch based on currentView from context
+    switch (currentView) { 
       case 'SELECT_FACTS':
         return <SelectFacts />;
       case 'SELECT_NARRATIVES':
@@ -44,7 +45,6 @@ const GameLayout = () => {
   };
 
   const renderRightContent = () => {
-    // Example implementations. Adjust according to your game design.
     switch (currentView) {
       case 'SELECT_FACTS':
         return <SelectFactsDisplay />;
@@ -77,6 +77,7 @@ const GameLayout = () => {
 
   return (
     <div className="game-layout">
+      <GameInstructions />
       <LeftContainer>{renderLeftContent()}</LeftContainer>
       <RightContainer>{renderRightContent()}</RightContainer>
       {currentView === 'INTRODUCE_EVENT' && isEventPopupVisible && (
