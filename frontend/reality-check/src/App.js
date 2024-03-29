@@ -1,12 +1,10 @@
 // App.js
-
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import About from './views/About';
 import Game from './views/Game';
 import GameProvider from './contexts/GameContext';
 import './App.css';
-import './i18n'
 
 function App() {
   return (

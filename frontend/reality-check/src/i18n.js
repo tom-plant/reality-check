@@ -1,33 +1,35 @@
 // src/i18n.js
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import translationENG from './locales/eng/translation.json'; 
-import translationEST from './locales/est/translation.json'; 
-import translationRUS from './locales/rus/translation.json'; 
+import translationEN from './locales/en/translation.json'; 
+import translationET from './locales/et/translation.json'; 
+import translationRU from './locales/ru/translation.json'; 
 
 
 const resources = {
-  eng: {
-    translation: translationENG
+  en: {
+    translation: translationEN
   },
-  est: {
-    translation: translationEST
+  et: {
+    translation: translationET
   },
-  rus: {
-    translation: translationRUS
+  ru: {
+    translation: translationRU
   }
 };
 
 i18n
-  .use(initReactI18next) // Passes i18n down to react-i18next
+  .use(initReactI18next) 
   .init({
-    resources,
-    lng: "eng", // Default language
-    fallbackLng: 'eng',
-    keySeparator: false, // We do not use keys in form messages.welcome
+    resources: resources,
+    debug: true, 
+    lng: "en", 
+    defaultNS: "translation", 
+    fallbackLng: "en",
     interpolation: {
-      escapeValue: false // React already safes from XSS
+      escapeValue: false 
     }
   });
+
 
 export default i18n;
