@@ -44,7 +44,7 @@ Session(app)
 # db.init_app(app)
 
 # Initialize Flask-Migrate associated with app and SQLAlchemy instance
-migrate = Migrate(app, db)
+migrate = Migrate(app, db, directory="backend/migrations")
 
 # Make sure we can read print statements for debugging
 app.debug = True
