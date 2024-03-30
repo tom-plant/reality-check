@@ -18,7 +18,7 @@ import logging
 
 
 # Determine which environment to load
-load_dotenv(dotenv_path)
+load_dotenv()
 
 print('Database URI:', os.getenv('SQLALCHEMY_DATABASE_URI'))
 
