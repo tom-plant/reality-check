@@ -1,6 +1,6 @@
 #app.py 
 
-from flask import Flask, session, jsonify, redirect, url_for, render_template, request
+from flask import Flask, session, jsonify, redirect, url_for, render_template, request, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_session import Session 
@@ -8,7 +8,7 @@ from models import db
 from db_operations import *
 from flask_cors import CORS
 import uuid #for unique user id
-from config import Config, DevelopmentConfig, TestingConfig, SECRET_KEY, SQL_KEY
+from config import Config, DevelopmentConfig, TestingConfig, ProductionConfig, SECRET_KEY, SQL_KEY
 from controllers import initialize_data_controller, register_user_controller, get_all_facts_controller, get_all_events_controller, select_facts_controller, select_narrative_controller, introduce_event_controller, identify_weaknesses_controller
 from dotenv import load_dotenv
 import os
@@ -17,22 +17,31 @@ from sqlalchemy.exc import SQLAlchemyError
 import logging
 
 
+# Determine which environment to load
+load_dotenv(dotenv_path)
 
+print('Database URI:', os.getenv('SQLALCHEMY_DATABASE_URI'))
 
-load_dotenv()  # This loads the variables from .env into the environment
+app = Flask(__name__, static_folder='build/static')
 
-app = Flask(__name__)
 if os.getenv('FLASK_ENV') == 'development':
     app.config.from_object(DevelopmentConfig)
 elif os.getenv('FLASK_ENV') == 'testing':
     app.config.from_object(TestingConfig)
+elif os.getenv('FLASK_ENV') == 'production':
+    app.config.from_object(ProductionConfig)
 else:
     app.config.from_object(Config)  # Default to Config if not specified
+
+print('Configured Database URI:', app.config['SQLALCHEMY_DATABASE_URI'])
+db.init_app(app)
+
+
 CORS(app, supports_credentials=True, resources={r"/*": {"origins": os.environ.get('ALLOWED_ORIGINS')}})
 Session(app)
 
 # Initialize SQLAlchemy instance
-db.init_app(app)
+# db.init_app(app)
 
 # Initialize Flask-Migrate associated with app and SQLAlchemy instance
 migrate = Migrate(app, db)
@@ -42,11 +51,18 @@ app.debug = True
 app.logger.setLevel(logging.DEBUG)  # Set the log level to DEBUG
 
 
-
 #Initialize session management tools
 app.secret_key = SECRET_KEY
 def generate_session_id():
     return str(uuid.uuid4())
+        
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def catch_all(path):
+    if path != "" and os.path.exists(app.static_folder + '/' + path):
+        return send_from_directory(app.static_folder, path)
+    else:
+        return send_from_directory('build', 'index.html')
 
 @app.route('/')
 def hello():

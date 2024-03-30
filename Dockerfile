@@ -2,7 +2,7 @@
 FROM python:3.8-slim
 
 # Set the working directory in the container
-WORKDIR /app
+WORKDIR /app/backend
 
 # Install system dependencies for mysqlclient
 RUN apt-get update && apt-get install -y \
@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y \
 && rm -rf /var/lib/apt/lists/*
 
 # Copy the current directory contents into the container at /app
-COPY . /app
+COPY ./backend /app/backend
 COPY entrypoint.sh /entrypoint.sh
 
 # Specify the script to be executed when the container starts

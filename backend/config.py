@@ -30,3 +30,9 @@ class DevelopmentConfig(Config):
     API_KEY = os.environ.get('API_KEY')
     SQL_KEY = os.environ.get('SQL_KEY')
     SECRET_KEY = os.environ.get('SECRET_KEY')  
+
+class ProductionConfig(Config):
+    SQLALCHEMY_DATABASE_URI = os.getenv('JAWSDB_URL')
+    API_KEY = os.environ.get('API_KEY')
+    SQL_KEY = os.environ.get('SQL_KEY')
+    SECRET_KEY = os.environ.get('SECRET_KEY')  

@@ -1,3 +1,5 @@
+# This docker-compose.yml is intended for local development use only.
+
 version: '3.8'
 services:
   web:
@@ -5,7 +7,7 @@ services:
     entrypoint: /entrypoint.sh  # Specify the entrypoint script
     command: gunicorn -w 3 -b :5000 --log-level debug app:app
     volumes:
-      - .:/app
+      - ./backend:/app/backend
     ports:
       - "5000:5000"
     env_file:
