@@ -26,7 +26,8 @@ class TestingConfig(Config):
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_SQLALCHEMY_DATABASE_URI')
+    # SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_SQLALCHEMY_DATABASE_URI')
+    SQLALCHEMY_DATABASE_URI = 'mysql://iaulbcr0y50qjpvi:v7frfm2ldznchq9l@y0nkiij6humroewt.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/ip3rnzvk2nrgcif4'
     API_KEY = os.environ.get('API_KEY')
     SQL_KEY = os.environ.get('SQL_KEY')
     SECRET_KEY = os.environ.get('SECRET_KEY')  
