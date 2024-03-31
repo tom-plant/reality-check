@@ -34,14 +34,13 @@ else:
     app.config.from_object(Config)  # Default to Config if not specified
 
 print('Configured Database URI:', app.config['SQLALCHEMY_DATABASE_URI'])
-db.init_app(app)
-
 
 CORS(app, supports_credentials=True, resources={r"/*": {"origins": os.environ.get('ALLOWED_ORIGINS')}})
 Session(app)
 
 # Initialize Flask-Migrate associated with app and SQLAlchemy instance
 migrate = Migrate(app, db)
+db.init_app(app)
 
 # Make sure we can read print statements for debugging
 app.debug = True
