@@ -1,6 +1,9 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next'; 
 
 const GameLesson = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="game-lesson">
       <h2>Game Lesson</h2>

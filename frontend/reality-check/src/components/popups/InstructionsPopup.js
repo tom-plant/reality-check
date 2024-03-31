@@ -1,9 +1,12 @@
 // InstructionsPopup.js
 
 import React from 'react';
+import { useTranslation } from 'react-i18next'; 
 import './InstructionsPopup.css'; 
 
 const InstructionsPopup = ({ onClose }) => {
+  const { t } = useTranslation();
+
   return (
     <div className="popup-overlay">
       <div className="popup-content">

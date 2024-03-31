@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { useGameFunction, useGameState, useGameDispatch } from '../../contexts/GameContext'; // Adjust the import path as needed
+import { useGameFunction, useGameState, useGameDispatch } from '../../contexts/GameContext';
+import { useTranslation } from 'react-i18next'; 
 import './AuthLogin.css'; 
 
 const AuthLogin = ({ setCurrentIntroView }) => {
   const { loginUser, setCurrentLanguage} = useGameFunction();
+  const { t } = useTranslation();
   const [localUsername, setLocalUsername] = useState('');
   const [localEmail, setLocalEmail] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track login status
@@ -39,10 +41,10 @@ const AuthLogin = ({ setCurrentIntroView }) => {
 
   return (
     <div className="auth-login">
-      <h2>Register to Start</h2>
+      <h2>{t('common.registerToStart')}</h2>
       <div className="input-container">
         <div className="input-group">
-          <label htmlFor="username">Username</label>
+          <label htmlFor="username">{t('common.username')}</label>
           <input
             id="username"
             type="text"
@@ -51,7 +53,7 @@ const AuthLogin = ({ setCurrentIntroView }) => {
           />
         </div>
         <div className="input-group">
-          <label htmlFor="email">Email</label>
+          <label htmlFor="email">{t('common.email')}</label>
           <input
             id="email"
             type="email"
@@ -60,11 +62,11 @@ const AuthLogin = ({ setCurrentIntroView }) => {
           />
         </div>
         <div className="input-group">
-          <label htmlFor="language-select">Select Language</label>
+          <label htmlFor="language-select">{t('common.selectLanguage')}</label>
           <select id="language-select" onChange={handleLanguageChange}>
-            <option value="ENG">English</option>
-            <option value="EST">Estonian</option>
-            <option value="RUS">Russian</option>
+            <option value="ENG">{t('common.english')}</option>
+            <option value="EST">{t('common.estonian')}</option>
+            <option value="RUS">{t('common.russian')}</option>
           </select>
         </div>
       </div>
@@ -73,9 +75,9 @@ const AuthLogin = ({ setCurrentIntroView }) => {
         onClick={loginClick}
         disabled={isLoggedIn}
       >
-        Login
+        {t('common.login')}
       </button>
-      <button className='proceed' onClick={() => setCurrentIntroView('EXPO_INBOX')} disabled={!isLoggedIn}>Start Game</button>
+      <button className='proceed' onClick={() => setCurrentIntroView('EXPO_INBOX')} disabled={!isLoggedIn}>{t('common.startGame')}</button>
     </div>
   );
 };

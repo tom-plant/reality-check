@@ -1,0 +1,12 @@
+Flask
+Flask-Session
+Flask-Migrate
+Flask-SQLAlchemy
+requests
+gunicorn
+alembic
+mysqlclient
+python-dotenv
+Flask-CORS
+pymysql>=0.9.3
+cachelib

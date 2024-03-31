@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import EventBox from '../common/EventBox';
 import { useGameDispatch, useGameState, useGameFunction } from '../../contexts/GameContext';
+import { useTranslation } from 'react-i18next'; 
 import './EventPopup.css';
 
 const EventPopup = ({ onClose }) => {
@@ -11,6 +12,8 @@ const EventPopup = ({ onClose }) => {
   const [isCycling, setIsCycling] = useState(false);
   const [showCloseButton, setShowCloseButton] = useState(false);
   const [displayedEvents, setDisplayedEvents] = useState(events.slice(0, 3)); 
+  const { t } = useTranslation();
+
 
   // Initially load a random selection of 3 events
   useEffect(() => {
@@ -64,7 +67,7 @@ const EventPopup = ({ onClose }) => {
           onClick={startCyclingEvents}
           disabled={isCycling || selectedEventIndex !== null}
         >
-          Randomize Event
+          {t('common.randomizeEvent')} 
         </button>
         {showCloseButton && (
           <button

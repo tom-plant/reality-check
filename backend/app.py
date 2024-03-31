@@ -40,9 +40,6 @@ db.init_app(app)
 CORS(app, supports_credentials=True, resources={r"/*": {"origins": os.environ.get('ALLOWED_ORIGINS')}})
 Session(app)
 
-# Initialize SQLAlchemy instance
-# db.init_app(app)
-
 # Initialize Flask-Migrate associated with app and SQLAlchemy instance
 migrate = Migrate(app, db, directory="backend/migrations")
 

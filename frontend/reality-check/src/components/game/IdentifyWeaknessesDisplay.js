@@ -1,6 +1,7 @@
 // IdentifyWeaknessesDisplay.js
 
 import React, { useState} from 'react';
+import { useTranslation } from 'react-i18next'; 
 import { useGameDispatch, useGameState, useGameFunction } from '../../contexts/GameContext';
 import FactBox from '../common/FactBox'; 
 import './IdentifyWeaknessesDisplay.css'; 
@@ -10,6 +11,7 @@ const IdentifyWeaknessesDisplay = () => {
   const { identifyWeaknessesAndSetContent } = useGameFunction(); 
   const [buttonClicked, setButtonClicked] = useState(false); 
   const dispatch = useGameDispatch();
+  const { t } = useTranslation();
 
   // Check if the updated fact selection and the same as existing fact selection
   const arraysAreEqual = (arr1, arr2) => {
@@ -51,7 +53,7 @@ const IdentifyWeaknessesDisplay = () => {
         onClick={handleUpdateNarrative}
         disabled={arraysAreEqual(updatedFactCombination, selectedFactCombination)}
       >
-        Update Narrative
+        {t('common.updateNarrative')} 
       </button>
     </div>
   );

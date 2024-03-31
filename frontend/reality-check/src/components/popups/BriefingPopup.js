@@ -2,8 +2,12 @@
 
 import React from 'react';
 import './BriefingPopup.css'; 
+import { useTranslation } from 'react-i18next'; 
+
 
 const BriefingPopup = ({ onClose }) => {
+  const { t } = useTranslation();
+
   return (
     <div className="popup-overlay">
       <div className="popup-content">

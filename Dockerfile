@@ -2,7 +2,7 @@
 FROM python:3.8-slim
 
 # Set the working directory in the container
-WORKDIR /app/backend
+WORKDIR /app
 
 # Install system dependencies for mysqlclient
 RUN apt-get update && apt-get install -y \
@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y \
 && rm -rf /var/lib/apt/lists/*
 
 # Copy the current directory contents into the container at /app
-COPY ./backend /app/backend
+COPY ./backend /app
 COPY entrypoint.sh /entrypoint.sh
 
 # Specify the script to be executed when the container starts
@@ -29,6 +29,7 @@ EXPOSE 5000
 
 # Define environment variable
 ENV NAME World
+ENV FLASK_APP backend/app.py
 
 # Run app.py when the container launches
 CMD ["gunicorn", "-w", "3", "-b", "0.0.0.0:5000", "--log-level", "debug", "app:app"]

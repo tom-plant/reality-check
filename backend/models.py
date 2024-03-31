@@ -6,8 +6,6 @@ from datetime import datetime
 db = SQLAlchemy()
 
 # Define models
-
-
 class User(db.Model):
     __tablename__ = 'users'
 

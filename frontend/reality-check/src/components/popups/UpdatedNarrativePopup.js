@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useGameDispatch, useGameState } from '../../contexts/GameContext';
+import { useTranslation } from 'react-i18next'; 
 import './UpdatedNarrativePopup.css'; 
 
 const UpdatedNarrativePopup = () => {
   const { secondaryNarrative, isLoadingNews } = useGameState();
   const dispatch = useGameDispatch();
   const [content, setContent] = useState(null);
+  const { t } = useTranslation();
+
 
   // Set content from context
   useEffect(() => {
@@ -23,7 +26,7 @@ const UpdatedNarrativePopup = () => {
   return (
     <div className="popup-overlay"> 
       <div className="popup-content"> 
-        <h2>Your Updated Narrative</h2>
+        <h2>{t('common.updatedNarrative')}</h2>
         {isLoadingNews && <div>Loading news content...</div>}
         <p>{secondaryNarrative.text}</p>
         <button
@@ -31,7 +34,7 @@ const UpdatedNarrativePopup = () => {
           onClick={handleContinue}
           disabled={isLoadingNews}
         >
-          Continue
+          {t('common.continue')} 
         </button>
       </div>
     </div>
