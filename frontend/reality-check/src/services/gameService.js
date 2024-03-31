@@ -1,7 +1,9 @@
 // src/services/gameService.js
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:5000'; // Adjust this to your actual Flask API URL
+// const API_BASE_URL = 'http://localhost:5000'; // Adjust this to your actual Flask API URL
+const API_BASE_URL = 'https://reality-check-game-f90e2fef9c33.herokuapp.com'; 
+
 
 
 // Function to authenticate (register or login) the user
