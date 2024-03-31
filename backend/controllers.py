@@ -61,7 +61,7 @@ def get_all_events_controller():
 
 
 def select_facts_controller(selected_facts):
-    from app import app
+    from backend.app import app
 
     # Ensure 'user_data' is initialized in session
     if 'user_data' not in session:
