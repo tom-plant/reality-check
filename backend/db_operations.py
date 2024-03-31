@@ -1,8 +1,8 @@
 # db_operations.py
 
-from app import db
+from backend.app import db
 from sqlalchemy import select, func, and_, or_
-from models import User, Fact, Event, FactCombination, PrimaryNarrative, NarrativeEvent, SecondaryNarrative
+from backend.models import User, Fact, Event, FactCombination, PrimaryNarrative, NarrativeEvent, SecondaryNarrative
 
 
 # User Operations
