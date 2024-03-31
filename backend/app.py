@@ -4,26 +4,22 @@ from flask import Flask, session, jsonify, redirect, url_for, render_template, r
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_session import Session 
-from models import db  
-from db_operations import *
 from flask_cors import CORS
 import uuid #for unique user id
 from config import Config, DevelopmentConfig, TestingConfig, ProductionConfig, SECRET_KEY, SQL_KEY
-from controllers import initialize_data_controller, register_user_controller, get_all_facts_controller, get_all_events_controller, select_facts_controller, select_narrative_controller, introduce_event_controller, identify_weaknesses_controller
 from dotenv import load_dotenv
 import os
 import sys
 from sqlalchemy.exc import SQLAlchemyError
+from flask_sqlalchemy import SQLAlchemy
 import logging
 
 
-# Determine which environment to load
-load_dotenv()
-
-print('Database URI:', os.getenv('SQLALCHEMY_DATABASE_URI'))
-
+# Initialize Flask app
 app = Flask(__name__, static_folder='build/static')
 
+# Determine which environment to load and apply configurations
+load_dotenv()
 if os.getenv('FLASK_ENV') == 'development':
     app.config.from_object(DevelopmentConfig)
 elif os.getenv('FLASK_ENV') == 'testing':
@@ -35,17 +31,24 @@ else:
 
 print('Configured Database URI:', app.config['SQLALCHEMY_DATABASE_URI'])
 
+# Initialize SQLAlchemy with app
+db = SQLAlchemy(app)
+
+# Initialize Flask-Migrate with app and db
+migrate = Migrate(app, db)
+
+# Enable CORS and Session
 CORS(app, supports_credentials=True, resources={r"/*": {"origins": os.environ.get('ALLOWED_ORIGINS')}})
 Session(app)
-
-# Initialize Flask-Migrate associated with app and SQLAlchemy instance
-migrate = Migrate(app, db)
-db.init_app(app)
 
 # Make sure we can read print statements for debugging
 app.debug = True
 app.logger.setLevel(logging.DEBUG)  # Set the log level to DEBUG
 
+# Import models and controllers after initializing db to avoid circular imports
+from models import * 
+from controllers import initialize_data_controller, register_user_controller, get_all_facts_controller, get_all_events_controller, select_facts_controller, select_narrative_controller, introduce_event_controller, identify_weaknesses_controller
+from db_operations import *  
 
 #Initialize session management tools
 app.secret_key = SECRET_KEY
