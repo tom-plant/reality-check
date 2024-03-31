@@ -6,7 +6,7 @@ from flask_migrate import Migrate
 from flask_session import Session 
 from flask_cors import CORS
 import uuid #for unique user id
-from config import Config, DevelopmentConfig, TestingConfig, ProductionConfig, SECRET_KEY, SQL_KEY
+from backend.config import Config, DevelopmentConfig, TestingConfig, ProductionConfig, SECRET_KEY, SQL_KEY
 from dotenv import load_dotenv
 import os
 import sys
@@ -46,9 +46,9 @@ app.debug = True
 app.logger.setLevel(logging.DEBUG)  # Set the log level to DEBUG
 
 # Import models and controllers after initializing db to avoid circular imports
-from models import * 
-from controllers import initialize_data_controller, register_user_controller, get_all_facts_controller, get_all_events_controller, select_facts_controller, select_narrative_controller, introduce_event_controller, identify_weaknesses_controller
-from db_operations import *  
+from backend.models import * 
+from backend.controllers import initialize_data_controller, register_user_controller, get_all_facts_controller, get_all_events_controller, select_facts_controller, select_narrative_controller, introduce_event_controller, identify_weaknesses_controller
+from backend.db_operations import *  
 
 #Initialize session management tools
 app.secret_key = SECRET_KEY
