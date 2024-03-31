@@ -41,7 +41,7 @@ CORS(app, supports_credentials=True, resources={r"/*": {"origins": os.environ.ge
 Session(app)
 
 # Initialize Flask-Migrate associated with app and SQLAlchemy instance
-migrate = Migrate(app, db, directory="backend/migrations")
+migrate = Migrate(app, db)
 
 # Make sure we can read print statements for debugging
 app.debug = True

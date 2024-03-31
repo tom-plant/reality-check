@@ -1,7 +1,8 @@
 #!/bin/sh
 # Export environment variables
-export FLASK_APP=backend/app.py
+export FLASK_APP=app.py
 export FLASK_ENV=development
+
 
 # Wait for the database to be ready
 echo "Waiting for database..."
