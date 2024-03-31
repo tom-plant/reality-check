@@ -5,7 +5,7 @@ import os
 import logging
 import json
 import requests
-from db_operations import *
+from backend.db_operations import *
 from flask import session, redirect, url_for, current_app
 from localization import get_text
 
