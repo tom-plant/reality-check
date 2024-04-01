@@ -5,9 +5,14 @@ import os
 import logging
 import json
 import requests
-from backend.db_operations import *
 from flask import session, redirect, url_for, current_app
-from backend.localization import get_text
+
+if os.getenv('FLASK_ENV') == 'production':
+    from backend.localization import get_text
+    from backend.db_operations import *
+else:
+    from localization import get_text
+    from db_operations import *
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -61,7 +66,10 @@ def get_all_events_controller():
 
 
 def select_facts_controller(selected_facts):
-    from backend.app import app
+    if os.getenv('FLASK_ENV') == 'production':
+        from backend.app import app
+    else:
+        from app import app
 
     # Ensure 'user_data' is initialized in session
     if 'user_data' not in session:

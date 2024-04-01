@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useGameState } from '../../contexts/GameContext';
+import LoadingIcon from '../common/LoadingIcon';
 import './UpdatedNarrativeImpact.css'; 
 
 const UpdatedNarrativeImpact = () => {
@@ -15,21 +16,22 @@ const UpdatedNarrativeImpact = () => {
     }
   }, [secondaryNewsContent, isLoadingNews]); 
 
-  // Loading Animation
-  if (isLoadingNews || !content) {
-    return <div>Loading news content...</div>; 
-  }
-
   // Destructure with correct property names
   const { headline, story, image_url: imageUrl } = content;
 
   return (
     <div className="narrative-impact">
-      <div className="news-content"> 
-        <h1>{headline}</h1>
-        {imageUrl && <img src={imageUrl} alt="News Visual" />}
-        <p>{story}</p>
-      </div>
+      {isLoadingNews ? (
+        <div className="loading-container">
+          <LoadingIcon />
+        </div>
+      ) : (
+        <div className="news-content"> 
+          <h1>{headline}</h1>
+          {imageUrl && <img src={imageUrl} alt="News Visual" />}
+          <p>{story}</p>
+        </div>
+      )}
     </div>
   );
 };

@@ -14,3 +14,10 @@
 .updated-narrative-impact p {
   text-align: justify;
 }
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Adjust based on your needs */
+}

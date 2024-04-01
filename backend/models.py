@@ -1,7 +1,11 @@
 #models.py
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-from backend.app import db
+import os
+if os.getenv('FLASK_ENV') == 'production':
+    from backend.app import db
+else:
+    from app import db
 
 # Define models
 class User(db.Model):

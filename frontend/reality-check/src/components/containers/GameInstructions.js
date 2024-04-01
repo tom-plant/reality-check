@@ -1,6 +1,7 @@
 import React from 'react';
 import { useGameState } from '../../contexts/GameContext';
 import { useTranslation } from 'react-i18next';
+import './GameInstructions.css'
 
 const GameInstructions = () => {
   const { currentView } = useGameState();
@@ -12,10 +13,19 @@ const GameInstructions = () => {
         return;
       case 'SELECT_NARRATIVES':
         return [
-          'selectNarratives.instructions.introduction',
-          'selectNarratives.instructions.guidance',
-          'selectNarratives.instructions.impact',
-        ];
+          'selectNarratives.instructions.introduction'];
+      case 'NARRATIVE_IMPACT':
+        return [
+          'narrativeImpact.instructions.introduction'];
+      case 'INTRODUCE_EVENT':
+        return [
+        'introduceEvent.instructions.introduction'];
+      case 'IDENTIFY_WEAKNESSES':
+        return [
+        'identifyWeaknesses.instructions.introduction'];
+      case 'UPDATED_NARRATIVE_IMPACT':
+        return [
+          'updatedNarrativeImpact.instructions.introduction'];
       default:
         return; // Default instruction or null if none
     }

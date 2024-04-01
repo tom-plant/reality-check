@@ -1,9 +1,13 @@
 # db_operations.py
 
-from backend.app import db
 from sqlalchemy import select, func, and_, or_
-from backend.models import User, Fact, Event, FactCombination, PrimaryNarrative, NarrativeEvent, SecondaryNarrative
-
+import os
+if os.getenv('FLASK_ENV') == 'production':
+    from backend.app import db
+    from backend.models import User, Fact, Event, FactCombination, PrimaryNarrative, NarrativeEvent, SecondaryNarrative
+else:
+    from app import db
+    from models import User, Fact, Event, FactCombination, PrimaryNarrative, NarrativeEvent, SecondaryNarrative
 
 # User Operations
 

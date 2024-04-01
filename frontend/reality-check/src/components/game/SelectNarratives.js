@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next'; 
 import { useGameState, useGameDispatch, useGameFunction } from '../../contexts/GameContext';
 import NarrativeBox from '../common/NarrativeBox'; 
+import LoadingIcon from '../common/LoadingIcon';
 import './SelectNarratives.css'; 
 
 const SelectNarratives = () => {
@@ -12,11 +13,6 @@ const SelectNarratives = () => {
   const [buttonClicked, setButtonClicked] = useState(false); 
   const dispatch = useGameDispatch();
   const { t } = useTranslation();
-
-  // Loading animation
-  if (isLoadingNarratives) {
-    return <div>Loading narratives...</div>; 
-  }
 
   // Generate news content upon narrative selection
   const handleNarrativeConfirmation = () => {
@@ -29,24 +25,32 @@ const SelectNarratives = () => {
 
   return (
     <div className="select-narratives">
-        <h2>{t('selectNarratives.title')}</h2>
-        <div className="narratives-list">
-          {narrativeOptions && narrativeOptions.map((narrative) => (
-            <NarrativeBox 
-              key={narrative.id} 
-              narrative={narrative}
-              isSelected={selectedNarrative && narrative === selectedNarrative}
-              container="left"
-            />
-          ))}
+      {isLoadingNarratives ? (
+        <div className="loading-container">
+          <LoadingIcon />
         </div>
-        <button 
-          className="confirm-narrative" 
-          disabled={!selectedNarrative} 
-          onClick={handleNarrativeConfirmation} 
-        >
-          {t('common.confirmNarrative')} 
-      </button>
+      ) : (
+        <>
+          <h2>{t('selectNarratives.title')}</h2>
+          <div className="narratives-list">
+            {narrativeOptions && narrativeOptions.map((narrative) => (
+              <NarrativeBox 
+                key={narrative.id} 
+                narrative={narrative}
+                isSelected={selectedNarrative && narrative === selectedNarrative}
+                container="left"
+              />
+            ))}
+          </div>
+          <button 
+            className="confirm-narrative" 
+            disabled={!selectedNarrative} 
+            onClick={handleNarrativeConfirmation}
+          >
+            {t('common.confirmNarrative')}
+          </button>
+        </>
+      )}
     </div>
   );
 };

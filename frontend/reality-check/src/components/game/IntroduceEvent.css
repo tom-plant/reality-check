@@ -33,3 +33,9 @@
   clear: both;
 }
 
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Adjust based on your needs */
+}

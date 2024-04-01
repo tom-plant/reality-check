@@ -1,9 +1,19 @@
 /* GameInstructions.css */
 .game-instructions {
+  position: absolute;
+  width: 80%; /* Adjust width as per your need */
+  height: 10%;
+  max-height: 10vh; /* Limit height to ensure it's short */
+  top: 12%; /* Adjust to position below the header */
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%); /* Center align */
   text-align: center;
   padding: 20px;
-  margin-bottom: 20px; /* Adjust as needed */
-  background-color: #f0f0f0; /* Example background */
-  border-radius: 8px;
-  /* Additional styling as needed */
+  margin-bottom: 20px;
+  background-color: transparent; /* Invisible background */
+  border-radius: 5px;
+  box-sizing: border-box;
+  /* overflow-y: auto; Enable vertical scrolling */
 }
+
+
