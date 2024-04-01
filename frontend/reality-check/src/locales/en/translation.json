@@ -6,6 +6,7 @@
     "loadingNewsContent": "Loading News Content",
     "randomizeEvent": "Randomize Event",
     "generateNarrative": "Generate Narrative",
+    "clickToJoin": "Click to Join",
     "updateNarrative": "Update Narrative",
     "moreFacts": "More Information",
     "login": "Login",
@@ -28,7 +29,17 @@
     "russian": "Russian"
   },
   "expoInbox": {},
-  "emailRecruitment": {},
+  "emailRecruitment": {
+    "subject": "Immediate Action Needed: Join Our Crisis Response Simulation Now",
+    "sender": "The Civic Resilience Project",
+    "address": "engage@civicresilience.org",
+    "intro": "Dear Citizen,",
+    "request": "Your immediate participation is requested. In response to the unfolding crisis in Metroville, The Civic Resilience Project has launched an essential simulation to navigate and mitigate the current challenges. Your involvement is crucial.",
+    "information": "The Civic Resilience Project, a collective of experts across various disciplines, is at the forefront of developing strategies for effective crisis management and public education in times of uncertainty.",
+    "sendOff": "In this critical moment, your choices and insights can make a difference. Act now.",
+    "goodbye": "Sincerely,",
+    "footer": "Empowering communities through knowledge and resilience."
+  },
   "introPopup": {
       "instructions": {
         "title": "Welcome to the Civic Resilience Simulation",
@@ -47,7 +58,7 @@
           "keyPointsTitle": "Key Points to Understand:",
           "natureOfCrisis": {
             "title": "Nature of the Crisis",
-            "description": "A security incident at a Quantum Computing Center in the Republic of Talme——one of the most populous and technologically advanced countries——has escalated into a global concern. An alarm was triggered by a minor explosion, leading to immediate speculation about the potential compromise of critical quantum computing technology. No theft has been confirmed, but the incident has sparked widespread fear about the security of sensitive data and the possible implications of quantum technology falling into the wrong hands."
+            "description": "A security incident at a Quantum Computing Center in the Republic of Talme—one of the most populous and technologically advanced countries—has escalated into a global concern. An alarm was triggered by a minor explosion, leading to immediate speculation about the potential compromise of critical quantum computing technology. No theft has been confirmed, but the incident has sparked widespread fear about the security of sensitive data and the possible implications of quantum technology falling into the wrong hands."
           },
           "affectedAreas": {
             "title": "Affected Areas",

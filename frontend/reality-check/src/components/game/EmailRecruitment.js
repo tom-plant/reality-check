@@ -1,12 +1,21 @@
 import React from 'react';
 import { useGameDispatch, useGameState, useGameFunction } from '../../contexts/GameContext';
 import { useTranslation } from 'react-i18next'; 
+import messageBackground from '../../assets/gmail_message.png';
 import './EmailRecruitment.css'; 
 
 
 const EmailRecruitment = ({ setCurrentPhase }) => {
   const dispatch = useGameDispatch();
   const { t } = useTranslation();
+
+  // Hardcoded email object
+  const email = {
+    subject: "Immediate Action Needed: Join Our Crisis Response Simulation Now",
+    sender: "The Civic Resilience Project",
+    address: "<engage@civicresilience.org>",
+    time: "9:17 AM (0 minutes ago)", 
+  };
 
   const handleStart = () => {
     setCurrentPhase('game')
@@ -15,11 +24,26 @@ const EmailRecruitment = ({ setCurrentPhase }) => {
   };
 
   return (
-    <div className="email-recruitment">
-      <h2>Email Recruitment</h2>
-      <button onClick={handleStart}>
-        {t('common.start')} 
-      </button>
+    <div className="email-recruitment" style={{ backgroundImage: `url(${messageBackground})` }}>
+      <div className="title-container">
+        <p>{email.subject}</p>
+      </div>
+      <div className="message-container">
+        <span className="sender-name">{email.sender}</span>
+        <span className="sender-address">{email.address}</span>
+        <span className="email-time">{email.time}</span>
+      </div>
+      <div className="body-container">
+        <p>{t('emailRecruitment.intro')}</p>
+        <p>{t('emailRecruitment.request')}</p>
+        <button onClick={handleStart}>
+          {t('common.clickToJoin')} 
+        </button>
+        <p>{t('emailRecruitment.information')}</p>
+        <p>{t('emailRecruitment.sendOff')}</p>
+        <p>{t('emailRecruitment.goodbye')}</p>
+        <p>{t('emailRecruitment.footer')}</p>
+      </div>
     </div>
   );
 };
