@@ -10,9 +10,10 @@
   
   .email-container {
     position: absolute;
-    height: 498px; /* Adjust as needed based on your screenshot */
-    width: 755px; /* Adjust as needed based on your screenshot */
+    height: 498px; 
+    width: 755px; 
     right: 48px;
     bottom: 6px;
-    background: blue;
+    background: white;
+    overflow: hidden;
   }
