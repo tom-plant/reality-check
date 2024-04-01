@@ -1,0 +1,14 @@
+/* GmailContainer.css */
+.gmail-container {
+  background-color: transparent; /* Invisible background */
+  position: absolute;
+  width: 1000px; /* Fixed width, adjust as needed */
+  height: 630px; /* Fixed height, adjust as needed */
+  top: 50px; /* Fixed position from the top, adjust as needed */
+  left: 50%; /* Centering horizontally */
+  transform: translateX(-50%); /* Adjusts the left positioning to truly center the div */
+  padding: 0;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: 2px solid white;
+}

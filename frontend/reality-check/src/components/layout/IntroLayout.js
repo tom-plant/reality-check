@@ -4,6 +4,7 @@ import AuthLogin from '../game/AuthLogin';
 import ExpoInbox from '../game/ExpoInbox'; 
 import EmailRecruitment from '../game/EmailRecruitment';  
 import CenterContainer from '../containers/CenterContainer';
+import GmailContainer from '../containers/GmailContainer'
 import './IntroLayout.css'; 
 
 const IntroLayout = () => {
@@ -24,9 +25,14 @@ const IntroLayout = () => {
     }
   };
 
+
   return (
     <div className="intro-layout">
-      <CenterContainer>{renderIntroContent()}</CenterContainer>
+      {currentIntroView === 'AUTH_LOGIN' ? (
+        <CenterContainer>{renderIntroContent()}</CenterContainer>
+      ) : (
+        <GmailContainer>{renderIntroContent()}</GmailContainer>
+      )}
     </div>
   );
 };

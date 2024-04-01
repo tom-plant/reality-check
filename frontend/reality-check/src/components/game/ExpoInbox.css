@@ -1,0 +1,18 @@
+/* ExpoInbox.css */
+
+.expo-inbox {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 100%; 
+  }
+  
+  .email-container {
+    position: absolute;
+    height: 498px; /* Adjust as needed based on your screenshot */
+    width: 755px; /* Adjust as needed based on your screenshot */
+    right: 48px;
+    bottom: 6px;
+    background: blue;
+  }
