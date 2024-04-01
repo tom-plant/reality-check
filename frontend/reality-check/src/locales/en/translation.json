@@ -47,7 +47,7 @@
           "keyPointsTitle": "Key Points to Understand:",
           "natureOfCrisis": {
             "title": "Nature of the Crisis",
-            "description": "A security incident at a Quantum Computing Center in 'Nation X' has escalated into a global concern. An alarm was triggered by a minor explosion, leading to immediate speculation about the potential compromise of critical quantum computing technology. No theft has been confirmed, but the incident has sparked widespread fear about the security of sensitive data and the possible implications of quantum technology falling into the wrong hands."
+            "description": "A security incident at a Quantum Computing Center in the Republic of Talme——one of the most populous and technologically advanced countries——has escalated into a global concern. An alarm was triggered by a minor explosion, leading to immediate speculation about the potential compromise of critical quantum computing technology. No theft has been confirmed, but the incident has sparked widespread fear about the security of sensitive data and the possible implications of quantum technology falling into the wrong hands."
           },
           "affectedAreas": {
             "title": "Affected Areas",
@@ -55,7 +55,7 @@
           },
           "responseMeasures": {
             "title": "Response Measures",
-            "description": "Authorities in both 'Nation X' and our country have heightened security measures and launched comprehensive investigations into these incidents. Despite these efforts, the rampant spread of misinformation, particularly through deepfake technology and AI-generated content, is severely hampering the clarity of our situation, leading to public confusion and fear."
+            "description": "Authorities in both the Republic of Talme and our country have heightened security measures and launched comprehensive investigations into these incidents. Despite these efforts, the rampant spread of misinformation, particularly through deepfake technology and AI-generated content, is severely hampering the clarity of our situation, leading to public confusion and fear."
           },
           "challengesAndUnknowns": {
             "title": "Challenges and Unknowns",
@@ -91,11 +91,10 @@
       }
     },
   "narrativeImpact": {
-  "introduction": "Observe your chosen narrative unfolding, guiding responses and shaping perceptions amid the crisis."
+    "introduction": "Observe your chosen narrative unfolding, guiding responses and shaping perceptions amid the crisis."
   },
   "introduceEvent": {
-      "introduction": "As the story progresses, an unforeseen event will be randomly introduced.",
-      "observationPrompt": "Notice how your narrative uses this event to push its message."
+      "introduction": "As the story progresses, an unforeseen event is randomly introduced. Notice how your narrative uses this event to push its message."
     },
   "alert": {
       "update": {

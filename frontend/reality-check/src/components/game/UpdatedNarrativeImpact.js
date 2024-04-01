@@ -9,6 +9,9 @@ const UpdatedNarrativeImpact = () => {
   const { secondaryNewsContent, isLoadingNews } = useGameState();
   const [content, setContent] = useState(null);
 
+  // Initialize variables outside of the conditional scope
+  let headline, story, imageUrl;
+
   // Render news content from the backend
   useEffect(() => {
     if (secondaryNewsContent && !isLoadingNews) {
@@ -16,8 +19,12 @@ const UpdatedNarrativeImpact = () => {
     }
   }, [secondaryNewsContent, isLoadingNews]); 
 
-  // Destructure with correct property names
-  const { headline, story, image_url: imageUrl } = content;
+  // Conditional destructuring of content
+  if (!isLoadingNews && content) {
+    headline = content.headline;
+    story = content.story;
+    imageUrl = content.image_url;
+  }
 
   return (
     <div className="narrative-impact">

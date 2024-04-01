@@ -16,10 +16,10 @@ const GameInstructions = () => {
           'selectNarratives.instructions.introduction'];
       case 'NARRATIVE_IMPACT':
         return [
-          'narrativeImpact.instructions.introduction'];
+          'narrativeImpact.introduction'];
       case 'INTRODUCE_EVENT':
         return [
-        'introduceEvent.instructions.introduction'];
+        'introduceEvent.introduction'];
       case 'IDENTIFY_WEAKNESSES':
         return [
         'identifyWeaknesses.instructions.introduction'];

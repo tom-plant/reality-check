@@ -9,6 +9,9 @@ const IntroduceEvent = () => {
   const { eventNewsContent, isLoadingNews } = useGameState(); 
   const [content, setContent] = useState(null);
 
+  // Initialize variables outside of the conditional scope
+  let headline, story, imageUrl;
+  
   // Render news content
   useEffect(() => {
     if (eventNewsContent && !isLoadingNews) {
@@ -16,8 +19,12 @@ const IntroduceEvent = () => {
     }
   }, [eventNewsContent, isLoadingNews]); 
 
-  // Destructure with correct property names
-  const { headline, story, image_url: imageUrl } = content;
+  // Conditional destructuring of content
+  if (!isLoadingNews && content) {
+    headline = content.headline;
+    story = content.story;
+    imageUrl = content.image_url;
+  }
 
   return (
     <div className="introduce-event">
