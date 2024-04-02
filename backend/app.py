@@ -20,7 +20,6 @@ else:
     from config import Config, DevelopmentConfig, TestingConfig, ProductionConfig, SECRET_KEY, SQL_KEY
 
 
-
 # Initialize Flask app
 app = Flask(__name__, static_folder='build/static')
 

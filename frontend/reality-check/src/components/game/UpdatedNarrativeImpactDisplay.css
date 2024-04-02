@@ -29,7 +29,7 @@
 
 .selected-narrative, .secondary-narrative, .displayed-fact {
   padding: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
   width: 100%;
   box-sizing: border-box; /* Ensures padding is included in width */
   text-align: center; /* Center the text inside each fact box */

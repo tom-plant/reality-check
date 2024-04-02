@@ -42,6 +42,7 @@ const EmailRecruitment = ({ setCurrentPhase }) => {
         <p>{t('emailRecruitment.information')}</p>
         <p>{t('emailRecruitment.sendOff')}</p>
         <p>{t('emailRecruitment.goodbye')}</p>
+        <p>{t('emailRecruitment.sender')}</p>
         <p>{t('emailRecruitment.footer')}</p>
       </div>
     </div>

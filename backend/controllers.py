@@ -126,7 +126,7 @@ def generate_additional_narratives(selected_facts, num_additional_narratives):
 
     language_code = get_user_language_by_id(user_id=session['user_data']['user_id'])
     narratives = []
-    previous_narrative = None
+    # previous_narrative = None
 
 
     for i in range(num_additional_narratives):
@@ -139,7 +139,7 @@ def generate_additional_narratives(selected_facts, num_additional_narratives):
         else:
             # Use the different prompt for subsequent narratives, referring back to the previous one
             system_content = get_text(language_code, "chatgpt_prompts", "additional_narratives", 'generate_additional_narratives_system_content', replacements={"evidence": ', '.join(selected_facts)})
-            user_content = get_text(language_code, "chatgpt_prompts", "additional_narratives", 'generate_additional_narratives_user_content_followup', replacements={"evidence": ', '.join(selected_facts)})
+            user_content = get_text(language_code, "chatgpt_prompts", "additional_narratives", 'generate_additional_narratives_user_content_followup', replacements={"evidence": ', '.join(selected_facts), "narrative": narratives})
             current_app.logger.debug(f'SYSTEM FOR SECOND: {system_content} USER FOR SECOND: {user_content}')
 
         payload = {
@@ -157,7 +157,7 @@ def generate_additional_narratives(selected_facts, num_additional_narratives):
             response_json = response.json()
             narrative = response_json['choices'][0]['message']['content'].strip()
             narratives.append(narrative)
-            previous_narrative = narrative  # Save the last generated narrative for reference in the next loop iteration
+            # previous_narrative = narrative
         else:
             print(f"Error in generate_additional_narratives: {response.status_code} - {response.text}")
             narratives.append(f"Error generating narrative {i+1}")
@@ -263,6 +263,9 @@ def generate_prompts(language_code, category, context, selected_narrative, selec
         except KeyError:
             prompts["secondary_user"] = None  # or some default value or handling
             current_app.logger.debug("An error occurred: 'secondary_user' key not found.")
+        
+    if context == "conclusion":
+        pass
 
     return prompts
 

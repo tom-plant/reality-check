@@ -13,7 +13,10 @@
   overflow-y: auto;
   flex-grow: 1;
   width: 100%; /* Ensures the list takes up the full width */
+  margin: 0; /* Remove default margins */
+  padding: 0; /* Remove default padding */
 }
+
 
 .update-narrative {
   margin-top: 20px;

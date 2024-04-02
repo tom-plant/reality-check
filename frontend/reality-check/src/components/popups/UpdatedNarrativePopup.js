@@ -28,7 +28,7 @@ const UpdatedNarrativePopup = () => {
     <div className="popup-overlay"> 
       <div className="popup-content"> 
         <h2>{t('common.updatedNarrative')}</h2>
-        {isLoadingNews && <LoadingIcon />}  
+        {isLoadingNews && <div>Loading news content...</div>}
         <p>{secondaryNarrative.text}</p>
         <button
           className="continue-button"

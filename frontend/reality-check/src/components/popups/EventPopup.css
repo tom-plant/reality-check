@@ -23,7 +23,7 @@
   display: flex; /* Use flex layout */
   flex-direction: column; /* Stack items vertically */
   align-items: center; /* Center items horizontally */
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
   
 .events-container {
