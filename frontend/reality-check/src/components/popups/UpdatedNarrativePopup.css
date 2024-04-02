@@ -22,20 +22,21 @@
   display: flex; /* Use flex layout */
   flex-direction: column; /* Stack items vertically */
   align-items: center; /* Center items horizontally */
-  margin-bottom: 20px;
-}
-  
-.events-container {
-  display: flex; /* Use flex layout for event boxes */
-  justify-content: space-between; /* Space out event boxes */
-  width: 100%; /* Full width to allow spacing between boxes */
-  margin-bottom: 20px; /* Space between event boxes and the button */
+  justify-content: space-between; /* Distribute space between items */
+  margin-bottom: 40px;
 }
 
-.randomize-event {
+.popup-content h2 {
+  margin-bottom: 10px; /* Add space below the title */
+}
+
+.loading-text, .narrative-text {
+  margin-bottom: 20px; /* Add space below the text elements */
+}
+
+.continue-button {
   margin-top: 20px;
   padding: 10px 20px;
-  align-self: center;
   cursor: pointer;
   position: absolute;
   bottom: 20px;  
@@ -47,21 +48,11 @@
   /* Additional styling for hover state */
   &:hover {
     background-color: #0056b3;
-    }
+  }
 
+  /* Styling for disabled state */
   &:disabled {
     background-color: #cccccc;
-    cursor: default;
+    cursor: not-allowed;
   }
-}
-
-.close-button {
-  position: absolute;
-  top: 10px; /* Adjust as needed */
-  right: 10px; /* Adjust as needed */
-  cursor: pointer;
-  background-color: transparent; /* Or any color you prefer */
-  border: none; /* Removes the default button border */
-  font-size: 24px; /* Adjust as needed */
-  /* Additional styles to make the button look better */
 }

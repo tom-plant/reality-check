@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useGameDispatch, useGameState } from '../../contexts/GameContext';
 import { useTranslation } from 'react-i18next'; 
+import LoadingIcon from '../common/LoadingIcon';
 import './UpdatedNarrativePopup.css'; 
 
 const UpdatedNarrativePopup = () => {
@@ -27,7 +28,7 @@ const UpdatedNarrativePopup = () => {
     <div className="popup-overlay"> 
       <div className="popup-content"> 
         <h2>{t('common.updatedNarrative')}</h2>
-        {isLoadingNews && <div>Loading news content...</div>}
+        {isLoadingNews && <LoadingIcon />}  
         <p>{secondaryNarrative.text}</p>
         <button
           className="continue-button"

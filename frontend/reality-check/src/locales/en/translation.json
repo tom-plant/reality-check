@@ -109,11 +109,11 @@
     },
   "alert": {
       "update": {
-        "title": "Urgent Update: Simulation Integrity",
+        "title": "SYSTEM ALERT: Simulation Integrity",
+        "spacer": "    *    *    *    *",
         "introduction": "We have detected unauthorized data access within our simulation platform, indicating an external attempt to influence public opinion and national security.",
         "challenge": "This breach is a direct challenge to informed citizenship and resilience. We've secured the breach but must now address the potential use of this data to craft harmful narratives.",
-        "response": "Halting our simulation would serve the adversaries' goals. We're integrating this scenario into the simulation, emphasizing the importance of your continued participation.",
-        "opportunity": "This situation offers you a chance to engage with cybersecurity dynamics and narrative influence, enhancing your skills against digital threats."
+        "response": "Halting our simulation would serve the adversaries' goals. We're integrating this scenario into the simulation, emphasizing the importance of your continued participation."
       },
       "pivot": {
         "title": "Strategic Pivot: Countering Narrative Manipulation",
