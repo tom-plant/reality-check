@@ -618,18 +618,15 @@ def conclusion_controller():
     if 'user_data' not in session:
         return {"error": "User not logged in"}, 401
     
-    current_app.logger.debug('ENTERING CONCLUSION LETS GOOOOOOOOOOO')
     # Extract necessary values from session for news generation
     user_id = session['user_data']['user_id']
     language_code = get_user_language_by_id(user_id=session['user_data']['user_id'])
     context = "conclusion"
     primary_narrative_id = session['user_data']['primary_narrative_id']
-    current_app.logger.debug(f'did we get primary id? {primary_narrative_id}')
     secondary_narrative_id = session['user_data']['secondary_narrative_id']
-    current_app.logger.debug(f'did we get secondary? {secondary_narrative_id}')
     selected_facts = ['conclusion']
 
-    current_app.logger.debug('Trying to get narratives')
+    
     #db operations to fetch narratives
     primary_narrative = get_primary_narrative_by_id(primary_narrative_id)
     primary_narrative_text = primary_narrative.narrative_text
@@ -646,13 +643,14 @@ def conclusion_controller():
         return {"error": "Failed to handle conclusion"}, 500
     
     current_app.logger.debug(f"FINAL returning conclusion: {conclusion_content}")
-    return {"conclusion_content": conclusion_content}
+    # Extract paragraphs from the conclusion_content
+    paragraphs = conclusion_content.get("paragraphs", [])
+    return {"conclusion_paragraphs": paragraphs}
 
 
 def generate_conclusion(language_code, context, selected_facts, primary_narrative, secondary_narrative):
 
     API_KEY = os.environ.get('API_KEY')
-    current_app.logger.debug(f'Generation Data: LANG {language_code}, CONTEXT {context}, FACTS {selected_facts}, PRIMARY {primary_narrative}, SECONDARY {secondary_narrative}')
 
     # Call the ChatGPT API
     chatGPTUrl = 'https://api.openai.com/v1/chat/completions'
@@ -676,18 +674,26 @@ def generate_conclusion(language_code, context, selected_facts, primary_narrativ
         "temperature": 0.7,
         "max_tokens": 600
     }
-    
+
     try:
         response = requests.post(chatGPTUrl, headers=headers, data=json.dumps(payload))
         if response.status_code == 200:
-            return response.json()['choices'][0]['message']['content']
+            content = response.json()['choices'][0]['message']['content']
+            
+            # Split the content into paragraphs based on two newline characters
+            paragraphs = content.split('\n\n')
+
+            # Return the list of paragraphs
+            return {
+                "paragraphs": paragraphs
+            }
         else:
             error_message = f"Failed to generate text content. API Error: {response.status_code} - {response.text}"
-            print(error_message)
-        raise Exception(error_message)  # Halting the process by raising an exception
+            current_app.logger.error(error_message)
+            raise Exception(error_message)  # Halting the process by raising an exception
     except Exception as e:
-        print(f"Network or request error occurred: {str(e)}")
-        raise Exception(f"Network or request error occurred: {str(e)}")  # Re-raise to halt the process
+        current_app.logger.error(f"Network or request error occurred: {str(e)}")
+        raise  # Re-raise to halt the process
 
 
     # # Initialize secondary_narrative to handle potential errors

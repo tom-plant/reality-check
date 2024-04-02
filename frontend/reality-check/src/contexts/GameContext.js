@@ -332,22 +332,22 @@ const GameProvider = ({ children }) => {
 
   const fetchAndSetConclusion = async () => {
     try {
-      console.log('starting conclusion context functino')
+      console.log('starting conclusion context function')
       dispatch({ type: 'SET_LOADING_CONCLUSION', payload: true }); 
-        const response = await conclusion(); // Assuming this returns the full response
-        console.log("YAY CONCLUSION CONTENT", response);
-        dispatch({
-          type: 'SET_CONCLUSION_CONTENT',
-          payload: {
-            conclusion_content: response.conclusion_content
-          }
-        });        
+      const response = await conclusion();
+      console.log("YAY CONCLUSION CONTENT", response);
+      dispatch({
+        type: 'SET_CONCLUSION_CONTENT',
+        payload: {
+          conclusion_paragraphs: response.conclusion_paragraphs
+        }
+      });
       dispatch({ type: 'SET_LOADING_CONCLUSION', payload: false });
     } catch (error) {
       console.error('Failed to conclude:', error);
       dispatch({ type: 'SET_LOADING_CONCLUSION', payload: false }); 
     }
-  };
+};
 
   return (
     <GameStateContext.Provider value={state}>

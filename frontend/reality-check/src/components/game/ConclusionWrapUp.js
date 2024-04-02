@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useGameDispatch, useGameState, useGameFunction } from '../../contexts/GameContext';
 import { useTranslation } from 'react-i18next';
+import './ConclusionWrapUp.css';
 
 const ConclusionWrapUp = ({ setCurrentOutroView }) => {
   const { conclusionContent, isLoadingConclusion } = useGameState();
@@ -27,7 +28,9 @@ const ConclusionWrapUp = ({ setCurrentOutroView }) => {
   return (
     <div className="conclusion-wrap-up">
       <h2>Game Conclusion</h2>
-      <p>{content?.conclusion_content}</p>
+      {content?.conclusion_paragraphs?.map((paragraph, index) => (
+        <p key={index}>{paragraph}</p>
+      ))}
       <button onClick={handleConclude}>{t('common.continue')}</button>
     </div>
   );
