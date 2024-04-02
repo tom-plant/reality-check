@@ -34,7 +34,7 @@
     "sender": "The Civic Resilience Project",
     "address": "engage@civicresilience.org",
     "intro": "Dear Citizen,",
-    "request": "Your immediate participation is requested. In response to the unfolding crisis, The Civic Resilience Project has launched an essential simulation to navigate and mitigate the current challenges. Your involvement is crucial.",
+    "request": "Your immediate participation is requested. The Civic Resilience Project is launching a pre-built simulation to navigate and mitigate the mis/disinformation likely to spread in the current crisis. Your involvement is crucial.",
     "information": "The Civic Resilience Project, a collective of experts across various disciplines, is at the forefront of developing strategies for effective crisis management and public education in times of uncertainty.",
     "sendOff": "In this critical moment, your choices and insights can make a difference. Act now.",
     "goodbye": "Sincerely,",
@@ -43,10 +43,10 @@
   "introPopup": {
       "instructions": {
         "title": "Welcome to the Civic Resilience Simulation",
-        "introduction": "As we navigate the complexities of the current crisis, your participation in this pre-designed simulation is both timely and vital. This tool was developed by the Civic Resilience Project as a proactive measure, intended to be deployed in times just like these—to arm citizens with the knowledge and skills necessary for effective crisis response.",
+        "introduction": "Your participation in this pre-designed simulation is both timely and vital for the unfolding election crisis. This tool was developed by the Civic Resilience Project as a proactive measure, intended to be deployed in times just like these—to arm citizens with the knowledge and skills for effective crisis response and national resilience.",
         "whatYouWillDoTitle": "What You Will Do:",
         "engageScenarios": "Engage with Prepared Scenarios: Immerse yourself in situations crafted to reflect potential real-world challenges of the ongoing crisis.",
-        "informedDecisionMaking": "Informed Decision-Making: Your choices in responding to each scenario will influence the development of events, illustrating the impact of individual actions on collective outcomes.",
+        "informedDecisionMaking": "Informed Decision-Making: Your choices in crafting to each scenario will influence the development of events, illustrating the impact of public opinion on collective outcomes.",
         "criticalAnalysis": "Critical Analysis: Evaluate the information presented, distinguishing between reliable and questionable sources to make informed decisions.",
         "conclusion": "This simulation is more than an exercise; it's a vital part of our preparedness and response strategy, empowering you to contribute meaningfully to our collective resilience.",
         "readyToBegin": "Are you ready to begin? Your informed choices are crucial, now more than ever."
@@ -62,15 +62,15 @@
           },
           "affectedAreas": {
             "title": "Affected Areas",
-            "description": "The direct vicinity of the quantum center experienced the initial shock, but the repercussions have quickly spread. Subsequent targeted disruptions at power substations across key voting towns in our country have caused emergency power protocols to be activated at crucial voting centers. These events have not only disrupted our infrastructure but have also sown seeds of unrest and speculation among the populace."
+            "description": "The direct vicinity of the quantum center experienced the initial shock, but the repercussions have quickly spread. Subsequent targeted disruptions at power substations across key voting towns in our country, Eirist, have caused emergency power protocols to be activated at crucial voting centers. These events have not only disrupted our infrastructure but have also sown seeds of unrest and speculation among the populace."
           },
           "responseMeasures": {
             "title": "Response Measures",
-            "description": "Authorities in both the Republic of Talme and our country have heightened security measures and launched comprehensive investigations into these incidents. Despite these efforts, the rampant spread of misinformation, particularly through deepfake technology and AI-generated content, is severely hampering the clarity of our situation, leading to public confusion and fear."
+            "description": "Authorities in both the Republic of Talme and Eirist have heightened security measures and launched comprehensive investigations into these incidents. Despite these efforts, the rampant spread of misinformation, particularly through deepfake technology and AI-generated content, is severely hampering the clarity of our situation, leading to public confusion and fear."
           },
           "challengesAndUnknowns": {
             "title": "Challenges and Unknowns",
-            "description": "The motivations behind these disruptions remain enigmatic, with potential involvement from multiple domestic and international actors. A notable challenge is our country's existing ethnic tensions, with the majority and minority groups viewing the crisis through the lens of long-standing distrust and historical grievances. The majority, feeling besieged both domestically and internationally, may perceive these events as targeted attacks, escalating nationalist sentiments. Conversely, the minority, often feeling marginalized, might see this as yet another instance of systemic neglect or direct aggression."
+            "description": "The motivations behind these disruptions remain enigmatic, with potential involvement from multiple domestic and international actors. A notable challenge is Eirist's existing ethnic tensions, with the majority and minority groups viewing the crisis through the lens of long-standing distrust and historical grievances. The majority, feeling besieged both domestically and internationally, may perceive these events as targeted attacks, escalating nationalist sentiments. Conversely, the minority, often feeling marginalized, might see this as yet another instance of systemic neglect or direct aggression."
           },
           "conclusion": "This briefing aims to equip you with a foundational understanding of the current crisis landscape. As you navigate through this simulation, your decisions will play a crucial role in steering through the layers of information and perception that define our reality.",
           "reminder": "Remember: The information provided here is a snapshot within a rapidly evolving situation. Stay alert to new developments as the crisis unfolds."
@@ -85,50 +85,51 @@
             },
             "selection": {
               "title": "Make Your Selection",
-              "description": "Choose 3 to 5 facts that stand out to you as the most important for shaping your approach to the crisis."
+              "description": "Choose 3 to 5 facts that stand out to you and might make for a compelling narrative."
             },
             "timely": {
               "title": "Be Timely",
               "description": "You have a limited time to make your selections, reflecting the real-world pressure of decision-making during emergencies."
             }
           },
-          "impact": "The facts you select will directly influence the scenarios and challenges you'll face next in the simulation."
+          "impact": "The facts you select will directly influence the scenarios and challenges you see play out in the simulation."
       }
   },
   "selectNarratives": {
       "title": "Select Narratives",
       "instructions" : {
-        "introduction": "Choose one narrative that aligns with your beliefs, resonates with you, or motivates action. Your decision will shape the rest of the simulation."
+        "introduction": "Choose one narrative that aligns with your beliefs, resonates with you, or motivates action. Your decision will shape the narrative that dominates public opinion in the rest of the simulation."
       }
     },
   "narrativeImpact": {
     "introduction": "Observe your chosen narrative unfolding, guiding responses and shaping perceptions amid the crisis."
   },
   "introduceEvent": {
-      "introduction": "As the story progresses, an unforeseen event is randomly introduced. Notice how your narrative uses this event to push its message."
+      "introduction": "As the story progresses, an unforeseen event is randomly introduced. Notice how your narrative uses this event to validate its message."
     },
   "alert": {
       "update": {
         "title": "SYSTEM ALERT: Simulation Integrity",
         "spacer": "    *    *    *    *",
-        "introduction": "We have detected unauthorized data access within our simulation platform, indicating an external attempt to influence public opinion and national security.",
-        "challenge": "This breach is a direct challenge to informed citizenship and resilience. We've secured the breach but must now address the potential use of this data to craft harmful narratives.",
-        "response": "Halting our simulation would serve the adversaries' goals. We're integrating this scenario into the simulation, emphasizing the importance of your continued participation."
+        "introduction": "We have detected unauthorized data access within our simulation platform. It is likely an external attempt to influence public opinion and national security through our platform.",
+        "challenge": "We have secured the breach. However, the leaked data may be used to craft harmful narratives during a time of crisis. This breach is a direct challenge to informed citizenship and resilience.",
+        "response": "Halting our simulation would serve the adversaries' goals. Your continued participation is crucial to promote resiliency and avoid manipulation if one of the prior narratives were to be used against us through deliberately promotion of its message in the real world."
       },
       "pivot": {
-        "title": "Strategic Pivot: Countering Narrative Manipulation",
-        "introduction": "Originally focused on narrative construction, we now shift towards understanding and countering narrative manipulation.",
-        "task": "Revisit and dissect your narratives, identifying manipulations and learning to counter them. Reconsider your fact selections to construct a more comprehensive narrative that reflects a deeper understanding and counters misinformation."
+        "title": "SYSTEM ALERT: Simulation Integrity",
+        "introduction": "While the original simulation focused on narrative construction, you will now create another branch of how the crisis might unfold.",
+        "task": "On the next screen, reconsider your fact selections to construct a more comprehensive narrative that reflects a deeper understanding and counters misinformation."
       }
     },
+  "identifyWeaknesses": {
+    "instructions": "Select and deselect information to create a more robust and comprehensive narrative."
+  },
   "updatedNarrativeImpact": {
       "introduction": "Notice how your udpated narrative unfolds differently, creating a new trajectory of events in the crisis."
     },
   "conclusionWrapUp": {
-      "introduction": "As you reach the conclusion of this simulation, we present your original and revised narratives side-by-side. As we conclude this experience, remember: there isn't a 'winning' narrative here. This journey was about understanding the power of narratives and their profound impact on our perceptions and decisions.",
-      "lessonOnImpact": "This comparison is not just about evaluating choices; it's a profound lesson on the impact of narratives on public perception, decision-making, and ultimately, on national security.",
+      "introduction": "As we conclude this experience, remember: there isn't a 'winning' narrative here. This journey was about understanding the power of narratives and their profound impact on public perception, decision-making, and ultimately, national security. We thank you for your engagement and critical thinking throughout this simulation. Your contributions extend beyond this simulation, aiding in the development of tools and strategies to better navigate and mitigate the impacts of information on society.",
       "reflection": "Reflect on how each narrative shaped the course of events and the responses it elicited. Notice the differences brought about by a more informed, nuanced narrative. It illustrates the power of narratives to construct reality, influencing actions and outcomes based on how information is framed and presented.",
-      "thanks": "We thank you for your engagement and critical thinking throughout this simulation. Your contributions extend beyond this simulation, aiding in the development of tools and strategies to better navigate and mitigate the impacts of narrative warfare on our collective security.",
       "closing": "The Civic Resilience Project Team"
     },
   "gameLesson": {

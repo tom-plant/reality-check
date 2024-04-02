@@ -22,11 +22,14 @@ const GameInstructions = () => {
         'introduceEvent.introduction'];
       case 'IDENTIFY_WEAKNESSES':
         return [
-        // 'identifyWeaknesses.instructions.introduction'
+        'identifyWeaknesses.instructions'
       ];
       case 'UPDATED_NARRATIVE_IMPACT':
         return [
           'updatedNarrativeImpact.introduction'];
+      case 'CONCLUSION_WRAP_UP':
+        return [
+          'conclusionWrapUp.introduction'];
       default:
         return; // Default instruction or null if none
     }
