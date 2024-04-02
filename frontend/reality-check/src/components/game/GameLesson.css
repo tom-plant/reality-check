@@ -1,0 +1,30 @@
+.game-lesson {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Use the full height of the viewport */
+    text-align: center;
+    padding: 20px; /* Add some padding */
+    max-height: 350px; /* Sets a maximum height for the container */
+    border-radius: 8px; /* Rounded corners for the container */
+  }
+
+  .game-lesson h2 {
+    margin-bottom: 30px; /* Spacing between title and content */
+    font-size: 2.5rem; /* Large, prominent title */
+    color: white; /* Dark color for contrast */
+  }
+  
+  .game-lesson .introduction, .game-lesson .conclusion {
+    max-width: 800px; /* Limit the width for readability */
+    margin-bottom: 20px; /* Spacing between paragraphs */
+    font-size: 1.2rem; /* Comfortable reading size */
+    color: white; /* Slightly lighter color for body text */
+  }
+  
+  .game-lesson .conclusion {
+    font-weight: bold; /* Emphasize the concluding statement */
+    color: white; /* Darker color for the conclusion for impact */
+  }
+  

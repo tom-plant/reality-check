@@ -132,8 +132,9 @@
       "closing": "The Civic Resilience Project Team"
     },
   "gameLesson": {
-      "introduction": "Awareness of what's missing is your best defense against mis/disinformation. It's not just about spotting the lies; it's about recognizing the truths that are left out. This understanding is crucial for navigating the complexities of information in our world, especially in times of crisis.",
-      "conclusion": "Stay aware, stay critical. Your discernment matters more than you might realize."
+      "title": "Reality Check",
+      "introduction": "Awareness of what's missing is your best defense against mis/disinformation. It's not just about spotting the lies; it's about recognizing what is left out. This understanding is crucial for navigating the complexities of information in our world, especially in times of crisis.",
+      "conclusion": "Stay aware, stay critical. Your attention matters more than you might realize."
     }
 }
   
