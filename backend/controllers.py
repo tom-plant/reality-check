@@ -172,6 +172,9 @@ def select_narrative_controller(selected_narrative):
         return {"error": "User not logged in"}, 401
 
     # Set language code and selected facts
+    current_app.logger.debug("ABOUT TO TRY THE NEW THING")
+    selected_narrative = selected_narrative['text']  #### NOT SURE IF THIS WILL WORK
+    current_app.logger.debug(f"TRIED THE NEW THING {selected_narrative}")
     language_code = get_user_language_by_id(user_id=session['user_data']['user_id'])
     selected_facts = get_fact_combination_by_id(session['user_data']['fact_combination_id'])
 
@@ -196,11 +199,10 @@ def select_narrative_controller(selected_narrative):
     # Return the news data as a JSON response
     return {"news_content": news_content}
 
-def generate_prompts(language_code, category, context, selected_narrative, selected_facts, headline=None):
+def generate_prompts(language_code, category, context, selected_narrative, selected_facts, headline=None, secondary_narrative=None):
 
-    # if isinstance(selected_facts, list):
-    #     selected_facts = ", ".join(selected_facts)  # Join if list
-    current_app.logger.debug(f"selected_facts: {selected_facts} and selected_narrative {selected_narrative} and context {context}")
+
+    current_app.logger.debug(f"This time in GENERATE PROMPTS: selected_facts: {selected_facts} and selected_narrative {selected_narrative} and context {context}")
     replacements = {
         "narrative": selected_narrative,
         "evidence": selected_facts
@@ -255,17 +257,32 @@ def generate_prompts(language_code, category, context, selected_narrative, selec
         try:
             prompts["secondary_system"] = get_text(language_code, category, context, "secondary_system", replacements)
         except KeyError:
-            prompts["secondary_system"] = None  # or some default value or handling
+            prompts["secondary_system"] = None 
             current_app.logger.debug("An error occurred: 'secondary_system' key not found.")
 
         try:
             prompts["secondary_user"] = get_text(language_code, category, context, "secondary_user", replacements)
         except KeyError:
-            prompts["secondary_user"] = None  # or some default value or handling
+            prompts["secondary_user"] = None  
             current_app.logger.debug("An error occurred: 'secondary_user' key not found.")
         
-    if context == "conclusion":
-        pass
+    # # Generate conclusion_system and conclusion_user prompts for conclusion context
+    # if context == "conclusion":
+    #  # Update replacements with the secondary narrative
+    #     replacements["secondary_narrative"] = secondary_narrative
+
+    #     try: 
+    #         promtps["conclusion_system"] = get_text(language_code, category, context, "conclusion_system", replacements)
+    #     except KeyError:
+    #         prompts["conclusion_system"] = None  
+    #         current_app.logger.debug("An error occurred: 'conclusion_system' key not found.")
+
+    #     try:
+    #         prompts["conclusion_user"] = get_text(language_code, category, context, "conclusion_user", replacements)
+    #     except KeyError:
+    #         prompts["conclusion_user"] = None 
+    #         current_app.logger.debug("An error occurred: 'conclusion_user' key not found.")
+
 
     return prompts
 
@@ -456,9 +473,7 @@ def generate_event_news_content(primary_narrative, context, language_code, event
 
 
 
-
-
-def identify_weaknesses_controller(updated_fact_combination):     # Receive Updated Fact Combination
+def identify_weaknesses_controller(updated_fact_combination):    
     # Check if user is logged in
     if 'user_data' not in session:
         return {"error": "User not logged in"}, 401
@@ -562,7 +577,7 @@ def generate_secondary_narrative(language_code, context, primary_narrative, upda
             {"role": "user", "content": user_content}
         ],
         "temperature": 0.7,
-        "max_tokens": 100
+        "max_tokens": 300
     }
 
     # Initialize secondary_narrative to handle potential errors
@@ -596,12 +611,76 @@ def generate_secondary_news_content(language_code, context, secondary_narrative,
     
     return secondary_news_content
 
-def generate_conclusion(): 
-    pass
+
+
+def conclusion(): 
+     # Check if user is logged in
+    if 'user_data' not in session:
+        return {"error": "User not logged in"}, 401
     
-    # A final function that creates some kind of final storyline that wraps up not only the narrative but also the crisis in general. 
-    # This is stored in the secondary narrative table
+    current_app.logger.debug('ENTERING CONCLUSION LETS GOOOOOOOOOOO')
+    # Extract necessary values from session for news generation
+    user_id = session['user_data']['user_id']
+    language_code = get_user_language_by_id(user_id=session['user_data']['user_id'])
+    context = "conclusion"
+    primary_narrative_id = session['user_data']['primary_narrative_id']
+    secondary_narrative_id = session['user_data']['secondary_narrative_id']
+    selected_facts = ['conclusion']
+
+    current_app.logger.debug('Trying to get narratives')
+    #db operations to fetch narratives
+    primary_narrative = get_primary_narrative_by_id(primary_narrative_id)
+    secondary_narrative = get_secondary_narrative_by_id(secondary_narrative_id)
+
+    current_app.logger.debug('Trying to generate conclusion content')
+    # Generate conclusion content
+    conclusion_content = generate_conclusion(language_code, context, selected_facts, primary_narrative, secondary_narrative)
+    
+    if conclusion_content is None:
+        return {"error": "Failed to handle conclusion"}, 500
+    
+    current_app.logger.debug(f"FINAL returning conclusion: {conclusion_content}")
+    return {"conclusion_content": conclusion_content}
 
 
+def generate_conclusion(language_code, context, selected_facts, primary_narrative, secondary_narrative):
 
+    API_KEY = os.environ.get('API_KEY')
 
+    # Call the ChatGPT API
+    chatGPTUrl = 'https://api.openai.com/v1/chat/completions'
+    headers = {
+        'Authorization': f'Bearer {API_KEY}',
+        'Content-Type': 'application/json'
+    }
+
+    # Set Up
+        system_content = get_text(language_code, "chatgpt_prompts", "conclusion", 'conclusion_system')
+        user_content = get_text(language_code, "chatgpt_prompts", "conclusion", 'conclusion_user', replacements={"primary_narrative": primary_narrative, "secondary_narrative": secondary_narrative})
+       
+    payload = {
+        "model": "gpt-3.5-turbo",
+        "messages": [
+            {"role": "system", "content": system_content},
+            {"role": "user", "content": user_content}
+        ],
+        "temperature": 0.7,
+        "max_tokens": 500
+    }
+
+    # Initialize secondary_narrative to handle potential errors
+    conclusion_content = None
+
+    response = requests.post(chatGPTUrl, headers=headers, data=json.dumps(payload))
+    if response.status_code == 200:
+        response_json = response.json()
+        secondary_narrative = response_json['choices'][0]['message']['content'].strip()
+    else:
+        print(f"Error in generate_conclusion: {response.status_code} - {response.text}")
+
+    # Ensure secondary_narrative has been set before returning it
+    if conclusion_content is not None:
+        return conclusion_content
+    else:
+        # Handle the case where secondary_narrative wasn't generated successfully
+        raise Exception("Failed to generate conclusion content")
