@@ -1,7 +1,7 @@
 // src/context/GameContext.js
 
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
-import { authenticateUser, getFacts, getEvents, generateNarrativeFromFacts, selectNarrative, introduceEvent, identifyWeaknesses } from '../services/gameService';
+import { authenticateUser, getFacts, getEvents, generateNarrativeFromFacts, selectNarrative, introduceEvent, identifyWeaknesses, conclusion } from '../services/gameService';
 
 const GameStateContext = createContext();
 const GameDispatchContext = createContext();
@@ -22,6 +22,7 @@ const initialState = {
   narrativeOptions: [],
   selectedNarrative: null,
   secondaryNarrative: [],
+  conclusionContent: [],
   selectedEvent: null,
   primaryNewsContent: null,
   eventNewsContent: null,
@@ -31,6 +32,7 @@ const initialState = {
   timerHasEnded: false, 
   isLoadingNarratives: false,
   isLoadingNews: false,
+  isLoadingConclusion: false,
   userLanguage: 'English', 
 };
 
@@ -122,6 +124,9 @@ const gameReducer = (state, action) => {
     case 'SET_LOADING_NEWS':
       return { ...state, isLoadingNews: action.payload };
 
+    case  'SET_LOADING_CONCLUSION':
+      return { ...state, isLoadingConclusion: action.payload };
+
     case 'SET_SELECTED_NARRATIVE_CONTENT':
       return { ...state, primaryNewsContent: action.payload };
 
@@ -137,6 +142,9 @@ const gameReducer = (state, action) => {
     case 'SET_SECONDARY_NARRATIVE':
       return { ...state, secondaryNarrative: action.payload };
       
+    case 'SET_CONCLUSION_CONTENT':
+      return { ...state, conclusionContent: action.payload };
+
     case 'SELECT_EVENT':
       return { ...state, selectedEvent: action.payload };
 
@@ -321,10 +329,29 @@ const GameProvider = ({ children }) => {
       dispatch({ type: 'SET_LOADING_NEWS', payload: false }); 
     }
   };
+
+  const fetchAndSetConclusion = async () => {
+    try {
+      dispatch({ type: 'SET_LOADING_CONCLUSION', payload: true }); 
+        const response = await conclusion(); // Assuming this returns the full response
+        console.log("YAY CONCLUSION CONTENT", response);
+        dispatch({
+          type: 'SET_CONCLUSION_CONTENT',
+          payload: {
+            conclusion_content: response.conclusion_content
+          }
+        });        
+      dispatch({ type: 'SET_LOADING_CONCLUSION', payload: false });
+    } catch (error) {
+      console.error('Failed to conclude:', error);
+      dispatch({ type: 'SET_LOADING_CONCLUSION', payload: false }); 
+    }
+  };
+
   return (
     <GameStateContext.Provider value={state}>
       <GameDispatchContext.Provider value={dispatch}>
-        <GameFunctionContext.Provider value={{ fetchAndSetFacts, fetchAndSetEvents, loginUser, fetchAndSetNarratives, selectNarrativeAndSetContent, selectEventAndSetContent, identifyWeaknessesAndSetContent, setCurrentPhase, setCurrentOutroView, setCurrentTurnPointView, setCurrentIntroView }}> 
+        <GameFunctionContext.Provider value={{ fetchAndSetFacts, fetchAndSetEvents, loginUser, fetchAndSetNarratives, selectNarrativeAndSetContent, selectEventAndSetContent, identifyWeaknessesAndSetContent, fetchAndSetConclusion, setCurrentPhase, setCurrentOutroView, setCurrentTurnPointView, setCurrentIntroView }}> 
           {children}
           </GameFunctionContext.Provider>
       </GameDispatchContext.Provider>

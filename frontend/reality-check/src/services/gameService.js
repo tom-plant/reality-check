@@ -130,6 +130,23 @@ export const identifyWeaknesses = async (updatedFactCombination) => {
 };
 
 
+// API function to identify weaknesses in narratives
+export const conclusion = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/game/conclusion`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error concluding:', error);
+    throw error;
+  }
+};
+
+
 // Function to save user progress
 export const saveUserProgress = async (userProgress) => {
   try {
