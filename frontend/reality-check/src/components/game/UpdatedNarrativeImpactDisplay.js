@@ -1,21 +1,26 @@
 // UpdatedNarrativeImpactDisplay.js
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useGameState, useGameFunction, useGameDispatch } from '../../contexts/GameContext';
 import { useTranslation } from 'react-i18next'; 
 import './UpdatedNarrativeImpactDisplay.css'; 
 
 const UpdatedNarrativeImpactDisplay = () => {
   const { selectedNarrative, secondaryNarrative, updatedFactCombination, isLoadingNews } = useGameState();
-  const { setCurrentPhase } = useGameFunction(); 
+  const { setCurrentPhase, fetchAndSetConclusion } = useGameFunction(); 
   const dispatch = useGameDispatch();
+  const [buttonClicked, setButtonClicked] = useState(false); 
   const { t } = useTranslation();
 
   // Progress to outro phase of the game
   const handleContinue = () => {
-    setCurrentPhase('outro'); 
-    dispatch({ type: 'SET_CURRENT_OUTRO_VIEW', payload: 'CONCLUSION_WRAP_UP' });
-  };
+    if (!buttonClicked) { 
+      setButtonClicked(true); 
+      fetchAndSetConclusion(); 
+      console.log('called fetch and set conclusion')
+      setCurrentPhase('outro'); 
+      dispatch({ type: 'SET_CURRENT_OUTRO_VIEW', payload: 'CONCLUSION_WRAP_UP' });
+  }};
     
   return (
     <div className="updated-narrative-impact-display-container">

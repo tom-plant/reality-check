@@ -332,6 +332,7 @@ const GameProvider = ({ children }) => {
 
   const fetchAndSetConclusion = async () => {
     try {
+      console.log('starting conclusion context functino')
       dispatch({ type: 'SET_LOADING_CONCLUSION', payload: true }); 
         const response = await conclusion(); // Assuming this returns the full response
         console.log("YAY CONCLUSION CONTENT", response);

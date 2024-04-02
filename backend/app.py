@@ -53,11 +53,11 @@ app.logger.setLevel(logging.DEBUG)  # Set the log level to DEBUG
 # Import models and controllers after initializing db to avoid circular imports
 if os.getenv('FLASK_ENV') == 'production':
     from backend.models import * 
-    from backend.controllers import initialize_data_controller, register_user_controller, get_all_facts_controller, get_all_events_controller, select_facts_controller, select_narrative_controller, introduce_event_controller, identify_weaknesses_controller
+    from backend.controllers import initialize_data_controller, register_user_controller, get_all_facts_controller, get_all_events_controller, select_facts_controller, select_narrative_controller, introduce_event_controller, identify_weaknesses_controller, conclusion_controller
     from backend.db_operations import *  
 else:
     from models import * 
-    from controllers import initialize_data_controller, register_user_controller, get_all_facts_controller, get_all_events_controller, select_facts_controller, select_narrative_controller, introduce_event_controller, identify_weaknesses_controller
+    from controllers import initialize_data_controller, register_user_controller, get_all_facts_controller, get_all_events_controller, select_facts_controller, select_narrative_controller, introduce_event_controller, identify_weaknesses_controller, conclusion_controller
     from db_operations import *  
 
 #Initialize session management tools
@@ -184,6 +184,11 @@ def save_progress():
     response_data = save_progress_controller(user_progress)
     
     # Return response to frontend
+    return jsonify(response_data)
+
+@app.route('/game/conclusion', methods=['GET'])
+def conclusion():
+    response_data = conclusion_controller()
     return jsonify(response_data)
 
 @app.errorhandler(404)

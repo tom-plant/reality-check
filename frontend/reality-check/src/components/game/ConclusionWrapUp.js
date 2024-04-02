@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next';
 const ConclusionWrapUp = ({ setCurrentOutroView }) => {
   const { conclusionContent, isLoadingConclusion } = useGameState();
   const { t } = useTranslation();
-  const { fetchAndSetConclusion } = useGameFunction(); 
   const dispatch = useGameDispatch();
   const [buttonClicked, setButtonClicked] = useState(false); 
   const [content, setContent] = useState(null);
@@ -16,7 +15,6 @@ const ConclusionWrapUp = ({ setCurrentOutroView }) => {
     if (!buttonClicked) { 
       setButtonClicked(true); 
       setCurrentOutroView('GAME_LESSON')}
-      fetchAndSetConclusion(); 
     }
 
   // Render news content from the backend
@@ -29,7 +27,7 @@ const ConclusionWrapUp = ({ setCurrentOutroView }) => {
   return (
     <div className="conclusion-wrap-up">
       <h2>Game Conclusion</h2>
-      <p>{content}</p>
+      <p>{content?.conclusion_content}</p>
       <button onClick={handleConclude}>{t('common.continue')}</button>
     </div>
   );

@@ -172,14 +172,12 @@ def select_narrative_controller(selected_narrative):
         return {"error": "User not logged in"}, 401
 
     # Set language code and selected facts
-    current_app.logger.debug("ABOUT TO TRY THE NEW THING")
-    selected_narrative = selected_narrative['text']  #### NOT SURE IF THIS WILL WORK
-    current_app.logger.debug(f"TRIED THE NEW THING {selected_narrative}")
+    selected_narrative_text = selected_narrative['text']  
     language_code = get_user_language_by_id(user_id=session['user_data']['user_id'])
     selected_facts = get_fact_combination_by_id(session['user_data']['fact_combination_id'])
 
     # Call the function to generate news content
-    news_content = generate_news_content(language_code, "primary_narrative", selected_narrative, selected_facts)
+    news_content = generate_news_content(language_code, "primary_narrative", selected_narrative_text, selected_facts)
 
     # Commit Primary Narrative to Database
     primary_narrative = create_primary_narrative(
@@ -488,15 +486,15 @@ def identify_weaknesses_controller(updated_fact_combination):
     updated_fact_combination_id = handle_fact_combination(updated_fact_combination)
 
     # Find or create the secondary narrative news content and its id
-    news_content, secondary_narrative_id, secondary_narrative_text = handle_narrative_update(primary_narrative_id, updated_fact_combination_id, updated_fact_combination, language_code, context) 
+    news_content, secondary_narrative_text = handle_narrative_update(primary_narrative_id, updated_fact_combination_id, updated_fact_combination, language_code, context) 
     # Store secondary_narrative_id in user session
-    session['user_data']['secondary_narrative_id'] = secondary_narrative_id
-    session.modified = True
     
     if news_content is None:
         return {"error": "Failed to handle narrative event"}, 500
 
+    secondary_narrative_id = session['user_data']['secondary_narrative_id']
     # Construct secondary narrative object
+
     secondary_narrative = {
         "id": secondary_narrative_id,
         "text": secondary_narrative_text
@@ -505,10 +503,9 @@ def identify_weaknesses_controller(updated_fact_combination):
     current_app.logger.debug(f"FINAL returning secondary_narrative: {secondary_narrative} and news: {news_content}")
     return {"secondary_news_content": news_content, "secondary_narrative": secondary_narrative}
 
-def handle_narrative_update(primary_narrative_id, updated_fact_combination_id, updated_fact_combination, language_code, context, _session=None):
-    session = _session or db.session
-
+def handle_narrative_update(primary_narrative_id, updated_fact_combination_id, updated_fact_combination, language_code, context):
     current_app.logger.debug("ENTERING HANDLE NARRATIVE UPDATE")
+    current_app.logger.debug(f"Session Data: {session}")
     #Check if new or existing
     secondary_narrative_id = get_secondary_narrative_id_by_fact_combination_and_primary_narrative(primary_narrative_id, updated_fact_combination_id) 
 
@@ -539,12 +536,15 @@ def handle_narrative_update(primary_narrative_id, updated_fact_combination_id, u
             resulting_headline=news_content['headline'], 
             resulting_story=news_content['story'], 
             resulting_photo_url=news_content['image_url'],
-            user_id=primary_narrative.user_id  # Set user_id from the primary_narrative's user_id
+            user_id=primary_narrative.user_id,  # Set user_id from the primary_narrative's user_id
+            _session=None
         )
         db.session.add(secondary_narrative)
-        session.commit()  # Don't forget to commit the session
+        db.session.commit()  # Don't forget to commit the session
+        session['user_data']['secondary_narrative_id'] = secondary_narrative.id
+        session.modified = True
 
-        return news_content, secondary_narrative_id, secondary_narrative_text
+        return news_content, secondary_narrative_text
     # If not new
     else:
         current_app.logger.debug("ENTERING secondarynarrative old conditional")
@@ -613,7 +613,7 @@ def generate_secondary_news_content(language_code, context, secondary_narrative,
 
 
 
-def conclusion(): 
+def conclusion_controller(): 
      # Check if user is logged in
     if 'user_data' not in session:
         return {"error": "User not logged in"}, 401
@@ -624,17 +624,23 @@ def conclusion():
     language_code = get_user_language_by_id(user_id=session['user_data']['user_id'])
     context = "conclusion"
     primary_narrative_id = session['user_data']['primary_narrative_id']
+    current_app.logger.debug(f'did we get primary id? {primary_narrative_id}')
     secondary_narrative_id = session['user_data']['secondary_narrative_id']
+    current_app.logger.debug(f'did we get secondary? {secondary_narrative_id}')
     selected_facts = ['conclusion']
 
     current_app.logger.debug('Trying to get narratives')
     #db operations to fetch narratives
     primary_narrative = get_primary_narrative_by_id(primary_narrative_id)
+    primary_narrative_text = primary_narrative.narrative_text
+
     secondary_narrative = get_secondary_narrative_by_id(secondary_narrative_id)
+    secondary_narrative_text = secondary_narrative.narrative_text
+
 
     current_app.logger.debug('Trying to generate conclusion content')
     # Generate conclusion content
-    conclusion_content = generate_conclusion(language_code, context, selected_facts, primary_narrative, secondary_narrative)
+    conclusion_content = generate_conclusion(language_code, context, selected_facts, primary_narrative_text, secondary_narrative_text)
     
     if conclusion_content is None:
         return {"error": "Failed to handle conclusion"}, 500
@@ -646,6 +652,7 @@ def conclusion():
 def generate_conclusion(language_code, context, selected_facts, primary_narrative, secondary_narrative):
 
     API_KEY = os.environ.get('API_KEY')
+    current_app.logger.debug(f'Generation Data: LANG {language_code}, CONTEXT {context}, FACTS {selected_facts}, PRIMARY {primary_narrative}, SECONDARY {secondary_narrative}')
 
     # Call the ChatGPT API
     chatGPTUrl = 'https://api.openai.com/v1/chat/completions'
@@ -655,9 +662,11 @@ def generate_conclusion(language_code, context, selected_facts, primary_narrativ
     }
 
     # Set Up
-        system_content = get_text(language_code, "chatgpt_prompts", "conclusion", 'conclusion_system')
-        user_content = get_text(language_code, "chatgpt_prompts", "conclusion", 'conclusion_user', replacements={"primary_narrative": primary_narrative, "secondary_narrative": secondary_narrative})
-       
+    system_content = get_text(language_code, "chatgpt_prompts", "conclusion", 'conclusion_system')
+    current_app.logger.debug(f'system content: {system_content}')
+    user_content = get_text(language_code, "chatgpt_prompts", "conclusion", 'conclusion_user', replacements={"primary_narrative": primary_narrative, "secondary_narrative": secondary_narrative})
+    current_app.logger.debug(f'user content: {user_content}')
+
     payload = {
         "model": "gpt-3.5-turbo",
         "messages": [
@@ -665,22 +674,38 @@ def generate_conclusion(language_code, context, selected_facts, primary_narrativ
             {"role": "user", "content": user_content}
         ],
         "temperature": 0.7,
-        "max_tokens": 500
+        "max_tokens": 600
     }
+    
+    try:
+        response = requests.post(chatGPTUrl, headers=headers, data=json.dumps(payload))
+        if response.status_code == 200:
+            return response.json()['choices'][0]['message']['content']
+        else:
+            error_message = f"Failed to generate text content. API Error: {response.status_code} - {response.text}"
+            print(error_message)
+        raise Exception(error_message)  # Halting the process by raising an exception
+    except Exception as e:
+        print(f"Network or request error occurred: {str(e)}")
+        raise Exception(f"Network or request error occurred: {str(e)}")  # Re-raise to halt the process
 
-    # Initialize secondary_narrative to handle potential errors
-    conclusion_content = None
 
-    response = requests.post(chatGPTUrl, headers=headers, data=json.dumps(payload))
-    if response.status_code == 200:
-        response_json = response.json()
-        secondary_narrative = response_json['choices'][0]['message']['content'].strip()
-    else:
-        print(f"Error in generate_conclusion: {response.status_code} - {response.text}")
+    # # Initialize secondary_narrative to handle potential errors
+    # conclusion_content = None
 
-    # Ensure secondary_narrative has been set before returning it
-    if conclusion_content is not None:
-        return conclusion_content
-    else:
-        # Handle the case where secondary_narrative wasn't generated successfully
-        raise Exception("Failed to generate conclusion content")
+    # response = requests.post(chatGPTUrl, headers=headers, data=json.dumps(payload))
+    # if response.status_code == 200:
+    #     response_json = response.json()
+    #     secondary_narrative = response_json['choices'][0]['message']['content'].strip()
+    # else:
+    #     print(f"Error in generate_conclusion: {response.status_code} - {response.text}")
+
+    # # Ensure secondary_narrative has been set before returning it
+    # if conclusion_content is not None:
+    #     return conclusion_content
+    # else:
+    #     # Handle the case where secondary_narrative wasn't generated successfully
+    #     raise Exception("Failed to generate conclusion content")
+
+
+
