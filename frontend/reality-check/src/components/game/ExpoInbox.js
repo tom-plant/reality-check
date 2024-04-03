@@ -13,8 +13,8 @@ const ExpoInbox = ({ setCurrentIntroView }) => {
   const newEmail = {
     id: 0, 
     title: 'The Civic Resilience Project', 
-    subject: 'Critical Participation Request: Crisis Simulation', 
-    description: 'As we navigate the complexities of the current crisis, your participation...', 
+    subject: 'URGENT Participation Request: Crisis Simulation', 
+    description: 'Dear Citizen, Your immediate participation is requested...', 
     time: '9:17 AM'
   };
 

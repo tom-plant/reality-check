@@ -11,7 +11,7 @@ const EmailRecruitment = ({ setCurrentPhase }) => {
 
   // Hardcoded email object
   const email = {
-    subject: "Immediate Action Needed: Join Our Crisis Response Simulation Now",
+    subject: "URGENT Participation Request: Crisis Simulation",
     sender: "The Civic Resilience Project",
     address: "<engage@civicresilience.org>",
     time: "9:17 AM (0 minutes ago)", 
@@ -36,14 +36,14 @@ const EmailRecruitment = ({ setCurrentPhase }) => {
       <div className="body-container">
         <p>{t('emailRecruitment.intro')}</p>
         <p>{t('emailRecruitment.request')}</p>
-        <button onClick={handleStart}>
+        <button onClick={handleStart} style={{ fontWeight: 'bold' }}>
           {t('common.clickToJoin')} 
         </button>
         <p>{t('emailRecruitment.information')}</p>
         <p>{t('emailRecruitment.sendOff')}</p>
         <p>{t('emailRecruitment.goodbye')}</p>
-        <p>{t('emailRecruitment.sender')}</p>
-        <p>{t('emailRecruitment.footer')}</p>
+        <p style={{ fontWeight: 'bold' }}>{t('emailRecruitment.sender')}</p>
+        <p style={{ fontStyle: 'italic' }}>{t('emailRecruitment.footer')}</p>
       </div>
     </div>
   );

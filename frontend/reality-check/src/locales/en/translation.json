@@ -35,7 +35,7 @@
     "sender": "The Civic Resilience Project",
     "address": "engage@civicresilience.org",
     "intro": "Dear Citizen,",
-    "request": "Your immediate participation is requested. The Civic Resilience Project is launching its pre-built simulation to navigate and mitigate the mis/disinformation and data insecurity present in our current crisis. Your involvement is crucial.",
+    "request": "Your immediate participation is requested. The Civic Resilience Project is launching its pre-built simulation using generative AI to navigate and mitigate the mis/disinformation and data insecurity present in our current crisis. Your involvement is crucial.",
     "information": "The Civic Resilience Project, a collective of experts across various disciplines, is at the forefront of developing strategies for effective crisis management and public education in times of uncertainty.",
     "sendOff": "In this critical moment, your choices and insights can make a difference. Act now.",
     "goodbye": "Sincerely,",
@@ -106,7 +106,8 @@
     "introduction": "Observe your chosen narrative unfolding, guiding responses and shaping perceptions amid the crisis."
   },
   "introduceEvent": {
-      "introduction": "As the story progresses, an unforeseen event is randomly introduced. Notice how your narrative uses this event to validate its message."
+      "introduction": "As the story progresses, an unforeseen event is randomly introduced. Notice how your narrative uses this event to validate its message.",
+      "popup": "Click the button to randomly select one of these events to occur during the crisis."
     },
   "alert": {
       "update": {
@@ -129,14 +130,14 @@
       "introduction": "Notice how your udpated narrative unfolds differently, creating a new trajectory of events in the crisis."
     },
   "conclusionWrapUp": {
-      "introduction": "As we conclude this experience, remember: there isn't a 'winning' narrative here. This journey was about understanding the power of narratives and their profound impact on public perception, decision-making, and ultimately, national security. We thank you for your engagement and critical thinking throughout this simulation. Your contributions extend beyond this simulation, aiding in the development of tools and strategies to better navigate and mitigate the impacts of information on society.",
+      "introduction": "As we conclude this experience, remember: there isn't a 'winning' narrative here. This concluding storyline will compare your two branching pathways for the crisis, highlighting the power of narratives and their profound impact on public perception, decision-making, and ultimately, national security. Please await your summary:",
       "reflection": "Reflect on how each narrative shaped the course of events and the responses it elicited. Notice the differences brought about by a more informed, nuanced narrative. It illustrates the power of narratives to construct reality, influencing actions and outcomes based on how information is framed and presented.",
       "closing": "The Civic Resilience Project Team"
     },
   "gameLesson": {
       "title": "Reality Check",
-      "introduction": "Awareness of what's missing is your best defense against mis/disinformation. It's not just about spotting the lies; it's about recognizing what is left out. This understanding is crucial for navigating the complexities of information in our world, especially in times of crisis.",
-      "conclusion": "Stay aware, stay critical. Your attention matters more than you might realize."
+      "introduction": "Awareness of what is missing from the conversation is your best defense against mis/disinformation. It is not just about spotting the lies; it is about recognizing what is left out. This understanding is crucial for navigating the complexities of information in our world, especially in times of crisis.",
+      "conclusion": "Stay aware, stay critical. Information is data. Your attention matters more than you might realize."
     }
 }
   

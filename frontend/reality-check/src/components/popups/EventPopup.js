@@ -52,6 +52,7 @@ const EventPopup = ({ onClose }) => {
   return (
     <div className="popup-overlay">
       <div className="popup-content">
+        <p className="introduce-event-text">{t('introduceEvent.popup')}</p>
         <div className="events-container">
           {displayedEvents.map((event, index) => (
             <EventBox
@@ -67,7 +68,7 @@ const EventPopup = ({ onClose }) => {
           onClick={startCyclingEvents}
           disabled={isCycling || selectedEventIndex !== null}
         >
-          {t('common.randomizeEvent')} 
+          {t('common.randomizeEvent')}
         </button>
         {showCloseButton && (
           <button
@@ -80,6 +81,7 @@ const EventPopup = ({ onClose }) => {
       </div>
     </div>
   );
+  
 };
 
 export default EventPopup;

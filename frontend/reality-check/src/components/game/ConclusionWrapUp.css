@@ -3,7 +3,6 @@
     max-height: 350px; /* Sets a maximum height for the container */
     overflow-y: auto; /* Enables vertical scrolling if content overflows */
     border-radius: 8px; /* Rounded corners for the container */
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Adds subtle shadow */
     display: flex;
     flex-direction: column;
     justify-content: space-between; /* Distributes space between content and button */
