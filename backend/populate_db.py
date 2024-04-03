@@ -48,7 +48,7 @@ events = [
 ]
 
 
-if os.getenv('FLASK_ENV') == 'development':
+if os.getenv('FLASK_ENV') == 'production':
     with app.app_context():  # Use the app's context
         # Iterate over the facts list and add each to the database
         for fact_text in facts:
