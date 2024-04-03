@@ -30,11 +30,11 @@
   },
   "expoInbox": {},
   "emailRecruitment": {
-    "subject": "Immediate Action Needed: Join Our Crisis Response Simulation Now",
+    "subject": "IMMEDIATE ACTION NEEDED: Eirist Crisis Response Simulation",
     "sender": "The Civic Resilience Project",
     "address": "engage@civicresilience.org",
     "intro": "Dear Citizen,",
-    "request": "Your immediate participation is requested. The Civic Resilience Project is launching a pre-built simulation to navigate and mitigate the mis/disinformation likely to spread in the current crisis. Your involvement is crucial.",
+    "request": "Your immediate participation is requested. The Civic Resilience Project is launching its pre-built simulation to navigate and mitigate the mis/disinformation and data insecurity present in our current crisis. Your involvement is crucial.",
     "information": "The Civic Resilience Project, a collective of experts across various disciplines, is at the forefront of developing strategies for effective crisis management and public education in times of uncertainty.",
     "sendOff": "In this critical moment, your choices and insights can make a difference. Act now.",
     "goodbye": "Sincerely,",
@@ -43,17 +43,17 @@
   "introPopup": {
       "instructions": {
         "title": "Welcome to the Civic Resilience Simulation",
-        "introduction": "Your participation in this pre-designed simulation is both timely and vital for the unfolding election crisis. This tool was developed by the Civic Resilience Project as a proactive measure, intended to be deployed in times just like these—to arm citizens with the knowledge and skills for effective crisis response and national resilience.",
+        "introduction": "Your participation in this pre-designed simulation is vital for the unfolding election crisis. This tool was developed by the Civic Resilience Project as a proactive measure, intended to be deployed in times just like these—to arm citizens with the knowledge and skills for effective crisis response and national resilience.",
         "whatYouWillDoTitle": "What You Will Do:",
         "engageScenarios": "Engage with Prepared Scenarios: Immerse yourself in situations crafted to reflect potential real-world challenges of the ongoing crisis.",
-        "informedDecisionMaking": "Informed Decision-Making: Your choices in crafting to each scenario will influence the development of events, illustrating the impact of public opinion on collective outcomes.",
+        "informedDecisionMaking": "Informed Decision-Making: Your choices in crafting to each scenario will influence the development of events.",
         "criticalAnalysis": "Critical Analysis: Evaluate the information presented, distinguishing between reliable and questionable sources to make informed decisions.",
-        "conclusion": "This simulation is more than an exercise; it's a vital part of our preparedness and response strategy, empowering you to contribute meaningfully to our collective resilience.",
+        "conclusion": "This simulation is more than an exercise; it's a vital part of our preparedness and response strategy.",
         "readyToBegin": "Are you ready to begin? Your informed choices are crucial, now more than ever."
       },
       "briefing": {
           "title": "Crisis Briefing: Overview of the Current Situation",
-          "introduction": "As you begin this simulation, it's crucial to grasp the intricacies of the unfolding crisis at hand.",
+          "introduction": "As you begin, it is crucial to grasp the intricacies of the unfolding crisis at hand.",
           "note": "This briefing provides an overview based on the most current and reliable data available, sourced directly from government agencies and trusted news outlets. Please note that due to the evolving nature of the crisis, some details may be subject to change.",
           "keyPointsTitle": "Key Points to Understand:",
           "natureOfCrisis": {
@@ -62,22 +62,22 @@
           },
           "affectedAreas": {
             "title": "Affected Areas",
-            "description": "The direct vicinity of the quantum center experienced the initial shock, but the repercussions have quickly spread. Subsequent targeted disruptions at power substations across key voting towns in our country, Eirist, have caused emergency power protocols to be activated at crucial voting centers. These events have not only disrupted our infrastructure but have also sown seeds of unrest and speculation among the populace."
+            "description": "The direct vicinity of the quantum center experienced the initial shock, but the repercussions have quickly spread. Subsequent targeted disruptions at power substations plunged rural Eirist into darkness, and data leaks exposed the emails and other information about these rural populations. Our election has been postponed and chaos is emerging locally."
           },
           "responseMeasures": {
             "title": "Response Measures",
-            "description": "Authorities in both the Republic of Talme and Eirist have heightened security measures and launched comprehensive investigations into these incidents. Despite these efforts, the rampant spread of misinformation, particularly through deepfake technology and AI-generated content, is severely hampering the clarity of our situation, leading to public confusion and fear."
+            "description": "Authorities in both the Republic of Talme and Eirist have heightened security measures and launched comprehensive investigations into these incidents. However, the rampant spread of misinformation, particularly through deepfake technology and AI-generated content, is severely hampering the clarity of our situation."
           },
           "challengesAndUnknowns": {
             "title": "Challenges and Unknowns",
-            "description": "The motivations behind these disruptions remain enigmatic, with potential involvement from multiple domestic and international actors. A notable challenge is Eirist's existing ethnic tensions, with the majority and minority groups viewing the crisis through the lens of long-standing distrust and historical grievances. The majority, feeling besieged both domestically and internationally, may perceive these events as targeted attacks, escalating nationalist sentiments. Conversely, the minority, often feeling marginalized, might see this as yet another instance of systemic neglect or direct aggression."
+            "description": "The motivations behind these disruptions remain enigmatic, with potential involvement from multiple domestic and international actors. A notable challenge is Eirist's existing ethnic tensions, with the urban and rural groups blaming each other for the attacks."
           },
-          "conclusion": "This briefing aims to equip you with a foundational understanding of the current crisis landscape. As you navigate through this simulation, your decisions will play a crucial role in steering through the layers of information and perception that define our reality.",
+          "conclusion": "This briefing aims to equip you with a foundational understanding of the current crisis landscape. As you navigate through this simulation, your decisions will play a crucial role in steering through the layers of uncertainty.",
           "reminder": "Remember: The information provided here is a snapshot within a rapidly evolving situation. Stay alert to new developments as the crisis unfolds."
         },
       "selectFactsInstructions": {
           "title": "Fact Selection Instructions",
-          "introduction": "You are about to start the core part of the simulation. Your task is to select the facts that you think are most crucial to understanding the current crisis.",
+          "introduction": "You are about to start the core part of the simulation. You will be overwhelmed with information—just like real life. Your task is to select the facts that you think are most crucial to understanding the current crisis.",
           "steps": {
             "examine": {
               "title": "Examine the List",
@@ -89,7 +89,7 @@
             },
             "timely": {
               "title": "Be Timely",
-              "description": "You have a limited time to make your selections, reflecting the real-world pressure of decision-making during emergencies."
+              "description": "You have a limited time to make your selections, reflecting the real-world pressure of decision-making during emergencies. You will not have enough time to read everything, so choose carefully."
             }
           },
           "impact": "The facts you select will directly influence the scenarios and challenges you see play out in the simulation."
