@@ -47,7 +47,7 @@ const SelectNarratives = () => {
             disabled={!selectedNarrative} 
             onClick={handleNarrativeConfirmation}
           >
-            {t('common.confirmNarrative')}
+            {t('common.promoteNarrative')}
           </button>
         </>
       )}

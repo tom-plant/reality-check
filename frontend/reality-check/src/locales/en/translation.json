@@ -8,6 +8,7 @@
     "generateNarrative": "Generate Narrative",
     "clickToJoin": "Click to Join",
     "updateNarrative": "Update Narrative",
+    "promoteNarrative": "Promote This Narrative",
     "moreFacts": "More Information",
     "login": "Login",
     "start": "Start",
@@ -58,7 +59,7 @@
           "keyPointsTitle": "Key Points to Understand:",
           "natureOfCrisis": {
             "title": "Nature of the Crisis",
-            "description": "A security incident at a Quantum Computing Center in the Republic of Talme—one of the most populous and technologically advanced countries—has escalated into a global concern. An alarm was triggered by a minor explosion, leading to immediate speculation about the potential compromise of critical quantum computing technology. No theft has been confirmed, but the incident has sparked widespread fear about the security of sensitive data and the possible implications of quantum technology falling into the wrong hands."
+            "description": "A security incident at a Quantum Computing Center in the Republic of Talme—one of the most populous and technologically advanced countries—has escalated into a global concern. All you need to know about quanutm computers: they are new, extremely advanced, and have the capability to access hack private data and systems. A minor explosion triggered the alarm, leading to immediate speculation about the potential compromise of critical quantum computing technology. No theft has been confirmed, but the incident has sparked widespread fear about the security of sensitive data and the possible implications of quantum technology falling into the wrong hands."
           },
           "affectedAreas": {
             "title": "Affected Areas",
@@ -98,7 +99,7 @@
   "selectNarratives": {
       "title": "Select Narratives",
       "instructions" : {
-        "introduction": "Choose one narrative that aligns with your beliefs, resonates with you, or motivates action. Your decision will shape the narrative that dominates public opinion in the rest of the simulation."
+        "introduction": "Choose one narrative that makes the most sense to you, either because it aligns with your beliefs, resonates with you, or motivates action. Your decision will shape the narrative that dominates public opinion in the rest of the simulation."
       }
     },
   "narrativeImpact": {
