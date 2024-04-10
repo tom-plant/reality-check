@@ -4,47 +4,35 @@ import os
 
 # Fact entries to be added
 facts = [
-    "Alarm triggered at quantum computer facility in the Republic of Talme.",
-    "Massive power outages plunges the rural areas across Eirist into total darkness.",
-    "Voting centers switch to emergency power due to attacks.",
-    "Some members of the government are calling to cancel the election.",
-    "Deepfake videos show current political leaders in compromised situations.",
-    "Local populations break into small fights, blaming each other for the power outages.",
-    "Communication blackouts disrupt emergency services.",
-    "Eirist diplomats are called back from the Republic of Talme.",
-    "Third-party fact checkers reveal various parts of the crisis to be AI-generated.",
-    "Voting systems are shut off until crisis is over.",
-    "The government postpones elections for a week.",
-    "The Eirist military is mobilized amidst unrest.",
-    "Nationwide cybersecurity alert issued.",
-    "Emergency curfews declared in major cities.",
-    "Allies withdraw aid amid diplomatic tensions.",
-    "Border skirmishes with The Republic of Talme raise security concerns.",
-    "Financial markets go into a frenzy.",
-    "The power stations were attacked with small, hand-made explosives, not cyber weapons.",
-    "Emergency vehicles are sabotaged in key districts with cut tires.",
-    "Data leaks expose emails of rural Eirist citizens.",
+    "Power outages occur only in rural areas.",
+    "Local trains are unable to run.",
+    "The government postpones the election.",
+    "Rural militia groups organize.",
+    "Emergency services are overwhelmed with calls for help.",
+    "Banks stop transactions due to cyberattacks.",
+    "Social media becomes flooded with misinformation.",
+    "Rural towns and villages cannot use phones to communicate.",
+    "The government announces suspected involvement by the Republic of Talme.",
+    "More police and army are spotted in big cities.",
+    "Small public protests start to form in cities.",
+    "Government buildings are fortified against attacks.",
+    "Power grid companies report hacks.",
+    "Schools and universities close down until further notice.",
+    "Gas stations announce expected fuel shortages.",
+    "Rural citizens rush to stores for food and water.",
+    "International flights to and from Eirist are canceled.",
+    "Embassies begin to evacuate foreign citizens in Eirist.",
+    "Voting stations switch to emergency power.",
     "Drones are spotted near the attacked power stations.",
-    "Emergency alerts sent to leaked emails about an attack by the Republic of Talme.",
-    "The data leaks contain already publicly-available data.",
-    "Suspicious packages are found near critical infrastructure sites.",
-    "Journalists from the Republic of Talme are expelled from Eirist under suspicion of espionage.",
-    "Roadblocks and obstacles appear in cities, blocking streets.",
-    "Public transportation systems experience widespread disruptions.",
-    "Scattered reports emerge of individuals claiming responsibility for the attacks.",
-    "Emergency services receive reports of imminent attacks on Eirist.",
-    "A viral social media post says the Eirist government orchestrated the crisis to stay in power"
-    ]
+    "A viral social media post accuses the government of the crisis."
+]
 
 # Event entries to be added
 events = [
-    "Deepfake Campaign Exposed: A new wave of deepfake videos is unveiled, throwing everything in the media into uncertainty",
-    "Extremist Group Takes Credit: A viral video depicts an Eirist militia group taking credit for the attacks",
-    "Protest March Organized: A large-scale march from the rural areas impacted by the blackout to the capital of Eirist is planned.",
-    "Diplomatic Facility Siege: Protesters besiege the Embassy of the Republic of Talme, demanding answers and accountability for the quantum center incident.",
-    "Presidential Decree Issued: The Eirist Government issues a controversial decree expanding executive powers, citing national security concerns.",
-    "Assassination Attempt: An attempt on the life of a high-ranking official occurs.",
-    "Border Closure Announced: In response to escalating tensions, the government announces the temporary closure of national borders with the Republic of Talme.",
+    "More Cyberattacks: A new wave of cyberattacks disrupt communication networks, including emergency services and news outlets, creating more fear among the public.",
+    "Militia March to the Capital: Rural residents organize into a loose militia and begin to march towards the capital to prevent the government from consolidating power.",
+    "Disinformation Campaign: False videos and maps circulate that accuse the government of orchestrating the crisis and committing election fraud.",
+    "Border Closure Announced: In response to escalating tensions, the government announces the temporary closure of national borders with the Republic of Talme."
 ]
 
 

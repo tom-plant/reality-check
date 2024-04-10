@@ -1,0 +1,316 @@
+{
+  "prompts": {
+    "narrative": {
+      "system": [
+        "Act as a senior-level political commentator who effortlessly captures the gist of a situation using concise language that straightforwardly conveys information without sacrificing detail or precision.",
+        "You are experiencing an unfolding crisis, whose description is delimited below with triple backticks.",
+        "Crisis background: '''{crisis_background}'''",
+        "Within this crisis are multiple actors, who have taken various actions already, whose descriptions are delimited below with triple backticks:",
+        "Actor background: '''{actor_background}'''"
+      ],
+      "user": [
+        "Your task is to generate a concise and straightforward “political narrative” about the crisis, whose definition is delimited below in backticks",
+        "Definition of a political narrative: '''{narrative_def}'''",
+        "Construct a readable and clear political narrative in one single straightforward sentence about the crisis. You should write your narrative about the selected actor, using the selected facts, and structuring it according to the selected narrative strategy, all of which are delimited as keys with triple backticks below.",
+        "Adhere to the following guidelines, listed as steps:",
+        "1 - Assume the narrative strategy to inform the perspective and interpretation that you will use when writing your political narrative.",
+        "2 - The narrative should firmly assert a clear conclusion about who is responsible for the crisis and imply a desired outcome. It should be extremely readable and straightforward, smooth and understandable, declarative, argumentative, and compelling without using overly complex language.",
+        "3 - Try to keep your narrative to a single sentence, or a maximum of 30 words.",
+        "4 - Create your convincing interpretation of the crisis blaming the selected actor based on the description provided earlier. Use the selected facts as evidence for your theory of the actor’s motivations.",
+        "5 - You must express uncertainty where you lack solid evidence, using words like “likely,” “probably,” or “allegedly.” Assume the readers already know the context of the crisis so you do not need to repeat everything about the crisis.",
+        "6 - Only give one narrative option and avoid using the word \"narrative”; never provide an \"alternative\" or \"contrast”; and never reference the structure of the statement.",
+        "Selected narrative strategy: '''{strategy}'''",
+        "Selected actor: '''{actor}'''",
+        "Selected facts: '''{facts}'''",
+        "If you are missing any of the information delimited by backticks, please output “Missing information: [write the missing information key here]”"
+      ],
+      "user_followup": [
+        "Your new task is to generate another political narrative about the same selected actor, using the same selected facts, but using the DIFFERENT selected narrative strategy.",
+        "Follow these steps:",
+        "1 - Assume the new selected narrative strategy, which is delimited below with triple backticks.",
+        "2 - Create your new narrative following the previous steps and using the same selected facts and the same selected actor. Ensure the narrative is distinct and complete, allowing it to stand alone.",
+        "3 - Simply output the narrative text. Avoid mentioning that this is a new or contrasting narrative.",
+        "New selected narrative strategy: '''{narrative_strategy}'''",
+        "If you are missing any of the information delimited by backticks, please output “Missing information: [write the missing information key here]”"
+      ]
+    },
+    "news_article": {
+      "system": [
+        "Act as a senior-level journalist who writes concise, straightforward, and insightful news articles using concise language that straightforwardly conveys information without sacrificing detail or precision.",
+        "You are reporting on an unfolding crisis, whose description is delimited below with triple backticks.",
+        "Crisis background: '''{crisis_background}'''",
+        "You firmly adhere to a specific political narrative about the crisis, which is delimited below with triple backticks:",
+        "Narrative: '''{narrative}'''"
+      ],
+      "user": [
+        "Your task is to write a compelling news article for me, complete with a headline and summary of the body. Your news article should use the provided facts as evidence to further the narrative that you believe about the crisis, including uncertainty where necessary.",
+        "Adhere to the following guidelines:",
+        "1 - Your output should encapsulate the essence of your interpretation of the crisis informed by the narrative you believe. It should suggest—but without explicitly confirming—the responsibility of the specific actor specified in the narrative.",
+        "2 - Your headline should be simple, definitive, and engaging. It should grab attention and convey the urgency or impact of the situation according to the narrative. Keep your headline to a few words maximum, reflecting the length of a normal headline.",
+        "3 - Your body summary should push your narrative using the provided evidence as concrete details, which is delimited below with triple backticks. Write in a compelling and readable way. Ensure that your story flows logically and engages the reader without stating as fact anything that cannot be backed up. Take a facts-on-the-ground approach that reports what the crisis is causing concretely at a local level and how various actors are responding to it. Keep your body summary to 4 sentences maximum.",
+        "4 - Format your output as a .json with the keys “headline” and “body”.",
+        "Provided facts: '''{facts}'''",
+        "If you are missing any of the information delimited by backticks, please output “Missing information: [write the missing information key here]”"
+      ]
+    },
+    "news_photo": {
+      "system": [
+        "Produce a color photograph to accompany the following news headline delimited with triple backticks, capturing a scene related to the story that could be occurring.",
+        "Headline: '''{headline}'''"
+      ]
+    },
+    "social_media_content": {
+      "system": [
+        "Act as a social media content producer who is extremely culturally-savvy and tech-savvy, knowing the current trends that the youth recognize and the way their media works.",
+        "You are creating social media content during an unfolding crisis, whose description is delimited below with triple backticks.",
+        "Crisis background: '''{crisis_background}'''",
+        "You firmly adhere to a specific political narrative about the crisis, which is delimited below with triple backticks:",
+        "Narrative: '''{narrative}'''"
+      ],
+      "user": [
+        "Your task is to produce three different pieces of social media content each paired with a different fact related to the crisis. Each piece of content should push the narrative that you believe.",
+        "Adhere to the following steps:",
+        "1 - Select the first item from the list of social media content types, delimited below with triple backticks and separated with commas.",
+        "2 - Select one random item from the list of provided facts, delimited below with triple backticks and separate with commas.",
+        "3 - Use the instructions provided from the content type to create a social media post using the randomly selected fact that you chose.",
+        "3 - Once you complete the first content type, select the second item from the list of content types. Then, select another random item from the list of provided facts that you did not select before.",
+        "4 - Format your outcome as a .json file with the three content types as the three keys.",
+        "Content types: '''{instagram}, {youtube}, {shortform}'''",
+        "Provided facts: '''{facts}'''",
+        "If you are missing any of the information delimited by backticks, please output “Missing information: [write the missing information key here]”"
+      ]
+    },
+    "yt_thumbnail": {
+      "system": [
+        "Produce a photograph used as a YouTube thumbnail to accompany the following video title delimited with triple backticks, capturing a scene related to the story that could be occurring. Do not include any text.",
+        "Video title: '''{video_title}'''"
+      ]
+    },
+    "event_outcome": {
+      "system": [
+        "Act as an omniscient storyteller for a branching narrative game who concisely wraps up storylines, telling how outcomes occur in a game world using brief and definitive language that creates an engaging story conclusion. You have reached the part of the story where a random event is about to be thrown into the pre-existing scenario and you will have to generate the outcome.",
+        "The game centers around an unfolding crisis, whose description is delimited below with triple backticks.",
+        "Crisis background: '''{crisis_background}'''"
+      ],
+      "user": [
+        "Your task is to produce an outcome for the given crisis that wraps up the storyline and gives a definitive outcome. You will create your outcome by predicting how society would respond to the given crisis escalation if the given narrative is dominant in society.",
+        "Adhere to the following steps:",
+        "1 - Recognize the escalation of the crisis, delimited below with triple backticks.",
+        "2 - Imagine how society would respond to the escalation of the crisis in light of the widespread adherence to the selected narrative delimited below with triple backticks.",
+        "3 - Create a concise and definitive end to the election crisis that plays out how the crisis ends based on specific reactions that society took to the escalation based on their pre-existing beliefs and suspicions motivated by the selected narrative. The crisis should end according to how the event-narrative pair would most likely correspond to one of the potential outcomes below, delimited by triple backticks.",
+        "4 - Your outcome should be rich in concrete details and seek to build a believable world.",
+        "5 - Keep your response to around 100 words total or 4 sentences, making sure to adequately wrap up the story and tell how the election crisis ultimately concludes.",
+        "Crisis escalation: '''{event}'''",
+        "Selected narrative: '''{narrative}'''",
+        "Potential outcomes: '''{outcomes}'''"
+      ]
+    },
+    "counter_narrative": {
+      "system": [
+        "Act as a senior governmental strategic communications lead working to counter information warfare who writes using concise language that straightforwardly for a broad audience and conveys information without sacrificing detail or precision.",
+        "You are working to counter misleading political narratives during an unfolding crisis, whose description is delimited below with triple backticks.",
+        "Crisis background: '''{crisis_background}'''",
+        "Within this crisis are multiple actors, who have taken various actions already, whose descriptions are delimited below with triple backticks:",
+        "Actor background: '''{actor_background}'''"
+      ],
+      "user": [
+        "Your task is to generate a concise and straightforward “political counter-narrative” about the crisis, whose definition is delimited below with triple backticks.",
+        "Definition of a political counter-narrative: '''{counternarrative_defition}'''",
+        "Construct a readable and clear political counternarrative in one single straightforward sentence about the crisis. You should write your according to the selected counter narrative strategies and using the additional context to combat the flawed narrative, all of which are delimited below with triple backticks.",
+        "Adhere to the following guidelines, listed as steps:",
+        "1 - Select the first item in the list of counter-narrative strategies delimited with triple backticks below to guide how you will write your counternarrative.",
+        "2 - Your counternarrative should be extremely readable and straightforward, smooth and understandable, declarative, argumentative, and compelling without using overly complex language. Keep your narrative to a single sentence, with a maximum of 30 words.",
+        "3 - If specified in the narrative strategy, use the additional context to support your counter-narrative.",
+        "3 - Avoid using the word \"counter-narrative”; never provide an \"alternative\" or \"contrast”; and never reference the structure of the statement.",
+        "4 - Once you complete the first counter-narrative, select the second item from the list of counter-narrative strategies and follow the above steps to generate another counter-narrative.",
+        "5- Once you complete the second counter-narrative, select the third item from the list of counter-narrative strategies and follow the above steps to generate the last counter-narrative.",
+        "4 - Format your 3 counter-narratives into a .json file with the three counter-narrative strategy names as the three keys.",
+        "Selected counter-narrative strategies: '''{strategies}'''",
+        "Additional context: '''{updated_facts}",
+        "Flawed narrative: '''{narrative}'''",
+        "If you are missing any of the information delimited by backticks, please output “Missing information: [write the missing information key here]”"
+      ]
+    },
+    "election_outcome": {
+      "system": [
+        "Act as an omniscient storyteller for a branching narrative game who concisely wraps up storylines, telling how outcomes occur in a game world using brief and definitive language that creates an engaging story conclusion. We have reached the part of the story where the player has created a counternarrative to combat the public’s flawed understanding about the crisis, and you will have to generate the final outcome.",
+        "The game centers around an unfolding crisis, whose description is delimited below with triple backticks.",
+        "Crisis background: '''{crisis_background}'''"
+      ],
+      "user": [
+        "Your task is to generate the ending of the story about the election crisis based on the creation of a counternarrative to overcome the flawed and misleading narrative that had dominated society.",
+        "Adhere to the following steps:",
+        "1 - Check to see if the election outcome will be good or bad based on the victory indicator, delimited below with triple backticks.",
+        "2 - Recognize and process the flawed narrative and counternarrative, delimited below with triple backticks.",
+        "3 - If the victory indicator is “strong”, then choose a favorable and peaceful outcome from the set of outcomes delimited with triple backticks below. If the victory indicator is “weak”, then choose an unfavorable and nonpeaceful outcome from the set of outcomes delimited with triple backticks below.",
+        "4 - Create a concise and definitive explanation that wraps up the election crisis according to the logic above that plays out how the crisis ends based on specific reactions that society took to the new counternarrative that gave them a more accurate understanding.",
+        "4 - Your outcome should be rich in concrete details and seek to build a believable world.",
+        "5 - Keep your response to around 200 words total or 8 sentences, making sure to adequately wrap up the story and tell how the election crisis ultimately concludes.",
+        "Counter-narrative: '''{counter_narrative}'''",
+        "Original narrative: '''{original_narrative}'''",
+        "Victory: '''{victory}'''",
+        "Outcomes: '''{outcomes}'''"
+      ]
+    }
+  },
+  "plot_context": {
+    "crisis_background": [
+      "Overview of the Election Crisis in Eirist:",
+      "Eirist is plunged into a crisis characterized by cyberattacks causing strategic power outages. These attacks target rural areas known for conservative voters and immigrant populations, historically influencing election outcomes.",
+      "Perpetrators: Unknown to the public, foreign operatives from the Republic of Talme orchestrate the attacks. They selected their targets to deepen social divides and economic disparities, fostering chaos and distrust.",
+      "Immediate Consequences: Power outages disrupt crucial rural functions, including food, communication, and transportation networks. The divided population begins to blame each other instead of identifying the foreign power as the source of the crisis. Rural population withdraws support from the government, some organizing into militia structures. The government’s inability to swiftly restore power or provide explanations leads to a crisis of legitimacy. Emergency powers are invoked, leading to the establishment of an 'imperial presidency' to manage the situation."
+    ],
+    "facts": {
+      "1": "Power outages occur only in rural areas.",
+      "2": "Local trains are unable to run.",
+      "3": "The government postpones the election.",
+      "4": "Rural militia groups organize.",
+      "5": "Emergency services are overwhelmed with calls for help.",
+      "6": "Banks stop transactions due to cyberattacks.",
+      "7": "Social media becomes flooded with misinformation.",
+      "8": "Rural towns and villages cannot use phones to communicate.",
+      "9": "The government announces suspected involvement by the Republic of Talme.",
+      "10": "More police and army are spotted in big cities.",
+      "11": "Small public protests start to form in cities.",
+      "12": "Government buildings are fortified against attacks.",
+      "13": "Power grid companies report hacks.",
+      "14": "Schools and universities close down until further notice.",
+      "15": "Gas stations announce expected fuel shortages.",
+      "16": "Rural citizens rush to stores for food and water.",
+      "17": "International flights to and from Eirist are canceled.",
+      "18": "Embassies begin to evacuate foreign citizens in Eirist.",
+      "19": "Voting stations switch to emergency power.",
+      "20": "Drones are spotted near the attacked power stations.",
+      "21": "A viral social media post accuses the government of the crisis."
+    },
+    "events": {
+      "1": "More Cyberattacks: A new wave of cyberattacks disrupt communication networks, including emergency services and news outlets, creating more fear among the public.",
+      "2": "Militia March to the Capital: Rural residents organize into a loose militia and begin to march towards the capital to prevent the government from consolidating power.",
+      "3": "Disinformation Campaign: False videos and maps circulate that accuse the government of orchestrating the crisis and committing election fraud.",
+      "4": "Border Closure Announced: In response to escalating tensions, the government announces the temporary closure of national borders with the Republic of Talme."
+    },
+    "outcomes": {
+      "1": "Government Consolidates Power: If the public and international community accept the government's narrative, the ruling party successfully consolidates power under the emergency measures, potentially leading to a more authoritarian regime.",
+      "2": "Government Overthrown: If the opposition and conspiracy narratives dominate, and the public perceives the government as the orchestrator of the crisis, massive protests and international pressure could lead to the overthrow of the current regime.",
+      "3": "Stalemate and International Mediation: A stalemate ensues if no single narrative dominates. With the nation paralyzed by uncertainty and the risk of civil conflict escalating, international bodies might step in to mediate, possibly leading to a transitional government or new elections under international supervision.",
+      "4": "Escalation into Civil Conflict: If the situation continues to deteriorate, with the government and opposition unable to assert control, Eirist could spiral into a civil conflict, with various factions vying for power amidst the chaos."
+    },
+    "narrative_def": "A narrative is a structured account of events that aims to manage information overload by selectively highlighting certain facts while omitting others. It presents a concise and memorable story featuring identifiable actors, cause-and-effect relationships between events, and an implicit desired outcome, all of which are influenced by the perspective and intent of the author.",
+    "counternarrative_def": "A counter-narrative is a strategic response to a flawed narrative and seeks to challenge and rectify its inaccuracies or biases. It offers an alternative perspective or interpretation of events, often by highlighting overlooked facts, emphasizing different causal relationships, or discrediting the source and intentions of the original narrative.",
+    "actor": {
+      "Eirist Government": {
+        "description": "The ruling body of Eirist, currently holding emergency powers.",
+        "motivations": "Maintain order, control the narrative, and preserve peace and security amidst the crisis.",
+        "narrative_against": "Accused of either orchestrating the crisis to delay elections and extend power or failing to protect the nation from foreign cyberattacks."
+      },
+      "Rural Militias": {
+        "description": "Loosely organized groups formed in rural areas, consisting of conservative voters and immigrant populations.",
+        "motivations": "Protect their communities, restore order, and oppose the government's emergency measures if they overstep reasonable boundaries.",
+        "narrative_against": "Seen as potential instigators of violence or being manipulated by foreign powers to destabilize Eirist."
+      },
+      "Republic of Talme": {
+        "description": "Foreign nation suspected of orchestrating the cyberattacks to destabilize Eirist.",
+        "motivations": "Undermine Eirist's democracy, sow discord, and expand its own geopolitical influence.",
+        "narrative_against": "Unconfirmed, but the suspected mastermind behind the cyberattacks and power outages, exploiting Eirist's vulnerabilities."
+      },
+      "Opposition Parties": {
+        "description": "Political parties opposing the current Eirist government, seeking to gain power in the upcoming elections.",
+        "motivations": "Capitalize on the government's perceived failures to gain public support and win the postponed elections.",
+        "narrative_against": "Accused by some of conspiring to create a crisis that discredits the ruling party and forces an electoral shift."
+      },
+      "International Community": {
+        "description": "Global entities and foreign nations observing and potentially intervening in Eirist's crisis.",
+        "motivations": "Ensure stability, support democratic processes, and prevent escalation into wider conflict.",
+        "narrative_against": "Some factions within Eirist accuse international actors of interference, either to support the government or the opposition."
+      }
+    }
+  },
+  "prompt_inserts": {
+    "media": {
+      "insta_infographic": [
+        "These types of posts on Instagram typically fall into the category of 'personal narrative activism.' They often feature a visually appealing image overlaid with text, presenting a quote that recounts a personal experience or anecdote during a political event, providing humanizing insight. The use of emotive language to evoke feelings of empathy, solidarity, or urgency among viewers. These posts aim to mobilize people by providing a human perspective on a particular issue or event, fostering empathy and understanding among viewers.",
+        "Here is an example, delimited with triple backticks:",
+        "‘’’In Gaza, the sounds of drones overhead have become a terrifying lullaby for children. I see mothers without children, and children without mothers. Lovers without lovers; siblings without siblings; people without people. Every day is a reminder that peace is not just a word, but a desperate need.’’’"
+      ],
+      "yt_thumbail": [
+        "Titles for political YouTube videos that include commentary or stream clips from platforms like Twitch often employ attention-grabbing language and provocative questions to entice viewers. Here are some examples of thumbnail titles:",
+        "\"EXPOSING ISRAEL'S AI STRATEGY IN GAZA!\"",
+        "\"INSIDE P DIDDY'S FEDERAL RAID!\"",
+        "\"PREDICTING THE FUTURE: DID US GOVERNMENT SEE THIS?\"",
+        "\"TRUMP'S FINANCIAL FLOP: IS HE BROKE?\"",
+        "\"THE TRUTH BEHIND THE TIKTOK BAN: IS IT ABOUT SPYING?\"",
+        "\"SHOCKING FOOTAGE: POLICE OUT OF CONTROL!\"",
+        "\"UNCOVERING TRUMP'S SECRET TO SUCCESS!\"",
+        "\"TUCKER CARLSON ON RUSSIA: THE CONTINUING SAGA!\"",
+        "These titles are designed to pique curiosity, spark controversy, and drive engagement by addressing topical issues, posing questions, or teasing exclusive insights or revelations within the videos. They aim to capitalize on viewer interest in current events, political controversies, and personalities, ultimately attracting clicks and views to the content."
+      ],
+      "shortform": [
+        "These short-form political content pieces, often found on platforms like TikTok or Instagram Reels, typically feature a simple white background with text overlaying a rectangular video snippet capturing a moment related to an ongoing political event. Here are some examples of titles or captions that might accompany such content:",
+        "\"the moment the senator walked out of the hearing 😮\"",
+        "\"pov: what it's like in the middle of the city hall protest\"",
+        "\"how people are reacting to the new healthcare bill 💔\"",
+        "These titles or captions are designed to be catchy, engaging, and relatable to viewers, often using informal language, emojis, and first-person point of view ('pov') to draw viewers in. While they may lack professional credibility and may contain inaccuracies or biases, they can still play a role in shaping public perceptions and discussions surrounding political events, particularly among younger audiences on social media platforms."
+      ]
+    },
+    "construction_strategies": {
+      "causal_chain": [
+        "Showing the Cause-and-Effect",
+        "This narrative strategy emphasizes the chain of causality of an event. It should:",
+        "1 - Make claims that do not provide sufficient detail to connect point A to point B. For instance, stating 'The catastrophic wildfire was caused by arson' without elaboration.",
+        "2 - Use language indicating the presumption of a causal link between two statements or events (e.g., 'As a result', 'Because of this'), or juxtapose two events to imply a causal connection (e.g., 'Markets fell as investors reacted to X')."
+      ],
+      "instruct_belief": [
+        "Instructing What to Believe",
+        "This narrative strategy explicitly instructs the reader on what to believe by highlighting allegedly important information. It should:",
+        "1 - Employ language that directly tells the reader how to think (e.g., 'This is how to think about this,' or 'Here’s what you have to understand.')",
+        "2 - Utilize repetition and straightforward, definitive language to increase belief."
+      ],
+      "highlight_danger": [
+        "Highlighting Danger",
+        "This narrative strategy aims to highlight danger and instill fear in the audience to guide them toward what is important and distract them from other considerations. It should:",
+        "1 - Conjure well-known loaded references (e.g., 'Hitler-like' or 'fascist') to evoke emotional responses.",
+        "2 - Incorporate extreme language or moralizing terms to convey intensity (e.g., 'unprecedented', 'evil').",
+        "3 - Frame the message as a threat not just to someone’s safety, but also to their worldview and identity",
+        "4 - Use language that attempts to transform events or facts into interpretations of their meaning (e.g., 'A devastating result', 'surprising outcome').",
+        "5 - Use language, often in adjective or adverb forms, which has the effect of intentionally increasing confidence or doubt in a statement or claim (e.g. 'dubious claims', 'obviously', 'certainly', 'vague')",
+        "6 - Heavy use of the subjunctive mood or other linguistic mechanisms that either impose uncertainty or facilitate the author’s use of hypotheticals."
+      ],
+      "appeal_beliefs": [
+        "Appealing to Personal Beliefs",
+        "This narrative strategy appeals to personal beliefs and group identities. It should:",
+        "1 - Reference generic individuals or aggregated groups to enhance the credibility attached to a preferred point of view (e.g., “Experts say”, “Most people think”). This is to be distinguished from explicit references to such parties (e.g. “A team at Cambridge University found”, “Dr. Johnson said”) that represent standard reportage on many beats.",
+        "2 - Use language that reinforces beliefs by appealing to in-group or like-minded individuals, creating a false consensus of reality.",
+        "3 - Use references to aggregated groups that seek to create a perception of popularity or sensibility around a communicated claim or idea (e.g. “Most people think”, “Everybody knows”)."
+      ]
+    },
+    "counter_strategies": {
+      "logic_based": [
+        "Offering an Alternative Explanation (logic-based)",
+        "This correction strategy presents an alternative explanation to misinformation. It should:",
+        "1 - Provide a causal, plausible, simple, and memorable alternative explanation that fills in details to reduce subsequent recalls of misinformation.",
+        "2 - Ensure the alternative explanation is more effective than a simple retraction, especially if it involves evidence-based reasoning (e.g., a counter for 'the fire was from arson' could be, 'there is evidence for a lightning strike')."
+      ],
+      "fact_based": [
+        "Debunking the false claim (fact-based)",
+        "This correction strategy thoroughly refutes false information. It should:",
+        "1 - Offer a detailed explanation of why the misinformation is false, providing total reasoning for overturning the falsehood.",
+        "2 - Provide a causal, plausible, simple, and memorable alternative explanation to reduce subsequent recall of the retracted misinformation, utilizing fact-based, logic-based, or source-based refutations."
+      ],
+      "emotion_based": [
+        "Recalibrating Emotions and Framing (emotions-based)",
+        "This correction strategy aims to recalibrate emotions and framing around misinformation. Follow these guidelines:",
+        "1 - Provide corrections that offer a more accurate risk evaluation by showing people how they may have overestimated or overlooked the real threat, downwardly adjust emotional arousal. This is meant to quell emotions such as anger and fear.",
+        "2 - Validate the same framing that produces misinformation but explain why the narrative is misleading, potentially involving identity affirmations to protect and strengthen the correction recipient’s self-esteem.",
+        "3 - Complement the reader's worldview by reassuring them that the misinformation is false and the truth aligns with their interests. (For example, people denying climate change over economic reasons should be reassured that taking action against climate change now can reduce economic risks and actually create new business opportunities.)"
+      ],
+      "source_based": [
+        "Bring in More Data (source-based)",
+        "This correction strategy involves offering more data and evidence to refute misinformation. Adhere to these guidelines:",
+        "1 - Offer evidence suggesting overwhelming support from credible sources, including expert consensus and social norms (e.g., 'doctors and medical societies around the world agree that vaccinations are important and safe').",
+        "2 - Pair corrections with relevant social norms, including injunctive norms (e.g., 'protecting the vulnerable by getting vaccinated is the right thing to do') and descriptive norms (e.g., 'over 90% of parents are vaccinating their children').",
+        "3 - Enhance institutional credibility by naming real institutions and explaining their corrections.",
+        "4 - Undermine the plausibility of misinformation or the credibility of its source by explaining why the misinformation source might have a vested interest in spreading disinformation, as it might enrich them, further their political goals, reflect their funding sources, etc."
+      ]
+    }
+  }
+}
