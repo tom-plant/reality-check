@@ -1,7 +1,7 @@
 // src/context/GameContext.js
 
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
-import { authenticateUser, getFacts, getEvents, generateNarrativeFromFacts, selectNarrative, introduceEvent, identifyWeaknesses, conclusion } from '../services/gameService';
+import { authenticateUser, getFacts, getEvents, setSelectedFacts, buildNarrative, selectNarrative, introduceEvent, identifyWeaknesses, conclusion } from '../services/gameService';
 
 const GameStateContext = createContext();
 const GameDispatchContext = createContext();
@@ -270,23 +270,30 @@ const GameProvider = ({ children }) => {
     }
   };
 
+  const setFactSelection = async (selectedFacts) => {
+    try {
+      // Simply send the selected facts to the backend
+      await setSelectedFacts(selectedFacts);
+    } catch (error) {
+      console.error("Failed to set selected facts:", error);
+    }
+  };
 
-  const fetchAndSetNarratives = async (selectedFacts) => {
+  const buildAndSetNarrative = async (selectedActor, selectedStrategies) => {
     try {
       dispatch({ type: 'SET_LOADING_NARRATIVES', payload: true });
-      const narrativesData = await generateNarrativeFromFacts(selectedFacts);
-      const formattedNarratives = narrativesData.narratives.map((narrativeText, index) => ({
-        id: index, 
-        text: narrativeText
+      const narrativeResponse = await buildNarrative(selectedActor, selectedStrategies);
+      const formattedNarratives = narrativeResponse.map((narrativeText, index) => ({
+        id: index,
+        text: narrativeText 
       }));
       dispatch({ type: 'SET_NARRATIVE_OPTIONS', payload: formattedNarratives });
       dispatch({ type: 'SET_LOADING_NARRATIVES', payload: false });
     } catch (error) {
-      console.error("Failed to fetch narratives:", error);
+      console.error('Failed to build narrative:', error);
       dispatch({ type: 'SET_LOADING_NARRATIVES', payload: false });
     }
   };
-
 
   const selectNarrativeAndSetContent = async (selectedNarrative) => {
     try {
@@ -352,7 +359,7 @@ const GameProvider = ({ children }) => {
   return (
     <GameStateContext.Provider value={state}>
       <GameDispatchContext.Provider value={dispatch}>
-        <GameFunctionContext.Provider value={{ fetchAndSetFacts, fetchAndSetEvents, loginUser, fetchAndSetNarratives, selectNarrativeAndSetContent, selectEventAndSetContent, identifyWeaknessesAndSetContent, fetchAndSetConclusion, setCurrentPhase, setCurrentOutroView, setCurrentTurnPointView, setCurrentIntroView }}> 
+        <GameFunctionContext.Provider value={{ fetchAndSetFacts, fetchAndSetEvents, loginUser, setFactSelection, buildAndSetNarrative, selectNarrativeAndSetContent, selectEventAndSetContent, identifyWeaknessesAndSetContent, fetchAndSetConclusion, setCurrentPhase, setCurrentOutroView, setCurrentTurnPointView, setCurrentIntroView }}> 
           {children}
           </GameFunctionContext.Provider>
       </GameDispatchContext.Provider>

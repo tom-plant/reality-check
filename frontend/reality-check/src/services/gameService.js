@@ -59,11 +59,11 @@ export const getEvents = async () => {
   }
 };
 
-export const generateNarrativeFromFacts = async (selectedFactCombination) => {
+export const setSelectedFacts = async (selectedFactCombination) => {
   try {
     // Transform selectedFactCombination to an array of fact texts
     const selectedFactsTexts = selectedFactCombination.map(fact => fact.text);
-    const response = await axios.post(`${API_BASE_URL}/game/select_facts`, {
+    await axios.post(`${API_BASE_URL}/game/select_facts`, {
       selected_facts: selectedFactsTexts, // Send the transformed array
     }, {
       headers: {
@@ -71,9 +71,23 @@ export const generateNarrativeFromFacts = async (selectedFactCombination) => {
       },
       withCredentials: true,
     });
+    // No data is expected to return, function completes successfully without return
+  } catch (error) {
+    console.error('Error setting selected facts:', error.response ? error.response.data : error);
+    throw error;
+  }
+};
+
+// Build a narrative with selected actor and strategies
+export const buildNarrative = async (selectedActor, selectedStrategies) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/game/build_narrative`, {
+      selected_actor: selectedActor,
+      selected_strategies: selectedStrategies,
+    }, { withCredentials: true });
     return response.data;
   } catch (error) {
-    console.error('Error generating narrative from facts:', error.response ? error.response.data : error);
+    console.error('Error building narrative:', error);
     throw error;
   }
 };
@@ -97,7 +111,7 @@ export const selectNarrative = async (selectedNarrative) => {
 export const introduceEvent = async (selectedEvent) => {
   try {
     const response = await axios.post(`${API_BASE_URL}/game/introduce_event`, {
-      Event: selectedEvent
+      event_details: selectedEvent
     }, {
       withCredentials: true
     });
@@ -109,13 +123,13 @@ export const introduceEvent = async (selectedEvent) => {
 };
 
 // API function to identify weaknesses in narratives
-export const identifyWeaknesses = async (updatedFactCombination) => {
+export const identifyWeaknesses = async (updatedFactCombination, selectedStrategies) => {
   try {
     // Transform newFactCombination to the required format 
     const updatedFactsTexts = updatedFactCombination.map(fact => fact.text);
-
     const response = await axios.post(`${API_BASE_URL}/game/identify_weaknesses`, {
-      updated_fact_combination: updatedFactsTexts, 
+      updated_fact_combination: updatedFactsTexts,
+      selected_strategies: selectedStrategies
     }, {
       headers: {
         'Content-Type': 'application/json',
@@ -131,9 +145,11 @@ export const identifyWeaknesses = async (updatedFactCombination) => {
 
 
 // API function to identify weaknesses in narratives
-export const conclusion = async () => {
+export const conclusion = async (counterNarrative) => {
   try {
     const response = await axios.get(`${API_BASE_URL}/game/conclusion`, {
+      counter_narrative: counterNarrative
+    }, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -147,17 +163,6 @@ export const conclusion = async () => {
 };
 
 
-// Function to save user progress
-export const saveUserProgress = async (userProgress) => {
-  try {
-    const response = await axios.post(`${API_BASE_URL}/game/save_progress`, {
-      user_progress: userProgress,
-    });
-    return response.data;
-  } catch (error) {
-    console.error('Error saving user progress:', error);
-    throw error;
-  }
-};
+
 
 // Add more functions for other endpoints like fetchNarratives, fetchEventResponse, etc.
