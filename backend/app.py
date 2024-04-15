@@ -53,11 +53,11 @@ app.logger.setLevel(logging.DEBUG)  # Set the log level to DEBUG
 # Import models and controllers after initializing db to avoid circular imports
 if os.getenv('FLASK_ENV') == 'production':
     from backend.models import * 
-    from backend.controllers import initialize_data_controller, register_user_controller, get_all_facts_controller, get_all_events_controller, select_facts_controller, select_narrative_controller, introduce_event_controller, identify_weaknesses_controller, conclusion_controller
+    from backend.controllers import initialize_data_controller, register_user_controller, get_all_facts_controller, get_all_events_controller, select_facts_controller, build_narrative_controller, select_narrative_controller, introduce_event_controller, identify_weaknesses_controller, conclusion_controller
     from backend.db_operations import *  
 else:
     from models import * 
-    from controllers import initialize_data_controller, register_user_controller, get_all_facts_controller, get_all_events_controller, select_facts_controller, select_narrative_controller, introduce_event_controller, identify_weaknesses_controller, conclusion_controller
+    from controllers import initialize_data_controller, register_user_controller, get_all_facts_controller, get_all_events_controller, select_facts_controller, build_narrative_controller, select_narrative_controller, introduce_event_controller, identify_weaknesses_controller, conclusion_controller
     from db_operations import *  
 
 #Initialize session management tools
@@ -119,11 +119,11 @@ def get_events():
     return jsonify(response_data)
 
 # Initial Fact Selection & Narrative Generation
-@app.route('/game/select_facts', methods=['GET'])
+@app.route('/game/select_facts', methods=['POST'])
 def select_facts():
     try: 
         # Retrieve selected facts from the frontend
-        selected_facts = request.args.get('selected_facts')
+        selected_facts = request.json.get('selected_facts')
         # Call controller function to handle logic
         select_facts_controller(selected_facts)
         # No response data needed for GET method
@@ -134,6 +134,19 @@ def select_facts():
     except Exception as e:
         app.logger.error(f"Unexpected error: {e}")
         return jsonify({"error": "An unexpected error occurred"}), 500
+
+# Building Narrative
+@app.route('/game/build_narrative', methods=['POST'])
+def build_narrative():
+    # Receive selected actor and strategies from the frontend
+    selected_actor = request.json.get('selected_actor')
+    selected_strategies = request.json.get('selected_strategies')
+    
+    # Call the build_narrative_controller function to handle the logic
+    response_data = build_narrative_controller(selected_actor, selected_strategies)
+    
+    # Return response to frontend
+    return jsonify(response_data)
 
 # Selecting Narratives
 @app.route('/game/select_narrative', methods=['POST'])
@@ -151,43 +164,37 @@ def select_narrative():
 @app.route('/game/introduce_event', methods=['POST'])
 def introduce_event():
     # Receive event from the frontend
-    Event = request.json.get('Event')
+    event_details = request.json.get('event_details')
     
     # Call the introduce_event_controller function to handle the logic
-    response_data = introduce_event_controller(Event)
+    response_data = introduce_event_controller(event_details)
     
     # Return response to frontend with the appropriate status code
     return jsonify(response_data)
 
+
 # Identifying Weaknesses in Narratives
 @app.route('/game/identify_weaknesses', methods=['POST'])
 def identify_weaknesses():
-    # Receive new combination of facts from the frontend
+    # Receive updated fact combination and selected strategies from the frontend
     updated_fact_combination = request.json.get('updated_fact_combination')
+    selected_strategies = request.json.get('selected_strategies')
     
     # Call controller function to handle logic
-    # Placeholder for controller function
-    response_data = identify_weaknesses_controller(updated_fact_combination)
+    response_data = identify_weaknesses_controller(updated_fact_combination, selected_strategies)
     
     # Return response to frontend
     return jsonify(response_data)
 
-# Saving User Progress
-@app.route('/game/save_progress', methods=['POST'])
-def save_progress():
-    # Receive user progress data from the frontend
-    user_progress = request.json.get('user_progress')
-    
-    # Call controller function to handle logic
-    # Placeholder for controller function
-    response_data = save_progress_controller(user_progress)
-    
-    # Return response to frontend
-    return jsonify(response_data)
-
-@app.route('/game/conclusion', methods=['GET'])
+@app.route('/game/conclusion', methods=['POST'])
 def conclusion():
-    response_data = conclusion_controller()
+    # Receive counter narrative from the frontend
+    counter_narrative = request.json.get('counter_narrative')
+    
+    # Call controller function to handle logic
+    response_data = conclusion_controller(counter_narrative)
+    
+    # Return response to frontend
     return jsonify(response_data)
 
 @app.errorhandler(404)
