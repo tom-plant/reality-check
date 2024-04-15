@@ -1,9 +1,14 @@
 # ai_calls.py
 
+import json
+import requests
+
 API_KEY = os.environ.get('API_KEY')
 
-def get_chatgpt_response(system_content, user_content):
-    
+import json
+import requests
+
+def get_chatgpt_response(prompts):
     # ChatGPT API settings
     chatGPTUrl = 'https://api.openai.com/v1/chat/completions'
     headers = {
@@ -11,12 +16,16 @@ def get_chatgpt_response(system_content, user_content):
         'Content-Type': 'application/json'
     }
 
+    # Construct the messages payload
+    messages = []
+    if 'system' in prompts:
+        messages.append({"role": "system", "content": prompts['system']})
+    if 'user' in prompts:
+        messages.append({"role": "user", "content": prompts['user']})
+
     payload = {
         "model": "gpt-3.5-turbo",
-        "messages": [
-            {"role": "system", "content": system_content},
-            {"role": "user", "content": user_content}
-        ],
+        "messages": messages,
         "temperature": 0.7,
         "max_tokens": 300
     }
@@ -28,10 +37,11 @@ def get_chatgpt_response(system_content, user_content):
         else:
             error_message = f"Failed to generate text content. API Error: {response.status_code} - {response.text}"
             print(error_message)
-        raise Exception(error_message)  # Halting the process by raising an exception
+            raise Exception(error_message)  # Halting the process by raising an exception
     except Exception as e:
         print(f"Network or request error occurred: {str(e)}")
         raise Exception(f"Network or request error occurred: {str(e)}")  # Re-raise to halt the process
+
 
 # Function to send requests to the DALL-E-2 API 
 def get_dalle2_response(prompt):

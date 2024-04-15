@@ -226,13 +226,13 @@
     }
   },
   "prompt_inserts": {
-    "media": {
-      "insta_infographic": [
+    "social_media_content": {
+      "instagram": [
         "These types of posts on Instagram typically fall into the category of 'personal narrative activism.' They often feature a visually appealing image overlaid with text, presenting a quote that recounts a personal experience or anecdote during a political event, providing humanizing insight. The use of emotive language to evoke feelings of empathy, solidarity, or urgency among viewers. These posts aim to mobilize people by providing a human perspective on a particular issue or event, fostering empathy and understanding among viewers.",
         "Here is an example, delimited with triple backticks:",
         "‘’’In Gaza, the sounds of drones overhead have become a terrifying lullaby for children. I see mothers without children, and children without mothers. Lovers without lovers; siblings without siblings; people without people. Every day is a reminder that peace is not just a word, but a desperate need.’’’"
       ],
-      "yt_thumbail": [
+      "youtube": [
         "Titles for political YouTube videos that include commentary or stream clips from platforms like Twitch often employ attention-grabbing language and provocative questions to entice viewers. Here are some examples of thumbnail titles:",
         "\"EXPOSING ISRAEL'S AI STRATEGY IN GAZA!\"",
         "\"INSIDE P DIDDY'S FEDERAL RAID!\"",

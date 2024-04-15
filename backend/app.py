@@ -118,17 +118,16 @@ def get_events():
     response_data = get_all_events_controller()
     return jsonify(response_data)
 
-    
 # Initial Fact Selection & Narrative Generation
-@app.route('/game/select_facts', methods=['POST'])
+@app.route('/game/select_facts', methods=['GET'])
 def select_facts():
     try: 
-        # Receive selected facts from the frontend
-        selected_facts = request.json.get('selected_facts')
+        # Retrieve selected facts from the frontend
+        selected_facts = request.args.get('selected_facts')
         # Call controller function to handle logic
-        response_data = select_facts_controller(selected_facts)
-        # Return response to frontend
-        return jsonify(response_data)
+        select_facts_controller(selected_facts)
+        # No response data needed for GET method
+        return '', 200
     except SQLAlchemyError as e:
         app.logger.error(f"Database error: {e}")
         return jsonify({"error": "Database operation failed"}), 500
