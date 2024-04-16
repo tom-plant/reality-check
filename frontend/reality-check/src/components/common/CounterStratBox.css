@@ -1,0 +1,23 @@
+/* CounterStratBox.css */
+
+.counter-strat-box {
+  border: 1px solid #fffffffc;
+  padding: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  background-color: transparent;
+  transition: background-color 0.3s;
+  width: 100%;
+  box-sizing: border-box; 
+}
+
+.counter-strat-box.left {
+  border: 1px solid rgb(255, 255, 255);
+  color: black;
+}
+
+.strat-box.right.selected {
+  background-color: #fff;
+  border: 1px solid rgb(0, 0, 0);
+  color: #000;
+}

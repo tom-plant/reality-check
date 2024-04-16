@@ -3,6 +3,8 @@ import { useGameState, useGameDispatch } from '../../contexts/GameContext';
 import IntroPopup from '../popups/IntroPopup';
 import SelectFacts from '../game/SelectFacts';
 import SelectFactsDisplay from '../game/SelectFactsDisplay'; 
+import BuildNarrative from '../game/BuildNarrative';
+import BuildNarrativeDisplay from '../game/BuildNarrativeDisplay';
 import SelectNarratives from '../game/SelectNarratives';
 import SelectNarrativesDisplay from '../game/SelectNarrativesDisplay'; 
 import NarrativeImpact from '../game/NarrativeImpact';
@@ -12,6 +14,8 @@ import IntroduceEventDisplay from '../game/IntroduceEventDisplay';
 import EventPopup from '../popups/EventPopup';
 import IdentifyWeaknesses from '../game/IdentifyWeaknesses';
 import IdentifyWeaknessesDisplay from '../game/IdentifyWeaknessesDisplay';
+import IdentifyStrategies from '../game/IdentifyStrategies';
+import IdentifyStrategiesDisplay from '../game/IdentifyStrategiesDisplay';
 import UpdatedNarrativePopup from '../popups/UpdatedNarrativePopup'
 import UpdatedNarrativeImpact from '../game/UpdatedNarrativeImpact';
 import UpdatedNarrativeImpactDisplay from '../game/UpdatedNarrativeImpactDisplay';
@@ -29,6 +33,8 @@ const GameLayout = () => {
     switch (currentView) { 
       case 'SELECT_FACTS':
         return <SelectFacts />;
+      case 'BUILD_NARRATIVE':
+        return <BuildNarrative />;
       case 'SELECT_NARRATIVES':
         return <SelectNarratives />;
       case 'NARRATIVE_IMPACT':
@@ -37,6 +43,8 @@ const GameLayout = () => {
         return <IntroduceEvent />;
       case 'IDENTIFY_WEAKNESSES':
         return <IdentifyWeaknesses />;
+      case 'IDENTIFY_STRATEGIES':
+        return <IdentifyStrategies />;
       case 'UPDATED_NARRATIVE_IMPACT':
         return <UpdatedNarrativeImpact />;
       default:
@@ -48,6 +56,8 @@ const GameLayout = () => {
     switch (currentView) {
       case 'SELECT_FACTS':
         return <SelectFactsDisplay />;
+      case 'BUILD_NARRATIVE':
+        return <BuildNarrativeDisplay />;
       case 'SELECT_NARRATIVES':
         return <SelectNarrativesDisplay />;
       case 'NARRATIVE_IMPACT':
@@ -56,6 +66,8 @@ const GameLayout = () => {
         return <IntroduceEventDisplay />;
       case 'IDENTIFY_WEAKNESSES':
         return <IdentifyWeaknessesDisplay />;
+      case 'IDENTIFY_STRATEGIES':
+        return <IdentifyStrategiesDisplay />;
       case 'UPDATED_NARRATIVE_IMPACT':
         return <UpdatedNarrativeImpactDisplay />;
       default:
