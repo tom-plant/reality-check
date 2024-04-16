@@ -53,11 +53,11 @@ app.logger.setLevel(logging.DEBUG)  # Set the log level to DEBUG
 # Import models and controllers after initializing db to avoid circular imports
 if os.getenv('FLASK_ENV') == 'production':
     from backend.models import * 
-    from backend.controllers import initialize_data_controller, register_user_controller, get_all_facts_controller, get_all_events_controller, select_facts_controller, build_narrative_controller, select_narrative_controller, introduce_event_controller, identify_weaknesses_controller, conclusion_controller
+    from backend.controllers import initialize_data_controller, register_user_controller, get_all_facts_controller, get_all_events_controller, get_all_actors_controller, get_all_strats_controller, get_all_counterstrats_controller, select_facts_controller, build_narrative_controller, select_narrative_controller, introduce_event_controller, identify_weaknesses_controller, conclusion_controller
     from backend.db_operations import *  
 else:
     from models import * 
-    from controllers import initialize_data_controller, register_user_controller, get_all_facts_controller, get_all_events_controller, select_facts_controller, build_narrative_controller, select_narrative_controller, introduce_event_controller, identify_weaknesses_controller, conclusion_controller
+    from controllers import initialize_data_controller, register_user_controller, get_all_facts_controller, get_all_events_controller, get_all_actors_controller, get_all_strats_controller, get_all_counterstrats_controller, select_facts_controller, build_narrative_controller, select_narrative_controller, introduce_event_controller, identify_weaknesses_controller, conclusion_controller
     from db_operations import *  
 
 #Initialize session management tools
@@ -116,6 +116,21 @@ def get_facts():
 @app.route('/game/get_events', methods=['GET'])
 def get_events():
     response_data = get_all_events_controller()
+    return jsonify(response_data)
+
+@app.route('/game/get_actors', methods=['GET'])
+def get_actors():
+    response_data = get_all_actors_controller()
+    return jsonify(response_data)
+
+@app.route('/game/get_strats', methods=['GET'])
+def get_strats():
+    response_data = get_all_strats_controller()
+    return jsonify(response_data)
+
+@app.route('/game/get_counterstrats', methods=['GET'])
+def get_counterstrats():
+    response_data = get_all_counterstrats_controller()
     return jsonify(response_data)
 
 # Initial Fact Selection & Narrative Generation

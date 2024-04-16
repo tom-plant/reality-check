@@ -213,7 +213,7 @@
         "motivations": "Undermine Eirist's democracy, sow discord, and expand its own geopolitical influence.",
         "narrative_against": "Unconfirmed, but the suspected mastermind behind the cyberattacks and power outages, exploiting Eirist's vulnerabilities."
       },
-      "Opposition Parties": {
+      "Eirist Opposition Parties": {
         "description": "Political parties opposing the current Eirist government, seeking to gain power in the upcoming elections.",
         "motivations": "Capitalize on the government's perceived failures to gain public support and win the postponed elections.",
         "narrative_against": "Accused by some of conspiring to create a crisis that discredits the ruling party and forces an electoral shift."
@@ -291,7 +291,7 @@
         "2 - Ensure the alternative explanation is more effective than a simple retraction, especially if it involves evidence-based reasoning (e.g., a counter for 'the fire was from arson' could be, 'there is evidence for a lightning strike')."
       ],
       "fact_based": [
-        "Debunking the false claim (fact-based)",
+        "Debunking the False Claim (fact-based)",
         "This correction strategy thoroughly refutes false information. It should:",
         "1 - Offer a detailed explanation of why the misinformation is false, providing total reasoning for overturning the falsehood.",
         "2 - Provide a causal, plausible, simple, and memorable alternative explanation to reduce subsequent recall of the retracted misinformation, utilizing fact-based, logic-based, or source-based refutations."
@@ -304,12 +304,37 @@
         "3 - Complement the reader's worldview by reassuring them that the misinformation is false and the truth aligns with their interests. (For example, people denying climate change over economic reasons should be reassured that taking action against climate change now can reduce economic risks and actually create new business opportunities.)"
       ],
       "source_based": [
-        "Bring in More Data (source-based)",
+        "Bringing in More Data (source-based)",
         "This correction strategy involves offering more data and evidence to refute misinformation. Adhere to these guidelines:",
         "1 - Offer evidence suggesting overwhelming support from credible sources, including expert consensus and social norms (e.g., 'doctors and medical societies around the world agree that vaccinations are important and safe').",
         "2 - Pair corrections with relevant social norms, including injunctive norms (e.g., 'protecting the vulnerable by getting vaccinated is the right thing to do') and descriptive norms (e.g., 'over 90% of parents are vaccinating their children').",
         "3 - Enhance institutional credibility by naming real institutions and explaining their corrections.",
         "4 - Undermine the plausibility of misinformation or the credibility of its source by explaining why the misinformation source might have a vested interest in spreading disinformation, as it might enrich them, further their political goals, reflect their funding sources, etc."
+      ]
+    },
+    "outcomes": {
+      "Government Power": [
+        "Government Consolidates Power: If the public and international community accept the government's narrative, the ruling party successfully consolidates power under the emergency measures, potentially leading to a more authoritarian regime."
+      ],
+      "Government Overthrow": [
+        "Government Overthrown: If the opposition and conspiracy narratives dominate, and the public perceives the government as the orchestrator of the crisis, massive protests and international pressure could lead to the overthrow of the current regime."
+      ],
+      "Intervention": [
+        "Stalemate and International Mediation: A stalemate ensues if no single narrative dominates. With the nation paralyzed by uncertainty and the risk of civil conflict escalating, international bodies might step in to mediate, possibly leading to a transitional government or new elections under international supervision."
+      ],
+      "Peace": [
+        "Peace Achieved: If a corrected narrative prevails, supported by public and international consensus, Eirist could achieve a sustainable peace by identifying the Republic of Talme as the attacker, neutralizing the threat, and resuming a free and fair election that leads to a peaceful maintence of power or transfer of power to the opposition."
+      ],
+      "Civil Conflict": [
+        "Escalation into Civil Conflict: If the situation continues to deteriorate, with the government and opposition unable to assert control, Eirist could spiral into a civil conflict, with various factions vying for power amidst the chaos."
+      ]
+    },
+    "victory": {
+      "strong": [
+        "strong"
+      ],
+      "weak": [
+        "weak"
       ]
     }
   }

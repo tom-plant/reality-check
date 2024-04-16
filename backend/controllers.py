@@ -25,6 +25,9 @@ def initialize_data_controller(user_id):
     session['user_data'] = {
         'user_id': user_id,
         'fact_combination_id': None,
+        'actor_id': None,
+        'strat_id': None,
+        'counterstrat_id': None,
         'updated_fact_combination_id': None,
         'primary_narrative_id': None, 
         'secondary_narrative_id': None,
@@ -58,6 +61,33 @@ def get_all_events_controller():
     except Exception as e:
         print(f"Database error: {str(e)}")
         return {"error": "Failed to fetch events from the database."}, 500
+
+def get_all_actors_controller():
+    try:
+        actors = get_all_actors()  
+        actors_list = [{'id': actor.id, 'text': actor.text, 'language': actor.language} for actor in actors]
+        return {"actors": actors_list}
+    except Exception as e:
+        print(f"Database error: {str(e)}")
+        return {"error": "Failed to fetch actors from the database."}, 500
+
+def get_all_strats_controller():
+    try:
+        strats = get_all_strats()  
+        strats_list = [{'id': strat.id, 'text': strat.text, 'language': strat.language} for strat in strats]
+        return {"strats": strats_list}
+    except Exception as e:
+        print(f"Database error: {str(e)}")
+        return {"error": "Failed to fetch strats from the database."}, 500
+
+def get_all_counterstrats_controller():
+    try:
+        strats = get_all_counterstrats()  
+        counterstrats_list = [{'id': counterstrat.id, 'text': counterstrat.text, 'language': counterstrat.language} for counterstrat in counterstrats]
+        return {"counterstrats": counterstrats_list}
+    except Exception as e:
+        print(f"Database error: {str(e)}")
+        return {"error": "Failed to fetch counterstrats from the database."}, 500
 
 def select_facts_controller(selected_facts):
     if 'user_data' not in session:
@@ -104,8 +134,6 @@ def build_narrative_controller(selected_actor, selected_strategies):
         chatgpt_responses[strategy] = get_chatgpt_response(prompts_narrative[strategy])
 
     return chatgpt_responses
-    
-
 
 def select_narrative_controller(selected_narrative):
     # Ensure 'user_data' is initialized in session
@@ -168,6 +196,8 @@ def select_narrative_controller(selected_narrative):
         fact_combination_id=session['user_data']['fact_combination_id'],
         narrative_text=selected_narrative['text'],  
         user_id=session['user_data']['user_id'],
+        actor_id=session['user_data']['actor_id'], ###NON EXISTENT CURRENTLY
+        strat_id=session['user_data']['strat_id'], ###NON EXISTENT CURRENTLY
         news=content_batch
         _session=None
     )
@@ -227,7 +257,7 @@ def introduce_event_controller(event_details):
     )
     db.session.add(narrative_event)
     db.session.commit()
-    session['user_data']['narrative_events_id'] = narrative_events.id
+    session['user_data']['narrative_events_id'] = narrative_event.id
     session.modified = True
 
     return {"event_outcome_text": event_outcome_text}
@@ -266,6 +296,11 @@ def conclusion_controller(counter_narrative):
     if 'user_data' not in session:
         return {"error": "User not logged in"}, 401
 
+#DEFINE THIS 
+    if 
+    victory = ['']
+
+
     prompts_election_outcomes = generate_prompts(
         file_path='prompts.json',
         category='election_outcome',
@@ -274,6 +309,8 @@ def conclusion_controller(counter_narrative):
             'narrative': get_primary_narrative_by_id(session['user_data']['primary_narrative_id']),
             'counter_narrative': counter_narrative,
             'crisis_background': get_text('plot_context', 'crisis_background'),
+            'victory': victory
+            'outcomes': get_text('plot_context', 'outcomes')
         })
 
     election_outcomes = get_chatgpt_response(prompts_election_outcomes)
@@ -283,6 +320,7 @@ def conclusion_controller(counter_narrative):
         original_narrative_id=session['user_data']['primary_narrative_id'], 
         updated_fact_combination_id=session['user_data']['updated_fact_combination_id'], 
         narrative_text=counter_narrative, 
+        counterstrat_id=session['user_data']['counterstrat_id'], ## CURRENTLY NON EXISTENT
         news=election_outcomes
         _session=None
     )

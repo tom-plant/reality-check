@@ -4,10 +4,10 @@ from sqlalchemy import select, func, and_, or_
 import os
 if os.getenv('FLASK_ENV') == 'production':
     from backend.app import db
-    from backend.models import User, Fact, Event, FactCombination, PrimaryNarrative, NarrativeEvent, SecondaryNarrative
+    from backend.models import User, Fact, Event, Actor, Strat, FactCombination, PrimaryNarrative, NarrativeEvent, SecondaryNarrative
 else:
     from app import db
-    from models import User, Fact, Event, FactCombination, PrimaryNarrative, NarrativeEvent, SecondaryNarrative
+    from models import User, Fact, Event, Actor, Strat, Strat, FactCombination, PrimaryNarrative, NarrativeEvent, SecondaryNarrative
 
 # User Operations
 
@@ -97,6 +97,23 @@ def delete_user(user_id, _session=None):
         else:
             return True  # Assume deletion is successful if using an external session
 
+#CounterStrat Operations
+
+def get_all_counterstrats(_session=None):
+    session = _session or db.session
+    return session.execute(select(CounterStrat)).scalars().all()
+
+# Strat Operations
+
+def get_all_strats(_session=None):
+    session = _session or db.session
+    return session.execute(select(Strat)).scalars().all()
+
+# Actor Operations
+
+def get_all_actors(_session=None):
+    session = _session or db.session
+    return session.execute(select(Actor)).scalars().all()
 
 # Fact Operations
 

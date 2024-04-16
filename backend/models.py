@@ -21,14 +21,35 @@ class Fact(db.Model):
     __tablename__ = 'facts'
 
     id = db.Column(db.Integer, primary_key=True)
-    text = db.Column(db.String(1000), nullable=False)  # Assuming text includes language-specific representation
+    text = db.Column(db.String(1000), nullable=False) 
     language = db.Column(db.Enum('ENG', 'EST', 'RUS', name='language_types'), default='ENG', nullable=False)
 
 class Event(db.Model):
     __tablename__ = 'events'
 
     id = db.Column(db.Integer, primary_key=True)
-    text = db.Column(db.String(1000), nullable=False)  # Assuming text includes language-specific representation
+    text = db.Column(db.String(1000), nullable=False) 
+    language = db.Column(db.Enum('ENG', 'EST', 'RUS', name='language_types'), default='ENG', nullable=False)
+
+class Actor(db.Model):
+    __tablename__ = 'actors'
+
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.String(1000), nullable=False)  
+    language = db.Column(db.Enum('ENG', 'EST', 'RUS', name='language_types'), default='ENG', nullable=False)
+
+class Strat(db.Model):
+    __tablename__ = 'strats'
+
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.String(1000), nullable=False) 
+    language = db.Column(db.Enum('ENG', 'EST', 'RUS', name='language_types'), default='ENG', nullable=False)
+
+class CounterStrat(db.Model):
+    __tablename__ = 'counterstrats'
+
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.String(1000), nullable=False) 
     language = db.Column(db.Enum('ENG', 'EST', 'RUS', name='language_types'), default='ENG', nullable=False)
 
 class FactCombination(db.Model):
@@ -46,6 +67,8 @@ class PrimaryNarrative(db.Model):
     fact_combination_id = db.Column(db.Integer, db.ForeignKey('fact_combinations.id'), nullable=False)
     narrative_text = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    actor_id = db.Column(db.Integer, db.ForeignKey('actors.id'), nullable=False)
+    strat_id = db.Column(db.Integer, db.ForeignKey('strats.id'), nullable=False)
     news = db.Column(db.JSON, nullable=False)  
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     narrative_events = db.relationship('NarrativeEvent', backref='primary_narrative', lazy=True, cascade="all, delete-orphan")
@@ -66,6 +89,7 @@ class SecondaryNarrative(db.Model):
     original_narrative_id = db.Column(db.Integer, db.ForeignKey('primary_narratives.id'), nullable=False)
     updated_fact_combination_id = db.Column(db.Integer, db.ForeignKey('fact_combinations.id'), nullable=False)  
     narrative_text = db.Column(db.Text, nullable=False) 
+    counterstrat_id = db.Column(db.Integer, db.ForeignKey('counterstrats.id'), nullable=False)
     news = db.Column(db.JSON, nullable=False)  
     outcome_text = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)  
