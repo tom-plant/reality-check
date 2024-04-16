@@ -91,6 +91,22 @@ export const getStrats = async () => {
   }
 };
 
+// Function to fetch initial list of events
+export const getCounterStrats = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/game/get_counterstrats`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      withCredentials: true, // If your backend requires cookies or session
+    });
+    return response.data; // This should return the list of events from your backend
+  } catch (error) {
+    console.error('Error fetching counterstrats:', error);
+    throw error;
+  }
+};
+
 export const setSelectedFacts = async (selectedFactCombination) => {
   try {
     // Transform selectedFactCombination to an array of fact texts

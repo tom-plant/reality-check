@@ -1,7 +1,7 @@
 // src/context/GameContext.js
 
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
-import { authenticateUser, getFacts, getEvents, getActors, getStrats, setSelectedFacts, buildNarrative, selectNarrative, introduceEvent, identifyWeaknesses, conclusion } from '../services/gameService';
+import { authenticateUser, getFacts, getEvents, getActors, getStrats, getCounterStrats, setSelectedFacts, buildNarrative, selectNarrative, introduceEvent, identifyWeaknesses, conclusion } from '../services/gameService';
 
 const GameStateContext = createContext();
 const GameDispatchContext = createContext();
@@ -19,6 +19,7 @@ const initialState = {
   events: [],
   actors: [],
   strats: [],
+  counterstrats: [],
   selectedFactCombination: [],
   updatedFactCombination: [],
   narrativeOptions: [],
@@ -27,6 +28,7 @@ const initialState = {
   conclusionContent: [],
   selectedEvent: null,
   selectedStrat: null,
+  selectedCounterStrat: null,
   selectedActor: null,
   primaryNewsContent: null,
   eventNewsContent: null,
@@ -95,6 +97,12 @@ const gameReducer = (state, action) => {
         strats: action.payload, 
       };
 
+    case 'SET_COUNTERSTRATS':
+      return {
+        ...state,
+        counterstrats: action.payload, 
+      };
+      
     case 'SELECT_FACT':
       return {
         ...state,
@@ -173,11 +181,17 @@ const gameReducer = (state, action) => {
     case 'DESELECT_ACTOR':
       return { ...state, selectedActor: action.payload };
 
-    case 'DESELECT_STRAT':
+    case 'SELECT_STRAT':
       return { ...state, selectedStrat: action.payload };
 
     case 'DESELECT_STRAT':
       return { ...state, selectedStrat: action.payload };
+
+    case 'SELECT_COUNTERSTRAT':
+      return { ...state, selectedCounterStrat: action.payload };
+
+    case 'DESELECT_COUNTERSTRAT':
+      return { ...state, selectedCounterStrat: action.payload };
       
     case 'SET_EVENT_OPTIONS':
       return { ...state, eventOptions: action.payload };
@@ -319,11 +333,30 @@ const GameProvider = ({ children }) => {
     }
   };
 
+  const fetchAndSetCounterStrats = async () => {
+    try {
+      const response = await getCounterStrats(); 
+      if (response && response.counterstrats) {
+        const counterstratsData = response.counterstrats;
+        const transformedCounterStrats = counterstratsData.map(counterstrat => ({
+          id: counterstrat.id,
+          text: counterstrat.text
+        }));
+        dispatch({ type: 'SET_COUNTERSTRATS', payload: transformedCounterStrats });
+      } else {
+        console.error("Fetched data is not in the expected format:", response);
+      }
+    } catch (error) {
+      console.error("Failed to fetch counterstrats:", error);
+    }
+  };
+
   useEffect(() => {
     fetchAndSetFacts();
     fetchAndSetEvents();
     fetchAndSetActors();
     fetchAndSetStrats();
+    fetchAndSetCounterStrats();
   }, []); 
 
   const loginUser = async (username, email) => {
@@ -425,7 +458,7 @@ const GameProvider = ({ children }) => {
   return (
     <GameStateContext.Provider value={state}>
       <GameDispatchContext.Provider value={dispatch}>
-        <GameFunctionContext.Provider value={{ fetchAndSetFacts, fetchAndSetEvents, fetchAndSetActors, fetchAndSetStrats, loginUser, setFactSelection, buildAndSetNarrative, selectNarrativeAndSetContent, selectEventAndSetContent, identifyWeaknessesAndSetContent, fetchAndSetConclusion, setCurrentPhase, setCurrentOutroView, setCurrentTurnPointView, setCurrentIntroView }}> 
+        <GameFunctionContext.Provider value={{ fetchAndSetFacts, fetchAndSetEvents, fetchAndSetActors, fetchAndSetStrats, fetchAndSetCounterStrats, loginUser, setFactSelection, buildAndSetNarrative, selectNarrativeAndSetContent, selectEventAndSetContent, identifyWeaknessesAndSetContent, fetchAndSetConclusion, setCurrentPhase, setCurrentOutroView, setCurrentTurnPointView, setCurrentIntroView }}> 
           {children}
           </GameFunctionContext.Provider>
       </GameDispatchContext.Provider>
