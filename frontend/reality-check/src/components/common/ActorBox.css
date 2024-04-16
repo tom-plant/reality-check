@@ -1,0 +1,22 @@
+/* FactBox.css */
+
+.actor-box {
+  border: 1px solid #fffffffc;
+  padding: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  background-color: transparent;
+  transition: background-color 0.3s;
+  width: 100%;
+  box-sizing: border-box; 
+}
+
+.actor-box.right {
+  border: 1px solid black;
+  color: black;
+}
+
+.actor-box.left.selected {
+  background-color: #fff;
+  color: #000;
+}

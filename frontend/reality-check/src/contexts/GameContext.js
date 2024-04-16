@@ -1,7 +1,7 @@
 // src/context/GameContext.js
 
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
-import { authenticateUser, getFacts, getEvents, setSelectedFacts, buildNarrative, selectNarrative, introduceEvent, identifyWeaknesses, conclusion } from '../services/gameService';
+import { authenticateUser, getFacts, getEvents, getActors, getStrats, setSelectedFacts, buildNarrative, selectNarrative, introduceEvent, identifyWeaknesses, conclusion } from '../services/gameService';
 
 const GameStateContext = createContext();
 const GameDispatchContext = createContext();
@@ -10,13 +10,15 @@ const GameFunctionContext = createContext();
 const initialState = {
   currentPhase: 'intro', 
   currentIntroView: 'AUTH_LOGIN',
-  currentView: 'SELECT-FACTS', 
+  currentView: 'SELECT_FACTS', 
   currentTurnPointView: 'ALERT',
   currentOutroView: 'CONCLUSION_WRAP_UP',
   username: null,
   email: null,
   facts: [],
   events: [],
+  actors: [],
+  strats: [],
   selectedFactCombination: [],
   updatedFactCombination: [],
   narrativeOptions: [],
@@ -24,6 +26,8 @@ const initialState = {
   secondaryNarrative: [],
   conclusionContent: [],
   selectedEvent: null,
+  selectedStrat: null,
+  selectedActor: null,
   primaryNewsContent: null,
   eventNewsContent: null,
   secondaryNewsContent: null,
@@ -77,6 +81,18 @@ const gameReducer = (state, action) => {
       return {
         ...state,
         events: action.payload, 
+      };
+  
+    case 'SET_ACTORS':
+      return {
+        ...state,
+        actors: action.payload, 
+      };
+  
+    case 'SET_STRATS':
+      return {
+        ...state,
+        strats: action.payload, 
       };
 
     case 'SELECT_FACT':
@@ -151,6 +167,18 @@ const gameReducer = (state, action) => {
     case 'DESELECT_EVENT':
       return { ...state, selectedEvent: action.payload };
 
+    case 'SELECT_ACTOR':
+      return { ...state, selectedActor: action.payload };
+
+    case 'DESELECT_ACTOR':
+      return { ...state, selectedActor: action.payload };
+
+    case 'DESELECT_STRAT':
+      return { ...state, selectedStrat: action.payload };
+
+    case 'DESELECT_STRAT':
+      return { ...state, selectedStrat: action.payload };
+      
     case 'SET_EVENT_OPTIONS':
       return { ...state, eventOptions: action.payload };
 
@@ -255,9 +283,47 @@ const GameProvider = ({ children }) => {
     }
   };
   
+  const fetchAndSetActors = async () => {
+    try {
+      const response = await getActors(); 
+      if (response && response.actors) {
+        const actorsData = response.actors;
+        const transformedActors = actorsData.map(actor => ({
+          id: actor.id,
+          text: actor.text
+        }));
+        dispatch({ type: 'SET_ACTORS', payload: transformedActors });
+      } else {
+        console.error("Fetched data is not in the expected format:", response);
+      }
+    } catch (error) {
+      console.error("Failed to fetch actors:", error);
+    }
+  };
+  
+  const fetchAndSetStrats = async () => {
+    try {
+      const response = await getStrats(); 
+      if (response && response.strats) {
+        const stratsData = response.strats;
+        const transformedStrats = stratsData.map(strat => ({
+          id: strat.id,
+          text: strat.text
+        }));
+        dispatch({ type: 'SET_STRATS', payload: transformedStrats });
+      } else {
+        console.error("Fetched data is not in the expected format:", response);
+      }
+    } catch (error) {
+      console.error("Failed to fetch strats:", error);
+    }
+  };
+
   useEffect(() => {
     fetchAndSetFacts();
     fetchAndSetEvents();
+    fetchAndSetActors();
+    fetchAndSetStrats();
   }, []); 
 
   const loginUser = async (username, email) => {
@@ -359,7 +425,7 @@ const GameProvider = ({ children }) => {
   return (
     <GameStateContext.Provider value={state}>
       <GameDispatchContext.Provider value={dispatch}>
-        <GameFunctionContext.Provider value={{ fetchAndSetFacts, fetchAndSetEvents, loginUser, setFactSelection, buildAndSetNarrative, selectNarrativeAndSetContent, selectEventAndSetContent, identifyWeaknessesAndSetContent, fetchAndSetConclusion, setCurrentPhase, setCurrentOutroView, setCurrentTurnPointView, setCurrentIntroView }}> 
+        <GameFunctionContext.Provider value={{ fetchAndSetFacts, fetchAndSetEvents, fetchAndSetActors, fetchAndSetStrats, loginUser, setFactSelection, buildAndSetNarrative, selectNarrativeAndSetContent, selectEventAndSetContent, identifyWeaknessesAndSetContent, fetchAndSetConclusion, setCurrentPhase, setCurrentOutroView, setCurrentTurnPointView, setCurrentIntroView }}> 
           {children}
           </GameFunctionContext.Provider>
       </GameDispatchContext.Provider>

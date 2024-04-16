@@ -59,6 +59,38 @@ export const getEvents = async () => {
   }
 };
 
+// Function to fetch initial list of events
+export const getActors = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/game/get_actors`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      withCredentials: true, // If your backend requires cookies or session
+    });
+    return response.data; // This should return the list of events from your backend
+  } catch (error) {
+    console.error('Error fetching actors:', error);
+    throw error;
+  }
+};
+
+// Function to fetch initial list of events
+export const getStrats = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/game/get_strats`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      withCredentials: true, // If your backend requires cookies or session
+    });
+    return response.data; // This should return the list of events from your backend
+  } catch (error) {
+    console.error('Error fetching strats:', error);
+    throw error;
+  }
+};
+
 export const setSelectedFacts = async (selectedFactCombination) => {
   try {
     // Transform selectedFactCombination to an array of fact texts

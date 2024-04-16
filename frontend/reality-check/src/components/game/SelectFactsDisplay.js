@@ -8,7 +8,7 @@ import './SelectFactsDisplay.css';
 
 const SelectFactsDisplay = () => {
   const { selectedFactCombination, timerHasEnded } = useGameState();
-  const { fetchAndSetNarratives } = useGameFunction(); 
+  const { setFactSelection } = useGameFunction(); 
   const dispatch = useGameDispatch();
   const [buttonClicked, setButtonClicked] = useState(false); 
   const { t } = useTranslation();
@@ -17,8 +17,8 @@ const SelectFactsDisplay = () => {
   const handleGenerateNarrative = async () => {
     if (!buttonClicked) { 
       setButtonClicked(true); 
-      dispatch({ type: 'SET_CURRENT_VIEW', payload: 'SELECT_NARRATIVES' });
-      await fetchAndSetNarratives(selectedFactCombination);
+      dispatch({ type: 'SET_CURRENT_VIEW', payload: 'BUILD_NARRATIVE' });
+      await setFactSelection(selectedFactCombination);
       dispatch({ type: 'COPY_FACTS_TO_UPDATED', payload: selectedFactCombination }); 
       dispatch({ type: 'RESET_SELECTION_ENDED' });
     }
