@@ -166,13 +166,13 @@ def build_narrative():
 # Selecting Narratives
 @app.route('/game/select_narrative', methods=['POST'])
 def select_narrative():
-    # Receive selected narrative from the frontend
-    selected_narrative = request.json.get('selected_narrative')
+    # Receive selected narrative and strategy from the frontend
+    data = request.get_json()
+    narrative = data['narrative']
+    strategy = data['strategy']
     
     # Call controller function to handle logic
-    response_data = select_narrative_controller(selected_narrative)
-    
-    # Return response to frontend
+    response_data = select_narrative_controller(narrative, strategy)
     return jsonify(response_data)
 
 # Introducing Follow-up Events

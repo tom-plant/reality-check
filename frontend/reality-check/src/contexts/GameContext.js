@@ -382,9 +382,10 @@ const GameProvider = ({ children }) => {
     try {
       dispatch({ type: 'SET_LOADING_NARRATIVES', payload: true });
       const narrativeResponse = await buildNarrative(selectedActor, selectedStrategies);
-      const formattedNarratives = narrativeResponse.map((narrativeText, index) => ({
+      const formattedNarratives = Object.keys(narrativeResponse).map((strategy, index) => ({
         id: index,
-        text: narrativeText 
+        text: narrativeResponse[strategy],
+        strategy: strategy  // Include the strategy in the narrative data
       }));
       dispatch({ type: 'SET_NARRATIVE_OPTIONS', payload: formattedNarratives });
       dispatch({ type: 'SET_LOADING_NARRATIVES', payload: false });
@@ -397,7 +398,10 @@ const GameProvider = ({ children }) => {
   const selectNarrativeAndSetContent = async (selectedNarrative) => {
     try {
       dispatch({ type: 'SET_LOADING_NEWS', payload: true }); 
-      const content = await selectNarrative(selectedNarrative);
+      const content = await selectNarrative({
+        narrative: selectedNarrative.text,
+        strategy: selectedNarrative.strategy
+      });
       dispatch({ type: 'SET_SELECTED_NARRATIVE_CONTENT', payload: content });
       dispatch({ type: 'SET_LOADING_NEWS', payload: false });
     } catch (error) {

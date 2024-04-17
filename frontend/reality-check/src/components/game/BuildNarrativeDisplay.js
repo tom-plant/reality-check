@@ -6,7 +6,7 @@ import './BuildNarrativeDisplay.css';
 
 const BuildNarrativeDisplay = () => {
   const { t } = useTranslation();
-  const { strats } = useGameState();
+  const { strats, selectedStrat, selectedActor } = useGameState();
   const dispatch = useGameDispatch();
   const [buttonClicked, setButtonClicked] = useState(false); 
 
@@ -15,7 +15,7 @@ const handleGenerateNarrative = async () => {
     if (!buttonClicked) { 
         setButtonClicked(true); 
         dispatch({ type: 'SET_CURRENT_VIEW', payload: 'SELECT_NARRATIVES' });
-        await buildAndSetNarrative(selectedFactCombination);
+        await buildAndSetNarrative(selectedActor, selectedStrat); 
     }
     };
     
@@ -27,12 +27,15 @@ const handleGenerateNarrative = async () => {
           <StratBox
             key={strat.id}
             actor={strat.text}
-            isSelected={strat === selectedStrat} //idk about this line
+            isSelected={strat === selectedStrat} 
+            disabled={selectedStrats.length >= 2 && !selectedStrats.includes(strat)}
           />
         ))}
       </div>
       <button className="generate-narrative" 
-        onClick={handleGenerateNarrative}>
+        onClick={handleGenerateNarrative}
+        disabled={selectedStrats.length < 2 || !selectedActor}
+      >
         {t('common.confirmSelections')} 
       </button>
     </div>

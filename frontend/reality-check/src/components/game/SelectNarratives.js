@@ -18,7 +18,9 @@ const SelectNarratives = () => {
   const handleNarrativeConfirmation = () => {
     if (!buttonClicked) { 
       setButtonClicked(true); 
-      selectNarrativeAndSetContent(selectedNarrative);
+      if (selectedNarrative) {
+        selectNarrativeAndSetContent(selectedNarrative);
+      }
       dispatch({ type: 'SET_CURRENT_VIEW', payload: 'NARRATIVE_IMPACT' }); 
     }
   };

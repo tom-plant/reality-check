@@ -6,7 +6,7 @@ import './BuildNarrative.css';
 
 const BuildNarrative = () => {
   const { t } = useTranslation();
-  const { actors } = useGameState();
+  const { actors, selectedActor } = useGameState();
 
   return (
     <div className="build-narratives">
@@ -16,7 +16,8 @@ const BuildNarrative = () => {
           <ActorBox
             key={actor.id}
             actor={actor.text}
-            isSelected={actor === selectedActor} //idk about this line
+            isSelected={actor === selectedActor}
+            disabled={selectedActor && actor !== selectedActor}
           />
         ))}
       </div>

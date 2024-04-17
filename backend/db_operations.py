@@ -109,11 +109,21 @@ def get_all_strats(_session=None):
     session = _session or db.session
     return session.execute(select(Strat)).scalars().all()
 
+def get_strategy_id_by_strategy_name(strategy_name):
+    strategy = Strat.query.filter_by(text=strategy_name).first()
+    return strategy.id if strategy else None
+
 # Actor Operations
 
 def get_all_actors(_session=None):
     session = _session or db.session
     return session.execute(select(Actor)).scalars().all()
+
+def get_actor_id_by_actor_name(name):
+    name = name.strip().lower()
+    # Query the database directly for a matching actor by normalized text
+    actor = Actor.query.filter_by(text=name).first()
+    return actor.id if actor else None
 
 # Fact Operations
 

@@ -3,7 +3,7 @@ import React from 'react';
 import { useGameDispatch, useGameState } from '../../contexts/GameContext'; 
 import './StratBox.css'; 
 
-const StratBox = ({ strat, isSelected, disabled, container}) => {
+const StratBox = ({ strat, isSelected, disabled}) => {
   const dispatch = useGameDispatch();
   const { selectedStrat } = useGameState(); // Access the selected facts from context
 
@@ -17,7 +17,7 @@ const StratBox = ({ strat, isSelected, disabled, container}) => {
 
   return (
     <div 
-      className={`strat-box ${isSelected ? 'selected' : ''} ${container}`} 
+      className={`strat-box ${isSelected ? 'selected' : ''}`}
       onClick={toggleStratSelection}
     >
       {strat.text}

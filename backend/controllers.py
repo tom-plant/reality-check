@@ -132,14 +132,23 @@ def build_narrative_controller(selected_actor, selected_strategies):
             })
         
         chatgpt_responses[strategy] = get_chatgpt_response(prompts_narrative[strategy])
+    
+    actor_id = get_actor_id_by_actor_name(selected_actor)
+    session['user_data']['actor_id'] = actor_id
+    session.modified = True
 
     return chatgpt_responses
 
-def select_narrative_controller(selected_narrative):
+def select_narrative_controller(narrative, strategy):
     # Ensure 'user_data' is initialized in session
     current_app.logger.debug(f"Session Data: {session}")
     if 'user_data' not in session:
         return {"error": "User not logged in"}, 401
+
+    # Store the strategy in session for later use
+    strategy_id = get_strategy_id_by_strategy_name(strategy)
+    session['user_data']['strat_id'] = strategy_id
+    session.modified = True
 
     content_batch = {}
 
@@ -196,8 +205,8 @@ def select_narrative_controller(selected_narrative):
         fact_combination_id=session['user_data']['fact_combination_id'],
         narrative_text=selected_narrative['text'],  
         user_id=session['user_data']['user_id'],
-        actor_id=session['user_data']['actor_id'], ###NON EXISTENT CURRENTLY
-        strat_id=session['user_data']['strat_id'], ###NON EXISTENT CURRENTLY
+        actor_id=session['user_data']['actor_id'], 
+        strat_id=strategy_id
         news=content_batch
         _session=None
     )

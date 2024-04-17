@@ -144,7 +144,8 @@ export const buildNarrative = async (selectedActor, selectedStrategies) => {
 export const selectNarrative = async (selectedNarrative) => {
   try {
     const response = await axios.post(`${API_BASE_URL}/game/select_narrative`, {
-      selected_narrative: selectedNarrative
+      narrative: selectedNarrative.narrative,
+      strategy: selectedNarrative.strategy
     }, {
       withCredentials: true 
     });
