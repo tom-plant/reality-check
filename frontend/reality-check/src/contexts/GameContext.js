@@ -23,6 +23,7 @@ const initialState = {
   selectedFactCombination: [],
   updatedFactCombination: [],
   narrativeOptions: [],
+  counterNarrativeOptions: [],
   selectedNarrative: null,
   secondaryNarrative: [],
   conclusionContent: [],
@@ -141,6 +142,12 @@ const gameReducer = (state, action) => {
         ...state,
         narrativeOptions: action.payload, 
       };
+
+    case 'SET_COUNTERNARRATIVE_OPTIONS':
+      return {
+        ...state,
+        counterNarrativeOptions: action.payload, 
+      };    
   
     case 'SET_LOADING_NARRATIVES':
       return { ...state, isLoadingNarratives: action.payload };
@@ -422,21 +429,23 @@ const GameProvider = ({ children }) => {
     }
   };
 
-  const identifyWeaknessesAndSetContent = async (updatedFactCombination) => {
+  const identifyWeaknessesAndSetContent = async (updatedFactCombination, selectedStrategies) => {
     try {
-      dispatch({ type: 'SET_LOADING_NEWS', payload: true }); 
-        const response = await identifyWeaknesses(updatedFactCombination);
-        dispatch({
-          type: 'SET_SECONDARY_NARRATIVE_CONTENT',
-          payload: {
-            secondary_news_content: response.secondary_news_content
-          }
-        });        
-        dispatch({ type: 'SET_SECONDARY_NARRATIVE', payload: response.secondary_narrative });
+      dispatch({ type: 'SET_LOADING_NEWS', payload: true });
+      const weaknessesResponse = await identifyWeaknesses(updatedFactCombination, selectedStrategies);
+      const counterNarrativeOptions = Object.keys(weaknessesResponse).map((strategy, index) => ({
+        id: index,
+        text: weaknessesResponse[strategy],
+        strategy: strategy  // Keeping track of which strategy each narrative corresponds to
+      }));
+      dispatch({
+        type: 'SET_COUNTER_NARRATIVE_OPTIONS',
+        payload: counterNarrativeOptions
+      });
       dispatch({ type: 'SET_LOADING_NEWS', payload: false });
     } catch (error) {
       console.error('Failed to identify weaknesses:', error);
-      dispatch({ type: 'SET_LOADING_NEWS', payload: false }); 
+      dispatch({ type: 'SET_LOADING_NEWS', payload: false });
     }
   };
 

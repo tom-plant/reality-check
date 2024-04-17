@@ -198,8 +198,11 @@ def identify_weaknesses():
     # Call controller function to handle logic
     response_data = identify_weaknesses_controller(updated_fact_combination, selected_strategies)
     
+    # Format response data for frontend, encapsulating each strategy's response
+    formatted_response = {strategy: data for strategy, data in response_data.items()}
+    
     # Return response to frontend
-    return jsonify(response_data)
+    return jsonify(formatted_response)
 
 @app.route('/game/conclusion', methods=['POST'])
 def conclusion():

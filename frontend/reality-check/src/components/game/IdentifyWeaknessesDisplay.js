@@ -8,7 +8,6 @@ import './IdentifyWeaknessesDisplay.css';
 
 const IdentifyWeaknessesDisplay = () => {
   const { updatedFactCombination, selectedFactCombination } = useGameState();
-  const { identifyWeaknessesAndSetContent } = useGameFunction(); 
   const [buttonClicked, setButtonClicked] = useState(false); 
   const dispatch = useGameDispatch();
   const { t } = useTranslation();
@@ -26,11 +25,10 @@ const IdentifyWeaknessesDisplay = () => {
   const handleUpdateNarrative = () => {
     if (!buttonClicked) { 
       setButtonClicked(true); 
-      dispatch({ type: 'TOGGLE_UPDATED_NARRATIVE_POPUP' }); // Toggle the popup first
+      dispatch({ type: 'SET_CURRENT_VIEW', payload: 'IDENTIFY_STRATEGIES' });
       dispatch({ type: 'RESET_SELECTION_ENDED', payload: true });
       setTimeout(() => {
         dispatch({ type: 'UPDATE_FACTS', payload: updatedFactCombination });
-        identifyWeaknessesAndSetContent(updatedFactCombination);
       }, 0); 
     }
   };

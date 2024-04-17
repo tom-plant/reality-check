@@ -174,7 +174,6 @@ export const introduceEvent = async (selectedEvent) => {
 // API function to identify weaknesses in narratives
 export const identifyWeaknesses = async (updatedFactCombination, selectedStrategies) => {
   try {
-    // Transform newFactCombination to the required format 
     const updatedFactsTexts = updatedFactCombination.map(fact => fact.text);
     const response = await axios.post(`${API_BASE_URL}/game/identify_weaknesses`, {
       updated_fact_combination: updatedFactsTexts,

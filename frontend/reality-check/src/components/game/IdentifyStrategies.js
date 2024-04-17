@@ -10,8 +10,15 @@ const IdentifyStrategies = () => {
 
   // Progress to next game phase
   const handleContinue = () => {
-    dispatch({ type: 'SET_CURRENT_VIEW', payload: 'UPDATED_NARRATIVE_IMPACT' });
+    if (!buttonClicked) { 
+      setButtonClicked(true); 
+      dispatch({ type: 'SET_CURRENT_VIEW', payload: 'UPDATED_NARRATIVE_IMPACT' });
+      setTimeout(() => {
+        identifyWeaknessesAndSetContent(updatedFactCombination, selected_strategies);
+      }, 0); 
+    }
   };
+
 
   return (
     <div className="identify-strategies">

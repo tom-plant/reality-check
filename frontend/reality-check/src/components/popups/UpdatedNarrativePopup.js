@@ -21,7 +21,7 @@ const UpdatedNarrativePopup = () => {
   // Toggle off popup and progress to next phase
   const handleContinue = () => {
     dispatch({ type: 'TOGGLE_UPDATED_NARRATIVE_POPUP' }); 
-    dispatch({ type: 'SET_CURRENT_VIEW', payload: 'IDENTIFY_STRATEGIES' });
+    dispatch({ type: 'SET_CURRENT_VIEW', payload: 'UPDATED_NARRATIVE_IMPACT' });
   };
 
   return (

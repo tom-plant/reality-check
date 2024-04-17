@@ -299,6 +299,8 @@ def identify_weaknesses_controller(updated_fact_combination, selected_strategies
         chatgpt_response = get_chatgpt_response(prompts)
         chatgpt_responses[strategy] = chatgpt_response
 
+    return chatgpt_responses
+
 
 def conclusion_controller(counter_narrative): 
     # Check if user is logged in

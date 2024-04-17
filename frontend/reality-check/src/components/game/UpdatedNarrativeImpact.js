@@ -6,25 +6,9 @@ import LoadingIcon from '../common/LoadingIcon';
 import './UpdatedNarrativeImpact.css'; 
 
 const UpdatedNarrativeImpact = () => {
-  const { secondaryNewsContent, isLoadingNews } = useGameState();
+  const { secondaryNarrativeOptions, isLoadingNews } = useGameState();
   const [content, setContent] = useState(null);
 
-  // Initialize variables outside of the conditional scope
-  let headline, story, imageUrl;
-
-  // Render news content from the backend
-  useEffect(() => {
-    if (secondaryNewsContent && !isLoadingNews) {
-      setContent(secondaryNewsContent.secondary_news_content);
-    }
-  }, [secondaryNewsContent, isLoadingNews]); 
-
-  // Conditional destructuring of content
-  if (!isLoadingNews && content) {
-    headline = content.headline;
-    story = content.story;
-    imageUrl = content.image_url;
-  }
 
   return (
     <div className="narrative-impact">
