@@ -1,6 +1,7 @@
 #app.py 
 
 from flask import Flask, session, jsonify, redirect, url_for, render_template, request, send_from_directory
+from config import Config, DevelopmentConfig, TestingConfig, ProductionConfig, SECRET_KEY, SQL_KEY
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_session import Session 
@@ -12,12 +13,6 @@ import sys
 from sqlalchemy.exc import SQLAlchemyError
 from flask_sqlalchemy import SQLAlchemy
 import logging
-
-
-if os.getenv('FLASK_ENV') == 'production':
-    from backend.config import Config, DevelopmentConfig, TestingConfig, ProductionConfig, SECRET_KEY, SQL_KEY
-else:
-    from config import Config, DevelopmentConfig, TestingConfig, ProductionConfig, SECRET_KEY, SQL_KEY
 
 
 # Initialize Flask app
@@ -50,15 +45,9 @@ Session(app)
 app.debug = True
 app.logger.setLevel(logging.DEBUG)  # Set the log level to DEBUG
 
-# Import models and controllers after initializing db to avoid circular imports
-if os.getenv('FLASK_ENV') == 'production':
-    from backend.models import * 
-    from backend.controllers import initialize_data_controller, register_user_controller, get_all_facts_controller, get_all_events_controller, get_all_actors_controller, get_all_strats_controller, get_all_counterstrats_controller, select_facts_controller, build_narrative_controller, select_narrative_controller, introduce_event_controller, identify_weaknesses_controller, conclusion_controller
-    from backend.db_operations import *  
-else:
-    from models import * 
-    from controllers import initialize_data_controller, register_user_controller, get_all_facts_controller, get_all_events_controller, get_all_actors_controller, get_all_strats_controller, get_all_counterstrats_controller, select_facts_controller, build_narrative_controller, select_narrative_controller, introduce_event_controller, identify_weaknesses_controller, conclusion_controller
-    from db_operations import *  
+from models import * 
+from controllers import initialize_data_controller, register_user_controller, get_all_facts_controller, get_all_events_controller, get_all_actors_controller, get_all_strats_controller, get_all_counterstrats_controller, select_facts_controller, build_narrative_controller, select_narrative_controller, introduce_event_controller, identify_weaknesses_controller, conclusion_controller
+from db_operations import *  
 
 #Initialize session management tools
 app.secret_key = SECRET_KEY

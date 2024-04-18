@@ -5,7 +5,7 @@ import { useGameState } from '../../contexts/GameContext';
 import './SelectNarrativesDisplay.css'; 
 
 const SelectNarrativesDisplay = () => {
-  const { selectedFactCombination } = useGameState();
+  const { selectedFactCombination, selectedNarrative } = useGameState();
   const { t } = useTranslation();
 
 return (

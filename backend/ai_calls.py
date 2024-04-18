@@ -2,11 +2,10 @@
 
 import json
 import requests
+import os
 
 API_KEY = os.environ.get('API_KEY')
 
-import json
-import requests
 
 def get_chatgpt_response(prompts):
     # ChatGPT API settings

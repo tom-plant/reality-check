@@ -2,12 +2,8 @@
 
 from sqlalchemy import select, func, and_, or_
 import os
-if os.getenv('FLASK_ENV') == 'production':
-    from backend.app import db
-    from backend.models import User, Fact, Event, Actor, Strat, CounterStrat, StrategyEffectiveness, FactCombination, PrimaryNarrative, NarrativeEvent, SecondaryNarrative
-else:
-    from app import db
-    from models import User, Fact, Event, Actor, Strat, Strat, CounterStrat, StrategyEffectiveness, FactCombination, PrimaryNarrative, NarrativeEvent, SecondaryNarrative
+from app import db
+from models import User, Fact, Event, Actor, Strat, Strat, CounterStrat, StrategyEffectiveness, FactCombination, PrimaryNarrative, NarrativeEvent, SecondaryNarrative
 
 # User Operations
 

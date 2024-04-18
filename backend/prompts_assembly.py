@@ -1,4 +1,3 @@
-
 def generate_prompts(file_path, category, prompt_type='both', dynamic_inserts=None):
     if dynamic_inserts is None:
         dynamic_inserts = {}

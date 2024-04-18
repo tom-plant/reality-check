@@ -9,7 +9,7 @@ import './UpdatedNarrativeImpact.css';
 const UpdatedNarrativeImpact = () => {
   const { secondaryNarrativeOptions, isLoadingNarrative, selectedNarrative } = useGameState();
   const dispatch = useGameDispatch();
-  const { fetchAndSetConclusion } = useGameFunction();
+  const { fetchAndSetConclusion, setCurrentPhase } = useGameFunction();
   const [buttonClicked, setButtonClicked] = useState(false);
 
   // Handle narrative selection

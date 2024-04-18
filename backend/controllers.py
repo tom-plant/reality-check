@@ -8,15 +8,8 @@ import requests
 from flask import session, redirect, url_for, current_app
 from ai_calls import get_chatgpt_response, get_dalle2_response
 from prompts_assembly import generate_prompts
-
-if os.getenv('FLASK_ENV') == 'production':
-    from backend.localization import get_text
-    from backend.db_operations import *
-    from backend.app import app
-else:
-    from localization import get_text
-    from db_operations import *
-    from app import app
+from db_operations import *
+from app import app
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -206,8 +199,8 @@ def select_narrative_controller(narrative, strategy):
         narrative_text=selected_narrative['text'],  
         user_id=session['user_data']['user_id'],
         actor_id=session['user_data']['actor_id'], 
-        strat_id=strategy_id
-        news=content_batch
+        strat_id=strategy_id,
+        news=content_batch,
         _session=None
     )
     db.session.add(primary_narrative)
@@ -320,7 +313,7 @@ def conclusion_controller(narrative, strategy):
             'narrative': get_primary_narrative_by_id(session['user_data']['primary_narrative_id']),
             'counter_narrative': counter_narrative,
             'crisis_background': get_text('plot_context', 'crisis_background'),
-            'effectiveness': effectiveness
+            'effectiveness': effectiveness,
             'outcomes': get_text('plot_context', 'outcomes')
         })
 
@@ -332,7 +325,7 @@ def conclusion_controller(narrative, strategy):
         updated_fact_combination_id=session['user_data']['updated_fact_combination_id'], 
         narrative_text=counter_narrative, 
         counterstrat_id=session['user_data']['counterstrat_id'],
-        news=election_outcome
+        news=election_outcome,
         _session=None
     )
     db.session.add(secondary_narrative)

@@ -1,11 +1,6 @@
 #config.py
 import os
 
-API_KEY = os.environ.get('API_KEY')  
-SECRET_KEY = os.environ.get('SECRET_KEY')  
-SQL_KEY = os.environ.get('SQL_KEY')  
-TEST_SQL_KEY = os.environ.get('TEST_SQL_KEY')  
-
 class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = os.environ.get('SECRET_KEY')  
@@ -36,3 +31,12 @@ class ProductionConfig(Config):
     API_KEY = os.environ.get('API_KEY')
     SQL_KEY = os.environ.get('SQL_KEY')
     SECRET_KEY = os.environ.get('SECRET_KEY')  
+
+# Automatically determine which config to load based on the environment
+env = os.environ.get('FLASK_ENV', 'development')
+if env == 'production':
+    CurrentConfig = ProductionConfig
+elif env == 'testing':
+    CurrentConfig = TestingConfig
+else:
+    CurrentConfig = DevelopmentConfig

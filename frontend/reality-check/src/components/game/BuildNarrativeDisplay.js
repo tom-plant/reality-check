@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next'; 
 import { useGameState, useGameDispatch, useGameFunction } from '../../contexts/GameContext';
-import StratBox from '../StratBox/StratBox'; 
+import StratBox from '../common/StratBox'; 
 import './BuildNarrativeDisplay.css'; 
 
 const BuildNarrativeDisplay = () => {
   const { t } = useTranslation();
+  const { buildAndSetNarrative } = useGameFunction();
   const { strats, selectedStrat, selectedActor } = useGameState();
   const dispatch = useGameDispatch();
   const [buttonClicked, setButtonClicked] = useState(false); 
@@ -28,13 +29,13 @@ const handleGenerateNarrative = async () => {
             key={strat.id}
             actor={strat.text}
             isSelected={strat === selectedStrat} 
-            disabled={selectedStrats.length >= 2 && !selectedStrats.includes(strat)}
+            disabled={selectedStrat.length >= 2 && !selectedStrat.includes(strat)}
           />
         ))}
       </div>
       <button className="generate-narrative" 
         onClick={handleGenerateNarrative}
-        disabled={selectedStrats.length < 2 || !selectedActor}
+        disabled={selectedStrat.length < 2 || !selectedActor}
       >
         {t('common.confirmSelections')} 
       </button>

@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next'; 
 import { useGameState, useGameDispatch, useGameFunction } from '../../contexts/GameContext';
-import CounterStratBox from '../CounterStratBox/CounterStratBox'; 
+import CounterStratBox from '../common/CounterStratBox'; 
 import './IdentifyStrategies.css'; 
 
 const IdentifyStrategies = () => {
   const { t } = useTranslation();
-  const { counterstrats } = useGameState();
+  const { counterstrats, updatedFactCombination, selectedCounterStrat } = useGameState();
+  const [buttonClicked, setButtonClicked] = useState(false); 
+  const dispatch = useGameDispatch();
+  const { identifyWeaknessesAndSetContent } = useGameFunction();
+
 
   // Progress to next game phase
   const handleContinue = () => {
@@ -14,7 +18,7 @@ const IdentifyStrategies = () => {
       setButtonClicked(true); 
       dispatch({ type: 'SET_CURRENT_VIEW', payload: 'UPDATED_NARRATIVE_IMPACT' });
       setTimeout(() => {
-        identifyWeaknessesAndSetContent(updatedFactCombination, selected_strategies);
+        identifyWeaknessesAndSetContent(updatedFactCombination, selectedCounterStrat);
       }, 0); 
     }
   };
@@ -32,7 +36,7 @@ const IdentifyStrategies = () => {
           />
         ))}
       </div>
-      <button className="continue-button" onClick={handleContinue} disabled={isLoadingNews}>
+      <button className="continue-button" onClick={handleContinue} disabled={!selectedCounterStrat}>
       {t('common.continue')} 
       </button>
     </div>
