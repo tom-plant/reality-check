@@ -271,8 +271,6 @@ def introduce_event_controller(event_details):
 
     return {"event_outcome_text": event_outcome_text}
 
-
-
 def identify_weaknesses_controller(updated_fact_combination, selected_strategies):    
     # Check if user is logged in
     if 'user_data' not in session:
@@ -301,16 +299,18 @@ def identify_weaknesses_controller(updated_fact_combination, selected_strategies
 
     return chatgpt_responses
 
-
-def conclusion_controller(counter_narrative): 
+def conclusion_controller(narrative, strategy):
     # Check if user is logged in
     if 'user_data' not in session:
         return {"error": "User not logged in"}, 401
 
-#DEFINE THIS 
-    if 
-    victory = ['']
+    # Store the strategy in session for later use
+    strategy_id = session['user_data']['strat_id']
+    counter_strategy_id = get_counter_strategy_id_by_name(strategy)
+    session['user_data']['counterstrat_id'] = counter_strategy_id
+    session.modified = True
 
+    effectiveness = get_effectiveness_by_ids(strategy_id, counter_strategy_id)
 
     prompts_election_outcomes = generate_prompts(
         file_path='prompts.json',
@@ -320,19 +320,19 @@ def conclusion_controller(counter_narrative):
             'narrative': get_primary_narrative_by_id(session['user_data']['primary_narrative_id']),
             'counter_narrative': counter_narrative,
             'crisis_background': get_text('plot_context', 'crisis_background'),
-            'victory': victory
+            'effectiveness': effectiveness
             'outcomes': get_text('plot_context', 'outcomes')
         })
 
-    election_outcomes = get_chatgpt_response(prompts_election_outcomes)
+    election_outcome = get_chatgpt_response(prompts_election_outcomes)
 
     # Save to Database 
     secondary_narrative = create_secondary_narrative(
         original_narrative_id=session['user_data']['primary_narrative_id'], 
         updated_fact_combination_id=session['user_data']['updated_fact_combination_id'], 
         narrative_text=counter_narrative, 
-        counterstrat_id=session['user_data']['counterstrat_id'], ## CURRENTLY NON EXISTENT
-        news=election_outcomes
+        counterstrat_id=session['user_data']['counterstrat_id'],
+        news=election_outcome
         _session=None
     )
     db.session.add(secondary_narrative)
@@ -340,4 +340,4 @@ def conclusion_controller(counter_narrative):
     session['user_data']['secondary_narrative_id'] = secondary_narrative.id
     session.modified = True
 
-    return {"election_outcomes": election_outcomes}
+    return {"election_outcome": election_outcome}

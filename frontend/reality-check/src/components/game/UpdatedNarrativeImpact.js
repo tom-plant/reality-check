@@ -1,27 +1,55 @@
 // UpdatedNarrativeImpact.js
 
-import React, { useEffect, useState } from 'react';
-import { useGameState } from '../../contexts/GameContext';
+import React, { useState } from 'react';
+import { useGameState, useGameDispatch, useGameFunction } from '../../contexts/GameContext';
+import NarrativeBox from '../common/NarrativeBox';
 import LoadingIcon from '../common/LoadingIcon';
-import './UpdatedNarrativeImpact.css'; 
+import './UpdatedNarrativeImpact.css';
 
 const UpdatedNarrativeImpact = () => {
-  const { secondaryNarrativeOptions, isLoadingNews } = useGameState();
-  const [content, setContent] = useState(null);
+  const { secondaryNarrativeOptions, isLoadingNarrative, selectedNarrative } = useGameState();
+  const dispatch = useGameDispatch();
+  const { fetchAndSetConclusion } = useGameFunction();
+  const [buttonClicked, setButtonClicked] = useState(false);
 
+  // Handle narrative selection
+  const handleNarrativeConfirmation = () => {
+    if (!buttonClicked && selectedNarrative) {
+      setButtonClicked(true);
+      dispatch({ type: 'SET_SECONDARY_NARRATIVE_CONTENT', payload: selectedNarrative }); 
+      fetchAndSetConclusion(selectedNarrative);
+      setCurrentPhase('outro'); 
+      dispatch({ type: 'SET_CURRENT_OUTRO_VIEW', payload: 'CONCLUSION_WRAP_UP' });
+    }
+  };
 
   return (
     <div className="narrative-impact">
-      {isLoadingNews ? (
+      {isLoadingNarrative ? (
         <div className="loading-container">
           <LoadingIcon />
         </div>
       ) : (
-        <div className="news-content"> 
-          <h1>{headline}</h1>
-          {imageUrl && <img src={imageUrl} alt="News Visual" />}
-          <p>{story}</p>
-        </div>
+        <>
+          <h2>Impact of Updated Narratives</h2>
+          <div className="narratives-list">
+            {secondaryNarrativeOptions && secondaryNarrativeOptions.map((narrative) => (
+              <NarrativeBox 
+                key={narrative.id} 
+                narrative={narrative}
+                isSelected={selectedNarrative && narrative === selectedNarrative}
+                container="left"
+              />
+            ))}
+          </div>
+          <button
+            className="confirm-narrative"
+            disabled={!selectedNarrative}
+            onClick={handleNarrativeConfirmation}
+          >
+            Confirm Selection
+          </button>
+        </>
       )}
     </div>
   );

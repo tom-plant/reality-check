@@ -8,7 +8,6 @@ import './ConclusionWrapUp.css';
 const ConclusionWrapUp = ({ setCurrentOutroView }) => {
   const { conclusionContent, isLoadingConclusion } = useGameState();
   const { t } = useTranslation();
-  const dispatch = useGameDispatch();
   const [buttonClicked, setButtonClicked] = useState(false); 
 
   // Set updated facts and generate updated news content
@@ -24,14 +23,12 @@ const ConclusionWrapUp = ({ setCurrentOutroView }) => {
   return (
     <div className="conclusion-wrap-up">
       <h2>Game Conclusion</h2>
-      <p className="conclusion-introduction">{introductionText}</p> {/* Display the introduction text */}
+      <p className="conclusion-introduction">{introductionText}</p>
       {isLoadingConclusion ? (
         <LoadingIcon />
       ) : (
         <>
-          {conclusionContent?.conclusion_paragraphs?.map((paragraph, index) => (
-            <p key={index}>{paragraph}</p>
-          ))}
+          <p>{conclusionContent?.election_outcome}</p> 
           <button onClick={handleConclude}>{t('common.continue')}</button>
         </>
       )}
@@ -40,6 +37,5 @@ const ConclusionWrapUp = ({ setCurrentOutroView }) => {
 };
 
 export default ConclusionWrapUp;
-
 
 

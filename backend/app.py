@@ -206,13 +206,15 @@ def identify_weaknesses():
 
 @app.route('/game/conclusion', methods=['POST'])
 def conclusion():
-    # Receive counter narrative from the frontend
-    counter_narrative = request.json.get('counter_narrative')
+    # Receive narrative details from the frontend
+    data = request.get_json()
+    narrative = data.get('narrative')
+    strategy = data.get('strategy')
     
-    # Call controller function to handle logic
-    response_data = conclusion_controller(counter_narrative)
+    # Call the controller function to process the data and generate a conclusion
+    response_data = conclusion_controller(narrative, strategy)
     
-    # Return response to frontend
+    # Return the generated conclusion data to the frontend
     return jsonify(response_data)
 
 @app.errorhandler(404)

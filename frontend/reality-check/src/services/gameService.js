@@ -192,11 +192,12 @@ export const identifyWeaknesses = async (updatedFactCombination, selectedStrateg
 };
 
 
-// API function to identify weaknesses in narratives
-export const conclusion = async (counterNarrative) => {
+// API function to fetch conclusion based on the selected narrative
+export const conclusion = async (selectedNarrative) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/game/conclusion`, {
-      counter_narrative: counterNarrative
+    const response = await axios.post(`${API_BASE_URL}/game/conclusion`, {
+      narrative: selectedNarrative.narrative,
+      strategy: selectedNarrative.strategy
     }, {
       headers: {
         'Content-Type': 'application/json',
@@ -209,6 +210,7 @@ export const conclusion = async (counterNarrative) => {
     throw error;
   }
 };
+
 
 
 

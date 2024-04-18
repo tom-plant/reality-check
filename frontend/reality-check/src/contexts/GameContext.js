@@ -407,7 +407,7 @@ const GameProvider = ({ children }) => {
       dispatch({ type: 'SET_LOADING_NEWS', payload: true }); 
       const content = await selectNarrative({
         narrative: selectedNarrative.text,
-        strategy: selectedNarrative.strategy
+        strategy: selectedNarrative.strategy //not sure if this is actually a part of what selectedNarrative actually is
       });
       dispatch({ type: 'SET_SELECTED_NARRATIVE_CONTENT', payload: content });
       dispatch({ type: 'SET_LOADING_NEWS', payload: false });
@@ -449,24 +449,25 @@ const GameProvider = ({ children }) => {
     }
   };
 
-  const fetchAndSetConclusion = async () => {
+  const fetchAndSetConclusion = async (selectedNarrative) => {
     try {
-      console.log('starting conclusion context function')
-      dispatch({ type: 'SET_LOADING_CONCLUSION', payload: true }); 
-      const response = await conclusion();
+      console.log('starting conclusion context function');
+      dispatch({ type: 'SET_LOADING_CONCLUSION', payload: true });
+      const response = await conclusion({
+        narrative: selectedNarrative.text,
+        strategy: selectedNarrative.strategy
+      });
       console.log("YAY CONCLUSION CONTENT", response);
       dispatch({
         type: 'SET_CONCLUSION_CONTENT',
-        payload: {
-          conclusion_paragraphs: response.conclusion_paragraphs
-        }
+        payload: response  // Directly setting the response object assuming it matches the expected structure.
       });
       dispatch({ type: 'SET_LOADING_CONCLUSION', payload: false });
     } catch (error) {
       console.error('Failed to conclude:', error);
       dispatch({ type: 'SET_LOADING_CONCLUSION', payload: false }); 
     }
-};
+  };
 
   return (
     <GameStateContext.Provider value={state}>

@@ -1,5 +1,5 @@
 from app import app, db  # Import your Flask app and db from your main app file
-from models import Fact, Event, Actor, Strat, CounterStrat # Import the Fact model
+from models import Fact, Event, Actor, Strat, CounterStrat, StrategyEffectiveness # Import the Fact model
 import os
 
 # Fact entries to be added
@@ -54,8 +54,16 @@ counterstrats = [
     "Offering an Alternative Explanation: Presenting an alternative explanation to the inaccurate one without explicitly correcting it.",
     "Debunking the False Claim: Providing thorough reasoning to disprove misleading information.",
     "Recalibrating Emotions and Framing: Using a correction to validate the reader's existing beliefs and reassure their interests.",
-    "Bringing in More Data: Offering data and evidence from trusted sources to back up true claims.",
+    "Corrective Data Aligned with Personal Values: Offering data and evidence from trusted sources to back up true claims.",
 ]
+
+effectiveness_mappings = [
+    ('strong', 'medium', 'weak', 'medium'),  # For Showing the Cause-and-Effect
+    ('weak', 'strong', 'medium', 'medium'),  # For Instructing What to Believe
+    ('medium', 'medium', 'strong', 'weak'),  # For Highlighting Danger
+    ('medium', 'weak', 'medium', 'strong')   # For Appealing to Personal Beliefs
+]
+
 
 if os.getenv('FLASK_ENV') == 'development':
     with app.app_context():  # Use the app's context
@@ -66,16 +74,34 @@ if os.getenv('FLASK_ENV') == 'development':
         for event_text in events:
             new_event = Event(text=event_text, language='ENG')  # Assuming all facts are in English
             db.session.add(new_event)
-        for actor_text in events:
+        for actor_text in actors:
             new_actor = Actor(text=actor_text, language='ENG')  # Assuming all facts are in English
             db.session.add(new_actor)
-        for strat_text in events:
+        for strat_text in strats:
             new_strat = Strat(text=strat_text, language='ENG')  # Assuming all facts are in English
             db.session.add(new_strat)
-        for strat_text in events:
+        for counterstrat_text in counterstrats:
             new_counterstrat = CounterStrat(text=counterstrat_text, language='ENG')  # Assuming all facts are in English
             db.session.add(new_counterstrat)
         # Commit the session to save these objects to the database
+        db.session.commit()
+
+        # Retrieve all strategies and counterstrategies
+        strats_db = {strat.text: strat.id for strat in Strat.query.all()}
+        counterstrats_db = {cstrat.text: cstrat.id for cstrat in CounterStrat.query.all()}
+
+        # Prepare StrategyEffectiveness entries
+        effectiveness_entries = []
+        for idx, (strat, effects) in enumerate(zip(strats, effectiveness_mappings)):
+            for jdx, eff in enumerate(effects):
+                effectiveness_entries.append({
+                    'strategy_id': strats_db[strat],
+                    'counter_strategy_id': counterstrats_db[counterstrats[jdx]],
+                    'effectiveness': eff
+                })
+
+        # Bulk insert StrategyEffectiveness entries
+        db.session.bulk_insert_mappings(StrategyEffectiveness, effectiveness_entries)
         db.session.commit()
 
 print("Database populated with facts and events.")

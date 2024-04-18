@@ -4,10 +4,10 @@ from sqlalchemy import select, func, and_, or_
 import os
 if os.getenv('FLASK_ENV') == 'production':
     from backend.app import db
-    from backend.models import User, Fact, Event, Actor, Strat, FactCombination, PrimaryNarrative, NarrativeEvent, SecondaryNarrative
+    from backend.models import User, Fact, Event, Actor, Strat, CounterStrat, StrategyEffectiveness, FactCombination, PrimaryNarrative, NarrativeEvent, SecondaryNarrative
 else:
     from app import db
-    from models import User, Fact, Event, Actor, Strat, Strat, FactCombination, PrimaryNarrative, NarrativeEvent, SecondaryNarrative
+    from models import User, Fact, Event, Actor, Strat, Strat, CounterStrat, StrategyEffectiveness, FactCombination, PrimaryNarrative, NarrativeEvent, SecondaryNarrative
 
 # User Operations
 
@@ -103,6 +103,11 @@ def get_all_counterstrats(_session=None):
     session = _session or db.session
     return session.execute(select(CounterStrat)).scalars().all()
 
+def get_counter_strategy_id_by_name(strategy_name):
+    # strategy_name = strategy_name.strip().lower()
+    counter_strategy = CounterStrat.query.filter_by(text=strategy_name).first()
+    return counter_strategy.id if counter_strategy else None
+
 # Strat Operations
 
 def get_all_strats(_session=None):
@@ -113,6 +118,26 @@ def get_strategy_id_by_strategy_name(strategy_name):
     strategy = Strat.query.filter_by(text=strategy_name).first()
     return strategy.id if strategy else None
 
+# StrategyEffectiveness Operations
+
+def get_effectiveness_by_ids(strategy_id, counter_strategy_id):
+    """
+    Retrieve the effectiveness of a strategy and counter-strategy matchup using their IDs.
+
+    Args:
+        strategy_id (int): The ID of the strategy.
+        counter_strategy_id (int): The ID of the counter-strategy.
+
+    Returns:
+        str: The effectiveness rating ('strong', 'medium', 'weak').
+    """
+    effectiveness_record = StrategyEffectiveness.query.filter_by(
+        strategy_id=strategy_id,
+        counter_strategy_id=counter_strategy_id
+    ).first()
+    return effectiveness_record.effectiveness if effectiveness_record else 'medium'
+
+
 # Actor Operations
 
 def get_all_actors(_session=None):
@@ -120,8 +145,7 @@ def get_all_actors(_session=None):
     return session.execute(select(Actor)).scalars().all()
 
 def get_actor_id_by_actor_name(name):
-    name = name.strip().lower()
-    # Query the database directly for a matching actor by normalized text
+    # name = name.strip().lower()
     actor = Actor.query.filter_by(text=name).first()
     return actor.id if actor else None
 

@@ -52,6 +52,17 @@ class CounterStrat(db.Model):
     text = db.Column(db.String(1000), nullable=False) 
     language = db.Column(db.Enum('ENG', 'EST', 'RUS', name='language_types'), default='ENG', nullable=False)
 
+class StrategyEffectiveness(db.Model):
+    __tablename__ = 'strategy_effectiveness'
+
+    id = db.Column(db.Integer, primary_key=True)
+    strategy_id = db.Column(db.Integer, db.ForeignKey('strats.id'), nullable=False)
+    counter_strategy_id = db.Column(db.Integer, db.ForeignKey('counterstrats.id'), nullable=False)
+    effectiveness = db.Column(db.Enum('weak', 'medium', 'strong', name='effectiveness_types'), default='medium', nullable=False)
+
+    strategy = db.relationship('Strat', foreign_keys=[strategy_id], backref='effectiveness_as_strategy')
+    counter_strategy = db.relationship('CounterStrat', foreign_keys=[counter_strategy_id], backref='effectiveness_as_counter_strategy')
+
 class FactCombination(db.Model):
     __tablename__ = 'fact_combinations'
 
