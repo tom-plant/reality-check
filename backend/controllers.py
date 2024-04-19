@@ -9,7 +9,7 @@ from flask import session, redirect, url_for, current_app
 from ai_calls import get_chatgpt_response, get_dalle2_response
 from prompts_assembly import generate_prompts
 from db_operations import *
-from app import app
+# from app import app
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)

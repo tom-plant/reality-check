@@ -1,13 +1,7 @@
-# This docker-compose.yml is intended for local development use only.
-
 version: '3.8'
 services:
   web:
     build: .
-    entrypoint: /entrypoint.sh  # Specify the entrypoint script
-    command: gunicorn -w 3 -b :5000 --log-level debug app:app
-    volumes:
-      - ./backend:/app/backend
     ports:
       - "5000:5000"
     env_file:
@@ -16,16 +10,17 @@ services:
       - FLASK_ENV=development
     depends_on:
       - db
+    volumes: 
+      - ./backend:/app/backend
   db:
     image: mysql:5.7
     volumes: 
-     - db-data:/var/lib/mysql
+      - db-data:/var/lib/mysql
     environment:
-      API_KEY: ${API_KEY}
-      MYSQL_DATABASE: reality_check
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      - MYSQL_DATABASE=reality_check
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     ports:
       - "3306:3306"
 
