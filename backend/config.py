@@ -14,6 +14,7 @@ class Config:
     SESSION_FILE_THRESHOLD = 100
 
 class DevelopmentConfig(Config):
+    SQLALCHEMY_DATABASE_URI = os.getenv('DEV_SQLALCHEMY_DATABASE_URI')
     DEBUG = True
 
 class TestingConfig(Config):

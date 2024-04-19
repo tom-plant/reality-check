@@ -104,4 +104,4 @@ if os.getenv('FLASK_ENV') == 'development':
         db.session.bulk_insert_mappings(StrategyEffectiveness, effectiveness_entries)
         db.session.commit()
 
-print("Database populated with facts and events.")
+print("Database populated with facts, events, actors, strats, and counterstrats.")
