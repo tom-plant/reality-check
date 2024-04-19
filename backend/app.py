@@ -2,6 +2,8 @@
 
 from flask import Flask, session, jsonify, redirect, url_for, render_template, request, send_from_directory
 from config import Config, DevelopmentConfig, TestingConfig, ProductionConfig
+from flask_cors import CORS
+from flask_session import Session 
 import uuid
 from dotenv import load_dotenv
 import os
@@ -20,6 +22,8 @@ def create_app():
     app = Flask(__name__, static_folder='build/static')
 
     # Load environment configurations
+    CORS(app, supports_credentials=True, resources={r"/*": {"origins": os.environ.get('ALLOWED_ORIGINS')}})
+    # Session(app)
     load_dotenv()
 
     # Set the configuration for SQLAlchemy directly after loading environment variables

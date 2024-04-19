@@ -75,7 +75,7 @@ def get_all_strats_controller():
 
 def get_all_counterstrats_controller():
     try:
-        strats = get_all_counterstrats()  
+        counterstrats = get_all_counterstrats()  
         counterstrats_list = [{'id': counterstrat.id, 'text': counterstrat.text, 'language': counterstrat.language} for counterstrat in counterstrats]
         return {"counterstrats": counterstrats_list}
     except Exception as e:

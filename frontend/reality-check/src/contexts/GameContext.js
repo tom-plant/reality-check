@@ -345,9 +345,9 @@ const GameProvider = ({ children }) => {
       const response = await getCounterStrats(); 
       if (response && response.counterstrats) {
         const counterstratsData = response.counterstrats;
-        const transformedCounterStrats = counterstratsData.map(counterstrat => ({
-          id: counterstrat.id,
-          text: counterstrat.text
+        const transformedCounterStrats = counterstratsData.map(counterstrats => ({
+          id: counterstrats.id,
+          text: counterstrats.text
         }));
         dispatch({ type: 'SET_COUNTERSTRATS', payload: transformedCounterStrats });
       } else {
