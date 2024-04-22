@@ -165,21 +165,17 @@ def select_narrative_controller(selected_narrative, strategy):
             'facts': get_fact_combination_by_id(session['user_data']['fact_combination_id'])
         })
 
-    response = get_chatgpt_response(prompts_news_article)
-    current_app.logger.debug(f"Received response: {response}")
-
-    # Check if the response is a string that looks like a JSON
+    news_response = get_chatgpt_response(prompts_news_article)
     try:
         # Try parsing it assuming it's a JSON string
-        parsed_response = json.loads(response)
+        parsed_response = json.loads(news_response)
         current_app.logger.debug(f"Parsed response as JSON: {parsed_response}")
         content_batch['news_article'] = parsed_response
     except json.JSONDecodeError:
         # If parsing fails, assume it's a normal string response
         current_app.logger.debug("Response is not JSON, using as is.")
-        content_batch['news_article'] = response
+        content_batch['news_article'] = news_response
 
-    # Continue with existing logic to handle the headline and other data...
     headline = content_batch['news_article']['headline']
 
     # Generate news photo
@@ -201,7 +197,18 @@ def select_narrative_controller(selected_narrative, strategy):
             'facts': get_fact_combination_by_id(session['user_data']['fact_combination_id']),
         })
 
-    content_batch['social_media_content'] = get_chatgpt_response(prompts_social_media_content)
+    social_media_response = get_chatgpt_response(prompts_social_media_content)
+    current_app.logger.debug('social media response: ', social_media_response)
+    try:
+        # Try parsing it assuming it's a JSON string
+        parsed_response = json.loads(social_media_response)
+        current_app.logger.debug(f"Parsed response as JSON: {parsed_response}")
+        content_batch['social_media_content'] = parsed_response
+    except json.JSONDecodeError:
+        # If parsing fails, assume it's a normal string response
+        current_app.logger.debug("Response is not JSON, using as is.")
+        content_batch['social_media_content'] = social_media_response
+
     video_title = content_batch['social_media_content']['youtube']
 
     # Generate YouTube thumbnail

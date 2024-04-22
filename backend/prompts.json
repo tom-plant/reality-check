@@ -74,7 +74,7 @@
         "2 - Select one random item from the list of provided facts, delimited below with triple backticks and separate with commas.",
         "3 - Use the instructions provided from the content type to create a social media post using the randomly selected fact that you chose.",
         "3 - Once you complete the first content type, select the second item from the list of content types. Then, select another random item from the list of provided facts that you did not select before.",
-        "4 - Format your outcome as a .json file with the three content types as the three keys.",
+        "4 - Format your outcome as a .json file with the three content types as the three keys: 'instagram', 'youtube', and 'shortform'",
         "Content types: '''{instagram}, {youtube}, {shortform}'''",
         "Provided facts: '''{facts}'''",
         "If you are missing any of the information delimited by backticks, please output “Missing information: [write the missing information key here]”"
