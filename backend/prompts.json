@@ -153,79 +153,22 @@
       ]
     }
   },
-  "plot_context": {
+  "prompt_inserts": {
     "crisis_background": [
       "Overview of the Election Crisis in Eirist:",
       "Eirist is plunged into a crisis characterized by cyberattacks causing strategic power outages. These attacks target rural areas known for conservative voters and immigrant populations, historically influencing election outcomes.",
       "Perpetrators: Unknown to the public, foreign operatives from the Republic of Talme orchestrate the attacks. They selected their targets to deepen social divides and economic disparities, fostering chaos and distrust.",
       "Immediate Consequences: Power outages disrupt crucial rural functions, including food, communication, and transportation networks. The divided population begins to blame each other instead of identifying the foreign power as the source of the crisis. Rural population withdraws support from the government, some organizing into militia structures. The government’s inability to swiftly restore power or provide explanations leads to a crisis of legitimacy. Emergency powers are invoked, leading to the establishment of an 'imperial presidency' to manage the situation."
     ],
-    "facts": {
-      "1": "Power outages occur only in rural areas.",
-      "2": "Local trains are unable to run.",
-      "3": "The government postpones the election.",
-      "4": "Rural militia groups organize.",
-      "5": "Emergency services are overwhelmed with calls for help.",
-      "6": "Banks stop transactions due to cyberattacks.",
-      "7": "Social media becomes flooded with misinformation.",
-      "8": "Rural towns and villages cannot use phones to communicate.",
-      "9": "The government announces suspected involvement by the Republic of Talme.",
-      "10": "More police and army are spotted in big cities.",
-      "11": "Small public protests start to form in cities.",
-      "12": "Government buildings are fortified against attacks.",
-      "13": "Power grid companies report hacks.",
-      "14": "Schools and universities close down until further notice.",
-      "15": "Gas stations announce expected fuel shortages.",
-      "16": "Rural citizens rush to stores for food and water.",
-      "17": "International flights to and from Eirist are canceled.",
-      "18": "Embassies begin to evacuate foreign citizens in Eirist.",
-      "19": "Voting stations switch to emergency power.",
-      "20": "Drones are spotted near the attacked power stations.",
-      "21": "A viral social media post accuses the government of the crisis."
-    },
-    "events": {
-      "1": "More Cyberattacks: A new wave of cyberattacks disrupt communication networks, including emergency services and news outlets, creating more fear among the public.",
-      "2": "Militia March to the Capital: Rural residents organize into a loose militia and begin to march towards the capital to prevent the government from consolidating power.",
-      "3": "Disinformation Campaign: False videos and maps circulate that accuse the government of orchestrating the crisis and committing election fraud.",
-      "4": "Border Closure Announced: In response to escalating tensions, the government announces the temporary closure of national borders with the Republic of Talme."
-    },
-    "outcomes": {
-      "1": "Government Consolidates Power: If the public and international community accept the government's narrative, the ruling party successfully consolidates power under the emergency measures, potentially leading to a more authoritarian regime.",
-      "2": "Government Overthrown: If the opposition and conspiracy narratives dominate, and the public perceives the government as the orchestrator of the crisis, massive protests and international pressure could lead to the overthrow of the current regime.",
-      "3": "Stalemate and International Mediation: A stalemate ensues if no single narrative dominates. With the nation paralyzed by uncertainty and the risk of civil conflict escalating, international bodies might step in to mediate, possibly leading to a transitional government or new elections under international supervision.",
-      "4": "Escalation into Civil Conflict: If the situation continues to deteriorate, with the government and opposition unable to assert control, Eirist could spiral into a civil conflict, with various factions vying for power amidst the chaos."
-    },
     "narrative_def": "A narrative is a structured account of events that aims to manage information overload by selectively highlighting certain facts while omitting others. It presents a concise and memorable story featuring identifiable actors, cause-and-effect relationships between events, and an implicit desired outcome, all of which are influenced by the perspective and intent of the author.",
     "counternarrative_def": "A counter-narrative is a strategic response to a flawed narrative and seeks to challenge and rectify its inaccuracies or biases. It offers an alternative perspective or interpretation of events, often by highlighting overlooked facts, emphasizing different causal relationships, or discrediting the source and intentions of the original narrative.",
-    "actor": {
-      "Eirist Government": {
-        "description": "The ruling body of Eirist, currently holding emergency powers.",
-        "motivations": "Maintain order, control the narrative, and preserve peace and security amidst the crisis.",
-        "narrative_against": "Accused of either orchestrating the crisis to delay elections and extend power or failing to protect the nation from foreign cyberattacks."
-      },
-      "Rural Militias": {
-        "description": "Loosely organized groups formed in rural areas, consisting of conservative voters and immigrant populations.",
-        "motivations": "Protect their communities, restore order, and oppose the government's emergency measures if they overstep reasonable boundaries.",
-        "narrative_against": "Seen as potential instigators of violence or being manipulated by foreign powers to destabilize Eirist."
-      },
-      "Republic of Talme": {
-        "description": "Foreign nation suspected of orchestrating the cyberattacks to destabilize Eirist.",
-        "motivations": "Undermine Eirist's democracy, sow discord, and expand its own geopolitical influence.",
-        "narrative_against": "Unconfirmed, but the suspected mastermind behind the cyberattacks and power outages, exploiting Eirist's vulnerabilities."
-      },
-      "Eirist Opposition Parties": {
-        "description": "Political parties opposing the current Eirist government, seeking to gain power in the upcoming elections.",
-        "motivations": "Capitalize on the government's perceived failures to gain public support and win the postponed elections.",
-        "narrative_against": "Accused by some of conspiring to create a crisis that discredits the ruling party and forces an electoral shift."
-      },
-      "International Community": {
-        "description": "Global entities and foreign nations observing and potentially intervening in Eirist's crisis.",
-        "motivations": "Ensure stability, support democratic processes, and prevent escalation into wider conflict.",
-        "narrative_against": "Some factions within Eirist accuse international actors of interference, either to support the government or the opposition."
-      }
-    }
-  },
-  "prompt_inserts": {
+    "actor_background": [
+      "Eirist Government: Description: The ruling body of Eirist, currently holding emergency powers. Motivations: Maintain order, control the narrative, and preserve peace and security amidst the crisis. Narrative Against: Accused of either orchestrating the crisis to delay elections and extend power or failing to protect the nation from foreign cyberattacks.",
+      "Rural Militias: Description: Loosely organized groups formed in rural areas, consisting of conservative voters and immigrant populations. Motivations: Protect their communities, restore order, and oppose the government's emergency measures if they overstep reasonable boundaries. Narrative Against: Seen as potential instigators of violence or being manipulated by foreign powers to destabilize Eirist.",
+      "Republic of Talme: Description: Foreign nation suspected of orchestrating the cyberattacks to destabilize Eirist. Motivations: Undermine Eirist's democracy, sow discord, and expand its own geopolitical influence. Narrative Against: Unconfirmed, but the suspected mastermind behind the cyberattacks and power outages, exploiting Eirist's vulnerabilities.",
+      "Eirist Opposition Parties: Description: Political parties opposing the current Eirist government, seeking to gain power in the upcoming elections. Motivations: Capitalize on the government's perceived failures to gain public support and win the postponed elections. Narrative Against: Accused by some of conspiring to create a crisis that discredits the ruling party and forces an electoral shift.",
+      "International Community: Description: Global entities and foreign nations observing and potentially intervening in Eirist's crisis. Motivations: Ensure stability, support democratic processes, and prevent escalation into wider conflict. Narrative Against: Some factions within Eirist accuse international actors of interference, either to support the government or the opposition."
+    ],
     "social_media_content": {
       "instagram": [
         "These types of posts on Instagram typically fall into the category of 'personal narrative activism.' They often feature a visually appealing image overlaid with text, presenting a quote that recounts a personal experience or anecdote during a political event, providing humanizing insight. The use of emotive language to evoke feelings of empathy, solidarity, or urgency among viewers. These posts aim to mobilize people by providing a human perspective on a particular issue or event, fostering empathy and understanding among viewers.",
@@ -312,22 +255,12 @@
         "4 - Undermine the plausibility of misinformation or the credibility of its source by explaining why the misinformation source might have a vested interest in spreading disinformation, as it might enrich them, further their political goals, reflect their funding sources, etc."
       ]
     },
-    "outcomes": {
-      "Government Power": [
-        "Government Consolidates Power: If the public and international community accept the government's narrative, the ruling party successfully consolidates power under the emergency measures, potentially leading to a more authoritarian regime."
-      ],
-      "Government Overthrow": [
-        "Government Overthrown: If the opposition and conspiracy narratives dominate, and the public perceives the government as the orchestrator of the crisis, massive protests and international pressure could lead to the overthrow of the current regime."
-      ],
-      "Intervention": [
-        "Stalemate and International Mediation: A stalemate ensues if no single narrative dominates. With the nation paralyzed by uncertainty and the risk of civil conflict escalating, international bodies might step in to mediate, possibly leading to a transitional government or new elections under international supervision."
-      ],
-      "Peace": [
-        "Peace Achieved: If a corrected narrative prevails, supported by public and international consensus, Eirist could achieve a sustainable peace by identifying the Republic of Talme as the attacker, neutralizing the threat, and resuming a free and fair election that leads to a peaceful maintence of power or transfer of power to the opposition."
-      ],
-      "Civil Conflict": [
-        "Escalation into Civil Conflict: If the situation continues to deteriorate, with the government and opposition unable to assert control, Eirist could spiral into a civil conflict, with various factions vying for power amidst the chaos."
-      ]
-    }
+    "outcomes": [
+      "Government Power: Government Consolidates Power: If the public and international community accept the government's narrative, the ruling party successfully consolidates power under the emergency measures, potentially leading to a more authoritarian regime.",
+      "Government Overthrow: Government Overthrown: If the opposition and conspiracy narratives dominate, and the public perceives the government as the orchestrator of the crisis, massive protests and international pressure could lead to the overthrow of the current regime.",
+      "Intervention: Stalemate and International Mediation: A stalemate ensues if no single narrative dominates. With the nation paralyzed by uncertainty and the risk of civil conflict escalating, international bodies might step in to mediate, possibly leading to a transitional government or new elections under international supervision.",
+      "Peace: Peace Achieved: If a corrected narrative prevails, supported by public and international consensus, Eirist could achieve a sustainable peace by identifying the Republic of Talme as the attacker, neutralizing the threat, and resuming a free and fair election that leads to a peaceful maintence of power or transfer of power to the opposition.",
+      "Civil Conflict: Escalation into Civil Conflict: If the situation continues to deteriorate, with the government and opposition unable to assert control, Eirist could spiral into a civil conflict, with various factions vying for power amidst the chaos."
+    ]
   }
 }

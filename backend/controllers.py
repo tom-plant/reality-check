@@ -118,21 +118,26 @@ def build_narrative_controller(selected_actor, selected_strategies):
     current_app.logger.debug("Entered build narative controller.")
     prompts_narrative = {}
     chatgpt_responses = {}
+
+    # Extract text from selected_actor and selected_strategies
+    actor_text = selected_actor['text'] 
+    strategy_texts = [strategy['text'] for strategy in selected_strategies] 
+
     current_app.logger.debug("Trying to generate prompts.")
-    for strategy in selected_strategies:
-        prompts_narrative[strategy] = generate_prompts(
+    for strategy_text in strategy_texts:
+        prompts_narrative[strategy_text] = generate_prompts(
             category='narrative',
             prompt_type='both',
             dynamic_inserts={
-                'actor': get_text('prompt_inserts', 'actor', selected_actor),
-                'strategy': get_text('prompt_inserts', 'construction_strategy', strategy),
+                'actor': get_text('prompt_inserts', 'actor', actor_text),
+                'strategy': get_text('prompt_inserts', 'construction_strategy', strategy_text),
                 'facts': get_fact_combination_by_id(session['user_data']['fact_combination_id']),
             })
         current_app.logger.debug("Trying to generate chatgptresponses.")
-        chatgpt_responses[strategy] = get_chatgpt_response(prompts_narrative[strategy])
+        chatgpt_responses[strategy_text] = get_chatgpt_response(prompts_narrative[strategy_text])
     
     current_app.logger.debug("Trying to commit session data.")
-    actor_id = get_actor_id_by_actor_name(selected_actor)
+    actor_id = get_actor_id_by_actor_name(selected_actor['text'])
     session['user_data']['actor_id'] = actor_id
     session.modified = True
 
