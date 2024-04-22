@@ -11,6 +11,7 @@ const BuildNarrativeDisplay = () => {
   const dispatch = useGameDispatch();
   const [buttonClicked, setButtonClicked] = useState(false); 
 
+  console.log('strats in buildnarrativedusplay: ', strats)
 // Generate narratives and change view, assuring button can only be clicked once
 const handleGenerateNarrative = async () => {
     if (!buttonClicked) { 
@@ -19,28 +20,31 @@ const handleGenerateNarrative = async () => {
         await buildAndSetNarrative(selectedActor, selectedStrat); 
     }
     };
+  
+    const isButtonEnabled = selectedActor && Array.isArray(selectedStrat) && selectedStrat.length === 2;
     
-  return (
-    <div className="build-narratives">
-      <h2>{t('buildNarratives.title')}</h2>
-      <div className="strats-list">
-        {strats.map((strat) => (
-          <StratBox
-            key={strat.id}
-            actor={strat.text}
-            isSelected={strat === selectedStrat} 
-            disabled={selectedStrat.length >= 2 && !selectedStrat.includes(strat)}
-          />
-        ))}
+    return (
+      <div className="build-narratives">
+        <h2>{t('buildNarratives.title')}</h2>
+        <div className="strats-list">
+          {strats && strats.map((strat) => (
+            <StratBox
+              key={strat.id}
+              strat={strat.text}
+              isSelected={selectedStrat.includes(strat)}
+              disabled={selectedStrat.length === 2 && !selectedStrat.includes(strat)}
+              container="right"
+            />
+          ))}
+        </div>
+        <button className="generate-narrative" 
+          onClick={handleGenerateNarrative}
+          disabled={!isButtonEnabled}
+        >
+          {t('common.confirmSelections')} 
+        </button>
       </div>
-      <button className="generate-narrative" 
-        onClick={handleGenerateNarrative}
-        disabled={selectedStrat.length < 2 || !selectedActor}
-      >
-        {t('common.confirmSelections')} 
-      </button>
-    </div>
-  );
+    );
 };
 
 export default BuildNarrativeDisplay;

@@ -9,6 +9,7 @@
     "clickToJoin": "Click to Join",
     "updateNarrative": "Update Narrative",
     "promoteNarrative": "Promote This Narrative",
+    "confirmSelections": "Confirm Selections",
     "moreFacts": "More Information",
     "login": "Login",
     "start": "Start",
@@ -95,6 +96,9 @@
           },
           "impact": "The facts you select will directly influence the scenarios and challenges you see play out in the simulation."
       }
+  },
+  "buildNarratives": {
+    "title": "Build Your Narrative"
   },
   "selectNarratives": {
       "title": "Select Narratives",

@@ -8,19 +8,24 @@ const StratBox = ({ strat, isSelected, disabled}) => {
   const { selectedStrat } = useGameState(); // Access the selected facts from context
 
   const toggleStratSelection = () => {
-    if (disabled) return; // Early return if interaction is disabled
+    if (disabled || !strat) return; // Early return if interaction is disabled or strat is undefined
   
     const actionType = isSelected ? 'DESELECT_STRAT' : 'SELECT_STRAT';
     dispatch({ type: actionType, payload: strat });
   };
 
+  // Check if strat is defined before rendering
+  if (!strat) {
+    console.error('StratBox received an undefined strat object.');
+    return null; // Or render some fallback UI
+  }
 
   return (
     <div 
-      className={`strat-box ${isSelected ? 'selected' : ''}`}
+      className={`strat-box ${isSelected ? 'selected' : ''} ${disabled ? 'disabled' : ''}`}
       onClick={toggleStratSelection}
     >
-      {strat.text}
+      {strat.text} // Safe to access text because of the check above
     </div>
   );
 };

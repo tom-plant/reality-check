@@ -1,3 +1,5 @@
+import json
+
 def generate_prompts(file_path, category, prompt_type='both', dynamic_inserts=None):
     if dynamic_inserts is None:
         dynamic_inserts = {}
@@ -44,3 +46,18 @@ def substitute_inserts(template, inserts):
     if not template:
         return None
     return template.format(**inserts)
+
+def get_text(file_path, category, key, identifier=None):
+
+    # Load the JSON data from the specified file
+    with open(file_path, 'r') as file:
+        data = json.load(file)
+
+    # Navigate to the required text snippet based on the presence of an identifier
+    try:
+        if identifier:
+            return data['prompt_inserts'][category][key][identifier]
+        else:
+            return data['prompt_inserts'][category][key]
+    except KeyError:
+        return f"Missing information: [{key}]"

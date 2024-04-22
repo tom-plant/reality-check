@@ -12,12 +12,13 @@ const BuildNarrative = () => {
     <div className="build-narratives">
       <h2>{t('buildNarratives.title')}</h2>
       <div className="actors-list">
-        {actors.map((actor) => (
+        {actors && actors.map((actor) => (
           <ActorBox
             key={actor.id}
             actor={actor.text}
             isSelected={actor === selectedActor}
             disabled={selectedActor && actor !== selectedActor}
+            container="left"
           />
         ))}
       </div>

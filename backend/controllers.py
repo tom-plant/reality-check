@@ -7,9 +7,8 @@ import json
 import requests
 from flask import session, redirect, url_for, current_app
 from ai_calls import get_chatgpt_response, get_dalle2_response
-from prompts_assembly import generate_prompts
+from prompts_assembly import generate_prompts, get_text
 from db_operations import *
-# from app import app
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -83,11 +82,16 @@ def get_all_counterstrats_controller():
         return {"error": "Failed to fetch counterstrats from the database."}, 500
 
 def select_facts_controller(selected_facts):
+    current_app.logger.debug("In the select facts controller.")
+
     if 'user_data' not in session:
         return {"error": "User not logged in"}, 401     
 
+    current_app.logger.debug("Trying to handle facts.")
     # Store the fact_combination_id in session
     fact_combination_id = handle_fact_combination(selected_facts)
+    current_app.logger.debug("Trying to add to user data.")
+
     session['user_data']['fact_combination_id'] = fact_combination_id
     session.modified = True
 
@@ -111,8 +115,10 @@ def build_narrative_controller(selected_actor, selected_strategies):
     if 'user_data' not in session:
         return {"error": "User not logged in"}, 401  
 
+    current_app.logger.debug("Entered build narative controller.")
     prompts_narrative = {}
     chatgpt_responses = {}
+    current_app.logger.debug("Trying to generate prompts.")
     for strategy in selected_strategies:
         prompts_narrative[strategy] = generate_prompts(
             file_path='prompts.json',
@@ -120,19 +126,20 @@ def build_narrative_controller(selected_actor, selected_strategies):
             prompt_type='both',
             dynamic_inserts={
                 'actor': get_text('prompt_inserts', 'actor', selected_actor),
-                'strategy': get_text('prompt_inserts', 'strategy', strategy),
+                'strategy': get_text('prompt_inserts', 'construction_strategy', strategy),
                 'facts': get_fact_combination_by_id(session['user_data']['fact_combination_id']),
             })
-        
+        current_app.logger.debug("Trying to generate chatgptresponses.")
         chatgpt_responses[strategy] = get_chatgpt_response(prompts_narrative[strategy])
     
+    current_app.logger.debug("Trying to commit session data.")
     actor_id = get_actor_id_by_actor_name(selected_actor)
     session['user_data']['actor_id'] = actor_id
     session.modified = True
 
     return chatgpt_responses
 
-def select_narrative_controller(narrative, strategy):
+def select_narrative_controller(selected_narrative, strategy):
     # Ensure 'user_data' is initialized in session
     current_app.logger.debug(f"Session Data: {session}")
     if 'user_data' not in session:
@@ -167,7 +174,7 @@ def select_narrative_controller(narrative, strategy):
             'headline': headline
         })
 
-    content_batch['news_photo'] = get_chatgpt_response(prompts_news_photo)
+    content_batch['news_photo'] = get_dalle2_response(prompts_news_photo)
 
     # Generate social media content
     prompts_social_media_content = generate_prompts(
@@ -191,7 +198,7 @@ def select_narrative_controller(narrative, strategy):
             'video_title': video_title
         })
 
-    content_batch['youtube_thumbnail'] = get_chatgpt_response(prompts_youtube_thumbnail)
+    content_batch['youtube_thumbnail'] = get_dalle2_response(prompts_youtube_thumbnail)
 
     # Commit Primary Narrative to Database
     primary_narrative = create_primary_narrative(
@@ -282,17 +289,17 @@ def identify_weaknesses_controller(updated_fact_combination, selected_strategies
             dynamic_inserts={
                 'narrative': get_primary_narrative_by_id(session['user_data']['primary_narrative_id']),
                 'updated_facts': updated_fact_combination,
-                'strategy': get_text('prompt_inserts', 'strategy', strategy)
+                'strategy': get_text('prompt_inserts', 'counter_strategies', strategy)
             })
 
     chatgpt_responses = {}
-    for strategy, prompts in prompts_narrative.items():
+    for strategy, prompts in prompts_counter_narrative.items():
         chatgpt_response = get_chatgpt_response(prompts)
         chatgpt_responses[strategy] = chatgpt_response
 
     return chatgpt_responses
 
-def conclusion_controller(narrative, strategy):
+def conclusion_controller(counter_narrative, strategy):
     # Check if user is logged in
     if 'user_data' not in session:
         return {"error": "User not logged in"}, 401

@@ -5,7 +5,6 @@ import EmailRow from '../common/EmailRow';
 import './ExpoInbox.css';
 
 
-
 const ExpoInbox = ({ setCurrentIntroView }) => {
   const { t } = useTranslation();
 
@@ -40,7 +39,7 @@ const ExpoInbox = ({ setCurrentIntroView }) => {
     // After a 5-second delay, add the new email to the top of the list
     const timer = setTimeout(() => {
       setCombinedEmails([newEmail, ...initialEmails]);
-    }, 5000); // 5000ms delay
+    }, 500); // 5000ms delay
 
     // Cleanup the timer when the component unmounts
     return () => clearTimeout(timer);

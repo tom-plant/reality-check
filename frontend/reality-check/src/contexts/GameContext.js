@@ -28,9 +28,9 @@ const initialState = {
   secondaryNarrative: [],
   conclusionContent: [],
   selectedEvent: null,
-  selectedStrat: null,
-  selectedCounterStrat: null,
-  selectedActor: null,
+  selectedStrat: [],
+  selectedCounterStrat: [],
+  selectedActor: [],
   primaryNewsContent: null,
   eventNewsContent: null,
   secondaryNewsContent: null,
@@ -314,6 +314,7 @@ const GameProvider = ({ children }) => {
           text: actor.text
         }));
         dispatch({ type: 'SET_ACTORS', payload: transformedActors });
+        console.log('here are actors being set in context: ', transformedActors)
       } else {
         console.error("Fetched data is not in the expected format:", response);
       }
@@ -332,6 +333,7 @@ const GameProvider = ({ children }) => {
           text: strat.text
         }));
         dispatch({ type: 'SET_STRATS', payload: transformedStrats });
+        console.log('here are strats being set in context: ', transformedStrats)
       } else {
         console.error("Fetched data is not in the expected format:", response);
       }
