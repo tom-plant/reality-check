@@ -17,7 +17,7 @@ ENV PYTHONPATH "${PYTHONPATH}:/app/backend"
 # Copy the backend directory contents and entrypoint script into the container
 COPY backend /app/backend
 COPY entrypoint.sh /app/
-# COPY ./migrations /app/migrations
+COPY ./backend/prompts.json /app/backend/prompts.json
 
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r backend/requirements.txt

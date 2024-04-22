@@ -121,7 +121,6 @@ def build_narrative_controller(selected_actor, selected_strategies):
     current_app.logger.debug("Trying to generate prompts.")
     for strategy in selected_strategies:
         prompts_narrative[strategy] = generate_prompts(
-            file_path='prompts.json',
             category='narrative',
             prompt_type='both',
             dynamic_inserts={
@@ -154,7 +153,6 @@ def select_narrative_controller(selected_narrative, strategy):
 
     # Generate news article
     prompts_news_article = generate_prompts(
-        file_path='prompts.json',
         category='news_article',
         prompt_type='both',
         dynamic_inserts={
@@ -167,7 +165,6 @@ def select_narrative_controller(selected_narrative, strategy):
 
     # Generate news photo
     prompts_news_photo = generate_prompts(
-        file_path='prompts.json',
         category='news_photo',
         prompt_type='system',
         dynamic_inserts={
@@ -178,7 +175,6 @@ def select_narrative_controller(selected_narrative, strategy):
 
     # Generate social media content
     prompts_social_media_content = generate_prompts(
-        file_path='prompts.json',
         category='social_media_content',
         prompt_type='both',
         dynamic_inserts={
@@ -191,7 +187,6 @@ def select_narrative_controller(selected_narrative, strategy):
 
     # Generate YouTube thumbnail
     prompts_youtube_thumbnail = generate_prompts(
-        file_path='prompts.json',
         category='youtube_thumbnail',
         prompt_type='system',
         dynamic_inserts={
@@ -248,7 +243,6 @@ def introduce_event_controller(event_details):
         return {"error": "Narrative not found"}, 404
 
     prompts_event_outcomes = generate_prompts(
-        file_path='prompts.json',
         category='event_outcome',
         prompt_type='both',
         dynamic_inserts={
@@ -283,7 +277,6 @@ def identify_weaknesses_controller(updated_fact_combination, selected_strategies
     prompts_counter_narrative = {}
     for strategy in selected_strategies:
         prompts_counter_narrative[strategy] = generate_prompts(
-            file_path='prompts.json',
             category='counter_narrative',
             prompt_type='both',
             dynamic_inserts={
@@ -313,7 +306,6 @@ def conclusion_controller(counter_narrative, strategy):
     effectiveness = get_effectiveness_by_ids(strategy_id, counter_strategy_id)
 
     prompts_election_outcomes = generate_prompts(
-        file_path='prompts.json',
         category='election_outcome',
         prompt_type='both',
         dynamic_inserts={

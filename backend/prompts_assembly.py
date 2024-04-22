@@ -1,6 +1,10 @@
 import json
+import os
 
-def generate_prompts(file_path, category, prompt_type='both', dynamic_inserts=None):
+def generate_prompts( category, prompt_type='both', dynamic_inserts=None):
+
+    file_path = '/app/backend/prompts.json'
+
     if dynamic_inserts is None:
         dynamic_inserts = {}
 
@@ -47,17 +51,22 @@ def substitute_inserts(template, inserts):
         return None
     return template.format(**inserts)
 
-def get_text(file_path, category, key, identifier=None):
 
-    # Load the JSON data from the specified file
-    with open(file_path, 'r') as file:
-        data = json.load(file)
+def get_text(category, key, identifier=None):
 
-    # Navigate to the required text snippet based on the presence of an identifier
+    file_path = '/app/backend/prompts.json'
+
     try:
+        with open(file_path, 'r') as file:
+            data = json.load(file)
+
         if identifier:
             return data['prompt_inserts'][category][key][identifier]
         else:
             return data['prompt_inserts'][category][key]
     except KeyError:
         return f"Missing information: [{key}]"
+    except FileNotFoundError:
+        return "Error: The file 'prompts.json' was not found."
+    except Exception as e:
+        return f"An error occurred: {e}"
