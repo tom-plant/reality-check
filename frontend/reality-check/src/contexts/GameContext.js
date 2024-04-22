@@ -392,8 +392,6 @@ const GameProvider = ({ children }) => {
   const buildAndSetNarrative = async (selectedActor, selectedStrategies) => {
     try {
       dispatch({ type: 'SET_LOADING_NARRATIVES', payload: true });
-      console.log('selectedActor:', selectedActor)
-      console.log('selectedStrategies:', selectedStrategies)
       const narrativeResponse = await buildNarrative(selectedActor, selectedStrategies);
       const formattedNarratives = Object.keys(narrativeResponse).map((strategy, index) => ({
         id: index,

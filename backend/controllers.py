@@ -161,11 +161,25 @@ def select_narrative_controller(selected_narrative, strategy):
         category='news_article',
         prompt_type='both',
         dynamic_inserts={
-            'narrative': selected_narrative['text'],
+            'narrative': selected_narrative,
             'facts': get_fact_combination_by_id(session['user_data']['fact_combination_id'])
         })
 
-    content_batch['news_article'] = get_chatgpt_response(prompts_news_article)
+    response = get_chatgpt_response(prompts_news_article)
+    current_app.logger.debug(f"Received response: {response}")
+
+    # Check if the response is a string that looks like a JSON
+    try:
+        # Try parsing it assuming it's a JSON string
+        parsed_response = json.loads(response)
+        current_app.logger.debug(f"Parsed response as JSON: {parsed_response}")
+        content_batch['news_article'] = parsed_response
+    except json.JSONDecodeError:
+        # If parsing fails, assume it's a normal string response
+        current_app.logger.debug("Response is not JSON, using as is.")
+        content_batch['news_article'] = response
+
+    # Continue with existing logic to handle the headline and other data...
     headline = content_batch['news_article']['headline']
 
     # Generate news photo
