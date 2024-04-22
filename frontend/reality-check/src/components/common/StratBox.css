@@ -1,7 +1,8 @@
 /* StratBox.css */
 
 .strat-box {
-  border: 1px solid #fffffffc;
+  border: 1px solid #000000fc;
+  color: black; 
   padding: 10px;
   margin-bottom: 10px;
   cursor: pointer;
@@ -9,15 +10,11 @@
   transition: background-color 0.3s;
   width: 100%;
   box-sizing: border-box; 
+  min-height: 50px; /* Ensures that each box has a minimum height */
 }
 
-.strat-box.right {
-  border: 1px solid rgb(255, 255, 255);
-  color: black;
-}
-
-.strat-box.right.selected {
-  background-color: #fff;
+.strat-box.selected {
+  background-color: #d2d2d2;
   border: 1px solid rgb(0, 0, 0);
   color: #000;
 }

@@ -1,4 +1,4 @@
-/* FactBox.css */
+/* ActorBox.css */
 
 .actor-box {
   border: 1px solid #fffffffc;
@@ -11,12 +11,7 @@
   box-sizing: border-box; 
 }
 
-.actor-box.right {
-  border: 1px solid black;
-  color: black;
-}
-
-.actor-box.left.selected {
+.actor-box.selected {
   background-color: #fff;
   color: #000;
 }

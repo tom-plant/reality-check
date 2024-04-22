@@ -15,10 +15,8 @@ const BuildNarrative = () => {
         {actors && actors.map((actor) => (
           <ActorBox
             key={actor.id}
-            actor={actor.text}
+            actor={actor}
             isSelected={actor === selectedActor}
-            disabled={selectedActor && actor !== selectedActor}
-            container="left"
           />
         ))}
       </div>

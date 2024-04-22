@@ -11,7 +11,6 @@ const BuildNarrativeDisplay = () => {
   const dispatch = useGameDispatch();
   const [buttonClicked, setButtonClicked] = useState(false); 
 
-  console.log('strats in buildnarrativedusplay: ', strats)
 // Generate narratives and change view, assuring button can only be clicked once
 const handleGenerateNarrative = async () => {
     if (!buttonClicked) { 
@@ -30,10 +29,8 @@ const handleGenerateNarrative = async () => {
           {strats && strats.map((strat) => (
             <StratBox
               key={strat.id}
-              strat={strat.text}
+              strat={strat}
               isSelected={selectedStrat.includes(strat)}
-              disabled={selectedStrat.length === 2 && !selectedStrat.includes(strat)}
-              container="right"
             />
           ))}
         </div>

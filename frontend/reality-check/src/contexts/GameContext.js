@@ -189,10 +189,14 @@ const gameReducer = (state, action) => {
       return { ...state, selectedActor: action.payload };
 
     case 'SELECT_STRAT':
-      return { ...state, selectedStrat: action.payload };
+      return { ...state, 
+        selectedStrat: [...state.selectedStrat, action.payload],
+      };
 
     case 'DESELECT_STRAT':
-      return { ...state, selectedStrat: action.payload };
+      return { ...state, 
+        selectedStrat: state.selectedStrat.filter(strat => strat !== action.payload),
+      };
 
     case 'SELECT_COUNTERSTRAT':
       return { ...state, selectedCounterStrat: action.payload };
@@ -314,7 +318,6 @@ const GameProvider = ({ children }) => {
           text: actor.text
         }));
         dispatch({ type: 'SET_ACTORS', payload: transformedActors });
-        console.log('here are actors being set in context: ', transformedActors)
       } else {
         console.error("Fetched data is not in the expected format:", response);
       }
@@ -333,7 +336,6 @@ const GameProvider = ({ children }) => {
           text: strat.text
         }));
         dispatch({ type: 'SET_STRATS', payload: transformedStrats });
-        console.log('here are strats being set in context: ', transformedStrats)
       } else {
         console.error("Fetched data is not in the expected format:", response);
       }
