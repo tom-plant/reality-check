@@ -17,13 +17,10 @@ const ConclusionWrapUp = ({ setCurrentOutroView }) => {
       setCurrentOutroView('GAME_LESSON')}
     }
 
-  // Fetch the introduction text from the translation file
-  const introductionText = t('conclusionWrapUp.introduction');
-
   return (
     <div className="conclusion-wrap-up">
       <h2>Game Conclusion</h2>
-      <p className="conclusion-introduction">{introductionText}</p>
+      <p className="conclusion-introduction"></p>
       {isLoadingConclusion ? (
         <LoadingIcon />
       ) : (

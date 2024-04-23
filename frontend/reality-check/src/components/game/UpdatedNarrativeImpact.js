@@ -7,7 +7,7 @@ import LoadingIcon from '../common/LoadingIcon';
 import './UpdatedNarrativeImpact.css';
 
 const UpdatedNarrativeImpact = () => {
-  const { secondaryNarrativeOptions, isLoadingNarrative, selectedNarrative } = useGameState();
+  const { secondaryNarrativeOptions, isLoadingNarratives, selectedNarrative } = useGameState();
   const dispatch = useGameDispatch();
   const { fetchAndSetConclusion, setCurrentPhase } = useGameFunction();
   const [buttonClicked, setButtonClicked] = useState(false);
@@ -25,13 +25,13 @@ const UpdatedNarrativeImpact = () => {
 
   return (
     <div className="narrative-impact">
-      {isLoadingNarrative ? (
+      {isLoadingNarratives ? (
         <div className="loading-container">
           <LoadingIcon />
         </div>
       ) : (
         <>
-          <h2>Impact of Updated Narratives</h2>
+          <h2>Counternarrative Options</h2>
           <div className="narratives-list">
             {secondaryNarrativeOptions && secondaryNarrativeOptions.map((narrative) => (
               <NarrativeBox 

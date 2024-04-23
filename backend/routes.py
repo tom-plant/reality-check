@@ -136,19 +136,16 @@ def setup_routes(app):
         
         # Call controller function to handle logic
         response_data = identify_weaknesses_controller(updated_fact_combination, selected_strategies)
-        
-        # Format response data for frontend, encapsulating each strategy's response
-        formatted_response = {strategy: data for strategy, data in response_data.items()}
-        
+                
         # Return response to frontend
-        return jsonify(formatted_response)
+        return jsonify(response_data)
 
     @app.route('/game/conclusion', methods=['POST'])
     def conclusion():
         # Receive narrative details from the frontend
         data = request.get_json()
-        narrative = data.get('narrative')
-        strategy = data.get('strategy')
+        narrative = data['narrative']
+        strategy = data['strategy']
         
         # Call the controller function to process the data and generate a conclusion
         response_data = conclusion_controller(narrative, strategy)

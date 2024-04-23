@@ -31,8 +31,8 @@ const IdentifyStrategies = () => {
         {counterstrats.map((counterstrat) => (
           <CounterStratBox
             key={counterstrat.id}
-            counterstrat={counterstrat.text}
-            isSelected={counterstrat === selectedCounterStrat} //idk about this line
+            counterstrat={counterstrat}
+            isSelected={selectedCounterStrat.includes(counterstrat)}
           />
         ))}
       </div>

@@ -199,10 +199,13 @@ const gameReducer = (state, action) => {
       };
 
     case 'SELECT_COUNTERSTRAT':
-      return { ...state, selectedCounterStrat: action.payload };
-
+      return { ...state, 
+        selectedCounterStrat: [...state.selectedCounterStrat, action.payload],
+      };
     case 'DESELECT_COUNTERSTRAT':
-      return { ...state, selectedCounterStrat: action.payload };
+      return { ...state, 
+        selectedCounterStrat: state.selectedCounterStrat.filter(counterstrat => counterstrat !== action.payload),
+      };
       
     case 'SET_EVENT_OPTIONS':
       return { ...state, eventOptions: action.payload };
@@ -436,18 +439,16 @@ const GameProvider = ({ children }) => {
 
   const identifyWeaknessesAndSetContent = async (updatedFactCombination, selectedStrategies) => {
     try {
-      dispatch({ type: 'SET_LOADING_NEWS', payload: true });
+      dispatch({ type: 'SET_LOADING_NARRATIVES', payload: true });
       const weaknessesResponse = await identifyWeaknesses(updatedFactCombination, selectedStrategies);
-      const counterNarrativeOptions = Object.keys(weaknessesResponse).map((strategy, index) => ({
+      const formattedCounterNarratives = Object.keys(weaknessesResponse).map((strategy, index) => ({
         id: index,
         text: weaknessesResponse[strategy],
         strategy: strategy  // Keeping track of which strategy each narrative corresponds to
       }));
-      dispatch({
-        type: 'SET_COUNTER_NARRATIVE_OPTIONS',
-        payload: counterNarrativeOptions
-      });
-      dispatch({ type: 'SET_LOADING_NEWS', payload: false });
+      dispatch({ type: 'SET_COUNTERNARRATIVE_OPTIONS', payload: formattedCounterNarratives });
+      dispatch({ type: 'SET_LOADING_NARRATIVES', payload: false });
+      console.log('did we get here? CounternarrativeOptions:', formattedCounterNarratives)
     } catch (error) {
       console.error('Failed to identify weaknesses:', error);
       dispatch({ type: 'SET_LOADING_NEWS', payload: false });

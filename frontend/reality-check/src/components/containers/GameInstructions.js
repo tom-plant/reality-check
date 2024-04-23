@@ -12,7 +12,8 @@ const GameInstructions = () => {
       case 'SELECT_FACTS':
         return;
       case 'BUILD_NARRATIVE':
-        return; 
+        return [
+          'buildNarratives.instructions'];
       case 'SELECT_NARRATIVES':
         return [
           'selectNarratives.instructions.introduction'];
@@ -24,8 +25,10 @@ const GameInstructions = () => {
         'introduceEvent.introduction'];
       case 'IDENTIFY_WEAKNESSES':
         return [
-        'identifyWeaknesses.instructions'
-      ];
+        'identifyWeaknesses.instructions'];
+      case 'IDENTIFY_STRATEGIES':
+        return [
+          'identifyStrategies.instructions'];
       case 'UPDATED_NARRATIVE_IMPACT':
         return [
           'updatedNarrativeImpact.introduction'];

@@ -11,13 +11,8 @@
   box-sizing: border-box; 
 }
 
-.counter-strat-box.left {
-  border: 1px solid rgb(255, 255, 255);
-  color: black;
-}
-
-.strat-box.right.selected {
-  background-color: #fff;
+.counter-strat-box.selected {
+  background-color: #d2d2d2;
   border: 1px solid rgb(0, 0, 0);
   color: #000;
 }

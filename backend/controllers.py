@@ -129,11 +129,11 @@ def build_narrative_controller(selected_actor, selected_strategies):
             category='narrative',
             prompt_type='both',
             dynamic_inserts={
-                'actor': get_text('prompt_inserts', 'actor', actor_text),
-                'strategy': get_text('prompt_inserts', 'construction_strategy', strategy_text),
+                'actor': actor_text,
+                'strategy': strategy_text,
                 'facts': get_fact_combination_by_id(session['user_data']['fact_combination_id']),
             })
-        current_app.logger.debug("Trying to generate chatgptresponses.")
+        current_app.logger.debug(f"Trying to generate chatgptresponses with prompts {prompts_narrative[strategy_text]}")
         chatgpt_responses[strategy_text] = get_chatgpt_response(prompts_narrative[strategy_text])
     
     current_app.logger.debug("Trying to commit session data.")
@@ -310,26 +310,29 @@ def identify_weaknesses_controller(updated_fact_combination, selected_strategies
     # Check if user is logged in
     if 'user_data' not in session:
         return {"error": "User not logged in"}, 401
+    current_app.logger.debug(f"What we're wokring with is udpaedfactcombo: {updated_fact_combination} and selected_strategies {selected_strategies}")
 
     updated_fact_combination_id = handle_fact_combination(updated_fact_combination)
     session['user_data']['updated_fact_combination_id'] = updated_fact_combination_id
     session.modified = True
 
     prompts_counter_narrative = {}
-    for strategy in selected_strategies:
-        prompts_counter_narrative[strategy] = generate_prompts(
+    chatgpt_responses = {}
+
+    strategy_texts = [strategy['text'] for strategy in selected_strategies] 
+
+    for strategy_text in strategy_texts:
+        prompts_counter_narrative[strategy_text] = generate_prompts(
             category='counter_narrative',
             prompt_type='both',
             dynamic_inserts={
                 'narrative': get_primary_narrative_by_id(session['user_data']['primary_narrative_id']),
                 'updated_facts': updated_fact_combination,
-                'strategy': get_text('prompt_inserts', 'counter_strategies', strategy)
+                'strategy': strategy_text
             })
+        chatgpt_responses[strategy_text] = get_chatgpt_response(prompts_counter_narrative[strategy_text])
 
-    chatgpt_responses = {}
-    for strategy, prompts in prompts_counter_narrative.items():
-        chatgpt_response = get_chatgpt_response(prompts)
-        chatgpt_responses[strategy] = chatgpt_response
+    current_app.logger.debug(f"chatgpt responess for counters: {chatgpt_responses}")
 
     return chatgpt_responses
 
@@ -345,6 +348,7 @@ def conclusion_controller(counter_narrative, strategy):
     session.modified = True
 
     effectiveness = get_effectiveness_by_ids(strategy_id, counter_strategy_id)
+    current_app.logger.debug(f"effecitveness is: {effectiveness}")
 
     prompts_election_outcomes = generate_prompts(
         category='election_outcome',
@@ -358,6 +362,7 @@ def conclusion_controller(counter_narrative, strategy):
         })
 
     election_outcome = get_chatgpt_response(prompts_election_outcomes)
+    current_app.logger.debug(f"election_outcome is: {election_outcome}")
 
     # Save to Database 
     secondary_narrative = create_secondary_narrative(

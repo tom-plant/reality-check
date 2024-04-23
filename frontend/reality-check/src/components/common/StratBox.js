@@ -30,39 +30,5 @@ const StratBox = ({ strat, isSelected }) => {
   );
 };
 
-
-
-  //   // Check if we are trying to add or remove a strat
-  //   const actionType = isSelected ? 'DESELECT_STRAT' : 'SELECT_STRAT';
-  //   // Check if adding a strat exceeds the limit of 2
-  //   const stratLimitReached = !isSelected && selectedStrat.length >= 2;
-  //   console.log(selectedStrat)
-
-  //   if (!stratLimitReached) {
-  //     dispatch({ type: actionType, payload: strat });
-  //   } else {
-  //     alert("You can select a maximum of 2 strategies."); // Feedback for the user when the limit is reached
-  //   }
-  // };
-
-  // // Check if strat is defined before rendering
-  // if (!strat) {
-  //   console.error('StratBox received an undefined strat object.');
-  //   return null; // Or render some fallback UI
-  // }
-
-  // // Determine if the StratBox should be disabled based on selection limit
-  // const isDisabled = !isSelected && selectedStrat.length >= 2;
-
-  // return (
-  //   <div 
-  //     className={`strat-box ${isSelected ? 'selected' : ''} ${isDisabled ? 'disabled' : ''}`}
-  //     onClick={toggleStratSelection}
-  //   >
-  //     {strat.text}
-  //   </div>
-  // );
-
-
 export default StratBox;
 

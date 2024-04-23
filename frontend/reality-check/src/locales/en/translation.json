@@ -68,7 +68,7 @@
           },
           "responseMeasures": {
             "title": "Response Measures",
-            "description": "Authorities in both the Republic of Talme and Eirist are on high alert and are trying to discover who committed the attacks. However, the misinformation, particularly through AI-generated content, is clouding the situation."
+            "description": "Authorities in Eirist are on high alert and are trying to discover who committed the attacks. However, the misinformation, particularly through AI-generated content, is clouding the situation."
           },
           "challengesAndUnknowns": {
             "title": "Challenges and Unknowns",
@@ -83,11 +83,11 @@
           "steps": {
             "examine": {
               "title": "Examine the List",
-              "description": "A list of key facts and recent developments related to the crisis will be provided."
+              "description": "A list of key facts and recent developments related to the crisis will be provided. These are all true facts--no false information is included."
             },
             "selection": {
               "title": "Make Your Selection",
-              "description": "Choose 3 to 5 facts that stand out to you and might make for a dangerous narrative that could influence how the crisis is addressed."
+              "description": "Choose 3 to 5 facts that could make a dangerous or misleading narrative if viewed in isolation. In other words, decide what information to include, and what information to leave out."
             },
             "timely": {
               "title": "Be Timely",
@@ -116,23 +116,28 @@
     },
   "alert": {
       "update": {
-        "title": "SYSTEM ALERT: Simulation Integrity",
+        "title": "SYSTEM ALERT: Live Update to Crisis",
         "spacer": "    *    *    *    *",
-        "introduction": "We have detected unauthorized data access within our simulation platform. It is likely an external attempt to influence public opinion and national security through our platform.",
-        "challenge": "We have secured the breach. However, the leaked data may be used to craft harmful narratives during a time of crisis. This breach is a direct challenge to informed citizenship and resilience.",
-        "response": "Halting our simulation would serve the adversaries' goals. Your continued participation is crucial to promote resiliency and avoid manipulation if one of the prior narratives were to be used against us through deliberately promotion of its message in the real world."
+        "introduction": "While you've been playing this simulation, the ongoing crisis has continued to unfold.",
+        "challenge": "We have flagged your fictional narrative because it resembles one of the real narratives that is currently circulating on social media.",
+        "response": "In response, we will adjust the game to focus solely on your narrative, strategizing ways to combat it."
       },
       "pivot": {
-        "title": "SYSTEM ALERT: Simulation Integrity",
-        "introduction": "While the original simulation focused on narrative construction, you will now create another branch of how the crisis might unfold.",
-        "task": "On the next screen, reconsider your fact selections to construct a more comprehensive narrative that reflects a deeper understanding and counters misinformation."
+        "title": "SYSTEM ALERT: Live Update to Crisis",
+        "introduction": "While the original simulation focused on narrative construction, you will now focus on narrative deconstruction. What does that mean? It means 1) identifying what is missing from the misleading narrative, and 2) coming up with an effective correction.",
+        "task": "On the next screen, you will get the chance to revise your original fact selection from the beginning of the simulation to include more accurate and important information. Try to selected the facts that are essential for correcting your misleading narrative."
       }
     },
   "identifyWeaknesses": {
-    "instructions": "Select and deselect information to create a more robust and comprehensive narrative."
+    "instructions": "Select and deselect information to create a more accurate narrative."
+  },
+  "identifyStrategies": {
+    "title": "Counternarrative Strategy",
+    "instructions": "Choose two counterstrategies that you think would be the best to combat your narrative. But select carefully--some strategies work better than others. Your choice could determine whether the election ends in peace or conflict."
   },
   "updatedNarrativeImpact": {
-      "introduction": "Notice how your udpated narrative unfolds differently, creating a new trajectory of events in the crisis."
+      "introduction": "Now, you need to select a counternarrative strategy. These strategies are all unique, and some are more impactful than others. Think about the narrative that you're trying to combat, and choose which strategy seems most effective for steering citizens toward a better understanding of the crisis.",
+      "updatedStrategies": "Counternarrative Strategies"
     },
   "conclusionWrapUp": {
       "introduction": "As we conclude this experience, remember: there isn't a 'winning' narrative here. This concluding storyline will compare your two branching pathways for the crisis, highlighting the power of narratives and their profound impact on public perception, decision-making, and ultimately, national security. Please await your summary:",
