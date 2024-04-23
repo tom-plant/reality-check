@@ -18,7 +18,7 @@
         "3 - Try to keep your narrative to a single sentence, or a maximum of 30 words.",
         "4 - Create your convincing interpretation of the crisis blaming the selected actor based on the description provided earlier. Use the selected facts as evidence for your theory of the actor’s motivations.",
         "5 - You must express uncertainty where you lack solid evidence, using words like “likely,” “probably,” or “allegedly.” Assume the readers already know the context of the crisis so you do not need to repeat everything about the crisis.",
-        "6 - Only give one narrative option and avoid using the word \"narrative”; never provide an \"alternative\" or \"contrast”; and never reference the structure of the statement.",
+        "6 - Only give one narrative option and avoid using the the word \"narrative” or giving a title; never provide an \"alternative\" or \"contrast”; and never reference the structure of the statement.",
         "Selected narrative strategy: '''{strategy}'''",
         "Selected actor: '''{actor}'''",
         "Selected facts: '''{facts}'''",
@@ -48,7 +48,7 @@
         "1 - Your output should encapsulate the essence of your interpretation of the crisis informed by the narrative you believe. It should suggest—but without explicitly confirming—the responsibility of the specific actor specified in the narrative.",
         "2 - Your headline should be simple, definitive, and engaging. It should grab attention and convey the urgency or impact of the situation according to the narrative. Keep your headline to a few words maximum, reflecting the length of a normal headline.",
         "3 - Your body summary should push your narrative using the provided evidence as concrete details, which is delimited below with triple backticks. Write in a compelling and readable way. Ensure that your story flows logically and engages the reader without stating as fact anything that cannot be backed up. Take a facts-on-the-ground approach that reports what the crisis is causing concretely at a local level and how various actors are responding to it. Keep your body summary to 4 sentences maximum.",
-        "4 - Format your output as a .json with the keys “headline” and “body”.",
+        "4 - Format your outcome as JSON. The output should be an object with two keys: 'headline' for your article's headline and 'body' for the article's summary. Each key should map to a string containing the appropriate content. Ensure the entire output is valid JSON format.",
         "Provided facts: '''{facts}'''",
         "If you are missing any of the information delimited by backticks, please output “Missing information: [write the missing information key here]”"
       ]
@@ -68,16 +68,17 @@
         "Narrative: '''{narrative}'''"
       ],
       "user": [
-        "Your task is to produce three different pieces of social media content each paired with a different fact related to the crisis. Each piece of content should push the narrative that you believe.",
+        "You need to generate a JSON object representing three pieces of social media content, each tied to a specific fact about a crisis in Eirist. Each content piece should adhere strictly to the format described and only include text relevant to the narrative you're trying to promote.",
         "Adhere to the following steps:",
-        "1 - Select the first item from the list of social media content types, delimited below with triple backticks and separated with commas.",
-        "2 - Select the first of the provided facts, delimited below with triple backticks and separate with commas after the key 'Provided Facts' below.",
-        "3 - Use the instructions provided from the content type to create a social media post based on the selected fact that you chose.",
-        "3 - Once you complete the first content type (instagram), select the second item from the list of content types (youtube). Then, select another of the provided facts that you did not select before. Basically, you're using each fact for a different piece of social media content",
-        "4 - Format your outcome as a .json file with the three content types as the three keys: 'instagram', 'youtube', and 'shortform'. Do not use triple backticks or any delimiters.",
-        "Content types: '''{instagram}, {youtube}, {shortform}'''",
-        "Provided facts: '''{facts}'''",
-        "If you are missing any of the information delimited by backticks, please output “Missing information: [write the missing information key here]”"
+        "1 - Generate three pieces of social media content: one for Instagram, one for YouTube, and one for a short-form platform. Each should be paired with a distinct fact about the crisis.",
+        "2 - Strictly format the output as a JSON object with three keys: 'instagram', 'youtube', and 'shortform'. Each of these keys will map to another object that contains a single key 'content' holding the text for the post.",
+        "3 - The 'content' for each platform should include text that utilizes the provided facts effectively to convey your narrative. Ensure that the text is suitable for the social media platform it's intended for.",
+        "4 - The output must be a valid JSON object. Use plain text strings for values and ensure there are no formatting errors. Do not include triple backticks, additional punctuation, or embellishments outside the JSON structure.",
+        "5 - The entire output should look like this (do not deviate from this structure):",
+        "'''{ 'instagram': { 'content': 'Example Instagram content text here using the provided facts.' }, 'youtube': { 'content': 'Example YouTube content text here using the provided facts.' }, 'shortform': { 'content': 'Example Shortform content text here using the provided facts.' }}'''",
+        "Do not stop until you've finished all three content types. If any required information or fact is missing, directly output 'Missing information: [missing key here]' instead of the content for that platform.",
+        "Content types: 'instagram', 'youtube', 'shortform'",
+        "Provided facts: '{facts}'"
       ]
     },
     "yt_thumbnail": {

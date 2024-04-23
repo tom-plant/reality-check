@@ -25,8 +25,8 @@ def get_chatgpt_response(prompts):
     payload = {
         "model": "gpt-3.5-turbo",
         "messages": messages,
-        "temperature": 0.7,
-        "max_tokens": 300
+        "temperature": 0.4,
+        "max_tokens": 500
     }
 
     try:

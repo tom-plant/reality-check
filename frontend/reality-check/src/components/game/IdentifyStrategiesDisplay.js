@@ -1,10 +1,11 @@
-// SelectNarrativesDisplay.js
+// IdentifyStrategiesDisplay.js
+
 import { useTranslation } from 'react-i18next'; 
 import React from 'react';
 import { useGameState } from '../../contexts/GameContext';
 import './SelectNarrativesDisplay.css'; 
 
-const SelectNarrativesDisplay = () => {
+const IdentifyStrategiesDisplay = () => {
   const { selectedFactCombination, selectedNarrative } = useGameState();
   const { t } = useTranslation();
 
@@ -30,5 +31,5 @@ return (
 );
 };
 
-export default SelectNarrativesDisplay;
+export default IdentifyStrategiesDisplay;
 

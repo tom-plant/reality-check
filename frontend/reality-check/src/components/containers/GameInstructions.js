@@ -11,6 +11,8 @@ const GameInstructions = () => {
     switch (currentView) {
       case 'SELECT_FACTS':
         return;
+      case 'BUILD_NARRATIVE':
+        return; 
       case 'SELECT_NARRATIVES':
         return [
           'selectNarratives.instructions.introduction'];

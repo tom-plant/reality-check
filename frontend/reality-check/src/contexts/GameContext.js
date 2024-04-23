@@ -414,6 +414,7 @@ const GameProvider = ({ children }) => {
         strategy: selectedNarrative.strategy //not sure if this is actually a part of what selectedNarrative actually is
       });
       dispatch({ type: 'SET_SELECTED_NARRATIVE_CONTENT', payload: content });
+      console.log('received narrative news content in context', content)
       dispatch({ type: 'SET_LOADING_NEWS', payload: false });
     } catch (error) {
       console.error('Failed to select narrative:', error);

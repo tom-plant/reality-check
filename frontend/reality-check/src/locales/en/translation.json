@@ -60,19 +60,19 @@
           "keyPointsTitle": "Key Points to Understand:",
           "natureOfCrisis": {
             "title": "Nature of the Crisis",
-            "description": "A security incident at a Quantum Computing Center in the Republic of Talme—one of the most populous and technologically advanced countries—has escalated into a global concern. All you need to know about quanutm computers: they are new, extremely advanced, and have the capability to access hack private data and systems. A minor explosion triggered the alarm, leading to immediate speculation about the potential compromise of critical quantum computing technology. No theft has been confirmed, but the incident has sparked widespread fear about the security of sensitive data and the possible implications of quantum technology falling into the wrong hands."
+            "description": "Cyber attacks have struck Eirist during our country's election. It is unclear who is behind the cyber attacks and why."
           },
           "affectedAreas": {
             "title": "Affected Areas",
-            "description": "The direct vicinity of the quantum center experienced the initial shock, but the repercussions have quickly spread. Subsequent targeted disruptions at power substations plunged rural Eirist into darkness, and data leaks exposed the emails and other information about these rural populations. Our election has been postponed and chaos is emerging locally."
+            "description": "The attacks plunged rural Eirist into darkness. Our election has been postponed and chaos is emerging locally."
           },
           "responseMeasures": {
             "title": "Response Measures",
-            "description": "Authorities in both the Republic of Talme and Eirist have heightened security measures and launched comprehensive investigations into these incidents. However, the rampant spread of misinformation, particularly through deepfake technology and AI-generated content, is severely hampering the clarity of our situation."
+            "description": "Authorities in both the Republic of Talme and Eirist are on high alert and are trying to discover who committed the attacks. However, the misinformation, particularly through AI-generated content, is clouding the situation."
           },
           "challengesAndUnknowns": {
             "title": "Challenges and Unknowns",
-            "description": "The motivations behind these disruptions remain enigmatic, with potential involvement from multiple domestic and international actors. A notable challenge is Eirist's existing ethnic tensions, with the urban and rural groups blaming each other for the attacks."
+            "description": "The motivations behind these disruptions are unclear, with potential involvement from multiple domestic and international actors."
           },
           "conclusion": "This briefing aims to equip you with a foundational understanding of the current crisis landscape. As you navigate through this simulation, your decisions will play a crucial role in steering through the layers of uncertainty.",
           "reminder": "Remember: The information provided here is a snapshot within a rapidly evolving situation. Stay alert to new developments as the crisis unfolds."
@@ -87,7 +87,7 @@
             },
             "selection": {
               "title": "Make Your Selection",
-              "description": "Choose 3 to 5 facts that stand out to you and might make for a compelling narrative."
+              "description": "Choose 3 to 5 facts that stand out to you and might make for a dangerous narrative that could influence how the crisis is addressed."
             },
             "timely": {
               "title": "Be Timely",
@@ -98,19 +98,20 @@
       }
   },
   "buildNarratives": {
-    "title": "Build Your Narrative"
+    "title": "Build Your Narrative",
+    "instructions": "Choose one actor to blame in your narrative. Then, choose two strategies for constructing your narrative. On the next page, you'll see two narrative options--each using the strategies you chose."
   },
   "selectNarratives": {
       "title": "Select Narratives",
       "instructions" : {
-        "introduction": "Choose one narrative that makes the most sense to you, either because it aligns with your beliefs, resonates with you, or motivates action. Your decision will shape the narrative that dominates public opinion in the rest of the simulation."
+        "introduction": "Choose one narrative that you think will cause the most dangerous impact on society. Your decision will shape the narrative that dominates public opinion in the rest of the simulation."
       }
     },
   "narrativeImpact": {
     "introduction": "Observe your chosen narrative unfolding, guiding responses and shaping perceptions amid the crisis."
   },
   "introduceEvent": {
-      "introduction": "As the story progresses, an unforeseen event is randomly introduced. Notice how your narrative uses this event to validate its message.",
+      "introduction": "As the story progresses, an unforeseen event is randomly introduced. Notice how your narrative uses this event to validate its message and watch how it impacts the election.",
       "popup": "Click the button to randomly select one of these events to occur during the crisis."
     },
   "alert": {
