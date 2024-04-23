@@ -7,7 +7,7 @@ services:
     env_file:
       - .env
     environment:
-      - FLASK_ENV=development
+      - FLASK_ENV=production
     depends_on:
       - db
     volumes: 
