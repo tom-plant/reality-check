@@ -7,7 +7,7 @@ import LoadingIcon from '../common/LoadingIcon';
 import './UpdatedNarrativeImpact.css';
 
 const UpdatedNarrativeImpact = () => {
-  const { secondaryNarrativeOptions, isLoadingNarratives, selectedNarrative } = useGameState();
+  const { counterNarrativeOptions, isLoadingNarratives, selectedNarrative } = useGameState();
   const dispatch = useGameDispatch();
   const { fetchAndSetConclusion, setCurrentPhase } = useGameFunction();
   const [buttonClicked, setButtonClicked] = useState(false);
@@ -18,6 +18,7 @@ const UpdatedNarrativeImpact = () => {
       setButtonClicked(true);
       dispatch({ type: 'SET_SECONDARY_NARRATIVE_CONTENT', payload: selectedNarrative }); 
       fetchAndSetConclusion(selectedNarrative);
+      console.log("narrativeotpins: ", counterNarrativeOptions)
       setCurrentPhase('outro'); 
       dispatch({ type: 'SET_CURRENT_OUTRO_VIEW', payload: 'CONCLUSION_WRAP_UP' });
     }
@@ -33,7 +34,7 @@ const UpdatedNarrativeImpact = () => {
         <>
           <h2>Counternarrative Options</h2>
           <div className="narratives-list">
-            {secondaryNarrativeOptions && secondaryNarrativeOptions.map((narrative) => (
+            {counterNarrativeOptions && counterNarrativeOptions.map((narrative) => (
               <NarrativeBox 
                 key={narrative.id} 
                 narrative={narrative}

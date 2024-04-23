@@ -554,7 +554,7 @@ def get_narrative_events_id_by_narrative_and_event(primary_narrative_id, event_i
 # Secondary Narrative Operations
 
 # Create a Secondary Narrative
-def create_secondary_narrative(original_narrative_id, updated_fact_combination_id, narrative_text, counterstrat_id, user_id, news, outcome_text, _session=None):
+def create_secondary_narrative(original_narrative_id, updated_fact_combination_id, narrative_text, counterstrat_id, news, outcome_text, user_id, _session=None):
     session = _session or db.session
     new_secondary_narrative = SecondaryNarrative(
         original_narrative_id=original_narrative_id,

@@ -330,6 +330,7 @@ def identify_weaknesses_controller(updated_fact_combination, selected_strategies
                 'updated_facts': updated_fact_combination,
                 'strategy': strategy_text
             })
+        current_app.logger.debug(f"prompts being used: {prompts_counter_narrative[strategy_text]}")
         chatgpt_responses[strategy_text] = get_chatgpt_response(prompts_counter_narrative[strategy_text])
 
     current_app.logger.debug(f"chatgpt responess for counters: {chatgpt_responses}")
@@ -356,21 +357,21 @@ def conclusion_controller(counter_narrative, strategy):
         dynamic_inserts={
             'narrative': get_primary_narrative_by_id(session['user_data']['primary_narrative_id']),
             'counter_narrative': counter_narrative,
-            'crisis_background': get_text('plot_context', 'crisis_background'),
             'effectiveness': effectiveness,
-            'outcomes': get_text('plot_context', 'outcomes')
         })
-
+    current_app.logger.debug(f"prompts are: {prompts_election_outcomes}")
     election_outcome = get_chatgpt_response(prompts_election_outcomes)
     current_app.logger.debug(f"election_outcome is: {election_outcome}")
 
     # Save to Database 
     secondary_narrative = create_secondary_narrative(
         original_narrative_id=session['user_data']['primary_narrative_id'], 
+        user_id=session['user_data']['user_id'],
         updated_fact_combination_id=session['user_data']['updated_fact_combination_id'], 
         narrative_text=counter_narrative, 
         counterstrat_id=session['user_data']['counterstrat_id'],
-        news=election_outcome,
+        outcome_text=election_outcome,
+        news='placeholder',
         _session=None
     )
     db.session.add(secondary_narrative)
