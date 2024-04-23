@@ -385,15 +385,15 @@ def get_fact_combination_id_by_facts(facts, _session=None):
 # Primary Narrative Operations
 
 # Create a New Primary Narrative
-def create_primary_narrative(fact_combination_id, narrative_text, user_id, headline, story, photo_url=None, _session=None):
+def create_primary_narrative(fact_combination_id, narrative_text, user_id, actor_id, strat_id, news, _session=None):
     session = _session or db.session
     new_primary_narrative = PrimaryNarrative(
         fact_combination_id=fact_combination_id,
         narrative_text=narrative_text,
         user_id=user_id,
-        headline=headline,
-        story=story,
-        photo_url=photo_url
+        actor_id=actor_id,
+        strat_id=strat_id,
+        news=news,
     )
     session.add(new_primary_narrative)
     if not _session:  # Commit only if not using an external session

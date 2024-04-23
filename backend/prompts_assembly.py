@@ -22,9 +22,9 @@ def generate_prompts( category, prompt_type='both', dynamic_inserts=None):
             dynamic_inserts[key] = ' '.join(value)
 
     # Combine static and dynamic inserts
-    current_app.logger.debug("Dynamic Inserts:", dynamic_inserts)
+    # current_app.logger.debug("Dynamic Inserts:", dynamic_inserts)
     inserts = {**prompts_data.get('prompt_inserts', {}), **dynamic_inserts}
-    current_app.logger.debug("Combined Inserts before substitution:", inserts)
+    # current_app.logger.debug("Combined Inserts before substitution:", inserts)
 
     assembled_prompts = {}
 

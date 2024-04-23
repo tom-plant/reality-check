@@ -71,10 +71,10 @@
         "Your task is to produce three different pieces of social media content each paired with a different fact related to the crisis. Each piece of content should push the narrative that you believe.",
         "Adhere to the following steps:",
         "1 - Select the first item from the list of social media content types, delimited below with triple backticks and separated with commas.",
-        "2 - Select one random item from the list of provided facts, delimited below with triple backticks and separate with commas.",
-        "3 - Use the instructions provided from the content type to create a social media post using the randomly selected fact that you chose.",
-        "3 - Once you complete the first content type, select the second item from the list of content types. Then, select another random item from the list of provided facts that you did not select before.",
-        "4 - Format your outcome as a .json file with the three content types as the three keys: 'instagram', 'youtube', and 'shortform'",
+        "2 - Select the first of the provided facts, delimited below with triple backticks and separate with commas after the key 'Provided Facts' below.",
+        "3 - Use the instructions provided from the content type to create a social media post based on the selected fact that you chose.",
+        "3 - Once you complete the first content type (instagram), select the second item from the list of content types (youtube). Then, select another of the provided facts that you did not select before. Basically, you're using each fact for a different piece of social media content",
+        "4 - Format your outcome as a .json file with the three content types as the three keys: 'instagram', 'youtube', and 'shortform'. Do not use triple backticks or any delimiters.",
         "Content types: '''{instagram}, {youtube}, {shortform}'''",
         "Provided facts: '''{facts}'''",
         "If you are missing any of the information delimited by backticks, please output “Missing information: [write the missing information key here]”"
@@ -169,32 +169,30 @@
       "Eirist Opposition Parties: Description: Political parties opposing the current Eirist government, seeking to gain power in the upcoming elections. Motivations: Capitalize on the government's perceived failures to gain public support and win the postponed elections. Narrative Against: Accused by some of conspiring to create a crisis that discredits the ruling party and forces an electoral shift.",
       "International Community: Description: Global entities and foreign nations observing and potentially intervening in Eirist's crisis. Motivations: Ensure stability, support democratic processes, and prevent escalation into wider conflict. Narrative Against: Some factions within Eirist accuse international actors of interference, either to support the government or the opposition."
     ],
-    "social_media_content": {
-      "instagram": [
-        "These types of posts on Instagram typically fall into the category of 'personal narrative activism.' They often feature a visually appealing image overlaid with text, presenting a quote that recounts a personal experience or anecdote during a political event, providing humanizing insight. The use of emotive language to evoke feelings of empathy, solidarity, or urgency among viewers. These posts aim to mobilize people by providing a human perspective on a particular issue or event, fostering empathy and understanding among viewers.",
-        "Here is an example, delimited with triple backticks:",
-        "‘’’In Gaza, the sounds of drones overhead have become a terrifying lullaby for children. I see mothers without children, and children without mothers. Lovers without lovers; siblings without siblings; people without people. Every day is a reminder that peace is not just a word, but a desperate need.’’’"
-      ],
-      "youtube": [
-        "Titles for political YouTube videos that include commentary or stream clips from platforms like Twitch often employ attention-grabbing language and provocative questions to entice viewers. Here are some examples of thumbnail titles:",
-        "\"EXPOSING ISRAEL'S AI STRATEGY IN GAZA!\"",
-        "\"INSIDE P DIDDY'S FEDERAL RAID!\"",
-        "\"PREDICTING THE FUTURE: DID US GOVERNMENT SEE THIS?\"",
-        "\"TRUMP'S FINANCIAL FLOP: IS HE BROKE?\"",
-        "\"THE TRUTH BEHIND THE TIKTOK BAN: IS IT ABOUT SPYING?\"",
-        "\"SHOCKING FOOTAGE: POLICE OUT OF CONTROL!\"",
-        "\"UNCOVERING TRUMP'S SECRET TO SUCCESS!\"",
-        "\"TUCKER CARLSON ON RUSSIA: THE CONTINUING SAGA!\"",
-        "These titles are designed to pique curiosity, spark controversy, and drive engagement by addressing topical issues, posing questions, or teasing exclusive insights or revelations within the videos. They aim to capitalize on viewer interest in current events, political controversies, and personalities, ultimately attracting clicks and views to the content."
-      ],
-      "shortform": [
-        "These short-form political content pieces, often found on platforms like TikTok or Instagram Reels, typically feature a simple white background with text overlaying a rectangular video snippet capturing a moment related to an ongoing political event. Here are some examples of titles or captions that might accompany such content:",
-        "\"the moment the senator walked out of the hearing 😮\"",
-        "\"pov: what it's like in the middle of the city hall protest\"",
-        "\"how people are reacting to the new healthcare bill 💔\"",
-        "These titles or captions are designed to be catchy, engaging, and relatable to viewers, often using informal language, emojis, and first-person point of view ('pov') to draw viewers in. While they may lack professional credibility and may contain inaccuracies or biases, they can still play a role in shaping public perceptions and discussions surrounding political events, particularly among younger audiences on social media platforms."
-      ]
-    },
+    "instagram": [
+      "These types of posts on Instagram typically fall into the category of 'personal narrative activism.' They often feature a visually appealing image overlaid with text, presenting a quote that recounts a personal experience or anecdote during a political event, providing humanizing insight. The use of emotive language to evoke feelings of empathy, solidarity, or urgency among viewers. These posts aim to mobilize people by providing a human perspective on a particular issue or event, fostering empathy and understanding among viewers.",
+      "Here is an example, delimited with triple backticks:",
+      "‘’’In Gaza, the sounds of drones overhead have become a terrifying lullaby for children. I see mothers without children, and children without mothers. Lovers without lovers; siblings without siblings; people without people. Every day is a reminder that peace is not just a word, but a desperate need.’’’"
+    ],
+    "youtube": [
+      "Titles for political YouTube videos that include commentary or stream clips from platforms like Twitch often employ attention-grabbing language and provocative questions to entice viewers. Here are some examples of thumbnail titles:",
+      "\"EXPOSING ISRAEL'S AI STRATEGY IN GAZA!\"",
+      "\"INSIDE P DIDDY'S FEDERAL RAID!\"",
+      "\"PREDICTING THE FUTURE: DID US GOVERNMENT SEE THIS?\"",
+      "\"TRUMP'S FINANCIAL FLOP: IS HE BROKE?\"",
+      "\"THE TRUTH BEHIND THE TIKTOK BAN: IS IT ABOUT SPYING?\"",
+      "\"SHOCKING FOOTAGE: POLICE OUT OF CONTROL!\"",
+      "\"UNCOVERING TRUMP'S SECRET TO SUCCESS!\"",
+      "\"TUCKER CARLSON ON RUSSIA: THE CONTINUING SAGA!\"",
+      "These titles are designed to pique curiosity, spark controversy, and drive engagement by addressing topical issues, posing questions, or teasing exclusive insights or revelations within the videos. They aim to capitalize on viewer interest in current events, political controversies, and personalities, ultimately attracting clicks and views to the content."
+    ],
+    "shortform": [
+      "These short-form political content pieces, often found on platforms like TikTok or Instagram Reels, typically feature a simple white background with text overlaying a rectangular video snippet capturing a moment related to an ongoing political event. Here are some examples of titles or captions that might accompany such content:",
+      "\"the moment the senator walked out of the hearing 😮\"",
+      "\"pov: what it's like in the middle of the city hall protest\"",
+      "\"how people are reacting to the new healthcare bill 💔\"",
+      "These titles or captions are designed to be catchy, engaging, and relatable to viewers, often using informal language, emojis, and first-person point of view ('pov') to draw viewers in. While they may lack professional credibility and may contain inaccuracies or biases, they can still play a role in shaping public perceptions and discussions surrounding political events, particularly among younger audiences on social media platforms."
+    ],
     "construction_strategies": {
       "causal_chain": [
         "Showing the Cause-and-Effect",

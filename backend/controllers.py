@@ -166,10 +166,12 @@ def select_narrative_controller(selected_narrative, strategy):
         })
 
     news_response = get_chatgpt_response(prompts_news_article)
+    current_app.logger.debug(f"Unparsed news_response: {news_response}")
+
     try:
         # Try parsing it assuming it's a JSON string
         parsed_response = json.loads(news_response)
-        current_app.logger.debug(f"Parsed response as JSON: {parsed_response}")
+        current_app.logger.debug(f"Parsed news_response as JSON: {parsed_response}")
         content_batch['news_article'] = parsed_response
     except json.JSONDecodeError:
         # If parsing fails, assume it's a normal string response
@@ -177,6 +179,7 @@ def select_narrative_controller(selected_narrative, strategy):
         content_batch['news_article'] = news_response
 
     headline = content_batch['news_article']['headline']
+    current_app.logger.debug(f"Headline: {headline}")
 
     # Generate news photo
     prompts_news_photo = generate_prompts(
@@ -187,6 +190,7 @@ def select_narrative_controller(selected_narrative, strategy):
         })
 
     content_batch['news_photo'] = get_dalle2_response(prompts_news_photo)
+    current_app.logger.debug(f"news_photo: {content_batch['news_photo']}")
 
     # Generate social media content
     prompts_social_media_content = generate_prompts(
@@ -198,33 +202,43 @@ def select_narrative_controller(selected_narrative, strategy):
         })
 
     social_media_response = get_chatgpt_response(prompts_social_media_content)
-    current_app.logger.debug('social media response: ', social_media_response)
+    current_app.logger.debug(f'social media response: {social_media_response}')
+
+    # Check if the response is a string that looks like a JSON
     try:
         # Try parsing it assuming it's a JSON string
         parsed_response = json.loads(social_media_response)
-        current_app.logger.debug(f"Parsed response as JSON: {parsed_response}")
+        current_app.logger.debug(f"Parsed social media response as JSON: {parsed_response}")
         content_batch['social_media_content'] = parsed_response
     except json.JSONDecodeError:
         # If parsing fails, assume it's a normal string response
         current_app.logger.debug("Response is not JSON, using as is.")
         content_batch['social_media_content'] = social_media_response
+        current_app.logger.debug(f"Parsed social media response as JSON: {content_batch['social_media_content']}")
 
-    video_title = content_batch['social_media_content']['youtube']
+    if isinstance(content_batch['social_media_content'], dict) and 'youtube' in content_batch['social_media_content']:
+        video_title = content_batch['social_media_content']['youtube'].get('content', "Default Title")
+        current_app.logger.debug(f"Extracted video title: {video_title}")
+    else:
+        current_app.logger.error("Expected 'youtube' key not found in social media content")
+        video_title = "Default Title"  # Fallback to a default value or handle the error
+
+        current_app.logger.debug(f"video_title: {video_title}")
 
     # Generate YouTube thumbnail
     prompts_youtube_thumbnail = generate_prompts(
-        category='youtube_thumbnail',
+        category='yt_thumbnail',
         prompt_type='system',
         dynamic_inserts={
             'video_title': video_title
         })
 
-    content_batch['youtube_thumbnail'] = get_dalle2_response(prompts_youtube_thumbnail)
+    content_batch['youtube_thumbnail'] = get_dalle2_response(str(prompts_youtube_thumbnail))
 
     # Commit Primary Narrative to Database
     primary_narrative = create_primary_narrative(
         fact_combination_id=session['user_data']['fact_combination_id'],
-        narrative_text=selected_narrative['text'],  
+        narrative_text=selected_narrative,  
         user_id=session['user_data']['user_id'],
         actor_id=session['user_data']['actor_id'], 
         strat_id=strategy_id,
@@ -238,6 +252,7 @@ def select_narrative_controller(selected_narrative, strategy):
 
     # Return the news data as a JSON response
     content_json = json.dumps(content_batch)
+    current_app.logger.debug(f"content_json: {content_json}")
     return content_json
 
 def introduce_event_controller(event_details):
