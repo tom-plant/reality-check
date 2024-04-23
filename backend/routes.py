@@ -1,6 +1,6 @@
 # routes.py
 from flask import jsonify, request, session, send_from_directory
-from controllers import * 
+from backend.controllers import * 
 
 def setup_routes(app):
 

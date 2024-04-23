@@ -2,7 +2,7 @@ import json
 import logging
 import json
 import requests
-from flask import  current_app
+from flask import current_app
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 

@@ -6,9 +6,9 @@ import logging
 import json
 import requests
 from flask import session, redirect, url_for, current_app
-from ai_calls import get_chatgpt_response, get_dalle2_response
-from prompts_assembly import generate_prompts, get_text
-from db_operations import *
+from backend.ai_calls import get_chatgpt_response, get_dalle2_response
+from backend.prompts_assembly import generate_prompts
+from backend.db_operations import *
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
