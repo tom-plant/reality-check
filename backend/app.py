@@ -1,4 +1,8 @@
 # app.py
+import os
+
+print("Current directory:", os.getcwd())
+print("Directory contents:", os.listdir())
 
 from flask import Flask, session, jsonify, redirect, url_for, render_template, request, send_from_directory
 from config import Config, DevelopmentConfig, TestingConfig, ProductionConfig
@@ -6,7 +10,6 @@ from flask_cors import CORS
 from flask_session import Session 
 import uuid
 from dotenv import load_dotenv
-import os
 import sys
 import logging
 
