@@ -6,9 +6,9 @@ import logging
 import json
 import requests
 from flask import session, redirect, url_for, current_app
-from backend.ai_calls import get_chatgpt_response, get_dalle2_response
-from backend.prompts_assembly import generate_prompts
-from backend.db_operations import *
+from ai_calls import get_chatgpt_response, get_dalle2_response
+from prompts_assembly import generate_prompts
+from db_operations import *
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -167,16 +167,8 @@ def select_narrative_controller(selected_narrative, strategy):
 
     news_response = get_chatgpt_response(prompts_news_article)
     current_app.logger.debug(f"Unparsed news_response: {news_response}")
-
-    try:
-        # Try parsing it assuming it's a JSON string
-        parsed_response = json.loads(news_response)
-        current_app.logger.debug(f"Parsed news_response as JSON: {parsed_response}")
-        content_batch['news_article'] = parsed_response
-    except json.JSONDecodeError:
-        # If parsing fails, assume it's a normal string response
-        current_app.logger.debug("Response is not JSON, using as is.")
-        content_batch['news_article'] = news_response
+    content_batch['news_article'] = handle_chatgpt_output(news_response)
+    current_app.logger.debug(f"Parsed news_response: {content_batch['news_article']}")
 
     headline = content_batch['news_article']['headline']
     current_app.logger.debug(f"Headline: {headline}")
@@ -192,48 +184,56 @@ def select_narrative_controller(selected_narrative, strategy):
     content_batch['news_photo'] = get_dalle2_response(prompts_news_photo)
     current_app.logger.debug(f"news_photo: {content_batch['news_photo']}")
 
-    # # Generate social media content
-    # prompts_social_media_content = generate_prompts(
-    #     category='social_media_content',
-    #     prompt_type='both',
-    #     dynamic_inserts={
-    #         'narrative': get_primary_narrative_by_id(session['user_data']['primary_narrative_id']),
-    #         'facts': get_fact_combination_by_id(session['user_data']['fact_combination_id']),
-    #     })
+    # Generate instagram content
+    prompts_instagram = generate_prompts(
+        category='instagram',
+        prompt_type='both',
+        dynamic_inserts={
+            'narrative': get_primary_narrative_by_id(session['user_data']['primary_narrative_id']),
+            'facts': get_fact_combination_by_id(session['user_data']['fact_combination_id']),
+        })
 
-    # social_media_response = get_chatgpt_response(prompts_social_media_content)
-    # current_app.logger.debug(f'social media response: {social_media_response}')
+    instagram_response = get_chatgpt_response(prompts_instagram)
+    content_batch['instagram'] = handle_chatgpt_output(instagram_response)
+    current_app.logger.debug(f"Instagram response: {content_batch['instagram']}")
 
-    # # Check if the response is a string that looks like a JSON
-    # try:
-    #     # Try parsing it assuming it's a JSON string
-    #     parsed_response = json.loads(social_media_response)
-    #     current_app.logger.debug(f"Parsed social media response as JSON: {parsed_response}")
-    #     content_batch['social_media_content'] = parsed_response
-    # except json.JSONDecodeError:
-    #     # If parsing fails, assume it's a normal string response
-    #     current_app.logger.debug("Response is not JSON, using as is.")
-    #     content_batch['social_media_content'] = social_media_response
-    #     current_app.logger.debug(f"Parsed social media response as JSON: {content_batch['social_media_content']}")
+    # Generate shortform content
+    prompts_shortform = generate_prompts(
+        category='shortform',
+        prompt_type='both',
+        dynamic_inserts={
+            'narrative': get_primary_narrative_by_id(session['user_data']['primary_narrative_id']),
+            'facts': get_fact_combination_by_id(session['user_data']['fact_combination_id']),
+        })
 
-    # if isinstance(content_batch['social_media_content'], dict) and 'youtube' in content_batch['social_media_content']:
-    #     video_title = content_batch['social_media_content']['youtube'].get('content', "Default Title")
-    #     current_app.logger.debug(f"Extracted video title: {video_title}")
-    # else:
-    #     current_app.logger.error("Expected 'youtube' key not found in social media content")
-    #     video_title = "Default Title"  # Fallback to a default value or handle the error
+    shortform_response = get_chatgpt_response(prompts_shortform)
+    content_batch['shortform'] = handle_chatgpt_output(shortform_response)
+    current_app.logger.debug(f"Shortform response: {content_batch['shortform']}")
 
-    #     current_app.logger.debug(f"video_title: {video_title}")
+    # Generate youtube content
+    prompts_youtube = generate_prompts(
+        category='youtube',
+        prompt_type='both',
+        dynamic_inserts={
+            'narrative': get_primary_narrative_by_id(session['user_data']['primary_narrative_id']),
+            'facts': get_fact_combination_by_id(session['user_data']['fact_combination_id']),
+        })
 
-    # # Generate YouTube thumbnail
-    # prompts_youtube_thumbnail = generate_prompts(
-    #     category='yt_thumbnail',
-    #     prompt_type='system',
-    #     dynamic_inserts={
-    #         'video_title': video_title
-    #     })
+    youtube_response = get_chatgpt_response(prompts_youtube)
+    content_batch['youtube'] = handle_chatgpt_output(youtube_response)
+    current_app.logger.debug(f"Youtube response: {content_batch['youtube']}")
 
-    # content_batch['youtube_thumbnail'] = get_dalle2_response(str(prompts_youtube_thumbnail))
+    video_title = content_batch['youtube']
+    current_app.logger.debug(f"video_title: {video_title}")
+
+    prompts_youtube_thumbnail = generate_prompts(
+        category='yt_thumbnail',
+        prompt_type='system',
+        dynamic_inserts={
+            'video_title': video_title
+        })
+
+    content_batch['youtube_thumbnail'] = get_dalle2_response(str(prompts_youtube_thumbnail))
 
     # Commit Primary Narrative to Database
     primary_narrative = create_primary_narrative(
@@ -254,6 +254,19 @@ def select_narrative_controller(selected_narrative, strategy):
     content_json = json.dumps(content_batch)
     current_app.logger.debug(f"content_json: {content_json}")
     return content_json
+
+def handle_chatgpt_output(chatgpt_response):
+    # Check if the response is a string that looks like a JSON
+    try:
+        # Try parsing it assuming it's a JSON string
+        parsed_response = json.loads(chatgpt_response)
+        current_app.logger.debug(f"Parsed social media response as JSON: {parsed_response}")
+        return parsed_response
+    except json.JSONDecodeError:
+        # If parsing fails, assume it's a normal string response
+        current_app.logger.debug("Response is not JSON, using as is.")
+        return chatgpt_response
+
 
 def introduce_event_controller(event_details):
     # Verify user authentication

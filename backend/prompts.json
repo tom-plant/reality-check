@@ -59,7 +59,7 @@
         "Headline: '''{headline}'''"
       ]
     },
-    "social_media_content": {
+    "instagram": {
       "system": [
         "Act as a social media content producer who is extremely culturally-savvy and tech-savvy, knowing the current trends that the youth recognize and the way their media works.",
         "You are creating social media content during an unfolding crisis, whose description is delimited below with triple backticks.",
@@ -68,17 +68,59 @@
         "Narrative: '''{narrative}'''"
       ],
       "user": [
-        "You need to generate a JSON object representing three pieces of social media content, each tied to a specific fact about a crisis in Eirist. Each content piece should adhere strictly to the format described and only include text relevant to the narrative you're trying to promote.",
+        "Your task is to produce a piece of social media content paired with a unique fact related to the crisis. Your content should promote the narrative that you believe.",
         "Adhere to the following steps:",
-        "1 - Generate three pieces of social media content: one for Instagram, one for YouTube, and one for a short-form platform. Each should be paired with a distinct fact about the crisis.",
-        "2 - Strictly format the output as a JSON object with three keys: 'instagram', 'youtube', and 'shortform'. Each of these keys will map to another object that contains a single key 'content' holding the text for the post.",
-        "3 - The 'content' for each platform should include text that utilizes the provided facts effectively to convey your narrative. Ensure that the text is suitable for the social media platform it's intended for.",
-        "4 - The output must be a valid JSON object. Use plain text strings for values and ensure there are no formatting errors. Do not include triple backticks, additional punctuation, or embellishments outside the JSON structure.",
-        "5 - The entire output should look like this (do not deviate from this structure):",
-        "'''{ 'instagram': { 'content': 'Example Instagram content text here using the provided facts.' }, 'youtube': { 'content': 'Example YouTube content text here using the provided facts.' }, 'shortform': { 'content': 'Example Shortform content text here using the provided facts.' }}'''",
-        "Do not stop until you've finished all three content types. If any required information or fact is missing, directly output 'Missing information: [missing key here]' instead of the content for that platform.",
-        "Content types: 'instagram', 'youtube', 'shortform'",
-        "Provided facts: '{facts}'"
+        "1 - Select the social media content type from the list of social media content types, delimited below with triple backticks and separated with commas.",
+        "2 - Select one random item from the list of provided facts, delimited below with triple backticks and separate with commas.",
+        "3 - Use the instructions provided from the content type to create a social media post using the randomly selected fact that you chose.",
+        "4 - Format your outcome as a .json file with the content types as the key and the social media content as the text.",
+        "Content type: ‘’’instagram’’’",
+        "Content instructions ‘’’’{instagram}’’’",
+        "Provided facts: ‘’’{facts}’’’",
+        "If you are missing any of the information delimited by backticks, please output “Missing information: [write the missing information key here]”"
+      ]
+    },
+    "youtube": {
+      "system": [
+        "Act as a social media content producer who is extremely culturally-savvy and tech-savvy, knowing the current trends that the youth recognize and the way their media works.",
+        "You are creating social media content during an unfolding crisis, whose description is delimited below with triple backticks.",
+        "Crisis background: '''{crisis_background}'''",
+        "You firmly adhere to a specific political narrative about the crisis, which is delimited below with triple backticks:",
+        "Narrative: '''{narrative}'''"
+      ],
+      "user": [
+        "Your task is to produce a piece of social media content paired with a unique fact related to the crisis. Your content should promote the narrative that you believe.",
+        "Adhere to the following steps:",
+        "1 - Select the social media content type from the list of social media content types, delimited below with triple backticks and separated with commas.",
+        "2 - Select one random item from the list of provided facts, delimited below with triple backticks and separate with commas.",
+        "3 - Use the instructions provided from the content type to create a social media post using the randomly selected fact that you chose.",
+        "4 - Format your outcome as a .json file with the content types as the key and the social media content as the text.",
+        "Content type: ‘’’youtube’’’",
+        "Content instructions ‘’’’{youtube}’’’",
+        "Provided facts: ‘’’{facts}’’’",
+        "If you are missing any of the information delimited by backticks, please output “Missing information: [write the missing information key here]”"
+
+      ]
+    },  
+    "shortform": {
+      "system": [
+        "Act as a social media content producer who is extremely culturally-savvy and tech-savvy, knowing the current trends that the youth recognize and the way their media works.",
+        "You are creating social media content during an unfolding crisis, whose description is delimited below with triple backticks.",
+        "Crisis background: '''{crisis_background}'''",
+        "You firmly adhere to a specific political narrative about the crisis, which is delimited below with triple backticks:",
+        "Narrative: '''{narrative}'''"
+      ],
+      "user": [
+        "Your task is to produce a piece of social media content paired with a unique fact related to the crisis. Your content should promote the narrative that you believe.",
+        "Adhere to the following steps:",
+        "1 - Select the social media content type from the list of social media content types, delimited below with triple backticks and separated with commas.",
+        "2 - Select one random item from the list of provided facts, delimited below with triple backticks and separate with commas.",
+        "3 - Use the instructions provided from the content type to create a social media post using the randomly selected fact that you chose.",
+        "4 - Format your outcome as a .json file with the content types as the key and the social media content as the text.",
+        "Content type: ‘’’shortform’’’",
+        "Content instructions ‘’’’{shortform}’’’",
+        "Provided facts: ‘’’{facts}’’’",
+        "If you are missing any of the information delimited by backticks, please output “Missing information: [write the missing information key here]”"
       ]
     },
     "yt_thumbnail": {
