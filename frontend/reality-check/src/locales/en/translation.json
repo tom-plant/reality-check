@@ -10,7 +10,7 @@
     "updateNarrative": "Update Narrative",
     "promoteNarrative": "Promote This Narrative",
     "confirmSelections": "Confirm Selections",
-    "moreFacts": "More Information",
+    "moreFacts": "More Facts",
     "login": "Login",
     "start": "Start",
     "previous": "Previous",
@@ -97,8 +97,13 @@
           "impact": "The facts you select will directly influence the scenarios and challenges you see play out in the simulation."
       }
   },
+  "selectFacts": {
+    "title": "All Facts",
+    "display": "Your Selection"
+  },
   "buildNarratives": {
-    "title": "Build Your Narrative",
+    "title": "Choose Someone to Blame",
+    "display": "Choose a Narrative Strategy",
     "instructions": "Choose one actor to blame in your narrative. Then, choose two strategies for constructing your narrative. On the next page, you'll see two narrative options--each using the strategies you chose."
   },
   "selectNarratives": {

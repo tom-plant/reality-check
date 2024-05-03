@@ -26,8 +26,8 @@ const SelectFactsDisplay = () => {
 
   return (
     <div className="select-facts-display">
-      <div className="spacer"></div>
-      <div className="facts-list">
+      <h2>{t('selectFacts.display')}</h2>
+      <div className="selected-facts-list">
         {selectedFactCombination.map((fact) => (
           <FactBox 
             key={fact.id}

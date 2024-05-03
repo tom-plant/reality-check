@@ -6,22 +6,7 @@
   width: 30%; /* Adjust based on your layout */
   height: 70%; /* Adjust based on your layout */
   top: 25%; /* Adjust to position below the header */
-  padding: 20px;
+  /* padding: 20px; */
   box-sizing: border-box;
 }
 
-.line {
-  position: absolute;
-  left: 0;
-  width: 100%; /* Stretches from one side to the other */
-  height: 2px; /* Thickness of the line */
-  background-color: white; /* Color of the line */
-  z-index: 10; /* Ensures the lines are above the background images */
-}
-
-/* Position each line at every fifth of the height of the container */
-.line-1 { top: 30%; }
-.line-2 { top: 45%; }
-.line-3 { top: 60%; }
-.line-4 { top: 75%; }
-.line-5 { top: 90%; }

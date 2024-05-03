@@ -72,6 +72,7 @@ const SelectFacts = () => {
       <Timer onTimeUp={onTimeUp} startTimer={!isIntroPopupVisible} />
         <Counter />  
       </div> 
+      <h2>{t('selectFacts.title')}</h2>
       <div className="facts-list">
         {displayedFacts.map((fact) => (
           <FactBox 

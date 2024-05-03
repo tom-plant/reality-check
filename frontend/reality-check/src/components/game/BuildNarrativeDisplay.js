@@ -23,8 +23,8 @@ const handleGenerateNarrative = async () => {
     const isButtonEnabled = selectedActor && Array.isArray(selectedStrat) && selectedStrat.length === 2;
     
     return (
-      <div className="build-narratives">
-        <h2>{t('buildNarratives.title')}</h2>
+      <div className="build-narratives-display">
+        <h2>{t('buildNarratives.display')}</h2>
         <div className="strats-list">
           {strats && strats.map((strat) => (
             <StratBox

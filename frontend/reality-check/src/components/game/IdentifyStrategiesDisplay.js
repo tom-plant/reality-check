@@ -19,7 +19,7 @@ return (
         </div>
       )}
       <h2>{t('common.yourFacts')} </h2>
-      <div className="facts-list">
+      <div className="selected-facts-list">
         {selectedFactCombination.map((fact) => (
           <div key={fact.id} className="displayed-fact">
             {fact.text}

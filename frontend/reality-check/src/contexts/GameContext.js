@@ -8,7 +8,7 @@ const GameDispatchContext = createContext();
 const GameFunctionContext = createContext(); 
 
 const initialState = {
-  currentPhase: 'intro', 
+  currentPhase: 'game', 
   currentIntroView: 'AUTH_LOGIN',
   currentView: 'SELECT_FACTS', 
   currentTurnPointView: 'ALERT',
