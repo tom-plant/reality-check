@@ -1,27 +1,27 @@
 .select-narratives {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    max-height: 400px; /* Adjust the height as needed */
-    overflow-y: auto;
-    text-align: center; 
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  padding: 20px;
+  color: white;
+  height: 100%;
+  box-sizing: border-box;
+}
 
   .facts-list {
     overflow-y: auto;
+    width: 100%;
     flex-grow: 1;
-    width: 100%; /* Ensures the list takes up the full width */
-    margin-bottom: 20px;
+    margin-bottom: 20px; 
   }
   
-
   .confirm-narrative {
     margin-top: 20px;
     padding: 10px 20px;
-    cursor: pointer;
     position: absolute;
-    bottom: 20px;  
+    bottom: 20px;
+    cursor: pointer;
     background-color: #007bff; /* Example button color */
     color: white; /* Button text color */
     border: none;
@@ -45,3 +45,7 @@
     height: 100%; /* Adjust based on your needs */
   }
   
+
+
+
+

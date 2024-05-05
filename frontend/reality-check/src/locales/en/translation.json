@@ -11,6 +11,7 @@
     "promoteNarrative": "Promote This Narrative",
     "confirmSelections": "Confirm Selections",
     "moreFacts": "More Facts",
+    "yourUpdatedFacts": "Your Updated Facts",
     "login": "Login",
     "start": "Start",
     "previous": "Previous",
@@ -19,6 +20,7 @@
     "yourNarrative": "Your Narrative",
     "yourFacts": "Your Facts",
     "yourEvent": "Your Event",
+    "yourStrategy": "Your Narrative Strategy",
     "updatedNarrative": "Updated Narrative",
     "originalNarrative": "Original Narrative",
     "updatedFacts": "Updated Facts",
@@ -134,6 +136,7 @@
       }
     },
   "identifyWeaknesses": {
+    "title": "",
     "instructions": "Select and deselect information to create a more accurate narrative."
   },
   "identifyStrategies": {

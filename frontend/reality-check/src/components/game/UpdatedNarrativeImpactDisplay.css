@@ -5,8 +5,9 @@
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  max-height: 400px; /* Adjust the height as needed */
-  overflow-y: auto; /* Enable scrolling for the entire container */
+  max-height: 400px; 
+  overflow-y: auto;
+  color: black;
 }
 
 .updated-narrative-impact-display {
@@ -15,27 +16,8 @@
   align-items: center;
   width: 100%;
   padding: 20px;
-  text-align: center; /* Center the content */
-}
-
-.updated-narrative-impact-display h2 {
-  color: #000; /* Set the header color to black */
-  margin-bottom: 20px; /* Add some space below the header */
-}
-
-.facts-list {
-  width: 100%; /* Ensure it takes up the full width */
-}
-
-.selected-narrative, .secondary-narrative, .displayed-fact {
-  padding: 10px;
-  margin-bottom: 30px;
-  width: 100%;
-  box-sizing: border-box; /* Ensures padding is included in width */
-  text-align: center; /* Center the text inside each fact box */
-  border: 1px solid black; /* Adjust as needed */
-  color: black; /* Adjust as needed */
-  background-color: transparent; /* Adjust as needed */
+  text-align: center; 
+  color: black;
 }
 
 .continue-button {

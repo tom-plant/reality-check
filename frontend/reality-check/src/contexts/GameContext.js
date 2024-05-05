@@ -25,6 +25,7 @@ const initialState = {
   narrativeOptions: [],
   counterNarrativeOptions: [],
   selectedNarrative: null,
+  selectedCounterNarrative: [],
   secondaryNarrative: [],
   conclusionContent: [],
   selectedEvent: null,
@@ -136,6 +137,12 @@ const gameReducer = (state, action) => {
 
     case 'DESELECT_NARRATIVE':
       return { ...state, selectedNarrative: null };
+
+    case 'SELECT_COUNTERNARRATIVE':
+      return { ...state, selectedCounterNarrative: action.payload };
+
+    case 'DESELECT_COUNTERNARRATIVE':
+      return { ...state, selectedCounterNarrative: null };
 
     case 'SET_NARRATIVE_OPTIONS':
       return {

@@ -11,7 +11,7 @@ const SelectNarrativesDisplay = () => {
   return (
     <div className="select-narratives-display">
       <h2>{t('common.selectedFacts')}</h2>
-      <div className="facts-list">
+      <div className="displayed-facts-list">
         {selectedFactCombination.map((fact) => (
           <div key={fact.id} className="displayed-fact">
             {fact.text}

@@ -5,15 +5,21 @@ import './NarrativeBox.css';
 
 const NarrativeBox = ({ narrative, isSelected, disabled, container}) => {
   const dispatch = useGameDispatch();
-  const { selectedNarrative } = useGameState(); // Access the selected facts from context
+  const { selectedNarrative, currentView, selectedCounterNarrative } = useGameState(); // Access the selected narrative and current view from context
 
   const toggleNarrativeSelection = () => {
     if (disabled) return; // Early return if interaction is disabled
-  
-    const actionType = isSelected ? 'DESELECT_NARRATIVE' : 'SELECT_NARRATIVE';
+
+    // Choose action type based on the current view and selection state
+    let actionType = isSelected ? 'DESELECT_NARRATIVE' : 'SELECT_NARRATIVE';
+
+    // Modify action types if the current view is UPDATED_NARRATIVE_IMPACT
+    if (currentView === 'UPDATED_NARRATIVE_IMPACT') {
+      actionType = isSelected ? 'DESELECT_COUNTERNARRATIVE' : 'SELECT_COUNTERNARRATIVE';
+    }
+
     dispatch({ type: actionType, payload: narrative });
   };
-
 
   return (
     <div 

@@ -4,17 +4,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  bottom: 20px;
+  height: 100%; 
   padding: 20px;
-  max-height: 400px; /* Adjust the height as needed */
   overflow-y: auto;
-}
-
-.facts-list {
-  overflow-y: auto;
-  flex-grow: 1;
-  width: 100%; /* Ensures the list takes up the full width */
-  margin: 0; /* Remove default margins */
-  padding: 0; /* Remove default padding */
+  color: black;
+  box-sizing: border-box;
 }
 
 

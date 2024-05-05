@@ -16,7 +16,7 @@
 .selected-facts-list {
   overflow-y: auto;
   flex-grow: 1;
-  width: 100%; /* Ensures the list takes up the full width */
+  width: 100%; 
 }
 
 .generate-narrative {

@@ -2,17 +2,25 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
   padding: 20px;
   color: black;
   height: 100%;
-  bottom: 20px;
-  position: relative;
+  box-sizing: border-box;
 }
 
 .strats-list {
   overflow-y: auto;
-  width: 100%; /* Ensures the list takes up the full width */
-  top: 80px;
-  bottom: 70px; 
+  width: 100%;
+  flex-grow: 1;
+  margin-bottom: 20px; 
+}
+
+.counter-wrapper {
+  display: flex;
+  left: 75%;
+  justify-content: space-between;
+  width: 100%;
   position: absolute;
+  bottom: 30px;
 }

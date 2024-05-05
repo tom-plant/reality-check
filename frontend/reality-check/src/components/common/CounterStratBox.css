@@ -12,7 +12,7 @@
 }
 
 .counter-strat-box.selected {
-  background-color: #d2d2d2;
-  border: 1px solid rgb(0, 0, 0);
+  background-color: #fff;
   color: #000;
 }
+

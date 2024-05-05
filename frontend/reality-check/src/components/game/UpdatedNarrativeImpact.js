@@ -7,18 +7,17 @@ import LoadingIcon from '../common/LoadingIcon';
 import './UpdatedNarrativeImpact.css';
 
 const UpdatedNarrativeImpact = () => {
-  const { counterNarrativeOptions, isLoadingNarratives, selectedNarrative } = useGameState();
+  const { counterNarrativeOptions, isLoadingNarratives, selectedCounterNarrative } = useGameState();
   const dispatch = useGameDispatch();
   const { fetchAndSetConclusion, setCurrentPhase } = useGameFunction();
   const [buttonClicked, setButtonClicked] = useState(false);
 
   // Handle narrative selection
   const handleNarrativeConfirmation = () => {
-    if (!buttonClicked && selectedNarrative) {
+    if (!buttonClicked && selectedCounterNarrative) {
       setButtonClicked(true);
-      dispatch({ type: 'SET_SECONDARY_NARRATIVE_CONTENT', payload: selectedNarrative }); 
-      fetchAndSetConclusion(selectedNarrative);
-      console.log("narrativeotpins: ", counterNarrativeOptions)
+      dispatch({ type: 'SET_SECONDARY_NARRATIVE_CONTENT', payload: selectedCounterNarrative }); 
+      fetchAndSetConclusion(selectedCounterNarrative);
       setCurrentPhase('outro'); 
       dispatch({ type: 'SET_CURRENT_OUTRO_VIEW', payload: 'CONCLUSION_WRAP_UP' });
     }
@@ -38,14 +37,14 @@ const UpdatedNarrativeImpact = () => {
               <NarrativeBox 
                 key={narrative.id} 
                 narrative={narrative}
-                isSelected={selectedNarrative && narrative === selectedNarrative}
+                isSelected={selectedCounterNarrative && narrative === selectedCounterNarrative}
                 container="left"
               />
             ))}
           </div>
           <button
             className="confirm-narrative"
-            disabled={!selectedNarrative}
+            disabled={!selectedCounterNarrative}
             onClick={handleNarrativeConfirmation}
           >
             Confirm Selection

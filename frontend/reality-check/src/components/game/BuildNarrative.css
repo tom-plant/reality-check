@@ -5,21 +5,14 @@
   padding: 20px;
   color: white;
   height: 100%; /* Fill the height of the parent */
-  bottom: 20px;
-}
-
-.select-actors {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  overflow-y: auto;
-  color: white;
+  position: relative;
+  box-sizing: border-box;
 }
 
 .actors-list {
   overflow-y: auto;
   flex-grow: 1;
+  top: 80px;
   width: 100%; /* Ensures the list takes up the full width */
   margin-bottom: 20px;
   color: white;

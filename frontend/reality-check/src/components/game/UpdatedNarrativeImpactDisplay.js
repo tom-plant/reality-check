@@ -14,13 +14,6 @@ const UpdatedNarrativeImpactDisplay = () => {
   return (
     <div className="updated-narrative-impact-display-container">
       <div className="updated-narrative-impact-display">
-        <h2>{t('updatedNarrativeImpact.updatedStrategies')} </h2>
-        <div className="facts-list">
-          {selectedCounterStrat.map((counterstrat) => (
-            <div key={counterstrat.id} className="displayed-fact">
-              {counterstrat.text}
-            </div>
-          ))}
         </div>
           {secondaryNarrative && (
           <div className="secondary-narrative">
@@ -34,7 +27,7 @@ const UpdatedNarrativeImpactDisplay = () => {
         </div>
       )}
         <h2>{t('common.updatedFacts')} </h2>
-        <div className="facts-list">
+        <div className="displayed-facts-list">
           {updatedFactCombination.map((fact) => (
             <div key={fact.id} className="displayed-fact">
               {fact.text}
@@ -42,7 +35,6 @@ const UpdatedNarrativeImpactDisplay = () => {
           ))}
         </div>
       </div>
-    </div>
   );
 };
 

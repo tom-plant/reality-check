@@ -26,7 +26,7 @@ const NarrativeImpactDisplay = () => {
         </div>
       )}
         <h2>{t('common.yourFacts')} </h2>
-        <div className="facts-list">
+        <div className="displayed-facts-list">
           {selectedFactCombination.map((fact) => (
             <div key={fact.id} className="displayed-fact">
               {fact.text}

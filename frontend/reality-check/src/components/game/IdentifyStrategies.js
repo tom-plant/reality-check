@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next'; 
 import { useGameState, useGameDispatch, useGameFunction } from '../../contexts/GameContext';
 import CounterStratBox from '../common/CounterStratBox'; 
+import Counter from '../common/Counter';
 import './IdentifyStrategies.css'; 
 
 const IdentifyStrategies = () => {
@@ -26,6 +27,9 @@ const IdentifyStrategies = () => {
 
   return (
     <div className="identify-strategies">
+        <div className="counter-wrapper">
+            <Counter />  
+        </div> 
       <h2>{t('identifyStrategies.title')}</h2>
       <div className="counter-strats-list">
         {counterstrats.map((counterstrat) => (

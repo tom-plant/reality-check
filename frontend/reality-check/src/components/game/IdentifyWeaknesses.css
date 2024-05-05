@@ -2,20 +2,17 @@
 
 
 .identify-weaknesses {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    max-height: 400px; /* Adjust the height as needed */
-    overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  bottom: 20px;
+  position: relative;
+  height: 100%; /* Fill the height of the parent */
+  box-sizing: border-box;
+  overflow-y: auto; /* Allows scrolling within this element */
   }
 
-  .facts-list {
-    overflow-y: auto;
-    flex-grow: 1;
-    width: 100%; /* Ensures the list takes up the full width */
-    margin-bottom: 20px;
-  }
   
   .load-more {
     margin-top: 20px;

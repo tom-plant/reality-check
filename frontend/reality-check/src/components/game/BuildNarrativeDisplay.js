@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next'; 
 import { useGameState, useGameDispatch, useGameFunction } from '../../contexts/GameContext';
 import StratBox from '../common/StratBox'; 
+import Counter from '../common/Counter';
 import './BuildNarrativeDisplay.css'; 
 
 const BuildNarrativeDisplay = () => {
@@ -34,6 +35,9 @@ const handleGenerateNarrative = async () => {
             />
           ))}
         </div>
+        <div className="counter-wrapper">
+            <Counter />  
+        </div> 
         <button className="generate-narrative" 
           onClick={handleGenerateNarrative}
           disabled={!isButtonEnabled}

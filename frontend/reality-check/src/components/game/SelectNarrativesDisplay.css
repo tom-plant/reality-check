@@ -4,35 +4,24 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
   padding: 20px;
-  max-height: 400px; /* Adjust the height as needed */
-  overflow-y: auto;
-  text-align: center; /* Center the content */
+  color: black;
+  height: 100%;
+  box-sizing: border-box;
 }
 
-.select-narratives-display h2 {
-  color: #000; /* Set the header color to black */
-  margin-bottom: 20px; /* Add some space below the header */
-}
-
-.facts-list {
+.displayed-facts-list {
   overflow-y: auto;
+  width: 100%;
   flex-grow: 1;
-  align-items: center;
-  width: 100%; /* Ensures the list takes up the full width */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow-y: auto; /* Enable scrolling if the list gets too long */
+  margin-bottom: 20px; 
 }
-
 
 .displayed-fact {
-  margin-bottom: 10px;
-  padding: 10px;
   width: 100%;
   box-sizing: border-box;
-  text-align: center; /* Center the text inside each fact box */
+  text-align: center; 
   border: 1px solid black;
   color: black;
   background-color: transparent;

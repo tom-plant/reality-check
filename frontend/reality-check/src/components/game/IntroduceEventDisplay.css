@@ -24,10 +24,6 @@
 
 }
 
-.facts-list {
-  width: 100%; /* Ensure it takes up the full width */
-}
-
 .selected-narrative, .selected-event, .displayed-fact {
   padding: 10px;
   margin: 5px 0; /* Adjust spacing between items */
