@@ -46,7 +46,7 @@ const NarrativeImpact = () => {
   return (
     <div className="narrative-impact">
       {isLoadingNews ? (
-        <div className="loading-container">
+        <div className="news-loading-container">
           <LoadingIcon />
         </div>
       ) : content && content.instagram && 

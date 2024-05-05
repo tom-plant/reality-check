@@ -7,7 +7,7 @@ const InstagramPost = ({ text }) => {
 
   return (
     <div className="instagram-post">
-      <img src="../../assets/instagram.png" alt="Instagram template" className="background-image" />
+      <img src="../../assets/instagram.PNG" alt="Instagram template" className="background-image" />
       <p className="instagram-text">{text}</p>
     </div>
   );

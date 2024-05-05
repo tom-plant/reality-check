@@ -1,24 +1,39 @@
 .news-article {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .headline {
+    display: block; /* Ensures that it acts as a standard block-level element */
+    max-width: 600px; /* Optional: limits the width for better control */
+    margin: 20px auto; /* Center aligns the article */
+    color: white; /* Correcting the color note */
+    font-family: 'Times New Roman', serif; /* More journalistic font */
+    overflow: hidden; /* Ensures the container clears its floats */
+}
+
+.headline {
     font-size: 24px;
     font-weight: bold;
-  }
-  
-  .article-content {
-    display: flex;
-  }
-  
-  .news-photo {
+    margin-bottom: 10px;
+    width: 100%; /* Ensure headline takes full width */
+}
+
+.article-content {
+    /* No specific styling needed here unless for padding/margins */
+}
+
+.news-photo {
+    float: left; /* Float the image to the left */
     width: 50%;
     margin-right: 20px;
-  }
-  
-  .body-text {
-    flex: 1;
-    overflow: auto;
-  }
-  
+    height: auto;
+}
+
+.body-text {
+    display: block; /* Explicitly declare display block */
+    width: auto; /* Auto width for automatic adjustment */
+    overflow: visible; /* If you need text to overflow */
+    padding-top: 0;
+}
+
+.news-article::after {
+    content: "";
+    display: block;
+    clear: both; /* This will clear the float, ensuring the container encloses floated elements */
+}

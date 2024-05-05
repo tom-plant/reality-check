@@ -1,17 +1,16 @@
 .youtube-content {
+    display: flex;
+    flex-direction: column; /* Use column to stack thumbnail and description */
     position: relative;
-    background-size: cover;
-  }
-  
-  .background-image {
     width: 100%;
+    height: auto; /* Allow height to adjust based on content */
+    background-size: cover;
+    background-position: center;
   }
   
   .actual-thumbnail {
-    position: relative;
-    top: 10%;
-    left: 10%;
-    width: 80%; /* Adjust size as necessary */
+    width: 100%; /* Full width */
+    height: auto; /* Maintain aspect ratio */
   }
   
   .youtube-description {
@@ -21,5 +20,6 @@
     font-family: 'Verdana', sans-serif;
     font-size: 18px;
     color: white;
+    width: 80%; /* Control the width of the description */
   }
   

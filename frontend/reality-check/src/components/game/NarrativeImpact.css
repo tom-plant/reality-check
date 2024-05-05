@@ -1,16 +1,16 @@
 .narrative-impact {
   display: flex;
-  flex-direction: column; /* Makes children stack vertically */
-  gap: 20px; /* Adds space between each child */
+  flex-direction: column;
+  gap: 20px;
   align-items: center;
   color: white;
   height: auto; 
-  width: 100%; /* Use the full width of the container */
-  overflow-y: auto; 
+  width: 100%;
+  overflow-y: auto;
 }
 
 
-.loading-container {
+.news-loading-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,28 +19,3 @@
   overflow-y: auto; 
 }
 
-
-
-/* .narrative-impact img {
-  float: left; 
-  margin-right: 20px; 
-  max-width: 40%; 
-  height: auto;
-}
-
-.narrative-impact h1 {
-  clear: both; 
-  word-wrap: break-word;
-  font-size: 18px;
-  margin-top: 0; 
-}
-
-.narrative-impact p {
-  font-size: 15px;
-}
-
-.narrative-impact::after {
-  content: "";
-  display: table;
-  clear: both;
-} */

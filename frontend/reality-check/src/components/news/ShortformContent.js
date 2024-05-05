@@ -7,7 +7,7 @@ const ShortformContent = ({ content }) => {
 
   return (
     <div className="shortform-content">
-      <img src="../../assets/shortform.png" alt="Shortform template" className="background-image" />
+      <img src="../../assets/shortform.PNG" alt="Shortform template" className="background-image" />
       <p className="shortform-text">{content}</p>
     </div>
   );

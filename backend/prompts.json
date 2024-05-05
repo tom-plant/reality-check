@@ -125,7 +125,7 @@
     },
     "yt_thumbnail": {
       "system": [
-        "Produce a photograph used as a YouTube thumbnail to accompany the following video title delimited with triple backticks, capturing a scene related to the story that could be occurring. Do not include any text.",
+        "Produce a photograph used as a YouTube thumbnail to accompany the following video title delimited with triple backticks, capturing a scene related to the story that could be occurring. Do not include any text in your image.",
         "Video title: '''{video_title}'''"
       ]
     },
