@@ -40,6 +40,7 @@
     overflow: hidden;
     align-items: center;
     font-size: 12px;
+    padding-left: 0;
 }
 
 .sender-name {
@@ -57,4 +58,20 @@
 .email-time {
     font-size: 8px; 
     color: gray;
+}
+
+.join-button {
+    font-weight: bold;
+    color: white;
+    margin-left: 0;
+    background-color: rgb(255, 225, 0);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+  
+.join-button:hover {
+    background-color: rgba(255, 225, 0, 0.8); /* Slightly lighter on hover */
 }

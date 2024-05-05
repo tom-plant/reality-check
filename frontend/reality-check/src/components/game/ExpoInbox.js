@@ -39,7 +39,7 @@ const ExpoInbox = ({ setCurrentIntroView }) => {
     // After a 5-second delay, add the new email to the top of the list
     const timer = setTimeout(() => {
       setCombinedEmails([newEmail, ...initialEmails]);
-    }, 50); // 5000ms delay
+    }, 5000); // 5000ms delay
 
     // Cleanup the timer when the component unmounts
     return () => clearTimeout(timer);
@@ -56,7 +56,8 @@ const ExpoInbox = ({ setCurrentIntroView }) => {
             subject={subject}
             description={description}
             time={time}
-            onClick={id === newEmail.id ? () => setCurrentIntroView('EMAIL_RECRUITMENT') : undefined} 
+            onClick={id === newEmail.id ? () => setCurrentIntroView('EMAIL_RECRUITMENT') : undefined}
+            isNewEmail={id === newEmail.id} // Adds a new email indicator
           />
         ))}
       </div>

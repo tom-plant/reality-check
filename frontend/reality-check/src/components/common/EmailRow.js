@@ -1,9 +1,9 @@
 import React from 'react';
 import './EmailRow.css'; // Make sure the path is correct
 
-const EmailRow = ({ title, subject, description, time, onClick }) => {
+const EmailRow = ({ title, subject, description, time, onClick, isNewEmail }) => {
   return (
-    <div className={`email-row ${onClick ? 'clickable' : ''}`} onClick={onClick}>
+    <div className={`email-row ${onClick ? 'clickable' : ''} ${isNewEmail ? 'new-email' : ''}`} onClick={onClick}>
       <div className="email-title">
         <h3>{title}</h3>
       </div>

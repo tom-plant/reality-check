@@ -35,12 +35,16 @@ const EmailRecruitment = ({ setCurrentPhase }) => {
       </div>
       <div className="body-container">
         <p>{t('emailRecruitment.intro')}</p>
+        <div style={{ height: '5px' }}></div>
         <p>{t('emailRecruitment.request')}</p>
-        <button onClick={handleStart} style={{ fontWeight: 'bold' }}>
+        <p>{t('emailRecruitment.information')}</p>
+        <div style={{ height: '20px' }}></div>
+        <button className="join-button" onClick={handleStart}>
           {t('common.clickToJoin')} 
         </button>
-        <p>{t('emailRecruitment.information')}</p>
+        <div style={{ height: '20px' }}></div>
         <p>{t('emailRecruitment.sendOff')}</p>
+        <div style={{ height: '20px' }}></div>
         <p>{t('emailRecruitment.goodbye')}</p>
         <p style={{ fontWeight: 'bold' }}>{t('emailRecruitment.sender')}</p>
         <p style={{ fontStyle: 'italic' }}>{t('emailRecruitment.footer')}</p>

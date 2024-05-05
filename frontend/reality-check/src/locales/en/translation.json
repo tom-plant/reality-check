@@ -109,7 +109,7 @@
     "instructions": "Choose one actor to blame in your narrative. Then, choose two strategies for constructing your narrative. On the next page, you'll see two narrative options--each using the strategies you chose."
   },
   "selectNarratives": {
-      "title": "Select Narratives",
+      "title": "Select A Narrative",
       "instructions" : {
         "introduction": "Choose one narrative that you think will cause the most dangerous impact on society. Your decision will shape the narrative that dominates public opinion in the rest of the simulation."
       }
