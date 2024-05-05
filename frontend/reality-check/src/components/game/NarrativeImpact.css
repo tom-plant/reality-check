@@ -1,39 +1,46 @@
 .narrative-impact {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-  overflow: hidden; /* Clear the float */
+  display: flex;
+  flex-direction: column; /* Makes children stack vertically */
+  gap: 20px; /* Adds space between each child */
+  align-items: center;
+  color: white;
+  height: auto; 
+  width: 100%; /* Use the full width of the container */
+  overflow-y: auto; 
 }
 
-.narrative-impact img {
-  float: left; /* Float the image to the left */
-  margin-right: 20px; /* Add some space between the image and the text */
-  max-width: 40%; /* Adjust the width of the image */
-  height: auto;
-}
-
-.narrative-impact h1 {
-  clear: both; /* Ensure the headline doesn't wrap around the floated image */
-  word-wrap: break-word;
-  font-size: 18px;
-  margin-top: 0; /* Adjust the margin to bring the headline closer to the top */
-}
-
-.narrative-impact p {
-  text-align: justify;
-  font-size: 15px;
-}
-
-/* After the floating elements, add a clearfix to ensure container encloses the floated elements */
-.narrative-impact::after {
-  content: "";
-  display: table;
-  clear: both;
-}
 
 .loading-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%; /* Adjust based on your needs */
+  gap: 20px; 
+  height: 100%; 
+  overflow-y: auto; 
 }
+
+
+
+/* .narrative-impact img {
+  float: left; 
+  margin-right: 20px; 
+  max-width: 40%; 
+  height: auto;
+}
+
+.narrative-impact h1 {
+  clear: both; 
+  word-wrap: break-word;
+  font-size: 18px;
+  margin-top: 0; 
+}
+
+.narrative-impact p {
+  font-size: 15px;
+}
+
+.narrative-impact::after {
+  content: "";
+  display: table;
+  clear: both;
+} */
