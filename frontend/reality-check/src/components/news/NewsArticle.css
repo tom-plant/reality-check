@@ -1,0 +1,24 @@
+.news-article {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .headline {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .article-content {
+    display: flex;
+  }
+  
+  .news-photo {
+    width: 50%;
+    margin-right: 20px;
+  }
+  
+  .body-text {
+    flex: 1;
+    overflow: auto;
+  }
+  

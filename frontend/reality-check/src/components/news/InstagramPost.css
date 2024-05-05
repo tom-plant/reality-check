@@ -1,0 +1,19 @@
+.instagram-post {
+    position: relative;
+    background-size: cover;
+  }
+  
+  .background-image {
+    width: 100%;
+  }
+  
+  .instagram-text {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    transform: translateY(-50%);
+    font-family: 'Arial', sans-serif; /* Specify the font used on Instagram or similar */
+    font-size: 18px;
+    color: black;
+  }
+  

@@ -251,7 +251,7 @@ def select_narrative_controller(selected_narrative, strategy):
     session.modified = True
 
     # Return the news data as a JSON response
-    content_json = json.dumps(content_batch)
+    content_json = safe_json_dumps(content_batch)
     current_app.logger.debug(f"content_json: {content_json}")
     return content_json
 
@@ -260,13 +260,23 @@ def handle_chatgpt_output(chatgpt_response):
     try:
         # Try parsing it assuming it's a JSON string
         parsed_response = json.loads(chatgpt_response)
-        current_app.logger.debug(f"Parsed social media response as JSON: {parsed_response}")
-        return parsed_response
-    except json.JSONDecodeError:
-        # If parsing fails, assume it's a normal string response
-        current_app.logger.debug("Response is not JSON, using as is.")
-        return chatgpt_response
+        if isinstance(parsed_response, dict):  # Ensure it's a dictionary
+            current_app.logger.debug(f"Parsed response as JSON: {parsed_response}")
+            return parsed_response
+        else:
+            raise ValueError("Parsed JSON is not a dictionary")
+    except (json.JSONDecodeError, ValueError) as e:
+        # If parsing fails or it's not a dictionary, log and use the string directly
+        current_app.logger.debug(f"Handling response as plain text due to: {e}")
+        return {'text': chatgpt_response}
 
+def safe_json_dumps(data):
+    try:
+        return json.dumps(data)
+    except TypeError as e:
+        current_app.logger.error(f"Failed to serialize to JSON: {e}")
+        # Handle non-serializable data gracefully, perhaps by converting to string or providing a default
+        return json.dumps({k: str(v) for k, v in data.items()})
 
 def introduce_event_controller(event_details):
     # Verify user authentication

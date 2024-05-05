@@ -1,0 +1,19 @@
+.shortform-content {
+    position: relative;
+    background-size: cover;
+  }
+  
+  .background-image {
+    width: 100%;
+  }
+  
+  .shortform-text {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    transform: translateY(-50%);
+    font-family: 'Helvetica', sans-serif; /* Specify a font similar to TikTok or suitable */
+    font-size: 20px;
+    color: white;
+  }
+  

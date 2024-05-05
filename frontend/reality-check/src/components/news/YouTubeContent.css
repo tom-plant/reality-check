@@ -1,0 +1,25 @@
+.youtube-content {
+    position: relative;
+    background-size: cover;
+  }
+  
+  .background-image {
+    width: 100%;
+  }
+  
+  .actual-thumbnail {
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    width: 80%; /* Adjust size as necessary */
+  }
+  
+  .youtube-description {
+    position: absolute;
+    bottom: 5%;
+    left: 10%;
+    font-family: 'Verdana', sans-serif;
+    font-size: 18px;
+    color: white;
+  }
+  
