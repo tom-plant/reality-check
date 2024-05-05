@@ -1,11 +1,10 @@
 .conclusion-wrap-up {
-    padding: 20px; /* Adds padding inside the container */
-    max-height: 350px; /* Sets a maximum height for the container */
-    overflow-y: auto; /* Enables vertical scrolling if content overflows */
-    border-radius: 8px; /* Rounded corners for the container */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; /* Distributes space between content and button */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  max-height: 400px; /* Adjust the height as needed */
+  overflow-y: auto;
   }
   
   .conclusion-wrap-up h2 {

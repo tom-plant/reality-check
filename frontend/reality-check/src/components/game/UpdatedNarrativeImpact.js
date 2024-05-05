@@ -24,7 +24,7 @@ const UpdatedNarrativeImpact = () => {
   };
 
   return (
-    <div className="narrative-impact">
+    <div className="updated-narrative-impact">
       {isLoadingNarratives ? (
         <div className="loading-container">
           <LoadingIcon />
