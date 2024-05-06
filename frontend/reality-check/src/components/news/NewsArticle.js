@@ -17,3 +17,5 @@ const NewsArticle = ({ article, photo }) => {
 };
 
 export default NewsArticle;
+
+

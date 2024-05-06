@@ -1,25 +1,39 @@
 .youtube-content {
-    display: flex;
-    flex-direction: column; /* Use column to stack thumbnail and description */
+    display: block; 
     position: relative;
     width: 100%;
-    height: auto; /* Allow height to adjust based on content */
-    background-size: cover;
-    background-position: center;
-  }
-  
-  .actual-thumbnail {
-    width: 100%; /* Full width */
-    height: auto; /* Maintain aspect ratio */
-  }
-  
-  .youtube-description {
+}
+
+.background-image {
+    width: 100%;
+    height: auto; /* Adjust height automatically to preserve aspect ratio */
+    display: block; /* Ensures no extra space below the image */
+}
+
+.actual-thumbnail {
     position: absolute;
-    bottom: 5%;
-    left: 10%;
+    top: 45%; /* Adjust this value to position the thumbnail within the template */
+    left: 13%; /* Adjust this value to center the thumbnail horizontally */
+    width: 20%; /* You might adjust this to fit the placeholder in the template */
+    height: auto; /* Maintain aspect ratio */
+    transform: translateY(-50%); /* Optionally adjust vertical centering based on 'top' */
+}
+
+.youtube-description {
+    position: absolute;
+    bottom: 10%;
+    top: 5%;
+    left: 45%;
+    right: 10px;
     font-family: 'Verdana', sans-serif;
-    font-size: 18px;
+    font-size: clamp(8px, 3vw, 12px); /* Adjusted for better readability */
     color: white;
-    width: 80%; /* Control the width of the description */
-  }
-  
+    padding: 0 10px;
+    box-sizing: border-box;
+    max-width: 50%; /* Limit width to not overflow the image boundary */
+    overflow: hidden;
+    display: -webkit-box; /* Use the webkit line clamp approach */
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3; /* Limit text to three lines */
+    text-overflow: ellipsis; /* Adds ellipsis after the clamp limit */
+}

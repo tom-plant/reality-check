@@ -1,25 +1,34 @@
 .instagram-post {
-    display: flex; /* Added flex for alignment */
-    position: relative; /* Added to position text absolutely within */
-    width: 100%; /* Full width of the container */
-    height: 300px; /* Set a fixed height for consistent appearance */
-    background-size: cover;
-    background-position: center; /* Center the background image */
-  }
-  
-  .background-image {
+    position: relative; 
+    width: 100%; 
+    display: block;
+    height: auto; 
+}
+
+.background-image {
     width: 100%;
-    height: 100%; /* Cover the area of the container */
-  }
-  
-  .instagram-text {
-    position: absolute; /* Absolute positioning within relative parent */
-    top: 50%;
-    left: 10%;
-    transform: translateY(-50%);
-    font-family: 'Arial', sans-serif;
-    font-size: 18px;
+    height: auto; 
+    display: block; 
+}
+
+.instagram-text {
+    position: absolute; 
+    top: 40%; 
+    left: 10%; 
+    transform: translateY(-20%); 
+    font-family: 'Courier New', Courier, monospace; 
+    font-weight: bold;
+    font-size: clamp(8px, 4vw, 12px); 
     color: white;
-    width: 80%; /* Limit width of text */
-  }
-  
+    width: 80%; 
+    padding: 10px; 
+    box-sizing: border-box; 
+}
+
+.instagram-post::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+

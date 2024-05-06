@@ -1,10 +1,9 @@
 .news-article {
-    display: block; /* Ensures that it acts as a standard block-level element */
-    max-width: 600px; /* Optional: limits the width for better control */
-    margin: 20px auto; /* Center aligns the article */
-    color: white; /* Correcting the color note */
-    font-family: 'Times New Roman', serif; /* More journalistic font */
-    overflow: hidden; /* Ensures the container clears its floats */
+    display: block;
+    max-width: 600px;
+    margin: 20px auto;
+    color: white;
+    overflow: hidden;
 }
 
 .headline {
@@ -12,10 +11,6 @@
     font-weight: bold;
     margin-bottom: 10px;
     width: 100%; /* Ensure headline takes full width */
-}
-
-.article-content {
-    /* No specific styling needed here unless for padding/margins */
 }
 
 .news-photo {
@@ -35,5 +30,5 @@
 .news-article::after {
     content: "";
     display: block;
-    clear: both; /* This will clear the float, ensuring the container encloses floated elements */
+    clear: both;
 }

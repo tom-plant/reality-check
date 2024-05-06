@@ -30,7 +30,7 @@
   display: flex; /* Use flex layout for event boxes */
   justify-content: space-between; /* Space out event boxes */
   width: 100%; /* Full width to allow spacing between boxes */
-  margin-bottom: 20px; /* Space between event boxes and the button */
+  margin-bottom: 40px; /* Space between event boxes and the button */
 }
 
 .randomize-event {

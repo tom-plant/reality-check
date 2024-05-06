@@ -44,23 +44,25 @@ const NarrativeImpact = () => {
 
 
   return (
-    <div className="narrative-impact">
-      {isLoadingNews ? (
-        <div className="news-loading-container">
-          <LoadingIcon />
-        </div>
-      ) : content && content.instagram && 
-           content.shortform && 
-           content.youtube && content.youtube_thumbnail ? (
-        <>
-          <NewsArticle article={content.news_article} photo={content.news_photo} />
-          <InstagramPost text={content.instagram} />
-          <ShortformContent content={content.shortform} />
-          <YouTubeContent thumbnail={content.youtube_thumbnail} description={content.youtube} />
-        </>
-      ) : (
-        <p>No content available or content is still loading...</p>
-      )}
+    <div className="scrollable-container"> {/* Outer container for scrolling */}
+      <div className="narrative-impact">
+        {isLoadingNews ? (
+          <div className="news-loading-container">
+            <LoadingIcon />
+          </div>
+        ) : content && content.instagram && 
+             content.shortform && 
+             content.youtube && content.youtube_thumbnail ? (
+          <>
+            <NewsArticle article={content.news_article} photo={content.news_photo} />
+            <InstagramPost text={content.instagram} />
+            <ShortformContent content={content.shortform} />
+            <YouTubeContent thumbnail={content.youtube_thumbnail} description={content.youtube} />
+          </>
+        ) : (
+          <p>No content available or content is still loading...</p>
+        )}
+      </div>
     </div>
   );
 };

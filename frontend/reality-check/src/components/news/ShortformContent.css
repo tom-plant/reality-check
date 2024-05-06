@@ -1,25 +1,36 @@
 .shortform-content {
-    display: flex; /* Added flex for alignment */
+    display: block;
     position: relative;
     width: 100%;
-    height: 200px; /* Shorter than InstagramPost */
-    background-size: cover;
-    background-position: center;
-  }
-  
-  .background-image {
+}
+
+.background-image {
     width: 100%;
-    height: 100%;
-  }
-  
-  .shortform-text {
+    height: auto; 
+    display: block; 
+}
+
+.shortform-text {
     position: absolute;
-    top: 50%;
-    left: 10%;
-    transform: translateY(-50%);
-    font-family: 'Helvetica', sans-serif;
+    top: 20%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    font-family: 'Arial', sans-serif;
     font-size: 20px;
-    color: white;
+    color: black;
+    text-shadow: 
+        0 0 4px yellow,
+        0 0 4px yellow,
+        0 0 4px yellow,
+        0 0 4px yellow,
+        0 0 4px yellow;    
     width: 80%;
-  }
-  
+    text-align: center; 
+}
+
+
+.shortform-content::after {
+    content: "";
+    display: block;
+    clear: both;
+}

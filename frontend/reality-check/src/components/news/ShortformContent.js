@@ -1,5 +1,6 @@
 import React from 'react';
-import './ShortformContent.css';  
+import './ShortformContent.css';
+import template from '../../assets/shortform.PNG'
 
 const ShortformContent = ({ content }) => {
 
@@ -7,7 +8,7 @@ const ShortformContent = ({ content }) => {
 
   return (
     <div className="shortform-content">
-      <img src="../../assets/shortform.PNG" alt="Shortform template" className="background-image" />
+      <img src={template} alt="Shortform template" className="background-image" />
       <p className="shortform-text">{content}</p>
     </div>
   );
