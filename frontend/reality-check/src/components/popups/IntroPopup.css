@@ -56,16 +56,11 @@ button {
   margin: 0 10px; /* Spacing between buttons */
 }
 
-.start-button, .next-button {
-  background-color: #4CAF50; /* Green */
+.start-button, .next-button, .prev-button {
+  background-color: #007bff; /* Green */
   color: white;
-}
-
-.prev-button {
-  background-color: #f44336; /* Red */
-  color: white;
-}
-
-button:hover {
-  opacity: 0.8; /* Simple hover effect */
+  transition: background-color 0.3s;
+  &:hover {
+    background-color: #0056b3;
+  }
 }
