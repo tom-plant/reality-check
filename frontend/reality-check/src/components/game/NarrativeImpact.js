@@ -60,7 +60,7 @@ const NarrativeImpact = () => {
             <YouTubeContent thumbnail={content.youtube_thumbnail} description={content.youtube} />
           </>
         ) : (
-          <p>No content available or content is still loading...</p>
+          <p>An error occured. Please refresh to try again.</p>
         )}
       </div>
     </div>

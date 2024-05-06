@@ -29,8 +29,8 @@
     "email": "Email",
     "selectLanguage": "Select Language",
     "english": "English",
-    "estonian": "Estonian",
-    "russian": "Russian"
+    "estonian": "Estonian (In Development)",
+    "russian": "Russian (In Development)"
   },
   "expoInbox": {},
   "emailRecruitment": {
@@ -61,19 +61,15 @@
           "note": "This briefing provides an overview based on the most current and reliable data available, sourced directly from government agencies and trusted news outlets. Please note that due to the evolving nature of the crisis, some details may be subject to change.",
           "keyPointsTitle": "Key Points to Understand:",
           "natureOfCrisis": {
-            "title": "Nature of the Crisis",
             "description": "Cyber attacks have struck Eirist during our country's election. It is unclear who is behind the cyber attacks and why."
           },
           "affectedAreas": {
-            "title": "Affected Areas",
             "description": "The attacks plunged rural Eirist into darkness. Our election has been postponed and chaos is emerging locally."
           },
           "responseMeasures": {
-            "title": "Response Measures",
             "description": "Authorities in Eirist are on high alert and are trying to discover who committed the attacks. However, the misinformation, particularly through AI-generated content, is clouding the situation."
           },
           "challengesAndUnknowns": {
-            "title": "Challenges and Unknowns",
             "description": "The motivations behind these disruptions are unclear, with potential involvement from multiple domestic and international actors."
           },
           "conclusion": "This briefing aims to equip you with a foundational understanding of the current crisis landscape. As you navigate through this simulation, your decisions will play a crucial role in steering through the layers of uncertainty.",

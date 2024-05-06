@@ -28,6 +28,7 @@ const AuthLogin = ({ setCurrentIntroView }) => {
       dispatch({ type: 'SET_EMAIL', payload: localEmail });
       await loginUser(localUsername, localEmail); // loginUser function from your context
       setIsLoggedIn(true); // Set login status to true upon successful login
+      setCurrentIntroView('EXPO_INBOX');
     } else {
       // Trigger bump animation if fields are empty
       setBump(true);
@@ -65,8 +66,8 @@ const AuthLogin = ({ setCurrentIntroView }) => {
           <label htmlFor="language-select">{t('common.selectLanguage')}</label>
           <select id="language-select" onChange={handleLanguageChange}>
             <option value="ENG">{t('common.english')}</option>
-            <option value="EST">{t('common.estonian')}</option>
-            <option value="RUS">{t('common.russian')}</option>
+            <option value="EST" disabled>{t('common.estonian')}</option>
+            <option value="RUS" disabled>{t('common.russian')}</option>
           </select>
         </div>
       </div>
@@ -77,7 +78,6 @@ const AuthLogin = ({ setCurrentIntroView }) => {
       >
         {t('common.login')}
       </button>
-      <button className='proceed' onClick={() => setCurrentIntroView('EXPO_INBOX')} disabled={!isLoggedIn}>{t('common.startGame')}</button>
     </div>
   );
 };

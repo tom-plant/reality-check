@@ -13,19 +13,37 @@
   z-index: 1000; /* Ensure it's above other content */
 }
 
-.popup-content {
+.intro-popup-content {
   background-color: #fff;
-  padding: 20px;
+  padding: 30px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 60%; /* Adjust based on your preference */
-  max-width: 600px; /* Ensures it doesn't get too wide on larger screens */
-  max-height: 80%; /* Limits the height and allows for scrolling */
-  overflow-y: auto; /* Enables vertical scrolling if content overflows */
-  text-align: center;
+  width: 60%;
+  max-width: 600px;
+  height: 500px; /* Fixed height */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Ensures buttons stay at the bottom */
+  text-align: left; 
 }
 
-.popup-content p {
+.popup-text-content {
+  overflow-y: auto; /* Allows scrolling within the text content div */
+}
+
+.button-container {
+  display: flex;
+  justify-content: center; 
+  margin-top: 15px;
+
+}
+
+.intro-popup-content p {
+  color: #333; /* Dark text for readability */
+  margin-bottom: 20px; /* Spacing between text and buttons */
+}
+
+.intro-popup-content h2, h3, h4 {
   color: #333; /* Dark text for readability */
   margin-bottom: 20px; /* Spacing between text and buttons */
 }

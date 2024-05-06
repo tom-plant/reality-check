@@ -8,7 +8,6 @@ import './ExpoInbox.css';
 const ExpoInbox = ({ setCurrentIntroView }) => {
   const { t } = useTranslation();
 
-  // Separate the new email from the initial list
   const newEmail = {
     id: 0, 
     title: 'The Civic Resilience Project', 
@@ -32,16 +31,13 @@ const ExpoInbox = ({ setCurrentIntroView }) => {
     { id: 12, title: 'Coupon Counter', subject: 'Mega Deals Week - Unbelievable Discounts Inside!', description: 'Save Big on Electronics, Fashion, and More...', time: '9:35 PM' },
   ];
   
-  // State to hold the combined list of emails
   const [combinedEmails, setCombinedEmails] = useState(initialEmails);
 
   useEffect(() => {
-    // After a 5-second delay, add the new email to the top of the list
     const timer = setTimeout(() => {
       setCombinedEmails([newEmail, ...initialEmails]);
-    }, 5000); // 5000ms delay
+    }, 2000); // delay
 
-    // Cleanup the timer when the component unmounts
     return () => clearTimeout(timer);
   }, [initialEmails, newEmail]);
 
@@ -57,7 +53,7 @@ const ExpoInbox = ({ setCurrentIntroView }) => {
             description={description}
             time={time}
             onClick={id === newEmail.id ? () => setCurrentIntroView('EMAIL_RECRUITMENT') : undefined}
-            isNewEmail={id === newEmail.id} // Adds a new email indicator
+            isNewEmail={id === newEmail.id} 
           />
         ))}
       </div>

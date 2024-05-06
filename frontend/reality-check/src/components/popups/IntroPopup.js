@@ -30,13 +30,13 @@ const IntroPopup = () => {
     dispatch({ type: 'TOGGLE_INTRO_POPUP' });
   };
 
+
   const renderScreenContent = (screenKey) => {
     const screenData = t(screenKey, { returnObjects: true });
     return (
-      <>
+      <div className="popup-text-content"> {/* Wrap the text content in its own div */}
         <h2>{screenData.title}</h2>
         <p>{screenData.introduction}</p>
-
 
         {screenKey === 'introPopup.instructions' && (
         <>
@@ -74,28 +74,31 @@ const IntroPopup = () => {
           <p><strong>{screenData.impact}</strong></p>
         </>
       )}
-    </>
-  );
-};
+      </div>
+    );
+  };
+
 
   return (
     <div className="popup-overlay">
-      <div className="popup-content">
+      <div className="intro-popup-content">
         {renderScreenContent(screens[currentScreen])}
-        {currentScreen > 0 && (
-          <button className="prev-button" onClick={handlePrev}>
-            {t('common.previous')}
-          </button>
-        )}
-        {currentScreen < screens.length - 1 ? (
-          <button className="next-button" onClick={handleNext}>
-            {t('common.next')}
-          </button>
-        ) : (
-          <button className="start-button" onClick={handleContinue}>
-            {t('common.start')}
-          </button>
-        )}
+        <div className="button-container"> 
+          {currentScreen > 0 && (
+            <button className="prev-button" onClick={handlePrev}>
+              {t('common.previous')}
+            </button>
+          )}
+          {currentScreen < screens.length - 1 ? (
+            <button className="next-button" onClick={handleNext}>
+              {t('common.next')}
+            </button>
+          ) : (
+            <button className="start-button" onClick={handleContinue}>
+              {t('common.start')}
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
