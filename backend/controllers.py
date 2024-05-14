@@ -126,6 +126,7 @@ def build_narrative_controller(selected_actor, selected_strategies):
 
     current_app.logger.debug("Trying to generate prompts.")
     for i, strategy_text in enumerate(strategy_texts):
+        current_app.logger.debug(f"Processing strategy '{strategy_text}' at index {i}")
         prompt_type = 'user_followup' if i > 0 else 'both'
         prompts_narrative = generate_prompts(
             category='narrative',

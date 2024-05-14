@@ -15,16 +15,25 @@ def generate_prompts( category, prompt_type='both', dynamic_inserts=None):
 
     # Load the prompts and inserts
     prompts_data = load_prompts_from_file(file_path)
+    construction_strategies = prompts_data.get('prompt_inserts', {}).get('construction_strategies', {})
 
     # For items that are lists (e.g., strategies), concatenate them into a single string
     for key, value in dynamic_inserts.items():
         if isinstance(value, list):
             dynamic_inserts[key] = ' '.join(value)
 
+    # Convert the verbose strategy description to a key
+    if 'strategy' in dynamic_inserts:
+        current_app.logger.debug(f"Original strategy description received: {dynamic_inserts['strategy']}")
+        strategy_key = map_strategy_to_key(dynamic_inserts['strategy'])
+        detailed_strategy = ' '.join(construction_strategies.get(strategy_key, ["Strategy not found"]))
+        current_app.logger.debug(f"Detailed strategy fetched for key '{strategy_key}': {detailed_strategy}")
+        dynamic_inserts['strategy'] = detailed_strategy
+
     # Combine static and dynamic inserts
     # current_app.logger.debug("Dynamic Inserts:", dynamic_inserts)
     inserts = {**prompts_data.get('prompt_inserts', {}), **dynamic_inserts}
-    # current_app.logger.debug("Combined Inserts before substitution:", inserts)
+    current_app.logger.debug("Combined Inserts before substitution:", inserts)
 
     assembled_prompts = {}
 
@@ -90,3 +99,15 @@ def get_text(category, key, identifier=None):
         return "Error: The file 'prompts.json' was not found."
     except Exception as e:
         return f"An error occurred: {e}"
+    
+def map_strategy_to_key(verbose_description):
+    strategy_map = {
+        "Showing the Cause-and-Effect: Saying one event caused another without sufficient detail to connect the two events.": "causal_chain",
+        "Instructing What to Believe: Directly telling the reader what is correct and incorrect.": "instruct_belief",
+        "Highlighting Danger: Focusing on risks to guide readers to a belief based on emotions, like fear.": "highlight_danger",
+        "Appealing to Personal Beliefs: Connecting the reader’s existing beliefs to a particular understanding of an event.": "appeal_beliefs"
+    }
+    verbose_description = verbose_description.strip()
+    matched_key = strategy_map.get(verbose_description, "default_key_if_not_found")
+    current_app.logger.debug(f"Mapping verbose description '{verbose_description}' to key '{matched_key}'")
+    return matched_key
