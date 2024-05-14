@@ -30,7 +30,7 @@
         "1 - Assume the new selected narrative strategy, which is delimited below with triple backticks.",
         "2 - Create your new narrative following the previous steps and using the same selected facts and the same selected actor. Ensure the narrative is distinct and complete, allowing it to stand alone.",
         "3 - Simply output the narrative text. Avoid mentioning that this is a new or contrasting narrative.",
-        "New selected narrative strategy: '''{narrative_strategy}'''",
+        "New selected narrative strategy: '''{strategy}'''",
         "If you are missing any of the information delimited by backticks, please output “Missing information: [write the missing information key here]”"
       ]
     },

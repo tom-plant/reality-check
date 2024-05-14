@@ -29,7 +29,7 @@ def generate_prompts( category, prompt_type='both', dynamic_inserts=None):
     assembled_prompts = {}
 
     # Fetch and assemble 'system' prompt if needed
-    if prompt_type in ['both', 'system']:
+    if prompt_type in ['both', 'system', 'user_followup']:  # Include 'user_followup' to fetch 'system'
         system_template = get_prompt_template(prompts_data, category, 'system')
         if system_template:  # Check if template is not None
             assembled_prompts['system'] = substitute_inserts(system_template, inserts)
@@ -38,6 +38,12 @@ def generate_prompts( category, prompt_type='both', dynamic_inserts=None):
     if prompt_type in ['both', 'user'] and 'user' in prompts_data['prompts'].get(category, {}):
         user_template = get_prompt_template(prompts_data, category, 'user')
         assembled_prompts['user'] = substitute_inserts(user_template, inserts)
+
+    # Fetch and assemble 'user_followup' prompt if needed
+    if prompt_type in ['user_followup']:  # Exclusive handling for 'user_followup'
+        followup_template = get_prompt_template(prompts_data, category, 'user_followup')
+        if followup_template:
+            assembled_prompts['user_followup'] = substitute_inserts(followup_template, inserts)
 
     # For categories with only a 'system' prompt, handle accordingly
     if category in ['news_photo', 'youtube_thumbnail'] and 'system' in assembled_prompts:
