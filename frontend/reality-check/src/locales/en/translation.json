@@ -132,7 +132,6 @@
       }
     },
   "identifyWeaknesses": {
-    "title": "",
     "instructions": "Select and deselect information to create a more accurate narrative."
   },
   "identifyStrategies": {
@@ -140,8 +139,7 @@
     "instructions": "Choose two counterstrategies that you think would be the best to combat your narrative. But select carefully--some strategies work better than others. Your choice could determine whether the election ends in peace or conflict."
   },
   "updatedNarrativeImpact": {
-      "introduction": "Now, you need to select a counternarrative strategy. These strategies are all unique, and some are more impactful than others. Think about the narrative that you're trying to combat, and choose which strategy seems most effective for steering citizens toward a better understanding of the crisis.",
-      "updatedStrategies": "Counternarrative Strategies"
+      "introduction": "Choose one counter narrative that you think most people will believe. Your decision will determine how the simulated election concludes."
     },
   "conclusionWrapUp": {
       "introduction": "As we conclude this experience, remember: there isn't a 'winning' narrative here. This concluding storyline will compare your two branching pathways for the crisis, highlighting the power of narratives and their profound impact on public perception, decision-making, and ultimately, national security. Please await your summary:",

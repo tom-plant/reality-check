@@ -16,6 +16,7 @@ def generate_prompts( category, prompt_type='both', dynamic_inserts=None):
     # Load the prompts and inserts
     prompts_data = load_prompts_from_file(file_path)
     construction_strategies = prompts_data.get('prompt_inserts', {}).get('construction_strategies', {})
+    counter_strategies = prompts_data.get('prompt_inserts', {}).get('counter_strategies', {})
 
     # For items that are lists (e.g., strategies), concatenate them into a single string
     for key, value in dynamic_inserts.items():
@@ -29,6 +30,15 @@ def generate_prompts( category, prompt_type='both', dynamic_inserts=None):
         detailed_strategy = ' '.join(construction_strategies.get(strategy_key, ["Strategy not found"]))
         current_app.logger.debug(f"Detailed strategy fetched for key '{strategy_key}': {detailed_strategy}")
         dynamic_inserts['strategy'] = detailed_strategy
+
+    # Convert the verbose counterstrategy descrption to a key
+    if 'counter_strategy'in dynamic_inserts:
+        current_app.logger.debug(f"Original strategy description received: {dynamic_inserts['counter_strategy']}")
+        counter_strategy_key = map_strategy_to_key(dynamic_inserts['counter_strategy'])
+        detailed_counter_strategy = ' '.join(counter_strategies.get(counter_strategy_key, ["Counter strategy not found"]))
+        current_app.logger.debug(f"Detailed strategy fetched for key '{counter_strategy_key}': {detailed_counter_strategy}")
+        dynamic_inserts['counter_strategy'] = detailed_counter_strategy
+
 
     # Combine static and dynamic inserts
     # current_app.logger.debug("Dynamic Inserts:", dynamic_inserts)
@@ -105,7 +115,11 @@ def map_strategy_to_key(verbose_description):
         "Showing the Cause-and-Effect: Saying one event caused another without sufficient detail to connect the two events.": "causal_chain",
         "Instructing What to Believe: Directly telling the reader what is correct and incorrect.": "instruct_belief",
         "Highlighting Danger: Focusing on risks to guide readers to a belief based on emotions, like fear.": "highlight_danger",
-        "Appealing to Personal Beliefs: Connecting the reader’s existing beliefs to a particular understanding of an event.": "appeal_beliefs"
+        "Appealing to Personal Beliefs: Connecting the reader’s existing beliefs to a particular understanding of an event.": "appeal_beliefs",
+        "Offering an Alternative Explanation: Presenting an alternative explanation to the inaccurate one without explicitly correcting it.": "logic_based",
+        "Debunking the False Claim: Providing thorough reasoning to disprove misleading information.": "fact_based",
+        "Recalibrating Emotions and Framing: Using a correction to validate the reader's existing beliefs and reassure their interests.": "emotion_based",
+        "Corrective Data Aligned with Personal Values: Offering data and evidence from trusted sources to back up true claims.": "source_based"
     }
     verbose_description = verbose_description.strip()
     matched_key = strategy_map.get(verbose_description, "default_key_if_not_found")

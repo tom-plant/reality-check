@@ -352,19 +352,27 @@ def identify_weaknesses_controller(updated_fact_combination, selected_strategies
     chatgpt_responses = {}
 
     strategy_texts = [strategy['text'] for strategy in selected_strategies] 
+    current_app.logger.debug("Trying to generate prompts.")
 
-    for strategy_text in strategy_texts:
-        prompts_counter_narrative[strategy_text] = generate_prompts(
+    for i, strategy_text in enumerate(strategy_texts):
+        current_app.logger.debug(f"Processing strategy '{strategy_text}' at index {i}")
+        prompt_type = 'user_followup' if i > 0 else 'both'
+        prompts_counter_narrative = generate_prompts(
             category='counter_narrative',
-            prompt_type='both',
+            prompt_type=prompt_type,
             dynamic_inserts={
                 'narrative': get_primary_narrative_by_id(session['user_data']['primary_narrative_id']),
                 'updated_facts': updated_fact_combination,
-                'strategy': strategy_text
+                'counter_strategy': strategy_text
             })
-        current_app.logger.debug(f"prompts being used: {prompts_counter_narrative[strategy_text]}")
-        chatgpt_responses[strategy_text] = get_chatgpt_response(prompts_counter_narrative[strategy_text])
+        current_app.logger.debug(f"Trying to generate chatgptresponses with prompts {prompts_narrative}")
 
+        # Handle prompt type to decide which key to use for API call
+        prompt_key = 'user_followup' if i > 0 else 'user'
+        chatgpt_responses[strategy_text] = get_chatgpt_response({
+            'system': prompts_counter_narrative.get('system', ''),
+            'user': prompts_counter_narrative.get(prompt_key, '')
+        })
     current_app.logger.debug(f"chatgpt responess for counters: {chatgpt_responses}")
 
     return chatgpt_responses
