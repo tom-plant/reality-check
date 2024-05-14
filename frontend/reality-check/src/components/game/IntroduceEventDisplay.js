@@ -11,14 +11,17 @@ const IntroduceEventDisplay = () => {
   const dispatch = useGameDispatch();
   const { t } = useTranslation();
 
+  console.log(inCoda)
+  console.log(introduceEventVisits)
+
   // Progress to next game phase
   const handleContinue = () => {
     // Increment the visit count each time this function is called
-    dispatch({ type: 'INCREMENT_INTRODUCE_EVENT_VISITS' });
 
     if (introduceEventVisits === 0) {
       // First visit to this phase
-      dispatch({ type: 'SET_CURRENT_PHASE', payload: 'SELECT_FACTS' });
+      dispatch({ type: 'INCREMENT_INTRODUCE_EVENT_VISITS' });
+      dispatch({ type: 'SET_CURRENT_VIEW', payload: 'SELECT_FACTS' });
     } else if (introduceEventVisits === 1 && !inCoda) {
       // Second visit, entering coda
       dispatch({ type: 'ENTER_CODA' });
