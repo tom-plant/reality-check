@@ -13,6 +13,8 @@ const initialState = {
   currentView: 'SELECT_FACTS', 
   currentTurnPointView: 'ALERT',
   currentOutroView: 'CONCLUSION_WRAP_UP',
+  introduceEventVisits: 0,
+  inCoda: false, 
   username: null,
   email: null,
   facts: [],
@@ -62,6 +64,12 @@ const gameReducer = (state, action) => {
 
     case 'SET_CURRENT_VIEW':
       return { ...state, currentView: action.payload };
+  
+    case 'ENTER_CODA':
+      return { ...state, inCoda: true };
+
+    case 'INCREMENT_INTRODUCE_EVENT_VISITS':
+      return { ...state, introduceEventVisits: state.introduceEventVisits + 1 };
 
     case 'SET_USER':
       return { ...state, user: action.payload };

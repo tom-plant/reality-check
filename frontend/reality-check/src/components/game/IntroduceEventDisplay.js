@@ -6,15 +6,28 @@ import { useGameState, useGameDispatch, useGameFunction } from '../../contexts/G
 import './IntroduceEventDisplay.css'; 
 
 const IntroduceEventDisplay = () => {
-  const { selectedEvent, selectedNarrative, selectedFactCombination, isLoadingNews } = useGameState();
+  const { selectedEvent, selectedNarrative, selectedFactCombination, isLoadingNews, introduceEventVisits, inCoda } = useGameState();
   const { setCurrentPhase } = useGameFunction(); 
   const dispatch = useGameDispatch();
   const { t } = useTranslation();
 
   // Progress to next game phase
   const handleContinue = () => {
-    setCurrentPhase('turn-point'); 
-    dispatch({ type: 'SET_CURRENT_TURN_POINT_VIEW', payload: 'ALERT' });
+    // Increment the visit count each time this function is called
+    dispatch({ type: 'INCREMENT_INTRODUCE_EVENT_VISITS' });
+
+    if (introduceEventVisits === 0) {
+      // First visit to this phase
+      dispatch({ type: 'SET_CURRENT_PHASE', payload: 'SELECT_FACTS' });
+    } else if (introduceEventVisits === 1 && !inCoda) {
+      // Second visit, entering coda
+      dispatch({ type: 'ENTER_CODA' });
+      setCurrentPhase('turn-point'); 
+      dispatch({ type: 'SET_CURRENT_TURN_POINT_VIEW', payload: 'ALERT' });
+    } else {
+      // Subsequent visits or errors could be handled here
+      console.error("Unexpected number of visits or state");
+    }
   };
 
   return (
