@@ -118,32 +118,46 @@ def build_narrative_controller(selected_actor, selected_strategies):
     current_app.logger.debug("Entered build narative controller.")
     prompts_narrative = {}
     chatgpt_responses = {}
-    iteration_count = 0  # Initialize a counter to track the loop iterations
 
     # Extract text from selected_actor and selected_strategies
     actor_text = selected_actor['text'] 
     strategy_texts = [strategy['text'] for strategy in selected_strategies] 
 
     current_app.logger.debug("Trying to generate prompts.")
+    first_narrative = None
+
     for i, strategy_text in enumerate(strategy_texts):
         current_app.logger.debug(f"Processing strategy '{strategy_text}' at index {i}")
         prompt_type = 'user_followup' if i > 0 else 'both'
+        
+        dynamic_inserts = {
+            'actor': actor_text,
+            'strategy': strategy_text,
+            'facts': get_fact_combination_by_id(session['user_data']['fact_combination_id']),
+        }
+        
+        if i > 0 and first_narrative:
+            dynamic_inserts['first_narrative'] = first_narrative  # Add the first narrative as a dynamic insert
+
         prompts_narrative = generate_prompts(
             category='narrative',
             prompt_type=prompt_type,
-            dynamic_inserts={
-                'actor': actor_text,
-                'strategy': strategy_text,
-                'facts': get_fact_combination_by_id(session['user_data']['fact_combination_id']),
-            })
+            dynamic_inserts=dynamic_inserts
+        )
+        
         current_app.logger.debug(f"Trying to generate chatgptresponses with prompts {prompts_narrative}")
 
         # Handle prompt type to decide which key to use for API call
         prompt_key = 'user_followup' if i > 0 else 'user'
-        chatgpt_responses[strategy_text] = get_chatgpt_response({
+        narrative_response = get_chatgpt_response({
             'system': prompts_narrative.get('system', ''),
             'user': prompts_narrative.get(prompt_key, '')
         })
+
+        chatgpt_responses[strategy_text] = narrative_response
+
+        if i == 0:
+            first_narrative = narrative_response  # Store the first narrative for later use
 
     current_app.logger.debug("Trying to commit session data.")
     actor_id = get_actor_id_by_actor_name(selected_actor['text'])

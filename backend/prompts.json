@@ -26,6 +26,7 @@
       ],
       "user_followup": [
         "You just generated a political narrative about a selected actor using a selected strategy. Now, using the same selected facts, but using a different selected narrative strategy delimited below with triple backticks, you will generate a wholly unique narrative.",
+        "The first narrative you generated was: '''{first_narrative}'''",
         "Follow these steps:",
         "1 - Assume the narrative strategy and use it to construct your narrative. Lean into the strategy and make sure your output adheres to it. It must inform the perspective and interpretation that you will use when writing your political narrative.",
         "New selected narrative strategy: '''{strategy}'''",
