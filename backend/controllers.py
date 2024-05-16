@@ -256,6 +256,33 @@ def select_narrative_controller(selected_narrative, strategy):
     content_batch['shortform'] = handle_chatgpt_output(shortform_response)
     current_app.logger.debug(f"Shortform response: {content_batch['shortform']}")
 
+    # Intermediate call to generate shortform description
+    prompts_shortform_description = generate_prompts(
+        category='shortform_image_description',
+        prompt_type='both',
+        dynamic_inserts={
+            'shortform_text': shortform_response
+        })
+
+    shortform_image_description_response = get_chatgpt_response(prompts_shortform_description)
+    if "error" in shortform_image_description_response:
+        return shortform_image_description_response, 500
+    shortform_image_description = handle_chatgpt_output(shortform_image_description_response)
+    current_app.logger.debug(f"Thumbnail description: {shortform_image_description}")
+
+    #Generate shortform image
+    prompts_shortform_image = generate_prompts(
+        category='shortform_image',
+        prompt_type='system',
+        dynamic_inserts={
+            'shortform_image_description': shortform_image_description
+        })
+
+    shortform_image_response = get_dalle2_response(str(prompts_shortform_image))
+    if "error" in shortform_image_response:
+        return shortform_image_response, 500
+    content_batch['shortform_image'] = shortform_image_response
+
     # Generate youtube content
     prompts_youtube = generate_prompts(
         category='youtube',
@@ -274,11 +301,26 @@ def select_narrative_controller(selected_narrative, strategy):
     video_title = content_batch['youtube']
     current_app.logger.debug(f"video_title: {video_title}")
 
+    # Intermediate call to generate image description
+    prompts_thumbnail_description = generate_prompts(
+        category='thumbnail_description',
+        prompt_type='both',
+        dynamic_inserts={
+            'video_title': video_title
+        })
+
+    thumbnail_description_response = get_chatgpt_response(prompts_thumbnail_description)
+    if "error" in thumbnail_description_response:
+        return thumbnail_description_response, 500
+    thumbnail_description = handle_chatgpt_output(thumbnail_description_response)
+    current_app.logger.debug(f"Thumbnail description: {thumbnail_description}")
+
+    #Generate YouTube Thumbnail
     prompts_youtube_thumbnail = generate_prompts(
         category='yt_thumbnail',
         prompt_type='system',
         dynamic_inserts={
-            'video_title': video_title
+            'thumbnail_description': thumbnail_description
         })
 
     youtube_thumbnail_response = get_dalle2_response(str(prompts_youtube_thumbnail))

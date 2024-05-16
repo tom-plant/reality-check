@@ -28,9 +28,19 @@
     text-align: center; 
 }
 
-
 .shortform-content::after {
     content: "";
     display: block;
     clear: both;
 }
+
+.overlay-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+    display: block;
+}
+

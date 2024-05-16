@@ -30,6 +30,7 @@ const NarrativeImpact = () => {
           news_photo: contentToSet.news_photo || '',
           instagram: contentToSet.instagram?.instagram || '',
           shortform: contentToSet.shortform?.shortform || '',
+          shortform_image: contentToSet.shortform_image || '',
           youtube: contentToSet.youtube?.youtube || '',
           youtube_thumbnail: contentToSet.youtube_thumbnail || ''
         });
@@ -51,6 +52,7 @@ const NarrativeImpact = () => {
       console.log('content.news_photo', content.news_photo);
       console.log('content.instagram', content.instagram);
       console.log('content.shortform', content.shortform);
+      console.log('content.shortform_image', content.shortform_image);
       console.log('content.youtube', content.youtube);
       console.log('content.youtube_thumbnail', content.youtube_thumbnail);
     }
@@ -63,7 +65,7 @@ const NarrativeImpact = () => {
         {isLoadingNews ? (
           <div className="news-loading-container">
             <LoadingIcon />
-            <p>Please wait for content to generate. This may take a few seconds.</p>
+            <p>Please wait for all news and social media content to generate. This may take up to a minute.</p>
           </div>
         ) : error ? (
           <div className="news-loading-container">
@@ -76,7 +78,7 @@ const NarrativeImpact = () => {
           <>
             <NewsArticle article={content.news_article} photo={content.news_photo} />
             <InstagramPost text={content.instagram} />
-            <ShortformContent content={content.shortform} />
+            <ShortformContent content={content.shortform} image={content.shortform_image} />
             <YouTubeContent thumbnail={content.youtube_thumbnail} description={content.youtube} />
           </>
         ) : (

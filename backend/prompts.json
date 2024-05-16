@@ -72,9 +72,35 @@
         "Headline: '''{headline}'''"
       ]
     },
+    "thumbnail_description": {
+      "system": [
+        "Act as a creative content writer who specializes in generating vivid and detailed descriptions for images."
+      ],
+      "user": [
+        "Your task is to generate a vivid and detailed description for a Youtube Thumbnail that you would likely see accompanying the given video title.",
+        "Adhere to the following guidelines:",
+        "1 - The description should depict a scene related to the title.",
+        "2 - Make the description detailed, engaging, and suitable for an AI to generate an image, so try to avoid people or text.",
+        "3 - Keep the description concise, within 50 words.",
+        "Video title: '''{video_title}'''"
+      ]
+    },
+    "shortform_image_description": {
+      "system": [
+        "Act as a creative content writer who specializes in generating vivid and detailed descriptions for images."
+      ],
+      "user": [
+        "Your task is to generate a vivid and detailed description for a screenshot from a TikTok that  you would likely see accompanying the given text in the post.",
+        "Adhere to the following guidelines:",
+        "1 - The description should capture a scene realted to the text, providing a visual scenario that relates to the content.",
+        "2 - Make the description detailed, engaging, and suitable for an AI to generate an image, so try to avoid people or additional text.",
+        "3 - Keep the description concise, within 50 words.",
+        "Short form text: '''{shortform_text}'''"
+      ]
+    },
     "news_photo": {
       "system": [
-        "Produce a color photograph to accompany the following image description:",
+        "Produce an image to accompany the following image description:",
         "Image description: '''{image_description}'''"
       ]
     },
@@ -118,7 +144,6 @@
         "Content instructions ‘’’’{youtube}’’’",
         "Provided facts: ‘’’{facts}’’’",
         "If you are missing any of the information delimited by backticks, please output “Missing information: [write the missing information key here]”"
-
       ]
     },  
     "shortform": {
@@ -142,10 +167,16 @@
         "If you are missing any of the information delimited by backticks, please output “Missing information: [write the missing information key here]”"
       ]
     },
+    "shortform_image": {
+      "system": [
+        "Produce an image based on the following description:",
+        "Short form image description: '''{shortform_image_description}'''"
+      ]
+    },
     "yt_thumbnail": {
       "system": [
-        "Produce a photograph used as a YouTube thumbnail to accompany the following video title delimited with triple backticks, capturing a scene related to the story that could be occurring. Do not include any text in your image.",
-        "Video title: '''{video_title}'''"
+        "Produce an image based on the following description:",
+        "Image description: '''{thumbnail_description}'''"
       ]
     },
     "event_outcome": {
