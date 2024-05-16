@@ -198,12 +198,26 @@ def select_narrative_controller(selected_narrative, strategy):
     headline = content_batch['news_article']['headline']
     current_app.logger.debug(f"Headline: {headline}")
 
+    # Intermediate call to generate image description
+    prompts_image_description = generate_prompts(
+        category='image_description',
+        prompt_type='both',
+        dynamic_inserts={
+            'headline': headline
+        })
+
+    image_description_response = get_chatgpt_response(prompts_image_description)
+    if "error" in image_description_response:
+        return image_description_response, 500
+    image_description = handle_chatgpt_output(image_description_response)
+    current_app.logger.debug(f"Image description: {image_description}")
+
     # Generate news photo
     prompts_news_photo = generate_prompts(
         category='news_photo',
         prompt_type='system',
         dynamic_inserts={
-            'headline': headline
+            'image_description': image_description
         })
 
     news_photo_response = get_dalle2_response(prompts_news_photo)
@@ -271,7 +285,7 @@ def select_narrative_controller(selected_narrative, strategy):
     if "error" in youtube_thumbnail_response:
         return youtube_thumbnail_response, 500
     content_batch['youtube_thumbnail'] = youtube_thumbnail_response
-    
+
     # Commit Primary Narrative to Database
     primary_narrative = create_primary_narrative(
         fact_combination_id=session['user_data']['fact_combination_id'],

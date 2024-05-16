@@ -10,5 +10,8 @@
   left: 12%; /* Adjust based on your layout */
   border-radius: 5px;
   border: 2px solid white;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  text-align: center; /* Center text inside the container */
 }
   

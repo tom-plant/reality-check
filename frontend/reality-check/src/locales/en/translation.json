@@ -112,8 +112,8 @@
     "introduction": "Observe your chosen narrative unfolding, guiding responses and shaping perceptions amid the crisis."
   },
   "introduceEvent": {
-      "introduction": "As the story progresses, an unforeseen event is randomly introduced. Notice how your narrative uses this event to validate its message and watch how it impacts the election.",
-      "popup": "Click the button to randomly select one of these events to occur during the crisis."
+      "introduction": "Watch your narrative use the event to validate its message, and see how it impacts the election outcome.",
+      "popup": "An unexpected event is randomly introduced."
     },
   "alert": {
       "update": {

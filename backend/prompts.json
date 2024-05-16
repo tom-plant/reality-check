@@ -59,10 +59,23 @@
         "If you are missing any of the information delimited by backticks, please output “Missing information: [write the missing information key here]”"
       ]
     },
+    "image_description": {
+      "system": [
+        "Act as a creative content writer who specializes in generating vivid and detailed descriptions for images."
+      ],
+      "user": [
+        "Your task is to generate a vivid and detailed description for a modern news image that you would likely see accompanying the given headline, delimited below with triple backticks.",
+        "Adhere to the following guidelines:",
+        "1 - The description should capture the essence and context of the headline, providing a visual scenario that relates to the headline.",
+        "2 - Make the description detailed, engaging, and suitable for an AI to generate an image.",
+        "3 - Keep the description concise, within 50 words.",
+        "Headline: '''{headline}'''"
+      ]
+    },
     "news_photo": {
       "system": [
-        "Produce a color photograph to accompany the following news headline delimited with triple backticks, capturing a scene related to the story that could be occurring.",
-        "Headline: '''{headline}'''"
+        "Produce a color photograph to accompany the following image description:",
+        "Image description: '''{image_description}'''"
       ]
     },
     "instagram": {

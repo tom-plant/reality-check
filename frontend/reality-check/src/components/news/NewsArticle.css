@@ -25,6 +25,7 @@
     width: auto; /* Auto width for automatic adjustment */
     overflow: visible; /* If you need text to overflow */
     padding-top: 0;
+    text-align: left; /* Justify text to the left */
 }
 
 .news-article::after {
