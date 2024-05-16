@@ -11,7 +11,6 @@ const RepeatPopup = ({ onClose }) => {
 
   const handleContinue = () => {
     dispatch({ type: 'TOGGLE_REPEAT_POPUP' });
-    console.log('press buttoned')
     dispatch({ type: 'SET_CURRENT_VIEW', payload: 'SELECT_FACTS' });
   };
 

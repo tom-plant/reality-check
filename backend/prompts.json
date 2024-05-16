@@ -2,7 +2,7 @@
   "prompts": {
     "narrative": {
       "system": [
-        "Act as a senior-level political commentator who effortlessly captures the gist of a situation using concise language that straightforwardly conveys information without sacrificing detail or precision.",
+        "Act as a political commentator who effortlessly captures the gist of a situation using straightforward language that conveys information without sacrificing detail or precision.",
         "You are experiencing an unfolding crisis, whose description is delimited below with triple backticks.",
         "Crisis background: '''{crisis_background}'''",
         "Within this crisis are multiple actors, who have taken various actions already, whose descriptions are delimited below with triple backticks:",
@@ -13,25 +13,26 @@
         "Definition of a political narrative: '''{narrative_def}'''",
         "Construct a readable and clear political narrative in one single straightforward sentence about the crisis. You should write your narrative about the selected actor, using the selected facts, and structuring it according to the selected narrative strategy, all of which are delimited as keys with triple backticks below.",
         "Adhere to the following guidelines, listed as steps:",
-        "1 - Assume the narrative strategy and use it to construct your narrative. Lean into the strategy and make sure your output adheres to it. It must inform the perspective and interpretation that you will use when writing your political narrative.",
+        "1 - Follow the selected narrative strategy when constructing your narrative. Follow these steps, which must be unmistakeable in your output:",
         "Selected narrative strategy: '''{strategy}'''",
-        "2 - The narrative should firmly assert that the selected actor  is responsible for the crisis (identified below in triple backticks) and explain how using the selected strategy. It should be extremely readable and straightforward, smooth and understandable, declarative, argumentative, and compelling without using overly complex language.",
-        "3 - Try to keep your narrative to a single sentence, or a maximum of 30 words. Obey this limit: 30 words max.",
-        "4 - Create your convincing interpretation of the crisis that clearly blames the selected actor, whose description is provided earlier. It should frame them as either directly or indirectly responsible for scheming and creating the crisis. Use the selected facts as evidence for your theory of the actor’s motivations.",
+        "2 - The narrative should firmly assert that the selected actor is responsible for the crisis (identified below in triple backticks) and explain how using the selected strategy. It should be extremely readable, smooth and understandable, declarative, argumentative, and compelling without using overly complex language.",
+        "3 - Try to keep your narrative to a single sentence, or a maximum of 50 words. Obey this limit: 50 words max.",
+        "4 - Create your convincing interpretation of the crisis that clearly blames the selected actor, whose description is provided earlier, either directly or indirectly responsible for scheming and creating the crisis. Use the selected facts as evidence for your theory of the actor’s motivations.",
         "5 - You must express uncertainty where you lack solid evidence, using words like “likely,” “probably,” or “allegedly.” Assume the readers already know the context of the crisis so you do not need to repeat everything about the crisis.",
-        "6 - Only give one narrative option and print the text alone. Avoid using the the word \"narrative” or giving a title; never provide an \"alternative\" or \"contrast”; and never reference the structure of the statement.",
+        "6 - Only give one narrative and print the text alone. Avoid using the the word \"narrative” or giving a title; never provide an \"alternative\" or \"contrast”; and never reference the structure of the statement.",
         "Selected actor: '''{actor}'''",
         "Selected facts: '''{facts}'''",
         "If you are missing any of the information delimited by backticks, please output “Missing information: [write the missing information key here]”"
       ],
       "user_followup": [
-        "You just generated a political narrative about a selected actor using a selected strategy. Now, using the same selected facts, but using a different selected narrative strategy delimited below with triple backticks, you will generate a wholly unique narrative.",
+        "You just generated a political narrative about a selected actor using a selected strategy.",
         "The first narrative you generated was: '''{first_narrative}'''",
+        "You have now been give the same actor but a DIFFERENT strategy, delimited below with triple backticks. Your task is to create a fundamentally different narrative.  The narratives will be viewed side by side and therefore must be unique.",
         "Follow these steps:",
-        "1 - Assume the narrative strategy and use it to construct your narrative. Lean into the strategy and make sure your output adheres to it. It must inform the perspective and interpretation that you will use when writing your political narrative.",
+        "1 - Make the new narrative different by following the new strategy, which must be unmistakeable in your output.",
         "New selected narrative strategy: '''{strategy}'''",
-        "2 - The narrative should firmly assert that the selected actor  is responsible for the crisis (identified below in triple backticks) and explain how using the selected strategy. It should be extremely readable and straightforward, smooth and understandable, declarative, argumentative, and compelling without using overly complex language.",
-        "3 - Try to keep your narrative to a single sentence, or a maximum of 30 words. Obey this limit: 30 words max.",
+        "2 - The narrative should firmly assert that the selected actor is responsible for the crisis (identified below in triple backticks) and explain how using the selected strategy. It should be extremely readable, smooth and understandable, declarative, argumentative, and compelling without using overly complex language.",
+        "3 - Try to keep your narrative to a single sentence, or a maximum of 50 words. Obey this limit: 50 words max.",
         "4 - Create your convincing interpretation of the crisis that clearly blames the selected actor, whose description is provided earlier. It should frame them as either directly or indirectly responsible for scheming and creating the crisis. Use the selected facts as evidence for your theory of the actor’s motivations.",
         "5 - You must express uncertainty where you lack solid evidence, using words like “likely,” “probably,” or “allegedly.” Assume the readers already know the context of the crisis so you do not need to repeat everything about the crisis.",
         "6 - Only give one narrative option and print the text alone. Avoid using the the word \"narrative” or giving a title; never provide an \"alternative\" or \"contrast”; and never reference the structure of the statement.",
@@ -100,8 +101,7 @@
     },
     "news_photo": {
       "system": [
-        "Produce an image to accompany the following image description:",
-        "Image description: '''{image_description}'''"
+        "{image_description}"
       ]
     },
     "instagram": {
@@ -248,7 +248,7 @@
       "user": [
         "Your task is to generate the ending of the story about the election crisis based on the creation of a counternarrative to overcome a flawed and misleading narrative that arose and ended up dominating society.",
         "Adhere to the following steps when creating the ending:",
-        "1 - Check to see if the election outcome will be good or bad based on the effectiveness indicator, delimited below with triple backticks.",
+        "1 - Check to see if the election outcome will be good or bad based on the effectiveness indicator, delimited below with triple backticks. Clearly tell the player if they won or lost.",
         "2 - Recognize and process the flawed narrative and counternarrative, delimited below with triple backticks.",
         "3 - If the effectiveness indicator is “strong”, then choose a favorable and peaceful outcome from the set of outcomes delimited with triple backticks below. If the effectiveness indicator is “weak”, then choose an unfavorable and nonpeaceful outcome from the set of outcomes delimited with triple backticks below. If the effectiveness indicator is “medium”, then choose an in-between outcome.",
         "4 - Create a concise and definitive explanation that wraps up the election crisis according to the logic above that plays out how the crisis ends based on specific reactions that society took to the new counternarrative that gave them a more accurate understanding.",
@@ -268,7 +268,7 @@
       "Perpetrators: Unknown to the public, foreign operatives from the Republic of Talme orchestrate the attacks. They selected their targets to deepen social divides and economic disparities, fostering chaos and distrust.",
       "Immediate Consequences: Power outages disrupt crucial rural functions, including food, communication, and transportation networks. The divided population begins to blame each other instead of identifying the foreign power as the source of the crisis. Rural population withdraws support from the government, some organizing into militia structures. The government’s inability to swiftly restore power or provide explanations leads to a crisis of legitimacy. Emergency powers are invoked, leading to the establishment of an 'imperial presidency' to manage the situation."
     ],
-    "narrative_def": "A narrative is a structured account of events that aims to manage information overload by selectively highlighting certain facts while omitting others. It presents a concise and memorable story featuring identifiable actors, cause-and-effect relationships between events, and an implicit desired outcome, all of which are influenced by the perspective and intent of the author.",
+    "narrative_def": "A narrative is a definitive and incisive framing of an event that presents a compelling story by weaving together facts in a way that creates a clear cause-and-effect sequence and an implicit evaluation of what is good and what is bad according to the intent and strategy of the author.",
     "counternarrative_def": "A counter-narrative is a strategic response to a flawed narrative and seeks to challenge and rectify its inaccuracies or biases. It offers an alternative perspective or interpretation of events, often by highlighting overlooked facts, emphasizing different causal relationships, or discrediting the source and intentions of the original narrative.",
     "actor_background": [
       "Eirist Government: Description: The ruling body of Eirist, currently holding emergency powers. Motivations: Maintain order, control the narrative, and preserve peace and security amidst the crisis. Narrative Against: Accused of either orchestrating the crisis to delay elections and extend power or failing to protect the nation from foreign cyberattacks.",

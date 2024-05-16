@@ -17,7 +17,6 @@ const InstructionsPopup = ({ onClose }) => {
         <p>{t('introPopup.instructions.informedDecisionMaking')}</p>
         <p>{t('introPopup.instructions.criticalAnalysis')}</p>
         <p>{t('introPopup.instructions.conclusion')}</p>
-        <p>{t('introPopup.instructions.readyToBegin')}</p>
         <button className="close-btn" onClick={onClose}>X</button>
       </div>
     </div>

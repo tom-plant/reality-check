@@ -42,7 +42,13 @@ const AuthLogin = ({ setCurrentIntroView }) => {
 
   return (
     <div className="auth-login">
+      <h1 className="title">{t('common.title')}</h1>
       <h2>{t('common.registerToStart')}</h2>
+      <p className="pretest-link">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSek5sDXTSsKEcck03iNVLTn5IkWimi3zr64p6qO7YTMy2c4Gw/viewform" target="_blank" rel="noopener noreferrer">
+          {t('common.pretest')}
+        </a>
+      </p>
       <div className="input-container">
         <div className="input-group">
           <label htmlFor="username">{t('common.username')}</label>

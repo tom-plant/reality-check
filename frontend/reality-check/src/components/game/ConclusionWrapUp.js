@@ -34,5 +34,3 @@ const ConclusionWrapUp = ({ setCurrentOutroView }) => {
 };
 
 export default ConclusionWrapUp;
-
-

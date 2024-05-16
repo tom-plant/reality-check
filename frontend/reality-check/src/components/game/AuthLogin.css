@@ -1,5 +1,7 @@
 /* AuthLogin.css */
 
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap');
+
 .auth-login {
   display: flex;
   flex-direction: column;
@@ -7,6 +9,15 @@
   padding: 20px;
   gap: 15px; /* Space between elements */
   border-radius: 8px;
+}
+
+.title {
+  font-family: 'Pixelify Sans', sans-serif;
+  font-weight: 700;
+  font-size: 100px;
+  color: white;
+  text-align: center;
+  margin-bottom: 20px; /* Space below the title */
 }
 
 .auth-login h2 {
@@ -76,4 +87,13 @@
   100% {
     transform: translateX(0);
   }
+}
+
+.pretest-link {
+  margin-bottom: 15px; /* Space below the pretest link */
+}
+
+.pretest-link a {
+  color: white;
+  text-decoration: underline;
 }

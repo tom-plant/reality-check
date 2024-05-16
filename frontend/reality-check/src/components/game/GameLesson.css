@@ -27,4 +27,12 @@
     font-weight: bold; /* Emphasize the concluding statement */
     color: white; /* Darker color for the conclusion for impact */
   }
-  
+
+.posttest-link {
+  margin-bottom: 15px; /* Space below the posttest link */
+}
+
+.posttest-link a {
+  color: white;
+  text-decoration: underline;
+}

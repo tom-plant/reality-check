@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import './Timer.css';
 
 const Timer = ({ onTimeUp, startTimer }) => {
-  const [seconds, setSeconds] = useState(1);
+  const [seconds, setSeconds] = useState(45);
   const secondsRef = useRef(seconds); 
   const intervalIdRef = useRef(null); 
 

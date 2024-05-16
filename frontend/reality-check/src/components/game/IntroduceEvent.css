@@ -23,7 +23,8 @@
 
 .introduce-event p {
   text-align: justify;
-  font-size: 15px;
+  font-size: 18px;
+  text-align: left;
 }
 
 /* After the floating elements, add a clearfix to ensure container encloses the floated elements */

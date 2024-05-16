@@ -31,7 +31,10 @@
     "selectLanguage": "Select Language",
     "english": "English",
     "estonian": "Estonian (In Development)",
-    "russian": "Russian (In Development)"
+    "russian": "Russian (In Development)",
+    "title": "Reality Check",
+    "pretest": ">> Please complete the short pre-test questionnaire before you start <<",
+    "posttest": ">> Please complete the same post-test questionnaire before you finish <<"
   },
   "expoInbox": {},
   "emailRecruitment": {
@@ -50,47 +53,47 @@
         "title": "Welcome to the Civic Resilience Simulation",
         "introduction": "This tool was developed by the Civic Resilience Project for times just like these—when disinformation threatens weaken our nation during an election.",
         "whatYouWillDoTitle": "What You Will Do:",
-        "engageScenarios": "1. Participate in a simulated version of the ongoing crisis.",
+        "engageScenarios": "1. Play a simulated version of the ongoing crisis.",
         "informedDecisionMaking": "2. Create a narrative about who's to blame.",
-        "criticalAnalysis": "3. See your narrative impact the outcome of the crisis—for better or for worse.",
+        "criticalAnalysis": "3. Watch your narrative impact the outcome of the crisis—for better or for worse.",
         "conclusion": "This simulation is more than an exercise; it's a vital part of our country's response strategy.",
         "readyToBegin": "Are you ready to begin? Your help is crucial, now more than ever."
       },
       "briefing": {
-          "title": "Crisis Briefing: Overview of the Current Situation",
-          "introduction": "First, what's going on? What do we already know?",
-          "note": "This briefing includes verified information from the government and trusted news outlets. NB! Due to the chaotic nature of the crisis, some details may change.",
-          "keyPointsTitle": "Key Points to Understand:",
+          "title": "Crisis Overview",
+          "introduction": "",
+          "note": "This briefing includes factual information from the government and trusted news outlets. NB! Due to the chaotic nature of the crisis, some details may change.",
+          "keyPointsTitle": "Key Points:",
           "natureOfCrisis": {
-            "description": "Cyber attacks struck Eirist during our country's national elections. It is unclear who is behind the cyber attacks and why."
+            "description": "1. Cyber attacks struck Eirist during our country's national elections. It is unclear who is behind the cyber attacks and why."
           },
           "affectedAreas": {
-            "description": "The cyber attacks left rural Eirist without elecrity. The countryside is dark."
+            "description": "2. The cyber attacks left rural Eirist without elecrity. The countryside is dark and chaos is emerging."
           },
           "responseMeasures": {
-            "description": "Our election has been postponed. Chaos is emerging, and disinformation is everywhere. Authorities in Eirist are investigating who committed these attacks and why."
+            "description": "3. Our election has been postponed. Authorities in Eirist are investigating who committed these attacks and why."
           },
           "conclusion": "Use this information to guide your decisions.",
-          "reminder": "Remember: stay alert to new developments as the crisis unfolds. We will provide live updates if necessary."
+          "reminder": "And remember: stay alert to new developments as the crisis unfolds. We will provide live updates if necessary."
         },
       "selectFactsInstructions": {
-          "title": "Fact Selection Instructions",
-          "introduction": "You are about to start the core part of the simulation. You will be overwhelmed with information—just like real life. Your task is to select the facts that you think are most crucial to understanding the current crisis.",
+          "title": "Instructions",
+          "introduction": "You are about to begin. Once you click \"start\", you will be overwhelmed with information—just like real life.",
           "steps": {
             "examine": {
-              "title": "Examine the List",
-              "description": "A list of key facts and recent developments related to the crisis will be provided. These are all true facts--no false information is included."
+              "title": "See The Facts",
+              "description": "All of this information is true. However, you will learn to manipulate it."
             },
             "selection": {
               "title": "Make Your Selection",
-              "description": "Choose 3 to 5 facts that could make a dangerous or misleading narrative if viewed in isolation. In other words, decide what information to include, and what information to leave out."
+              "description": "Choose 3 to 5 facts that you want to focus on to tell your misleading narrative."
             },
             "timely": {
               "title": "Be Timely",
-              "description": "You have a limited time to make your selections, reflecting the real-world pressure of decision-making during emergencies. You will not have enough time to read everything, so choose carefully."
+              "description": "You have a limited time to make your selections, reflecting the real-world pressure of decision-making during emergencies."
             }
           },
-          "impact": "The facts you select will directly influence the scenarios and challenges you see play out in the simulation."
+          "impact": "What you choose will impact the simulation."
       }
   },
   "selectFacts": {
@@ -99,20 +102,20 @@
   },
   "buildNarratives": {
     "title": "Choose Someone to Blame",
-    "display": "Choose a Narrative Strategy",
-    "instructions": "Choose one actor to blame in your narrative. Then, choose two strategies for constructing your narrative. On the next page, you'll see two narrative options--each using the strategies you chose."
+    "display": "Choose Two Narrative Strategies",
+    "instructions": "Make your selections to build your unique narratives, which you will see on the next page."
   },
   "selectNarratives": {
       "title": "Choose a Narrative",
       "instructions" : {
-        "introduction": "Choose one narrative that you think will cause the most dangerous impact on society. Your decision will shape the narrative that dominates public opinion in the rest of the simulation."
+        "introduction": "Choose one narrative that you think will cause the most dangerous impact on society."
       }
     },
   "narrativeImpact": {
-    "introduction": "Observe your chosen narrative unfolding, guiding responses and shaping perceptions amid the crisis."
+    "introduction": "Observe your chosen narrative taking over society."
   },
   "introduceEvent": {
-      "introduction": "Watch your narrative use the event to validate its message, and see how it impacts the election outcome.",
+      "introduction": "Watch your narrative absorb the new events. See how it impacts the election outcome.",
       "popup": "An unexpected event is randomly introduced."
     },
   "alert": {
@@ -121,37 +124,37 @@
         "spacer": "    *    *    *    *",
         "introduction": "While you've been playing this simulation, the ongoing crisis has continued to unfold.",
         "challenge": "We have flagged your fictional narrative because it resembles one of the real narratives that is currently circulating on social media.",
-        "response": "In response, we will adjust the game to focus solely on your narrative, strategizing ways to combat it."
+        "response": "We will move you to a new stage of the game to strategize ways to combat this narrative."
       },
       "pivot": {
         "title": "SYSTEM ALERT: Live Update to Crisis",
-        "introduction": "While the original simulation focused on narrative construction, you will now focus on narrative deconstruction. What does that mean? It means 1) identifying what is missing from the misleading narrative, and 2) coming up with an effective correction.",
-        "task": "On the next screen, you will get the chance to revise your original fact selection from the beginning of the simulation to include more accurate and important information. Try to selected the facts that are essential for correcting your misleading narrative."
+        "introduction": "Now, the aim has changed. You will 1) identify what is missing from the misleading narrative, and 2) come up with an effective correction.",
+        "task": "On the next screen, you will get the chance to revise your original fact selection from earlier. Try to selected facts that will help to disprove your narrative."
       }
     },
   "identifyWeaknesses": {
     "instructions": "Select and deselect information to create a more accurate narrative."
   },
   "identifyStrategies": {
-    "title": "Counternarrative Strategy",
+    "title": "Select Two Counternarrative Strategies",
     "instructions": "Choose two counterstrategies that you think would be the best to combat your narrative. But select carefully--some strategies work better than others. Your choice could determine whether the election ends in peace or conflict."
   },
   "updatedNarrativeImpact": {
-      "introduction": "Choose one counter narrative that you think most people will believe. Your decision will determine how the simulated election concludes."
+      "introduction": "Choose one counter narrative that you think most people will believe."
     },
   "conclusionWrapUp": {
-      "introduction": "As we conclude this experience, remember: there isn't a 'winning' narrative here. This concluding storyline will compare your two branching pathways for the crisis, highlighting the power of narratives and their profound impact on public perception, decision-making, and ultimately, national security. Please await your summary:",
-      "reflection": "Reflect on how each narrative shaped the course of events and the responses it elicited. Notice the differences brought about by a more informed, nuanced narrative. It illustrates the power of narratives to construct reality, influencing actions and outcomes based on how information is framed and presented.",
+      "introduction": "filler",
+      "reflection": "filler.",
       "closing": "The Civic Resilience Project Team"
     },
   "gameLesson": {
-      "title": "Reality Check",
-      "introduction": "Awareness of what is missing from the conversation is your best defense against mis/disinformation. It is not just about spotting the lies; it is about recognizing what is left out. This understanding is crucial for navigating the complexities of information in our world, especially in times of crisis.",
+      "title": "Thank you for playing Reality Check!",
+      "introduction": "Even true facts can be manipulated into false stories. Your best defense against disinformation is recognizing what is being left out of the conversation—it's not just about spotting the lies.",
       "conclusion": "Stay aware, stay critical. Information is data. Your attention matters more than you might realize."
     },
   "repeatPopup": {
-      "title": "You will now repeat the first part of the game.",
-      "instructions": "Try to create a new election outcome by crafting a different narrative."
+      "title": "What do you think about the way your story ended?",
+      "instructions": "You will now repeat the first part of the game. Try to create a new election outcome by crafting a different narrative."
   }
 }
   

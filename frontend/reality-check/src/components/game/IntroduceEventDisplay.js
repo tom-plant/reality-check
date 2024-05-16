@@ -12,9 +12,6 @@ const IntroduceEventDisplay = () => {
   const dispatch = useGameDispatch();
   const { t } = useTranslation();
 
-  console.log(inCoda)
-  console.log(introduceEventVisits)
-
   // Progress to next game phase
   const handleContinue = () => {
     // Increment the visit count each time this function is called
