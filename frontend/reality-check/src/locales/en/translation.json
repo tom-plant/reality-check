@@ -148,6 +148,10 @@
       "title": "Reality Check",
       "introduction": "Awareness of what is missing from the conversation is your best defense against mis/disinformation. It is not just about spotting the lies; it is about recognizing what is left out. This understanding is crucial for navigating the complexities of information in our world, especially in times of crisis.",
       "conclusion": "Stay aware, stay critical. Information is data. Your attention matters more than you might realize."
-    }
+    },
+  "repeatPopup": {
+      "title": "You will now repeat the first part of the game.",
+      "instructions": "Try to create a new election outcome by crafting a different narrative."
+  }
 }
   

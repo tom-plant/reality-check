@@ -61,19 +61,21 @@ def get_dalle2_response(prompt):
 
     try:
         response = requests.post(dalleUrl, headers=headers, data=json.dumps(payload))
-        if response.status_code == 200:
-            image_data = response.json()['data'][0]
-            return image_data.get('url')
-        elif response.status_code == 400:
+        response.raise_for_status()  # Raise HTTPError for bad responses
+
+        image_data = response.json().get('data')
+        if image_data:
+            return image_data[0].get('url')
+        else:
+            return {"error": "No image data returned from DALL-E API"}
+    except requests.exceptions.HTTPError as http_err:
+        if response.status_code == 400:
             error_info = response.json().get('error', {})
             if error_info.get('code') == 'content_policy_violation':
                 return {"error": "Content policy violation detected."}
             else:
-                error_message = f"Failed to generate image. API Error: {response.status_code} - {response.text}"
-                return {"error": error_message}
+                return {"error": f"Failed to generate image. API Error: {response.status_code} - {response.text}"}
         else:
-            error_message = f"Failed to generate image. API Error: {response.status_code} - {response.text}"
-            return {"error": error_message}
-    except Exception as e:
-        error_message = f"Network or request error occurred: {str(e)}"
-        return {"error": error_message}
+            return {"error": f"HTTP error occurred: {http_err}"}
+    except Exception as err:
+        return {"error": f"An error occurred: {err}"}

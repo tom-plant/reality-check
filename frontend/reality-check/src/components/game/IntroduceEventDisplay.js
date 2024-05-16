@@ -3,10 +3,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next'; 
 import { useGameState, useGameDispatch, useGameFunction } from '../../contexts/GameContext';
+import RepeatPopup from '../popups/RepeatPopup';
 import './IntroduceEventDisplay.css'; 
 
 const IntroduceEventDisplay = () => {
-  const { selectedEvent, selectedNarrative, selectedFactCombination, isLoadingNews, introduceEventVisits, inCoda } = useGameState();
+  const { selectedEvent, selectedNarrative, selectedFactCombination, isLoadingNews, introduceEventVisits, isRepeatPopupVisible, inCoda } = useGameState();
   const { setCurrentPhase } = useGameFunction(); 
   const dispatch = useGameDispatch();
   const { t } = useTranslation();
@@ -21,7 +22,7 @@ const IntroduceEventDisplay = () => {
     if (introduceEventVisits === 0) {
       // First visit to this phase
       dispatch({ type: 'INCREMENT_INTRODUCE_EVENT_VISITS' });
-      dispatch({ type: 'SET_CURRENT_VIEW', payload: 'SELECT_FACTS' });
+      dispatch({ type: 'TOGGLE_REPEAT_POPUP' });
     } else if (introduceEventVisits === 1 && !inCoda) {
       // Second visit, entering coda
       dispatch({ type: 'ENTER_CODA' });
@@ -36,19 +37,19 @@ const IntroduceEventDisplay = () => {
   return (
     <div className="introduce-event-display-container">
       <div className="introduce-event-display">
-        <h2>{t('common.yourEvent')} </h2>
+        <h2>{t('common.yourEvent')}</h2>
         {selectedEvent && (
           <div className="selected-event">
             <p>{selectedEvent.text}</p>
           </div>
         )}
-        <h2>{t('common.yourNarrative')} </h2>
+        <h2>{t('common.yourNarrative')}</h2>
         {selectedNarrative && (
           <div className="selected-narrative">
             <p>{selectedNarrative.text}</p>
           </div>
         )}
-        <h2>{t('common.yourFacts')} </h2>
+        <h2>{t('common.yourFacts')}</h2>
         <div className="displayed-facts-list">
           {selectedFactCombination.map((fact) => (
             <div key={fact.id} className="displayed-fact">
@@ -58,8 +59,9 @@ const IntroduceEventDisplay = () => {
         </div>
       </div>
       <button className="continue-button" onClick={handleContinue} disabled={isLoadingNews}>
-      {t('common.continue')} 
+        {t('common.continue')}
       </button>
+      {isRepeatPopupVisible && <RepeatPopup onClose={() => dispatch({ type: 'TOGGLE_REPEAT_POPUP' })} />}
     </div>
   );
 };

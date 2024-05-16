@@ -11,6 +11,7 @@ import NarrativeImpact from '../game/NarrativeImpact';
 import NarrativeImpactDisplay from '../game/NarrativeImpactDisplay';
 import IntroduceEvent from '../game/IntroduceEvent';
 import IntroduceEventDisplay from '../game/IntroduceEventDisplay';
+import RepeatPopup from '../popups/RepeatPopup'; 
 import EventPopup from '../popups/EventPopup';
 import IdentifyWeaknesses from '../game/IdentifyWeaknesses';
 import IdentifyWeaknessesDisplay from '../game/IdentifyWeaknessesDisplay';
@@ -25,7 +26,7 @@ import GameInstructions from '../containers/GameInstructions'
 import './GameLayout.css'; 
 
 const GameLayout = () => {
-  const { currentView, isUpdatedNarrativePopupVisible, isIntroPopupVisible } = useGameState();
+  const { currentView, isUpdatedNarrativePopupVisible, isIntroPopupVisible, isRepeatPopupVisible } = useGameState();
   const [isEventPopupVisible, setIsEventPopupVisible] = useState(true); 
   const dispatch = useGameDispatch();
 
@@ -100,6 +101,9 @@ const GameLayout = () => {
       )}
       {isIntroPopupVisible && (
         <IntroPopup onClose={closeIntroPopup} />
+      )}
+      {isRepeatPopupVisible && (
+        <RepeatPopup onClose={() => dispatch({ type: 'TOGGLE_REPEAT_POPUP' })} />
       )}
     </div>
   );

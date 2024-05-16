@@ -8,12 +8,13 @@ const GameDispatchContext = createContext();
 const GameFunctionContext = createContext(); 
 
 const initialState = {
-  currentPhase: 'intro', 
+  currentPhase: 'game', 
   currentIntroView: 'AUTH_LOGIN',
-  currentView: 'SELECT_FACTS', 
+  currentView: 'INTRODUCE_EVENT', 
   currentTurnPointView: 'ALERT',
   currentOutroView: 'CONCLUSION_WRAP_UP',
   introduceEventVisits: 0,
+  isRepeatPopupVisible: false,
   inCoda: false, 
   username: null,
   email: null,
@@ -260,6 +261,9 @@ const gameReducer = (state, action) => {
 
     case 'TOGGLE_INTRO_POPUP':
       return { ...state, isIntroPopupVisible: !state.isIntroPopupVisible };
+
+    case 'TOGGLE_REPEAT_POPUP':
+      return { ...state, isRepeatPopupVisible: !state.isRepeatPopupVisible };
 
       default:
         throw new Error(`Unhandled action type: ${action.type}`);
