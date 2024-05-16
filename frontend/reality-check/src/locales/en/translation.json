@@ -17,6 +17,7 @@
     "previous": "Previous",
     "confirmNarrative": "Confirm Narrative",
     "selectedFacts": "Selected Facts",
+    "yourSelections": "Your Selections",
     "yourNarrative": "Your Narrative",
     "yourFacts": "Your Facts",
     "yourEvent": "Your Event",
@@ -38,8 +39,8 @@
     "sender": "The Civic Resilience Project",
     "address": "engage@civicresilience.org",
     "intro": "Dear Citizen,",
-    "request": "Your immediate participation is requested for our new crisis simulation. This simulation is designed to keep you safe from disinformation during our country's current crisis.",
-    "information": "The Civic Resilience Project is at the forefront of developing strategies for effective crisis management and public education in times of uncertainty.",
+    "request": "Your immediate participation is requested for our emergency crisis simulation. This simulation is designed to keep you safe from disinformation as our the current crisis unfolds.",
+    "information": "The Civic Resilience Project is at the forefront of strategies for effective crisis management and public education in times of uncertainty.",
     "sendOff": "In this critical moment, your choices and insights can make a difference. Act now.",
     "goodbye": "Sincerely,",
     "footer": "Empowering communities through knowledge and resilience."
@@ -49,30 +50,27 @@
         "title": "Welcome to the Civic Resilience Simulation",
         "introduction": "This tool was developed by the Civic Resilience Project for times just like these—when disinformation threatens weaken our nation during an election.",
         "whatYouWillDoTitle": "What You Will Do:",
-        "engageScenarios": "Participate in a simulated version of the current national crisis.",
-        "informedDecisionMaking": "Decide what's happening and who's to blame.",
-        "criticalAnalysis": "Understand how your decisions chnages the outcome of the crisis—for better or for worse.",
+        "engageScenarios": "1. Participate in a simulated version of the ongoing crisis.",
+        "informedDecisionMaking": "2. Create a narrative about who's to blame.",
+        "criticalAnalysis": "3. See your narrative impact the outcome of the crisis—for better or for worse.",
         "conclusion": "This simulation is more than an exercise; it's a vital part of our country's response strategy.",
-        "readyToBegin": "Are you ready to begin? Your informed choices are crucial, now more than ever."
+        "readyToBegin": "Are you ready to begin? Your help is crucial, now more than ever."
       },
       "briefing": {
           "title": "Crisis Briefing: Overview of the Current Situation",
           "introduction": "First, what's going on? What do we already know?",
-          "note": "This briefing contains information from government agencies and trusted news outlets. NB! Due to the chaotic nature of the crisis, some details may be subject to change.",
+          "note": "This briefing includes verified information from the government and trusted news outlets. NB! Due to the chaotic nature of the crisis, some details may change.",
           "keyPointsTitle": "Key Points to Understand:",
           "natureOfCrisis": {
             "description": "Cyber attacks struck Eirist during our country's national elections. It is unclear who is behind the cyber attacks and why."
           },
           "affectedAreas": {
-            "description": "The attacks cut power supplies in rural Eirist. Our election has been postponed. Chaos is emerging"
+            "description": "The cyber attacks left rural Eirist without elecrity. The countryside is dark."
           },
           "responseMeasures": {
-            "description": "Disinformation is everywhere. Authorities in Eirist are investigating who committed these attacks and why. It's hard to know what to believe."
+            "description": "Our election has been postponed. Chaos is emerging, and disinformation is everywhere. Authorities in Eirist are investigating who committed these attacks and why."
           },
-          "challengesAndUnknowns": {
-            "description": ""
-          },
-          "conclusion": "Use this information to guide your understanding.",
+          "conclusion": "Use this information to guide your decisions.",
           "reminder": "Remember: stay alert to new developments as the crisis unfolds. We will provide live updates if necessary."
         },
       "selectFactsInstructions": {

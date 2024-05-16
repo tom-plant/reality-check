@@ -1,7 +1,7 @@
 // NarrativeImpact.js
 
 import React, { useEffect, useState } from 'react';
-import { useGameState } from '../../contexts/GameContext';
+import { useGameState, useGameDispatch, useGameFunction } from '../../contexts/GameContext';
 import LoadingIcon from '../common/LoadingIcon';
 import NewsArticle from '../news/NewsArticle';
 import InstagramPost from '../news/InstagramPost';
@@ -10,25 +10,39 @@ import YouTubeContent from '../news/YouTubeContent';
 import './NarrativeImpact.css';
 
 const NarrativeImpact = () => {
-  const { primaryNewsContent, isLoadingNews } = useGameState();
+  const { primaryNewsContent, isLoadingNews, selectedNarrative } = useGameState();
+  const { selectNarrativeAndSetContent } = useGameFunction();
   const [content, setContent] = useState(null);
-
+  const [error, setError] = useState(false);
+  const dispatch = useGameDispatch();
+  
   useEffect(() => {
     console.log('Primary News Content at useEffect:', primaryNewsContent);
     if (primaryNewsContent && !isLoadingNews) {
-      // Check if primaryNewsContent is a string and parse it if necessary
-      const contentToSet = typeof primaryNewsContent === 'string' ? JSON.parse(primaryNewsContent) : primaryNewsContent;
-      console.log('Setting content:', contentToSet);
-      setContent({
-        news_article: contentToSet.news_article || {},
-        news_photo: contentToSet.news_photo || '',
-        instagram: contentToSet.instagram?.instagram || '',
-        shortform: contentToSet.shortform?.shortform || '',
-        youtube: contentToSet.youtube?.youtube || '',
-        youtube_thumbnail: contentToSet.youtube_thumbnail || ''
-      });
+      if (primaryNewsContent.error) {
+        setError(true);
+        setContent(null);
+      } else {
+        // Check if primaryNewsContent is a string and parse it if necessary
+        const contentToSet = typeof primaryNewsContent === 'string' ? JSON.parse(primaryNewsContent) : primaryNewsContent;
+        setContent({
+          news_article: contentToSet.news_article || {},
+          news_photo: contentToSet.news_photo || '',
+          instagram: contentToSet.instagram?.instagram || '',
+          shortform: contentToSet.shortform?.shortform || '',
+          youtube: contentToSet.youtube?.youtube || '',
+          youtube_thumbnail: contentToSet.youtube_thumbnail || ''
+        });
+        setError(false);
+      }
     }
   }, [primaryNewsContent, isLoadingNews]);
+
+  const handleRetry = async () => {
+    setError(false);
+    dispatch({ type: 'SET_LOADING_NEWS', payload: true });
+    await selectNarrativeAndSetContent(selectedNarrative);
+  };
 
   useEffect(() => {
     console.log('Updated content state:', content);
@@ -49,6 +63,11 @@ const NarrativeImpact = () => {
         {isLoadingNews ? (
           <div className="news-loading-container">
             <LoadingIcon />
+          </div>
+        ) : error ? (
+          <div className="news-loading-container">
+            <p>An error occurred. Please try again.</p>
+            <button onClick={handleRetry}>Retry</button>
           </div>
         ) : content && content.instagram && 
              content.shortform && 

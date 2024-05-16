@@ -189,6 +189,8 @@ def select_narrative_controller(selected_narrative, strategy):
         })
 
     news_response = get_chatgpt_response(prompts_news_article)
+    if "error" in news_response:
+        return news_response, 500
     current_app.logger.debug(f"Unparsed news_response: {news_response}")
     content_batch['news_article'] = handle_chatgpt_output(news_response)
     current_app.logger.debug(f"Parsed news_response: {content_batch['news_article']}")
@@ -204,7 +206,10 @@ def select_narrative_controller(selected_narrative, strategy):
             'headline': headline
         })
 
-    content_batch['news_photo'] = get_dalle2_response(prompts_news_photo)
+    news_photo_response = get_dalle2_response(prompts_news_photo)
+    if "error" in news_photo_response:
+        return news_photo_response, 500
+    content_batch['news_photo'] = news_photo_response
     current_app.logger.debug(f"news_photo: {content_batch['news_photo']}")
 
     # Generate instagram content
@@ -217,6 +222,8 @@ def select_narrative_controller(selected_narrative, strategy):
         })
 
     instagram_response = get_chatgpt_response(prompts_instagram)
+    if "error" in instagram_response:
+        return instagram_response, 500
     content_batch['instagram'] = handle_chatgpt_output(instagram_response)
     current_app.logger.debug(f"Instagram response: {content_batch['instagram']}")
 
@@ -230,6 +237,8 @@ def select_narrative_controller(selected_narrative, strategy):
         })
 
     shortform_response = get_chatgpt_response(prompts_shortform)
+    if "error" in shortform_response:
+        return shortform_response, 500
     content_batch['shortform'] = handle_chatgpt_output(shortform_response)
     current_app.logger.debug(f"Shortform response: {content_batch['shortform']}")
 
@@ -243,6 +252,8 @@ def select_narrative_controller(selected_narrative, strategy):
         })
 
     youtube_response = get_chatgpt_response(prompts_youtube)
+    if "error" in youtube_response:
+        return youtube_response, 500
     content_batch['youtube'] = handle_chatgpt_output(youtube_response)
     current_app.logger.debug(f"Youtube response: {content_batch['youtube']}")
 
@@ -256,8 +267,11 @@ def select_narrative_controller(selected_narrative, strategy):
             'video_title': video_title
         })
 
-    content_batch['youtube_thumbnail'] = get_dalle2_response(str(prompts_youtube_thumbnail))
-
+    youtube_thumbnail_response = get_dalle2_response(str(prompts_youtube_thumbnail))
+    if "error" in youtube_thumbnail_response:
+        return youtube_thumbnail_response, 500
+    content_batch['youtube_thumbnail'] = youtube_thumbnail_response
+    
     # Commit Primary Narrative to Database
     primary_narrative = create_primary_narrative(
         fact_combination_id=session['user_data']['fact_combination_id'],
@@ -379,7 +393,7 @@ def identify_weaknesses_controller(updated_fact_combination, selected_strategies
                 'updated_facts': updated_fact_combination,
                 'counter_strategy': strategy_text
             })
-        current_app.logger.debug(f"Trying to generate chatgptresponses with prompts {prompts_narrative}")
+        current_app.logger.debug(f"Trying to generate chatgptresponses with prompts {prompts_counter_narrative}")
 
         # Handle prompt type to decide which key to use for API call
         prompt_key = 'user_followup' if i > 0 else 'user'

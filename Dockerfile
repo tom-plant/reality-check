@@ -32,4 +32,4 @@ ENV FLASK_ENV=development
 
 # Specify the script to be executed when the container starts
 ENTRYPOINT ["/app/entrypoint.sh"]
-CMD ["gunicorn", "-w", "3", "-b", "0.0.0.0:5000", "--log-level", "debug", "backend.app:app"]
+CMD ["gunicorn", "-w", "3", "-b", "0.0.0.0:5000", "--log-level", "debug", "--timeout", "120", "backend.app:app"]

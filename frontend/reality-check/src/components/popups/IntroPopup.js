@@ -59,8 +59,6 @@ const IntroPopup = () => {
           <p>{screenData.affectedAreas.description}</p>
           <h4>{screenData.responseMeasures.title}</h4>
           <p>{screenData.responseMeasures.description}</p>
-          <h4>{screenData.challengesAndUnknowns.title}</h4>
-          <p>{screenData.challengesAndUnknowns.description}</p>
           <p>{screenData.conclusion}</p>
           <p><strong>{screenData.reminder}</strong></p>
         </>

@@ -21,8 +21,6 @@ const BriefingPopup = ({ onClose }) => {
         <p>{t('introPopup.briefing.affectedAreas.description')}</p>
         <h4>{t('introPopup.briefing.responseMeasures.title')}</h4>
         <p>{t('introPopup.briefing.responseMeasures.description')}</p>
-        <h4>{t('introPopup.briefing.challengesAndUnknowns.title')}</h4>
-        <p>{t('introPopup.briefing.challengesAndUnknowns.description')}</p>
         <p>{t('introPopup.briefing.conclusion')}</p>
         <p>{t('introPopup.briefing.reminder')}</p>
         <button className="close-btn" onClick={onClose}>X</button>

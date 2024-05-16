@@ -435,7 +435,7 @@ const GameProvider = ({ children }) => {
       console.log('received narrative news content in context', content)
       dispatch({ type: 'SET_LOADING_NEWS', payload: false });
     } catch (error) {
-      console.error('Failed to select narrative:', error);
+      dispatch({ type: 'SET_SELECTED_NARRATIVE_CONTENT', payload: { error: 'An error occurred. Please try again.' } });
       dispatch({ type: 'SET_LOADING_NEWS', payload: false });
     }
   };
