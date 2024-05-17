@@ -24,13 +24,12 @@
 
 }
 
-.selected-narrative, .selected-event, .displayed-fact {
+.selected-event {
   padding: 10px;
   margin: 5px 0; /* Adjust spacing between items */
   width: 100%;
   box-sizing: border-box; /* Ensures padding is included in width */
   text-align: center; /* Center the text inside each fact box */
-  border: 1px solid black; /* Adjust as needed */
   color: black; /* Adjust as needed */
   background-color: transparent; /* Adjust as needed */
 }

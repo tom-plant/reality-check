@@ -59,7 +59,7 @@
 .close-button {
   position: absolute;
   top: 10px; /* Adjust as needed */
-  right: 10px; /* Adjust as needed */
+  right: 0px; /* Adjust as needed */
   cursor: pointer;
   background-color: transparent; /* Or any color you prefer */
   border: none; /* Removes the default button border */

@@ -7,14 +7,13 @@ const CenterContainer = ({ children }) => {
 
   // Determine the style based on the current phase
   const containerStyle = {
-    backgroundColor: 'transparent', // Always transparent
     position: 'absolute',
     width: '80%', // Adjust the width as needed
     height: '55%', // Adjust based on your layout
     top: '25%', // Adjust to position below the header
     boxSizing: 'border-box',
     borderRadius: '5px',
-    border: currentPhase === 'turn-point' ? 'none' : '2px solid white' // Conditional border
+    backgroundColor: currentPhase === 'turn-point' ? 'none' : 'rgba(255, 255, 255, 0.2)' // Conditional border
   };
 
   return (

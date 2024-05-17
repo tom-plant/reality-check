@@ -1,6 +1,6 @@
 /* RightContainer.css */
 .right-container {
-  background-color: white; /* White background */
+  background-color: rgba(255, 255, 255, 0.9); /* White background */
   position: absolute;
   width: 30%; /* Adjust based on your layout */
   height: calc(70vh - 40px); /* 70% of the viewport height minus double the padding */

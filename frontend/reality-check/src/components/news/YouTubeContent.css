@@ -12,15 +12,20 @@
 
 .actual-thumbnail {
     position: absolute;
-    top: 45%; /* Adjust this value to position the thumbnail within the template */
-    left: 13%; /* Adjust this value to center the thumbnail horizontally */
+    top: 10.5%; /* Adjust this value to position the thumbnail within the template */
+    left: 4.5%; /* Adjust this value to center the thumbnail horizontally */
     width: 20%; /* You might adjust this to fit the placeholder in the template */
     height: auto; /* Maintain aspect ratio */
-    transform: translateY(-50%); /* Optionally adjust vertical centering based on 'top' */
+    transform: translateY(-0%); /* Optionally adjust vertical centering based on 'top' */
+    object-fit: cover; /* Ensure the image covers the entire space */
+    object-position: center; /* Center the image within the space */
+    width: calc(100% - 62%); /* Adjust to fill the desired width, minus the left and right offset */
+    height: calc(80% - 0%); 
 }
 
 .youtube-description {
     position: absolute;
+    text-align: left;
     bottom: 10%;
     top: 5%;
     left: 45%;

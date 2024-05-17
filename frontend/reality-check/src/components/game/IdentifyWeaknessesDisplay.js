@@ -35,7 +35,7 @@ const IdentifyWeaknessesDisplay = () => {
 
   return (
     <div className="identify-weaknesses-display">
-      <h2>{t('common.yourAddedFacts')} </h2>
+      <h2>{t('common.yourUpdatedFacts')} </h2>
       <div className="displayed-facts-list">
         {updatedFactCombination.map(fact => (
           <FactBox

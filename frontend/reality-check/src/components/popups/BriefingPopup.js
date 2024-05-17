@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useTranslation } from 'react-i18next'; 
+import { FaTimesCircle } from 'react-icons/fa';  // Importing a times icon from react-icons
 import './BriefingPopup.css'; 
 
 
@@ -18,7 +19,9 @@ const BriefingPopup = ({ onClose }) => {
         <p>{t('introPopup.briefing.affectedAreas.description')}</p>
         <p>{t('introPopup.briefing.responseMeasures.description')}</p>
         <p>{t('introPopup.briefing.conclusion')}</p>
-        <button className="close-btn" onClick={onClose}>X</button>
+          <button className="close-button" onClick={onClose}>
+            <FaTimesCircle />  
+          </button>
       </div>
     </div>
   );

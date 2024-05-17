@@ -22,8 +22,11 @@
   width: 100%;
   box-sizing: border-box;
   text-align: center; 
-  border: 1px solid black;
   color: black;
-  background-color: transparent;
+  background-color: rgba(128, 128, 128, 0.1); 
   transition: background-color 0.3s;
+  margin-top: 10px;
+  padding: 10px;
 }
+
+

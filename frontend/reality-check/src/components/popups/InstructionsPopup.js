@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useTranslation } from 'react-i18next'; 
+import { FaTimesCircle } from 'react-icons/fa';  // Importing a times icon from react-icons
 import './InstructionsPopup.css'; 
 
 const InstructionsPopup = ({ onClose }) => {
@@ -17,7 +18,9 @@ const InstructionsPopup = ({ onClose }) => {
         <p>{t('introPopup.instructions.informedDecisionMaking')}</p>
         <p>{t('introPopup.instructions.criticalAnalysis')}</p>
         <p>{t('introPopup.instructions.conclusion')}</p>
-        <button className="close-btn" onClick={onClose}>X</button>
+          <button className="close-button" onClick={onClose}>
+            <FaTimesCircle />  
+          </button>
       </div>
     </div>
   );
