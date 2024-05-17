@@ -1,5 +1,5 @@
-from backend.app import app, db  # Import your Flask app and db from your main app file
-from backend.models import Fact, Event, Actor, Strat, CounterStrat, StrategyEffectiveness # Import the Fact model
+from app import app, db  # Import your Flask app and db from your main app file
+from models import Fact, Event, Actor, Strat, CounterStrat, StrategyEffectiveness # Import the Fact model
 import os
 
 # Fact entries to be added
