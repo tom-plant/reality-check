@@ -1,7 +1,7 @@
 # app.py
 
 from flask import Flask, session, jsonify, redirect, url_for, render_template, request, send_from_directory
-from config import Config, DevelopmentConfig, TestingConfig, ProductionConfig
+from backend.config import Config, DevelopmentConfig, TestingConfig, ProductionConfig
 from flask_cors import CORS
 from flask_session import Session 
 import uuid
@@ -11,11 +11,11 @@ import sys
 import logging
 
 # Correctly placed imports
-from database import db, init_app
-from models import *
-from controllers import *
-from db_operations import *
-from routes import setup_routes
+from backend.database import db, init_app
+from backend.models import *
+from backend.controllers import *
+from backend.db_operations import *
+from backend.routes import setup_routes
 
 # Initialize Flask app in a factory function to avoid circular imports
 def create_app():
