@@ -209,15 +209,14 @@ def select_narrative_controller(selected_narrative, strategy):
     image_description_response = get_chatgpt_response(prompts_image_description)
     if "error" in image_description_response:
         return image_description_response, 500
-    image_description = handle_chatgpt_output(image_description_response)
-    current_app.logger.debug(f"Image description: {image_description}")
+    current_app.logger.debug(f"Image description: {image_description_response}")
 
     # Generate news photo
     prompts_news_photo = generate_prompts(
         category='news_photo',
         prompt_type='system',
         dynamic_inserts={
-            'image_description': image_description
+            'image_description': image_description_response
         })
 
     news_photo_response = get_dalle2_response(prompts_news_photo)
@@ -267,15 +266,14 @@ def select_narrative_controller(selected_narrative, strategy):
     shortform_image_description_response = get_chatgpt_response(prompts_shortform_description)
     if "error" in shortform_image_description_response:
         return shortform_image_description_response, 500
-    shortform_image_description = handle_chatgpt_output(shortform_image_description_response)
-    current_app.logger.debug(f"Thumbnail description: {shortform_image_description}")
+    current_app.logger.debug(f"Thumbnail description: {shortform_image_description_response}")
 
     #Generate shortform image
     prompts_shortform_image = generate_prompts(
         category='shortform_image',
         prompt_type='system',
         dynamic_inserts={
-            'shortform_image_description': shortform_image_description
+            'shortform_image_description': shortform_image_description_response
         })
 
     shortform_image_response = get_dalle2_response(str(prompts_shortform_image))
@@ -312,15 +310,14 @@ def select_narrative_controller(selected_narrative, strategy):
     thumbnail_description_response = get_chatgpt_response(prompts_thumbnail_description)
     if "error" in thumbnail_description_response:
         return thumbnail_description_response, 500
-    thumbnail_description = handle_chatgpt_output(thumbnail_description_response)
-    current_app.logger.debug(f"Thumbnail description: {thumbnail_description}")
+    current_app.logger.debug(f"Thumbnail description: {thumbnail_description_response}")
 
     #Generate YouTube Thumbnail
     prompts_youtube_thumbnail = generate_prompts(
         category='yt_thumbnail',
         prompt_type='system',
         dynamic_inserts={
-            'thumbnail_description': thumbnail_description
+            'thumbnail_description': thumbnail_description_response
         })
 
     youtube_thumbnail_response = get_dalle2_response(str(prompts_youtube_thumbnail))

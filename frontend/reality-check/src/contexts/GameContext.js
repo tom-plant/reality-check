@@ -10,7 +10,7 @@ const GameFunctionContext = createContext();
 const initialState = {
   currentPhase: 'game', 
   currentIntroView: 'AUTH_LOGIN',
-  currentView: 'INTRODUCE_EVENT', 
+  currentView: 'NARRATIVE_IMPACT', 
   currentTurnPointView: 'ALERT',
   currentOutroView: 'CONCLUSION_WRAP_UP',
   introduceEventVisits: 0,

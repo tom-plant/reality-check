@@ -66,7 +66,7 @@ const NarrativeImpact = () => {
         {isLoadingNews ? (
           <div className="news-loading-container">
             <LoadingIcon />
-            <p>Please wait for all news and social media content to generate. This may take up to a minute.</p>
+            <p>Please wait for all news and social media content to generate. This may take up to a minute. Faster load times are in development.</p>
           </div>
         ) : error ? (
           <div className="news-loading-container">

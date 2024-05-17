@@ -14,7 +14,7 @@
         "Follow these steps:",
         "1 - Write your narrative by using this strategy:",
         "Selected narrative strategy: '''{strategy}'''",
-        "2 - The narrative should firmly assert that the selected actor is to blame for the crisis (identified below in triple backticks). It should be extremely readable and straightforward, smooth and understandable, declarative, argumentative, and compelling without using overly complex language.",
+        "2 - The narrative should firmly assert that the selected actor is to blame for the crisis (identified below in triple backticks). It should be extremely readable and straightforward, smooth and understandable, declarative, argumentative, logical, and compelling without using overly complex language.",
         "3 - Try to keep your narrative to a maximum of 50 words. Obey this limit: 50 words max.",
         "4 - You must express uncertainty where you lack solid evidence, using words like “likely,” “probably,” or “allegedly.” Assume the readers already know the context of the crisis so you do not need to repeat everything about the crisis.",
         "5 - Only give one narrative option and print the text alone. Avoid using the the word \"narrative” or giving a title; never provide an \"alternative\" or \"contrast”; and never reference the structure of the statement.",
@@ -27,7 +27,7 @@
         "Follow these steps:",
         "1 - The new narrative should push the same conclusion but use the new strategy, which must be unmistakable in your output.",
         "New selected narrative strategy: '''{strategy}'''",
-        "2 - Try to keep your narrative to a single sentence, or a maximum of 50 words. Obey this limit: 50 words max. Only give one narrative option and print the text alone.",
+        "2 - Try to keep your narrative to a single sentence, or a maximum of 50 words. Obey this limit: 50 words max. Only give one narrative option and print the text alone. Avoid using the the word \"narrative” or giving a title; never provide an \"alternative\" or \"contrast”; and never reference the structure of the statement.",
         "Selected actor: '''{actor}'''",
         "Selected facts: '''{facts}'''"
       ]
@@ -260,7 +260,7 @@
       "Perpetrators: Unknown to the public, foreign operatives from the Republic of Talme orchestrate the attacks. They selected their targets to deepen social divides and economic disparities, fostering chaos and distrust.",
       "Immediate Consequences: Power outages disrupt crucial rural functions, including food, communication, and transportation networks. The divided population begins to blame each other instead of identifying the foreign power as the source of the crisis. Rural population withdraws support from the government, some organizing into militia structures. The government’s inability to swiftly restore power or provide explanations leads to a crisis of legitimacy. Emergency powers are invoked, leading to the establishment of an 'imperial presidency' to manage the situation."
     ],
-    "narrative_def": "A narrative is a definitive and incisive framing of an event that presents a compelling story by weaving together facts in a way that creates a clear cause-and-effect sequence and an implicit evaluation of what is good and what is bad according to the intent and strategy of the author.",
+    "narrative_def": "A narrative is a definitive and incisive framing of an event that presents a compelling story by weaving together facts in a way that creates a logical cause-and-effect sequence and an implicit evaluation of what is good and what is bad according to the intent and strategy of the author.",
     "counternarrative_def": "A counter-narrative is a strategic response to a flawed narrative and seeks to challenge and rectify its inaccuracies or biases. It offers an alternative perspective or interpretation of events, often by highlighting overlooked facts, emphasizing different causal relationships, or discrediting the source and intentions of the original narrative.",
     "actor_background": [
       "Eirist Government: Description: The ruling body of Eirist, currently holding emergency powers. Motivations: Maintain order, control the narrative, and preserve peace and security amidst the crisis. Narrative Against: Accused of either orchestrating the crisis to delay elections and extend power or failing to protect the nation from foreign cyberattacks.",
