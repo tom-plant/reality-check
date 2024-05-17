@@ -36,4 +36,7 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3; /* Limit text to three lines */
     text-overflow: ellipsis; /* Adds ellipsis after the clamp limit */
+    line-height: 1.2em; /* Adjust line height for better text spacing */
+    max-height: 3.6em; /* Should be 3 * line-height */
+    white-space: normal; /* Ensure text wraps within the box */
 }

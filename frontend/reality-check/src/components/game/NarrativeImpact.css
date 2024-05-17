@@ -19,6 +19,7 @@
 
 
 .news-loading-container {
+  margin-top: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -29,3 +30,8 @@
   overflow-y: auto; 
 }
 
+.news-feed-title {
+  text-align: center;
+  color: white; /* Or any color you prefer */
+  margin-bottom: 0px; /* Space below the title */
+}

@@ -41,7 +41,7 @@ const SelectFactsDisplay = () => {
       <button className="generate-narrative" 
         disabled={!timerHasEnded}
         onClick={handleGenerateNarrative}>
-        {t('common.generateNarrative')} 
+        {t('common.confirmFacts')} 
       </button>
     </div>
   );

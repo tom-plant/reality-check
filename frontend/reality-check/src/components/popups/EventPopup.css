@@ -64,5 +64,11 @@
   background-color: transparent; /* Or any color you prefer */
   border: none; /* Removes the default button border */
   font-size: 24px; /* Adjust as needed */
-  /* Additional styles to make the button look better */
+  color: #007bff;  /* Color of the icon */
+  font-weight: 100; /* Makes the "X" thinner */
+  transition: color 0.3s; /* Smooth transition for color */
+}
+
+.close-button:hover {
+  color: #0056b3; /* Change color on hover to darker */
 }

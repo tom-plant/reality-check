@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import EventBox from '../common/EventBox';
 import { useGameDispatch, useGameState, useGameFunction } from '../../contexts/GameContext';
 import { useTranslation } from 'react-i18next'; 
+import { FaTimesCircle } from 'react-icons/fa';  // Importing a times icon from react-icons
 import './EventPopup.css';
 
 const EventPopup = ({ onClose }) => {
@@ -69,13 +70,10 @@ const EventPopup = ({ onClose }) => {
           disabled={isCycling || selectedEventIndex !== null}
         >
           {t('common.randomizeEvent')}
-        </button>
+         </button>
         {showCloseButton && (
-          <button
-            className="close-button"
-            onClick={onClose}
-          >
-            X
+          <button className="close-button" onClick={onClose}>
+            <FaTimesCircle />  
           </button>
         )}
       </div>

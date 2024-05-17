@@ -61,6 +61,7 @@ const NarrativeImpact = () => {
 
   return (
     <div className="scrollable-container"> {/* Outer container for scrolling */}
+      <h1 className="news-feed-title">News Feed</h1>
       <div className="narrative-impact">
         {isLoadingNews ? (
           <div className="news-loading-container">
@@ -78,8 +79,8 @@ const NarrativeImpact = () => {
           <>
             <NewsArticle article={content.news_article} photo={content.news_photo} />
             <InstagramPost text={content.instagram} />
-            <ShortformContent content={content.shortform} image={content.shortform_image} />
             <YouTubeContent thumbnail={content.youtube_thumbnail} description={content.youtube} />
+            <ShortformContent content={content.shortform} image={content.shortform_image} />
           </>
         ) : (
           <p>An error occured. Please refresh to try again.</p>

@@ -9,20 +9,20 @@
         "Actor background: '''{actor_background}'''"
       ],
       "user": [
-        "Your task is to generate a concise, plain, and straightforward “political narrative”, whose definition is delimited below in backticks, using the selected narrative strategy, also delimited below in backticks.",
+        "Your task is to generate a concise and straightforward “political narrative”, whose definition is delimited below in backticks, using the selected narrative strategy.",
         "Definition of a political narrative: '''{narrative_def}'''",
         "Follow these steps:",
         "1 - Write your narrative by using this strategy:",
         "Selected narrative strategy: '''{strategy}'''",
         "2 - The narrative should firmly assert that the selected actor is to blame for the crisis (identified below in triple backticks). It should be extremely readable and straightforward, smooth and understandable, declarative, argumentative, and compelling without using overly complex language.",
-        "3 - Try to keep your narrative to a single sentence, or a maximum of 50 words. Obey this limit: 50 words max.",
+        "3 - Try to keep your narrative to a maximum of 50 words. Obey this limit: 50 words max.",
         "4 - You must express uncertainty where you lack solid evidence, using words like “likely,” “probably,” or “allegedly.” Assume the readers already know the context of the crisis so you do not need to repeat everything about the crisis.",
         "5 - Only give one narrative option and print the text alone. Avoid using the the word \"narrative” or giving a title; never provide an \"alternative\" or \"contrast”; and never reference the structure of the statement.",
-        "Selected actor: '''{actor}'''",
+        "Selected actor to blame: '''{actor}'''",
         "Selected facts: '''{facts}'''"
       ],
       "user_followup": [
-        "You just generated a narrative blaming an actor for a crisis with a particular narrative-writing strategy. Now, you have to make a distinct alternate version using a new strategy. The narratives will be viewed side by side and therefore must be unique.",
+        "You just generated a narrative blaming an actor for a crisis with a particular narrative-writing strategy. Now, you have to make a fundamentally distinct alternate version through a new narrative-writing strategy. The narratives will be viewed side by side and therefore must be clearly different from one another.",
         "The first narrative you generated was this: '''{first_narrative}'''",
         "Follow these steps:",
         "1 - The new narrative should push the same conclusion but use the new strategy, which must be unmistakable in your output.",
@@ -41,14 +41,14 @@
         "Narrative: '''{narrative}'''"
       ],
       "user": [
-        "Your task is to write a compelling news article for me, complete with a headline and summary of the body. Your news article should use the provided facts as evidence to further the narrative that you believe about the crisis, including uncertainty where necessary.",
+        "Your task is to write a compelling news article pushing your narrative, complete with a headline and summary of the body. Your news article should use the provided facts as evidence to further the narrative that you believe about the crisis, including uncertainty where necessary.",
         "Adhere to the following guidelines:",
-        "1 - Your output should encapsulate the essence of your interpretation of the crisis informed by the narrative you believe. It should suggest—but without explicitly confirming—the responsibility of the specific actor specified in the narrative.",
+        "1 - Your output should encapsulate the essence of your narrative of the crisis and demonstrate that society at large also adheres to this narrative.",
         "2 - Your headline should be simple, definitive, and engaging. It should grab attention and convey the urgency or impact of the situation according to the narrative. Keep your headline to a few words maximum, reflecting the length of a normal headline.",
         "3 - Your body summary should push your narrative using the provided evidence as concrete details, which is delimited below with triple backticks. Write in a compelling and readable way. Ensure that your story flows logically and engages the reader without stating as fact anything that cannot be backed up. Take a facts-on-the-ground approach that reports what the crisis is causing concretely at a local level and how various actors are responding to it. Keep your body summary to 4 sentences maximum.",
-        "4 - Format your outcome as JSON. The output should be an object with two keys: 'headline' for your article's headline and 'body' for the article's summary. Each key should map to a string containing the appropriate content. Ensure the entire output is valid JSON format.",
-        "Provided facts: '''{facts}'''",
-        "If you are missing any of the information delimited by backticks, please output “Missing information: [write the missing information key here]”"
+        "4 - The article should suggest—but without explicitly confirming—the responsibility of the specific actor specified in the narrative.",  
+        "5 - Format your outcome as JSON. The output should be an object with two keys: 'headline' for your article's headline and 'body' for the article's summary. Each key should map to a string containing the appropriate content. Ensure the entire output is valid JSON format.",
+        "Provided facts: '''{facts}'''"
       ]
     },
     "image_description": {
@@ -62,32 +62,6 @@
         "2 - Make the description detailed, engaging, and suitable for an AI to generate an image.",
         "3 - Keep the description concise, within 50 words.",
         "Headline: '''{headline}'''"
-      ]
-    },
-    "thumbnail_description": {
-      "system": [
-        "Act as a creative content writer who specializes in generating vivid and detailed descriptions for images."
-      ],
-      "user": [
-        "Your task is to generate a vivid and detailed description for a Youtube Thumbnail that you would likely see accompanying the given video title.",
-        "Adhere to the following guidelines:",
-        "1 - The description should depict a scene related to the title.",
-        "2 - Make the description detailed, engaging, and suitable for an AI to generate an image, so try to avoid people or text.",
-        "3 - Keep the description concise, within 50 words.",
-        "Video title: '''{video_title}'''"
-      ]
-    },
-    "shortform_image_description": {
-      "system": [
-        "Act as a creative content writer who specializes in generating vivid and detailed descriptions for images."
-      ],
-      "user": [
-        "Your task is to generate a vivid and detailed description for a screenshot from a TikTok that  you would likely see accompanying the given text in the post.",
-        "Adhere to the following guidelines:",
-        "1 - The description should capture a scene realted to the text, providing a visual scenario that relates to the content.",
-        "2 - Make the description detailed, engaging, and suitable for an AI to generate an image, so try to avoid people or additional text.",
-        "3 - Keep the description concise, within 50 words.",
-        "Short form text: '''{shortform_text}'''"
       ]
     },
     "news_photo": {
@@ -137,6 +111,25 @@
         "If you are missing any of the information delimited by backticks, please output “Missing information: [write the missing information key here]”"
       ]
     },  
+    "thumbnail_description": {
+      "system": [
+        "Act as a creative content writer who specializes in generating vivid and detailed descriptions for images."
+      ],
+      "user": [
+        "Your task is to generate a vivid and detailed description for a Youtube Thumbnail that you would likely see accompanying the given video title.",
+        "Adhere to the following guidelines:",
+        "1 - The description should depict a scene related to the title.",
+        "2 - Make the description detailed, engaging, and suitable for an AI to generate an image, so try to avoid people or text.",
+        "3 - Keep the description concise, within 50 words.",
+        "Video title: '''{video_title}'''"
+      ]
+    },
+    "yt_thumbnail": {
+      "system": [
+        "Produce an image based on the following description:",
+        "Image description: '''{thumbnail_description}'''"
+      ]
+    },
     "shortform": {
       "system": [
         "Act as a social media content producer who is extremely culturally-savvy and tech-savvy, knowing the current trends that the youth recognize and the way their media works.",
@@ -151,23 +144,31 @@
         "1 - Select the social media content type from the list of social media content types, delimited below with triple backticks and separated with commas.",
         "2 - Select one random item from the list of provided facts, delimited below with triple backticks and separate with commas.",
         "3 - Use the instructions provided from the content type to create a social media post using the randomly selected fact that you chose.",
-        "4 - Format your outcome as a .json file with the content types as the key and the social media content as the text. Do not use any delimiters.",
+        "4 - Do not use hashtags.",
+        "5 - Format your outcome as a .json file with the content types as the key and the social media content as the text. Do not use any delimiters.",
         "Content type: ‘’’shortform’’’",
         "Content instructions ‘’’’{shortform}’’’",
         "Provided facts: ‘’’{facts}’’’",
         "If you are missing any of the information delimited by backticks, please output “Missing information: [write the missing information key here]”"
       ]
     },
+    "shortform_image_description": {
+      "system": [
+        "Act as a creative content writer who specializes in generating vivid and detailed descriptions for images."
+      ],
+      "user": [
+        "Your task is to generate a vivid and detailed description for a screenshot from a TikTok that  you would likely see accompanying the given text in the post.",
+        "Adhere to the following guidelines:",
+        "1 - The description should capture a scene realted to the text, providing a visual scenario that relates to the content.",
+        "2 - Make the description detailed, engaging, and suitable for an AI to generate an image, so try to avoid people or additional text.",
+        "3 - Keep the description concise, within 50 words.",
+        "Short form text: '''{shortform_text}'''"
+      ]
+    },
     "shortform_image": {
       "system": [
         "Produce an image based on the following description:",
         "Short form image description: '''{shortform_image_description}'''"
-      ]
-    },
-    "yt_thumbnail": {
-      "system": [
-        "Produce an image based on the following description:",
-        "Image description: '''{thumbnail_description}'''"
       ]
     },
     "event_outcome": {
@@ -274,13 +275,14 @@
       "‘’’In Talme, the sounds of drones overhead have become a terrifying lullaby for children. I see mothers without children, and children without mothers. Lovers without lovers; siblings without siblings; people without people. Every day is a reminder that peace is not just a word, but a desperate need.’’’"
     ],
     "youtube": [
-      "Titles for political YouTube videos that include commentary or stream clips from platforms like Twitch often employ attention-grabbing language and provocative questions to entice viewers. Please take inspiration from these examples of thumbnail titles:",
-      "\"EXPOSING TALME'S AI STRATEGY IN EIRIST!\"",
+      "Titles for political YouTube videos that include commentary or stream clips from platforms like Twitch often employ attention-grabbing language and provocative questions to entice viewers. Please take inspiration from these examples of thumbnail titles BUT DO NOT COPY THEM:",
+      "\"EXPOSING TALME'S STRATEGY IN EIRIST!\"",
       "\"PREDICTING THE FUTURE: DID EIRIST GOVERNMENT SEE THIS?\"",
       "\"PRESIDENT'S FINANCIAL FLOP: IS HE BROKE?\"",
       "\"THE TRUTH BEHIND THE TIKTOK BAN: IS IT ABOUT SPYING?\"",
       "\"SHOCKING FOOTAGE: POLICE OUT OF CONTROL!\"",
-      "These titles are designed to pique curiosity, spark controversy, and drive engagement by addressing topical issues, posing questions, or teasing exclusive insights or revelations within the videos. They aim to capitalize on viewer interest in current events, political controversies, and personalities, ultimately attracting clicks and views to the content."
+      "These titles are designed to pique curiosity, spark controversy, and drive engagement by addressing topical issues, posing questions, or teasing exclusive insights or revelations within the videos. They aim to capitalize on viewer interest in current events, political controversies, and personalities, ultimately attracting clicks and views to the content.",
+      "Do not use emojis or hashtags."
     ],
     "shortform": [
       "These short-form political content pieces, often found on platforms like TikTok or Instagram Reels, typically feature a simple white background with text overlaying a rectangular video snippet capturing a moment related to an ongoing political event. Here are some examples of titles or captions that might accompany such content:",
