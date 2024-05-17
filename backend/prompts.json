@@ -11,34 +11,25 @@
       "user": [
         "Your task is to generate a concise, plain, and straightforward “political narrative”, whose definition is delimited below in backticks, using the selected narrative strategy, also delimited below in backticks.",
         "Definition of a political narrative: '''{narrative_def}'''",
-        "Construct a readable and clear political narrative in one single straightforward sentence about the crisis. You should write your narrative about the selected actor, using the selected facts, and structuring it according to the selected narrative strategy, all of which are delimited as keys with triple backticks below.",
-        "Adhere to the following guidelines, listed as steps:",
-        "1 - Follow the selected narrative strategy when constructing your narrative. Follow these steps, which must be unmistakeable in your output:",
+        "Follow these steps:",
+        "1 - Write your narrative by using this strategy:",
         "Selected narrative strategy: '''{strategy}'''",
-        "2 - The narrative should firmly assert that the selected actor is responsible for the crisis (identified below in triple backticks) and explain how using the selected strategy. It should be extremely readable, smooth and understandable, declarative, argumentative, and compelling without using overly complex language.",
+        "2 - The narrative should firmly assert that the selected actor is to blame for the crisis (identified below in triple backticks). It should be extremely readable and straightforward, smooth and understandable, declarative, argumentative, and compelling without using overly complex language.",
         "3 - Try to keep your narrative to a single sentence, or a maximum of 50 words. Obey this limit: 50 words max.",
-        "4 - Create your convincing interpretation of the crisis that clearly blames the selected actor, whose description is provided earlier, either directly or indirectly responsible for scheming and creating the crisis. Use the selected facts as evidence for your theory of the actor’s motivations.",
-        "5 - You must express uncertainty where you lack solid evidence, using words like “likely,” “probably,” or “allegedly.” Assume the readers already know the context of the crisis so you do not need to repeat everything about the crisis.",
-        "6 - Only give one narrative and print the text alone. Avoid using the the word \"narrative” or giving a title; never provide an \"alternative\" or \"contrast”; and never reference the structure of the statement.",
+        "4 - You must express uncertainty where you lack solid evidence, using words like “likely,” “probably,” or “allegedly.” Assume the readers already know the context of the crisis so you do not need to repeat everything about the crisis.",
+        "5 - Only give one narrative option and print the text alone. Avoid using the the word \"narrative” or giving a title; never provide an \"alternative\" or \"contrast”; and never reference the structure of the statement.",
         "Selected actor: '''{actor}'''",
-        "Selected facts: '''{facts}'''",
-        "If you are missing any of the information delimited by backticks, please output “Missing information: [write the missing information key here]”"
+        "Selected facts: '''{facts}'''"
       ],
       "user_followup": [
-        "You just generated a political narrative about a selected actor using a selected strategy.",
-        "The first narrative you generated was: '''{first_narrative}'''",
-        "You have now been give the same actor but a DIFFERENT strategy, delimited below with triple backticks. Your task is to create a fundamentally different narrative.  The narratives will be viewed side by side and therefore must be unique.",
+        "You just generated a narrative blaming an actor for a crisis with a particular narrative-writing strategy. Now, you have to make a distinct alternate version using a new strategy. The narratives will be viewed side by side and therefore must be unique.",
+        "The first narrative you generated was this: '''{first_narrative}'''",
         "Follow these steps:",
-        "1 - Make the new narrative different by following the new strategy, which must be unmistakeable in your output.",
+        "1 - The new narrative should push the same conclusion but use the new strategy, which must be unmistakable in your output.",
         "New selected narrative strategy: '''{strategy}'''",
-        "2 - The narrative should firmly assert that the selected actor is responsible for the crisis (identified below in triple backticks) and explain how using the selected strategy. It should be extremely readable, smooth and understandable, declarative, argumentative, and compelling without using overly complex language.",
-        "3 - Try to keep your narrative to a single sentence, or a maximum of 50 words. Obey this limit: 50 words max.",
-        "4 - Create your convincing interpretation of the crisis that clearly blames the selected actor, whose description is provided earlier. It should frame them as either directly or indirectly responsible for scheming and creating the crisis. Use the selected facts as evidence for your theory of the actor’s motivations.",
-        "5 - You must express uncertainty where you lack solid evidence, using words like “likely,” “probably,” or “allegedly.” Assume the readers already know the context of the crisis so you do not need to repeat everything about the crisis.",
-        "6 - Only give one narrative option and print the text alone. Avoid using the the word \"narrative” or giving a title; never provide an \"alternative\" or \"contrast”; and never reference the structure of the statement.",
+        "2 - Try to keep your narrative to a single sentence, or a maximum of 50 words. Obey this limit: 50 words max. Only give one narrative option and print the text alone.",
         "Selected actor: '''{actor}'''",
-        "Selected facts: '''{facts}'''",
-        "If you are missing any of the information delimited by backticks, please output “Missing information: [write the missing information key here]”"
+        "Selected facts: '''{facts}'''"
       ]
     },
     "news_article": {
@@ -65,7 +56,7 @@
         "Act as a creative content writer who specializes in generating vivid and detailed descriptions for images."
       ],
       "user": [
-        "Your task is to generate a vivid and detailed description for a modern news image that you would likely see accompanying the given headline, delimited below with triple backticks.",
+        "Your task is to generate a vivid and detailed description of a photo that you would likely see accompanying the given headline, delimited below with triple backticks.",
         "Adhere to the following guidelines:",
         "1 - The description should capture the essence and context of the headline, providing a visual scenario that relates to the headline.",
         "2 - Make the description detailed, engaging, and suitable for an AI to generate an image.",
@@ -280,10 +271,10 @@
     "instagram": [
       "These types of posts on Instagram typically fall into the category of 'personal narrative activism.' They often feature a visually appealing image overlaid with text, presenting a quote that recounts a personal experience or anecdote during a political event, providing humanizing insight. The use of emotive language to evoke feelings of empathy, solidarity, or urgency among viewers. These posts aim to mobilize people by providing a human perspective on a particular issue or event, fostering empathy and understanding among viewers.",
       "Here is an example, delimited with triple backticks:",
-      "‘’’In Gaza, the sounds of drones overhead have become a terrifying lullaby for children. I see mothers without children, and children without mothers. Lovers without lovers; siblings without siblings; people without people. Every day is a reminder that peace is not just a word, but a desperate need.’’’"
+      "‘’’In Talme, the sounds of drones overhead have become a terrifying lullaby for children. I see mothers without children, and children without mothers. Lovers without lovers; siblings without siblings; people without people. Every day is a reminder that peace is not just a word, but a desperate need.’’’"
     ],
     "youtube": [
-      "Titles for political YouTube videos that include commentary or stream clips from platforms like Twitch often employ attention-grabbing language and provocative questions to entice viewers. Here are some examples of the style of thumbnail titles:",
+      "Titles for political YouTube videos that include commentary or stream clips from platforms like Twitch often employ attention-grabbing language and provocative questions to entice viewers. Please take inspiration from these examples of thumbnail titles:",
       "\"EXPOSING TALME'S AI STRATEGY IN EIRIST!\"",
       "\"PREDICTING THE FUTURE: DID EIRIST GOVERNMENT SEE THIS?\"",
       "\"PRESIDENT'S FINANCIAL FLOP: IS HE BROKE?\"",
@@ -302,60 +293,60 @@
       "causal_chain": [
         "Showing the Cause-and-Effect",
         "This narrative strategy emphasizes the chain of causality of an event. It should:",
-        "1 - Make claims that do not provide sufficient detail to connect point A to point B. For instance, stating 'The catastrophic wildfire was caused by arson' without elaboration.",
-        "2 - Use language indicating the presumption of a causal link between two statements or events (e.g., 'As a result', 'Because of this'), or juxtapose two events to imply a causal connection (e.g., 'Markets fell as investors reacted to X')."
+        "a - Make claims that do not provide sufficient detail to connect point A to point B. For instance, stating 'The catastrophic wildfire was caused by arson' without elaboration.",
+        "b - Use language indicating the presumption of a causal link between two statements or events (e.g., 'As a result', 'Because of this'), or juxtapose two events to imply a causal connection (e.g., 'Markets fell as investors reacted to X')."
       ],
       "instruct_belief": [
         "Instructing What to Believe",
         "This narrative strategy explicitly instructs the reader on what to believe by highlighting allegedly important information. It should:",
-        "1 - Employ language that directly tells the reader how to think (e.g., 'This is how to think about this,' or 'Here’s what you have to understand.')",
-        "2 - Utilize repetition and straightforward, definitive language to increase belief."
+        "a - Employ language that directly tells the reader how to think (e.g., 'This is how to think about this,' or 'Here’s what you have to understand.')",
+        "b - Utilize repetition and straightforward, definitive language to increase belief."
       ],
       "highlight_danger": [
         "Highlighting Danger",
         "This narrative strategy aims to highlight danger and instill fear in the audience to guide them toward what is important and distract them from other considerations. It should:",
-        "1 - Conjure well-known loaded references (e.g., 'Hitler-like' or 'fascist') to evoke emotional responses.",
-        "2 - Incorporate extreme language or moralizing terms to convey intensity (e.g., 'unprecedented', 'evil').",
-        "3 - Frame the message as a threat not just to someone’s safety, but also to their worldview and identity",
-        "4 - Use language that attempts to transform events or facts into interpretations of their meaning (e.g., 'A devastating result', 'surprising outcome').",
-        "5 - Use language, often in adjective or adverb forms, which has the effect of intentionally increasing confidence or doubt in a statement or claim (e.g. 'dubious claims', 'obviously', 'certainly', 'vague')",
-        "6 - Heavy use of the subjunctive mood or other linguistic mechanisms that either impose uncertainty or facilitate the author’s use of hypotheticals."
+        "a - Conjure well-known loaded references (e.g., 'Hitler-like' or 'fascist') to evoke emotional responses.",
+        "b - Incorporate extreme language or moralizing terms to convey intensity (e.g., 'unprecedented', 'evil').",
+        "c - Frame the message as a threat not just to someone’s safety, but also to their worldview and identity",
+        "d - Use language that attempts to transform events or facts into interpretations of their meaning (e.g., 'A devastating result', 'surprising outcome').",
+        "e - Use language, often in adjective or adverb forms, which has the effect of intentionally increasing confidence or doubt in a statement or claim (e.g. 'dubious claims', 'obviously', 'certainly', 'vague')",
+        "f - Heavy use of the subjunctive mood or other linguistic mechanisms that either impose uncertainty or facilitate the author’s use of hypotheticals."
       ],
       "appeal_beliefs": [
         "Appealing to Personal Beliefs",
         "This narrative strategy appeals to personal beliefs and group identities. It should:",
-        "1 - Reference generic individuals or aggregated groups to enhance the credibility attached to a preferred point of view (e.g., “Experts say”, “Most people think”). This is to be distinguished from explicit references to such parties (e.g. “A team at Cambridge University found”, “Dr. Johnson said”) that represent standard reportage on many beats.",
-        "2 - Use language that reinforces beliefs by appealing to in-group or like-minded individuals, creating a false consensus of reality.",
-        "3 - Use references to aggregated groups that seek to create a perception of popularity or sensibility around a communicated claim or idea (e.g. “Most people think”, “Everybody knows”)."
+        "a - Reference generic individuals or aggregated groups to enhance the credibility attached to a preferred point of view (e.g., “Experts say”, “Most people think”). This is to be distinguished from explicit references to such parties (e.g. “A team at Cambridge University found”, “Dr. Johnson said”) that represent standard reportage on many beats.",
+        "b - Use language that reinforces beliefs by appealing to in-group or like-minded individuals, creating a false consensus of reality.",
+        "c - Use references to aggregated groups that seek to create a perception of popularity or sensibility around a communicated claim or idea (e.g. “Most people think”, “Everybody knows”)."
       ]
     },
     "counter_strategies": {
       "logic_based": [
         "Offering an Alternative Explanation (logic-based)",
         "This correction strategy presents an alternative explanation to misinformation. It should:",
-        "1 - Provide a causal, plausible, simple, and memorable alternative explanation that fills in details to reduce subsequent recalls of misinformation.",
-        "2 - Ensure the alternative explanation is more effective than a simple retraction, especially if it involves evidence-based reasoning (e.g., a counter for 'the fire was from arson' could be, 'there is evidence for a lightning strike')."
+        "a - Provide a causal, plausible, simple, and memorable alternative explanation that fills in details to reduce subsequent recalls of misinformation.",
+        "b - Ensure the alternative explanation is more effective than a simple retraction, especially if it involves evidence-based reasoning (e.g., a counter for 'the fire was from arson' could be, 'there is evidence for a lightning strike')."
       ],
       "fact_based": [
         "Debunking the False Claim (fact-based)",
         "This correction strategy thoroughly refutes false information. It should:",
-        "1 - Offer a detailed explanation of why the misinformation is false, providing total reasoning for overturning the falsehood.",
-        "2 - Provide a causal, plausible, simple, and memorable alternative explanation to reduce subsequent recall of the retracted misinformation, utilizing fact-based, logic-based, or source-based refutations."
+        "a - Offer a detailed explanation of why the misinformation is false, providing total reasoning for overturning the falsehood.",
+        "b - Provide a causal, plausible, simple, and memorable alternative explanation to reduce subsequent recall of the retracted misinformation, utilizing fact-based, logic-based, or source-based refutations."
       ],
       "emotion_based": [
         "Recalibrating Emotions and Framing (emotions-based)",
         "This correction strategy aims to recalibrate emotions and framing around misinformation. Follow these guidelines:",
-        "1 - Provide corrections that offer a more accurate risk evaluation by showing people how they may have overestimated or overlooked the real threat, downwardly adjust emotional arousal. This is meant to quell emotions such as anger and fear.",
-        "2 - Validate the same framing that produces misinformation but explain why the narrative is misleading, potentially involving identity affirmations to protect and strengthen the correction recipient’s self-esteem.",
-        "3 - Complement the reader's worldview by reassuring them that the misinformation is false and the truth aligns with their interests. (For example, people denying climate change over economic reasons should be reassured that taking action against climate change now can reduce economic risks and actually create new business opportunities.)"
+        "a - Provide corrections that offer a more accurate risk evaluation by showing people how they may have overestimated or overlooked the real threat, downwardly adjust emotional arousal. This is meant to quell emotions such as anger and fear.",
+        "b - Validate the same framing that produces misinformation but explain why the narrative is misleading, potentially involving identity affirmations to protect and strengthen the correction recipient’s self-esteem.",
+        "c - Complement the reader's worldview by reassuring them that the misinformation is false and the truth aligns with their interests. (For example, people denying climate change over economic reasons should be reassured that taking action against climate change now can reduce economic risks and actually create new business opportunities.)"
       ],
       "source_based": [
         "Bringing in More Data (source-based)",
         "This correction strategy involves offering more data and evidence to refute misinformation. Adhere to these guidelines:",
-        "1 - Offer evidence suggesting overwhelming support from credible sources, including expert consensus and social norms (e.g., 'doctors and medical societies around the world agree that vaccinations are important and safe').",
-        "2 - Pair corrections with relevant social norms, including injunctive norms (e.g., 'protecting the vulnerable by getting vaccinated is the right thing to do') and descriptive norms (e.g., 'over 90% of parents are vaccinating their children').",
-        "3 - Enhance institutional credibility by naming real institutions and explaining their corrections.",
-        "4 - Undermine the plausibility of misinformation or the credibility of its source by explaining why the misinformation source might have a vested interest in spreading disinformation, as it might enrich them, further their political goals, reflect their funding sources, etc."
+        "a - Offer evidence suggesting overwhelming support from credible sources, including expert consensus and social norms (e.g., 'doctors and medical societies around the world agree that vaccinations are important and safe').",
+        "b - Pair corrections with relevant social norms, including injunctive norms (e.g., 'protecting the vulnerable by getting vaccinated is the right thing to do') and descriptive norms (e.g., 'over 90% of parents are vaccinating their children').",
+        "c - Enhance institutional credibility by naming real institutions and explaining their corrections.",
+        "d - Undermine the plausibility of misinformation or the credibility of its source by explaining why the misinformation source might have a vested interest in spreading disinformation, as it might enrich them, further their political goals, reflect their funding sources, etc."
       ]
     },
     "outcomes": [
