@@ -165,6 +165,9 @@ const gameReducer = (state, action) => {
         ...state,
         counterNarrativeOptions: action.payload, 
       };    
+
+    case 'RESET_FACT_SELECTION':
+      return { ...state, selectedFactCombination: [] };
   
     case 'SET_LOADING_NARRATIVES':
       return { ...state, isLoadingNarratives: action.payload };

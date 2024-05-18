@@ -1,17 +1,40 @@
 // SelectFactsDisplay.js
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useGameState, useGameDispatch, useGameFunction } from '../../contexts/GameContext';
 import { useTranslation } from 'react-i18next'; 
 import FactBox from '../common/FactBox'; 
 import './SelectFactsDisplay.css';
 
 const SelectFactsDisplay = () => {
-  const { selectedFactCombination, timerHasEnded } = useGameState();
+  const { selectedFactCombination, timerHasEnded, introduceEventVisits, inCoda, facts } = useGameState();
   const { setFactSelection } = useGameFunction(); 
   const dispatch = useGameDispatch();
   const [buttonClicked, setButtonClicked] = useState(false); 
   const { t } = useTranslation();
+  const originalFactsRef = useRef(selectedFactCombination);
+
+
+  useEffect(() => {
+    if (introduceEventVisits === 1 && !inCoda && timerHasEnded) {
+      const originalFacts = originalFactsRef.current;
+      const hasChangedSelection = selectedFactCombination.some(fact => !originalFacts.includes(fact));
+      
+      if (!hasChangedSelection) {
+        const newSelection = getRandomFacts(facts, 3);
+        dispatch({ type: 'RESET_FACT_SELECTION' });
+        newSelection.forEach(fact => {
+          dispatch({ type: 'SELECT_FACT', payload: fact });
+        });
+      }
+    }
+  }, [introduceEventVisits, inCoda, timerHasEnded, selectedFactCombination, facts, dispatch]);
+
+  const getRandomFacts = (factsArray, count) => {
+    let shuffled = [...factsArray].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count);
+  };
+
 
   // Generate narratives and change view, assuring button can only be clicked once
   const handleGenerateNarrative = async () => {

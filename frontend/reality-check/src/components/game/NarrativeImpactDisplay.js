@@ -12,7 +12,7 @@ const NarrativeImpactDisplay = () => {
 
   // Progress to next game phase
   const handleContinue = () => {
-    if (introduceEventVisits === 1 && inCoda) {
+    if (introduceEventVisits === 1 && !inCoda) {
       // Second visit, show the event popup and clear the event news content
       dispatch({ type: 'TOGGLE_EVENT_POPUP' });
       dispatch({ type: 'CLEAR_EVENT_NEWS_CONTENT' });
