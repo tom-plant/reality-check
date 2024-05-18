@@ -14,6 +14,7 @@ const NarrativeImpact = () => {
   const { selectNarrativeAndSetContent } = useGameFunction();
   const [content, setContent] = useState(null);
   const [error, setError] = useState(false);
+  const [retryCount, setRetryCount] = useState(0);
   const dispatch = useGameDispatch();
   
   useEffect(() => {
@@ -40,23 +41,28 @@ const NarrativeImpact = () => {
   }, [primaryNewsContent, isLoadingNews]);
 
   const handleRetry = async () => {
+    setRetryCount((prevCount) => prevCount + 1);
     setError(false);
     dispatch({ type: 'SET_LOADING_NEWS', payload: true });
     await selectNarrativeAndSetContent(selectedNarrative);
   };
 
-  useEffect(() => {
-    console.log('Updated content state:', content);
-    if (content) {
-      console.log('content.news_article', content.news_article);
-      console.log('content.news_photo', content.news_photo);
-      console.log('content.instagram', content.instagram);
-      console.log('content.shortform', content.shortform);
-      console.log('content.shortform_image', content.shortform_image);
-      console.log('content.youtube', content.youtube);
-      console.log('content.youtube_thumbnail', content.youtube_thumbnail);
-    }
-  }, [content]); // This useEffect will log details after content state updates
+  const handleRefresh = () => {
+    window.location.reload();
+  };
+
+  // useEffect(() => {
+  //   console.log('Updated content state:', content);
+  //   if (content) {
+  //     console.log('content.news_article', content.news_article);
+  //     console.log('content.news_photo', content.news_photo);
+  //     console.log('content.instagram', content.instagram);
+  //     console.log('content.shortform', content.shortform);
+  //     console.log('content.shortform_image', content.shortform_image);
+  //     console.log('content.youtube', content.youtube);
+  //     console.log('content.youtube_thumbnail', content.youtube_thumbnail);
+  //   }
+  // }, [content]); // This useEffect will log details after content state updates
 
 
   return (
@@ -70,8 +76,17 @@ const NarrativeImpact = () => {
           </div>
         ) : error ? (
           <div className="news-loading-container">
-            <p>An error occurred. Please try again.</p>
-            <button onClick={handleRetry}>Retry</button>
+            {retryCount < 3 ? (
+              <>
+                <p>An error occurred. Please try again.</p>
+                <button onClick={handleRetry}>Retry</button>
+              </>
+            ) : (
+              <>
+                <p>The problem is persisting. Please refresh to restart.</p>
+                <button onClick={handleRefresh}>Refresh</button>
+              </>
+            )}
           </div>
         ) : content && content.instagram && 
              content.shortform && 

@@ -56,7 +56,7 @@
         "whatYouWillDoTitle": "What You Will Do:",
         "engageScenarios": "1. Play a simulated version of the ongoing crisis.",
         "informedDecisionMaking": "2. Create a narrative about who's to blame.",
-        "criticalAnalysis": "3. Watch your narrative impact the outcome of the crisis—for better or for worse.",
+        "criticalAnalysis": "3. Watch your narrative change the outcome of the crisis—for better or for worse.",
         "conclusion": "This simulation is more than an exercise; it's a vital part of our country's response strategy.",
         "readyToBegin": "Are you ready to begin? Your help is crucial, now more than ever."
       },
@@ -94,7 +94,7 @@
               "description": "You have a limited time to make your selections, reflecting the real-world pressure of decision-making during emergencies. If you run out of time, random facts will be automatically selected for you."
             }
           },
-          "impact": "What you choose will impact the simulation."
+          "impact": "Your choices will impact the simulation."
       }
   },
   "selectFacts": {

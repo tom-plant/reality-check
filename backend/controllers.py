@@ -173,7 +173,7 @@ def select_narrative_controller(selected_narrative, strategy):
         return {"error": "User not logged in"}, 401
 
     # Store the strategy in session for later use
-    strategy_id = get_strategy_id_by_strategy_name(strategy)
+    # strategy_id = get_strategy_id_by_strategy_name(strategy)
     session['user_data']['strat_id'] = strategy_id
     session.modified = True
 
