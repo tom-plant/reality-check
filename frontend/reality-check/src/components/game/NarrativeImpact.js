@@ -10,10 +10,9 @@ import YouTubeContent from '../news/YouTubeContent';
 import './NarrativeImpact.css';
 
 const NarrativeImpact = () => {
-  const { primaryNewsContent, isLoadingNews, selectedNarrative } = useGameState();
+  const { primaryNewsContent, isLoadingNews, selectedNarrative, contentError } = useGameState();
   const { selectNarrativeAndSetContent } = useGameFunction();
   const [content, setContent] = useState(null);
-  const [error, setError] = useState(false);
   const [retryCount, setRetryCount] = useState(0);
   const dispatch = useGameDispatch();
   
@@ -21,7 +20,7 @@ const NarrativeImpact = () => {
     console.log('Primary News Content at useEffect:', primaryNewsContent);
     if (primaryNewsContent && !isLoadingNews) {
       if (primaryNewsContent.error) {
-        setError(true);
+        dispatch({ type: 'SET_CONTENT_ERROR', payload: true });
         setContent(null);
       } else {
         // Check if primaryNewsContent is a string and parse it if necessary
@@ -35,14 +34,14 @@ const NarrativeImpact = () => {
           youtube: contentToSet.youtube?.youtube || '',
           youtube_thumbnail: contentToSet.youtube_thumbnail || ''
         });
-        setError(false);
+        dispatch({ type: 'SET_CONTENT_ERROR', payload: false });
       }
     }
-  }, [primaryNewsContent, isLoadingNews]);
+  }, [primaryNewsContent, isLoadingNews, dispatch]);
 
   const handleRetry = async () => {
     setRetryCount((prevCount) => prevCount + 1);
-    setError(false);
+    dispatch({ type: 'SET_CONTENT_ERROR', payload: false });
     dispatch({ type: 'SET_LOADING_NEWS', payload: true });
     await selectNarrativeAndSetContent(selectedNarrative);
   };
@@ -50,20 +49,6 @@ const NarrativeImpact = () => {
   const handleRefresh = () => {
     window.location.reload();
   };
-
-  // useEffect(() => {
-  //   console.log('Updated content state:', content);
-  //   if (content) {
-  //     console.log('content.news_article', content.news_article);
-  //     console.log('content.news_photo', content.news_photo);
-  //     console.log('content.instagram', content.instagram);
-  //     console.log('content.shortform', content.shortform);
-  //     console.log('content.shortform_image', content.shortform_image);
-  //     console.log('content.youtube', content.youtube);
-  //     console.log('content.youtube_thumbnail', content.youtube_thumbnail);
-  //   }
-  // }, [content]); // This useEffect will log details after content state updates
-
 
   return (
     <div className="scrollable-container"> {/* Outer container for scrolling */}
@@ -74,7 +59,7 @@ const NarrativeImpact = () => {
             <LoadingIcon />
             <p>Please wait for all news and social media content to generate. This may take up to a minute. Faster load times are in development.</p>
           </div>
-        ) : error ? (
+        ) : contentError ? (
           <div className="news-loading-container">
             {retryCount < 3 ? (
               <>

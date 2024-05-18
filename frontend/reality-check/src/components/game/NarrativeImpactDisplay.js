@@ -6,7 +6,7 @@ import { useGameState, useGameDispatch } from '../../contexts/GameContext';
 import './NarrativeImpactDisplay.css'; 
 
 const NarrativeImpactDisplay = () => {
-  const { selectedNarrative, selectedFactCombination, isLoadingNews, inCoda, introduceEventVisits } = useGameState();
+  const { selectedNarrative, selectedFactCombination, isLoadingNews, inCoda, introduceEventVisits, contentError } = useGameState();
   const { t } = useTranslation();
   const dispatch = useGameDispatch();
 
@@ -42,7 +42,7 @@ const NarrativeImpactDisplay = () => {
       <button
         className="continue-button"
         onClick={handleContinue}
-        disabled={isLoadingNews}
+        disabled={isLoadingNews || contentError} 
       >
         {t('common.continue')} 
       </button>

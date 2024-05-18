@@ -16,6 +16,7 @@ const initialState = {
   introduceEventVisits: 0,
   isRepeatPopupVisible: false,
   inCoda: false, 
+  contentError: false, 
   username: null,
   email: null,
   facts: [],
@@ -249,6 +250,9 @@ const gameReducer = (state, action) => {
         ...state,
         updatedFactCombination: action.payload,
       };
+
+    case 'SET_CONTENT_ERROR':
+      return { ...state, contentError: action.payload };
 
     case 'SET_UPDATED_NARRATIVE':
       return {
