@@ -8,7 +8,7 @@ const GameDispatchContext = createContext();
 const GameFunctionContext = createContext(); 
 
 const initialState = {
-  currentPhase: 'intro', 
+  currentPhase: 'game', 
   currentIntroView: 'AUTH_LOGIN',
   currentView: 'SELECT_FACTS', 
   currentTurnPointView: 'ALERT',
@@ -446,7 +446,7 @@ const GameProvider = ({ children }) => {
       dispatch({ type: 'SET_LOADING_NEWS', payload: true }); 
       const content = await selectNarrative({
         narrative: selectedNarrative.text,
-        strategy: selectedNarrative.strategy //not sure if this is actually a part of what selectedNarrative actually is
+        strategy: selectedNarrative.strategy 
       });
       dispatch({ type: 'SET_SELECTED_NARRATIVE_CONTENT', payload: content });
       console.log('received narrative news content in context', content)
@@ -480,7 +480,6 @@ const GameProvider = ({ children }) => {
       }));
       dispatch({ type: 'SET_COUNTERNARRATIVE_OPTIONS', payload: formattedCounterNarratives });
       dispatch({ type: 'SET_LOADING_NARRATIVES', payload: false });
-      console.log('did we get here? CounternarrativeOptions:', formattedCounterNarratives)
     } catch (error) {
       console.error('Failed to identify weaknesses:', error);
       dispatch({ type: 'SET_LOADING_NEWS', payload: false });
@@ -489,7 +488,6 @@ const GameProvider = ({ children }) => {
 
   const fetchAndSetConclusion = async (selectedNarrative) => {
     try {
-      console.log('starting conclusion context function');
       dispatch({ type: 'SET_LOADING_CONCLUSION', payload: true });
       const response = await conclusion({
         narrative: selectedNarrative.text,

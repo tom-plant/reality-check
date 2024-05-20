@@ -13,7 +13,8 @@ const CenterContainer = ({ children }) => {
     top: '25%', // Adjust to position below the header
     boxSizing: 'border-box',
     borderRadius: '5px',
-    backgroundColor: currentPhase === 'turn-point' ? 'none' : 'rgba(255, 255, 255, 0.2)' // Conditional border
+    backgroundColor: currentPhase === 'turn-point' ? 'none' : 'rgba(255, 255, 255, 0.2)', // Conditional border
+    overflow: 'auto', // Allow scrolling
   };
 
   return (

@@ -1,0 +1,26 @@
+.match-strats {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.match-strats h2 {
+  margin-bottom: 15px; /* Space between title and first paragraph */
+}
+
+.strategies-section, .counter-strategies-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.strat-box, .counter-strat-box {
+  cursor: pointer;
+}
+
+.strat-box.matched, .counter-strat-box.matched {
+  border: 2px solid green;
+}

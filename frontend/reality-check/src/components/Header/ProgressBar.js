@@ -16,11 +16,9 @@ const ProgressBar = () => {
         switch (currentIntroView) {
           case 'EXPO_INBOX':
             step = 1;
-            console.log('expo')
             break;
           case 'EMAIL_RECRUITMENT':
             step = 2;
-            console.log('email')
             break;
           default:
             step = 0;
@@ -29,15 +27,12 @@ const ProgressBar = () => {
         switch (currentView) {
           case 'SELECT_FACTS':
             step = introduceEventVisits === 1 ? 11 : 3;
-            console.log('select')
             break;
           case 'BUILD_NARRATIVE':
             step = introduceEventVisits === 1 ? 12 : 4;
-            console.log('build')
             break;
           case 'SELECT_NARRATIVES':
             step = introduceEventVisits === 1 ? 13 : 5;
-            console.log('event')
             break;
           case 'NARRATIVE_IMPACT':
             step = introduceEventVisits === 1 ? 14 : 6;

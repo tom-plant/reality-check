@@ -486,7 +486,8 @@ def conclusion_controller(counter_narrative, strategy):
 
     # Save to Database 
     secondary_narrative = create_secondary_narrative(
-        original_narrative_id=session['user_data']['primary_narrative_id'], 
+        # original_narrative_id=session['user_data']['primary_narrative_id'], 
+        original_narrative_id=69, 
         user_id=session['user_data']['user_id'],
         updated_fact_combination_id=session['user_data']['updated_fact_combination_id'], 
         narrative_text=counter_narrative, 
@@ -500,4 +501,4 @@ def conclusion_controller(counter_narrative, strategy):
     session['user_data']['secondary_narrative_id'] = secondary_narrative.id
     session.modified = True
 
-    return {"election_outcome": election_outcome}
+    return {"election_outcome": election_outcome, "effectiveness": effectiveness}

@@ -1,0 +1,41 @@
+.revise-strategy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.revise-strategy h2, .revise-strategy h3 {
+  margin-bottom: 15px; /* Space between title and first paragraph */
+}
+
+/* .strategy-section, .counter-strategy-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+} */
+
+.public-sentiment-gauge {
+  width: 100%;
+  height: 50px;
+  background-color: #ddd;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.public-sentiment-gauge.strong {
+  background-color: green;
+}
+
+.public-sentiment-gauge.medium {
+  background-color: yellow;
+}
+
+.public-sentiment-gauge.weak {
+  background-color: red;
+}

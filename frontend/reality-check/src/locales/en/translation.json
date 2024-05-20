@@ -35,7 +35,9 @@
     "russian": "Russian (In Development)",
     "title": "Reality Check",
     "pretest": ">> Please complete the short pre-test questionnaire before you start <<",
-    "posttest": ">> Please complete the same post-test questionnaire before you finish <<"
+    "posttest": ">> Please complete the same post-test questionnaire before you finish <<", 
+    "retry": "Retry", 
+    "goBack": "Go Back"
   },
   "expoInbox": {},
   "emailRecruitment": {
@@ -146,7 +148,8 @@
   "conclusionWrapUp": {
       "introduction": "filler",
       "reflection": "filler.",
-      "closing": "The Civic Resilience Project Team"
+      "closing": "The Civic Resilience Project Team",
+      "chooseWeakerStrategyMessage": "Choose a weaker strategy for a different outcome"
     },
   "gameLesson": {
       "title": "Thank you for playing Reality Check!",

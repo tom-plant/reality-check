@@ -39,7 +39,7 @@ const Timer = ({ onTimeUp, startTimer }) => {
   useEffect(() => {
     // Update the timer duration when introduceEventVisits changes
     if (introduceEventVisits === 1) {
-      setSeconds(20);
+      setSeconds(5);
     } else {
       setSeconds(2);
     }
