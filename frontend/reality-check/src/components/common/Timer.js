@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useGameState } from '../../contexts/GameContext'; 
 import './Timer.css';
 
 const Timer = ({ onTimeUp, startTimer }) => {
-  const [seconds, setSeconds] = useState(2);
+  const { introduceEventVisits } = useGameState(); 
+  const [seconds, setSeconds] = useState(introduceEventVisits === 1 ? 5 : 2); // Set initial seconds based on introduceEventVisits
   const secondsRef = useRef(seconds); 
   const intervalIdRef = useRef(null); 
 
@@ -32,6 +34,16 @@ const Timer = ({ onTimeUp, startTimer }) => {
     // Cleanup function to clear the interval
     return () => clearInterval(intervalIdRef.current);
   }, [startTimer]); // Depend on the startTimer prop
+
+
+  useEffect(() => {
+    // Update the timer duration when introduceEventVisits changes
+    if (introduceEventVisits === 1) {
+      setSeconds(20);
+    } else {
+      setSeconds(2);
+    }
+  }, [introduceEventVisits]);
 
   return (
     <div className={`timer ${seconds <= 10 ? 'warning' : ''}`}>
