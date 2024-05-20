@@ -47,8 +47,8 @@ const NarrativeImpact = () => {
   };
 
   const handleRefresh = () => {
-    dispatch({ type: 'SET_CURRENT_VIEW', payload: 'INTRODUCE_EVENT' });
     // window.location.reload();
+    dispatch({ type: 'SET_CURRENT_VIEW', payload: 'INTRODUCE_EVENT' });
   };
 
   return (

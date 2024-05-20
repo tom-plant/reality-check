@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import './Header.css';
 import BriefingPopup from '../popups/BriefingPopup';
 import InstructionsPopup from '../popups/InstructionsPopup';
+import ProgressBar from './ProgressBar'
 
 const Header = () => {
   const [showBriefing, setShowBriefing] = useState(false);
@@ -15,14 +16,20 @@ const Header = () => {
   return (
     <>
       <div className="header">
-        <span className="header-item" onClick={toggleBriefing}>Briefing</span>
-        <span className="header-item" onClick={toggleInstructions}>Instructions</span>
+        <div className="progress-container">
+          <ProgressBar />
+        </div>
+        <div className="header-items">
+          <span className="header-item" onClick={toggleBriefing}>Briefing</span>
+          <span className="header-item" onClick={toggleInstructions}>Instructions</span>
+        </div>
       </div>
       {showBriefing && <BriefingPopup onClose={toggleBriefing} />}
       {showInstructions && <InstructionsPopup onClose={toggleInstructions} />}
     </>
   );
 };
+
 
 
 export default Header;
