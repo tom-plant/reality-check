@@ -26,18 +26,18 @@ const ConclusionWrapUp = ({ setCurrentOutroView }) => {
 
   const getOutcomeText = (effectiveness) => {
     if (!effectiveness) {
-      return 'Unknown';
+      return 'Loading';
     }
 
     switch (effectiveness.toLowerCase()) {
       case 'strong':
         return 'Peace';
       case 'medium':
-        return 'Crisis';
+        return 'Resolution';
       case 'weak':
         return 'Chaos';
       default:
-        return 'Unknown';
+        return 'Loading';
     }
   };
 
@@ -52,7 +52,7 @@ const ConclusionWrapUp = ({ setCurrentOutroView }) => {
         <h3>Counternarrative Strength</h3>
         <div className="effectiveness-bar">
           <div className={`segment red ${conclusionContent?.effectiveness?.toLowerCase() ? 'filled' : ''}`} />
-          <div className={`segment yellow ${conclusionContent?.effectiveness?.toLowerCase() !== 'medium' ? 'filled' : ''}`} />
+          <div className={`segment yellow ${conclusionContent?.effectiveness?.toLowerCase() === 'medium' ? 'filled' : ''}`} />
           <div className={`segment green ${conclusionContent?.effectiveness?.toLowerCase() === 'strong' ? 'filled' : ''}`} />
         </div>
         <h3>Conclusion</h3>

@@ -226,7 +226,17 @@ const gameReducer = (state, action) => {
       return { ...state, 
         selectedCounterStrat: state.selectedCounterStrat.filter(counterstrat => counterstrat !== action.payload),
       };
+
+    case 'CLEAR_SELECTED_STRAT':
+      return { ...state, 
+        selectedStrat: [],
+      };
       
+    case 'CLEAR_SELECTED_COUNTERSTRAT':
+      return { ...state, 
+        selectedCounterStrat: [],
+      };
+  
     case 'SET_EVENT_OPTIONS':
       return { ...state, eventOptions: action.payload };
 
