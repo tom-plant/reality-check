@@ -20,6 +20,8 @@ const ConclusionWrapUp = () => {
     dispatch({ type: 'SET_CURRENT_OUTRO_VIEW', payload: 'REVISE_STRATEGY' });
   };
 
+
+
   // Format strategies to objects with text property
   const formattedSelectedStrat = { text: selectedNarrative.strategy };
   const formattedSelectedCounterStrat = { text: selectedCounterNarrative.strategy };
@@ -27,6 +29,7 @@ const ConclusionWrapUp = () => {
   const getOutcomeText = (effectiveness) => {
     if (!effectiveness) {
       return 'Loading';
+      console.log('effectiveness is', effectiveness);
     }
 
     switch (effectiveness.toLowerCase()) {

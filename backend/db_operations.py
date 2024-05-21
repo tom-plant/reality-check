@@ -100,8 +100,8 @@ def get_all_counterstrats(_session=None):
     return session.execute(select(CounterStrat)).scalars().all()
 
 def get_counter_strategy_id_by_name(strategy_name):
-    # strategy_name = strategy_name.strip().lower()
-    counter_strategy = CounterStrat.query.filter_by(text=strategy_name).first()
+    strategy_name = strategy_name.strip()
+    counter_strategy = CounterStrat.query.filter(CounterStrat.text.ilike(strategy_name)).first()
     return counter_strategy.id if counter_strategy else None
 
 # Strat Operations

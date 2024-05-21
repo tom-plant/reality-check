@@ -173,11 +173,12 @@ def select_narrative_controller(selected_narrative, strategy):
         return {"error": "User not logged in"}, 401
 
     # Store the strategy in session for later use
-    # strategy_id = get_strategy_id_by_strategy_name(strategy)
+    strategy_id = get_strategy_id_by_strategy_name(strategy)
     session['user_data']['strat_id'] = strategy_id
     session.modified = True
 
     content_batch = {}
+    return
 
     # Generate news article
     prompts_news_article = generate_prompts(
@@ -470,7 +471,11 @@ def conclusion_controller(counter_narrative, strategy):
     session.modified = True
 
     effectiveness = get_effectiveness_by_ids(strategy_id, counter_strategy_id)
-    current_app.logger.debug(f"effecitveness is: {effectiveness}")
+    current_app.logger.debug(f"EFFECTIVENESS **** * ** *  ** * *  *** * * is: {effectiveness}")
+    current_app.logger.debug(f"COUnterSTRATEGY text **** * ** *  ** * *  *** * * is: {strategy}")
+    current_app.logger.debug(f"COUNTERSTRATEGY ID **** * ** *  ** * *  *** * * is: {counter_strategy_id}")
+    current_app.logger.debug(f"STRATEGY ID **** * ** *  ** * *  *** * * is: {strategy_id}")
+
 
     prompts_election_outcomes = generate_prompts(
         category='election_outcome',
