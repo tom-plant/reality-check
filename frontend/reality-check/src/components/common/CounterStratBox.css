@@ -15,3 +15,8 @@
   color: #000;
 }
 
+.counter-strat-box.center {
+  background-color: rgba(128, 128, 128, 0.1); 
+  color: #000;
+  cursor: default; /* Make sure cursor is not pointer for center */
+}

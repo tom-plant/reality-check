@@ -4,12 +4,14 @@
   padding: 20px;
   overflow-y: auto;
   height: calc(100vh - 120px); /* Adjust height to be responsive */
+  overflow: hidden; /* Prevent overflow of the entire container */
 }
 
 .left-section, .right-section {
   flex: 1;
   padding: 20px;
   overflow-y: auto; /* Allow scrolling within sections */
+  max-height: 100%; /* Ensure sections don't exceed the container's height */
 }
 
 .left-section {
@@ -105,4 +107,24 @@
 
 .retry-button-container button:hover {
   background-color: #0056b3;
+}
+
+.common-box {
+  background-color: #f0f0f0; /* Change this to the desired color */
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.conclusion-custom-box {
+  width: 100%;
+  cursor: default;
+}
+
+.conclusion-wrap-up .left-section h3 {
+  color: white; /* Change h3 text color to white in the left section */
+}
+
+.conclusion-wrap-up .right-section h3 {
+  color: black; /* Change h3 text color to black in the right section */
 }
