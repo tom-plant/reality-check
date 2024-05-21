@@ -43,17 +43,14 @@ const ReviseStrategy = () => {
     }, [currentOutroView]);
 
     useEffect(() => {
-      console.log("Selected counter strategies:", selectedCounterStrat);
-      if (selectedCounterStrat.length === 1) {
-          const selectedStratObj = strats.find(s => s.text === selectedNarrative.strategy);
-          if (selectedStratObj) {
-              updateEffectiveness(selectedStratObj, selectedCounterStrat[0]);
-          } else {
-              console.error("Selected strategy not found in strats array");
-          }
-      }
+        if (selectedCounterStrat.length === 1) {
+            const selectedStratObj = strats.find(s => s.text === selectedNarrative.strategy);
+            if (selectedStratObj) {
+                updateEffectiveness(selectedStratObj, selectedCounterStrat[0]);
+            }
+        }
     }, [selectedCounterStrat]);
-  
+
     const updateEffectiveness = (strat, counterstrat) => {
         console.log("Updating effectiveness for strat:", strat, "and counterstrat:", counterstrat);
 
@@ -83,20 +80,22 @@ const ReviseStrategy = () => {
         }
     };
 
+    const handleProceedClick = () => {
+      dispatch({ type: 'SET_CURRENT_OUTRO_VIEW', payload: 'CONCLUSION_WRAP_UP' });
+  };
+
     return (
-        <div className="revise-strategy-container">
-            <div>
-                <div className="effectiveness-bar">
-                    <div className={`segment red ${effectiveness === 'weak' ? 'filled' : ''}`} />
-                    <div className={`segment yellow ${effectiveness === 'medium' ? 'filled' : ''}`} />
-                    <div className={`segment green ${effectiveness === 'strong' ? 'filled' : ''}`} />
-                </div>
-                <div className="effectiveness-text">
-                    {getOutcomeText(effectiveness)}
-                </div>
+        <div className="revise-strategies">
+            <div className="effectiveness-bar">
+                <div className={`segment red ${['weak', 'medium', 'strong'].includes(effectiveness) ? 'filled' : ''}`} />
+                <div className={`segment yellow ${['medium', 'strong'].includes(effectiveness) ? 'filled' : ''}`} />
+                <div className={`segment green ${effectiveness === 'strong' ? 'filled' : ''}`} />
             </div>
-            <div className="strategy-boxes">
-                <div className="strategy-column">
+            <div className="effectiveness-text">
+                {getOutcomeText(effectiveness)}
+            </div>
+            <div className="strategy-container">
+                <div className="strategies-section">
                     {strats.map((strat, idx) => (
                         <StratBox
                             key={idx}
@@ -107,7 +106,7 @@ const ReviseStrategy = () => {
                         />
                     ))}
                 </div>
-                <div className="counter-strategy-column">
+                <div className="counter-strategies-section">
                     {counterstrats.map((counterstrat, idx) => (
                         <CounterStratBox
                             key={idx}
@@ -119,7 +118,9 @@ const ReviseStrategy = () => {
                     ))}
                 </div>
             </div>
-            <button className="proceed-button">{t('Proceed')}</button>
+            <div className="proceed-button-container">
+                <button className="proceed-button" onClick={handleProceedClick}>{t('Proceed')}</button>
+            </div>
         </div>
     );
 };
