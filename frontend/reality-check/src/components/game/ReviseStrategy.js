@@ -43,11 +43,17 @@ const ReviseStrategy = () => {
     }, [currentOutroView]);
 
     useEffect(() => {
-        if (selectedCounterStrat.length === 1) {
-            updateEffectiveness(selectedNarrative.strategy, selectedCounterStrat[0]);
-        }
+      console.log("Selected counter strategies:", selectedCounterStrat);
+      if (selectedCounterStrat.length === 1) {
+          const selectedStratObj = strats.find(s => s.text === selectedNarrative.strategy);
+          if (selectedStratObj) {
+              updateEffectiveness(selectedStratObj, selectedCounterStrat[0]);
+          } else {
+              console.error("Selected strategy not found in strats array");
+          }
+      }
     }, [selectedCounterStrat]);
-
+  
     const updateEffectiveness = (strat, counterstrat) => {
         console.log("Updating effectiveness for strat:", strat, "and counterstrat:", counterstrat);
 
