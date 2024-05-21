@@ -8,7 +8,7 @@ import CounterStratBox from '../common/CounterStratBox';
 import NarrativeBox from '../common/NarrativeBox';
 import './ConclusionWrapUp.css';
 
-const ConclusionWrapUp = ({ setCurrentOutroView }) => {
+const ConclusionWrapUp = () => {
   const { conclusionContent, isLoadingConclusion, selectedNarrative, selectedCounterNarrative } = useGameState();
   const { t } = useTranslation();
   const [buttonClicked, setButtonClicked] = useState(false); 

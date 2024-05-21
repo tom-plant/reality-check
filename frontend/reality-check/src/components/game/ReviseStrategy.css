@@ -78,3 +78,8 @@
   font-size: 16px;
   cursor: pointer;
 }
+
+.proceed-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

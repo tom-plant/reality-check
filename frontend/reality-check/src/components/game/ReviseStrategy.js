@@ -119,7 +119,13 @@ const ReviseStrategy = () => {
                 </div>
             </div>
             <div className="proceed-button-container">
-                <button className="proceed-button" onClick={handleProceedClick}>{t('Proceed')}</button>
+                <button
+                    className="proceed-button"
+                    onClick={handleProceedClick}
+                    disabled={effectiveness !== 'strong'}
+                >
+                    {t('Proceed')}
+                </button>
             </div>
         </div>
     );
