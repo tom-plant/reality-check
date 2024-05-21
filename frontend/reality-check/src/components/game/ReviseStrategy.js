@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useGameDispatch, useGameState } from '../../contexts/GameContext';
+import { useGameDispatch, useGameState, useGameFunction } from '../../contexts/GameContext';
 import { useTranslation } from 'react-i18next';
 import StratBox from '../common/StratBox';
 import CounterStratBox from '../common/CounterStratBox';
@@ -14,9 +14,12 @@ const effectivenessMappings = [
 
 const ReviseStrategy = () => {
     const dispatch = useGameDispatch();
-    const { strats, counterstrats, selectedNarrative, selectedCounterNarrative, selectedStrat, selectedCounterStrat, currentOutroView } = useGameState();
+    const { strats, counterstrats, selectedNarrative, selectedCounterNarrative, selectedStrat, selectedCounterStrat, currentOutroView, updatedFactCombination, counterNarrativeOptions, conclusionContent } = useGameState();
     const [effectiveness, setEffectiveness] = useState('');
+    const { fetchAndSetConclusion, identifyWeaknessesAndSetContent } = useGameFunction();
     const { t } = useTranslation();
+    const [shouldProceed, setShouldProceed] = useState(false);
+    const [isLoadingWeaknesses, setIsLoadingWeaknesses] = useState(false);
 
     useEffect(() => {
         if (currentOutroView === 'REVISE_STRATEGY') {
@@ -51,6 +54,23 @@ const ReviseStrategy = () => {
         }
     }, [selectedCounterStrat]);
 
+    useEffect(() => {
+        if (shouldProceed && !isLoadingWeaknesses && counterNarrativeOptions.length > 0) {
+            setShouldProceed(false);
+            // Change the view after counterNarrativeOptions has been updated
+            dispatch({ type: 'SET_CURRENT_OUTRO_VIEW', payload: 'CONCLUSION_WRAP_UP' });
+
+            // Set the first item from counterNarrativeOptions as the selected counter-narrative
+            const firstCounterNarrative = counterNarrativeOptions[0];
+            dispatch({ type: 'SELECT_COUNTERNARRATIVE', payload: firstCounterNarrative });
+            console.log('SelectedCounterNarrative after is now', selectedCounterNarrative);
+            console.log('and the above should match this: ', firstCounterNarrative);
+
+            // Fetch updated conclusion
+            fetchAndSetConclusion(firstCounterNarrative);
+        }
+    }, [shouldProceed, isLoadingWeaknesses, counterNarrativeOptions, dispatch, fetchAndSetConclusion, selectedCounterNarrative]);
+
     const updateEffectiveness = (strat, counterstrat) => {
         console.log("Updating effectiveness for strat:", strat, "and counterstrat:", counterstrat);
 
@@ -80,12 +100,33 @@ const ReviseStrategy = () => {
         }
     };
 
-    const handleProceedClick = () => {
-      dispatch({ type: 'SET_CURRENT_OUTRO_VIEW', payload: 'CONCLUSION_WRAP_UP' });
-  };
+    const handleProceedClick = async () => {
+        dispatch({ type: 'CLEAR_CONCLUSION_CONTENT' });
+        dispatch({ type: 'CLEAR_COUNTERNARRATIVE_OPTIONS' });
+
+        if (effectiveness === 'strong') {
+            setIsLoadingWeaknesses(true);
+            try {
+                // Fetch new narrative content based on the updated strategy and counter-strategy
+                console.log('right before identifyWeaknesses, selectedCounterStrat is', selectedCounterStrat);
+                console.log('CounterNarrativeOptions before, which should be clear:', counterNarrativeOptions);
+                await identifyWeaknessesAndSetContent(updatedFactCombination, selectedCounterStrat);
+                console.log('CounterNarrativeOptions after:', counterNarrativeOptions);
+                setIsLoadingWeaknesses(false);
+                setShouldProceed(true);
+            } catch (error) {
+                console.error("Failed to proceed:", error);
+                setIsLoadingWeaknesses(false);
+            }
+        }
+    };
 
     return (
         <div className="revise-strategies">
+            <div className="outcome-box">
+                <span>Election Outcome: </span>
+                <span className="outcome-value">{getOutcomeText(effectiveness)}</span>
+            </div>
             <div className="effectiveness-bar">
                 <div className={`segment red ${['weak', 'medium', 'strong'].includes(effectiveness) ? 'filled' : ''}`} />
                 <div className={`segment yellow ${['medium', 'strong'].includes(effectiveness) ? 'filled' : ''}`} />

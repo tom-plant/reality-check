@@ -161,10 +161,17 @@ const gameReducer = (state, action) => {
       };
 
     case 'SET_COUNTERNARRATIVE_OPTIONS':
+      console.log('Setting Counter Narrative Options:', action.payload); // Add this log to check the action payload
       return {
         ...state,
         counterNarrativeOptions: action.payload, 
-      };    
+      };   
+      
+    case 'CLEAR_COUNTERNARRATIVE_OPTIONS':
+      return {
+          ...state,
+          counterNarrativeOptions: null, 
+      };
 
     case 'RESET_FACT_SELECTION':
       return { ...state, selectedFactCombination: [] };
@@ -195,6 +202,12 @@ const gameReducer = (state, action) => {
       
     case 'SET_CONCLUSION_CONTENT':
       return { ...state, conclusionContent: action.payload };
+
+    case 'CLEAR_CONCLUSION_CONTENT':
+      return {
+          ...state,
+          conclusionContent: null, 
+      };
 
     case 'SELECT_EVENT':
       return { ...state, selectedEvent: action.payload };
@@ -231,7 +244,7 @@ const gameReducer = (state, action) => {
       return { ...state, 
         selectedStrat: [],
       };
-      
+
     case 'CLEAR_SELECTED_COUNTERSTRAT':
       return { ...state, 
         selectedCounterStrat: [],
@@ -488,6 +501,7 @@ const GameProvider = ({ children }) => {
         text: weaknessesResponse[strategy],
         strategy: strategy  // Keeping track of which strategy each narrative corresponds to
       }));
+      console.log('Formatted Counter Narratives:', formattedCounterNarratives); // Add this log to check the response
       dispatch({ type: 'SET_COUNTERNARRATIVE_OPTIONS', payload: formattedCounterNarratives });
       dispatch({ type: 'SET_LOADING_NARRATIVES', payload: false });
     } catch (error) {
