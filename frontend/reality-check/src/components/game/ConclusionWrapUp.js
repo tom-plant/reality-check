@@ -14,13 +14,17 @@ const ConclusionWrapUp = () => {
   const [buttonClicked, setButtonClicked] = useState(false); 
   const dispatch = useGameDispatch();
 
-  // Handle retry or choose a weaker strategy
-  const handleButtonClick = () => {
+  // Handle retry or choose a stronger strategy
+  const handleRetryClick = () => {
     setButtonClicked(false);
     dispatch({ type: 'SET_CURRENT_OUTRO_VIEW', payload: 'REVISE_STRATEGY' });
   };
 
-
+  // Handle finish game
+  const handleFinishClick = () => {
+    setButtonClicked(true);
+    dispatch({ type: 'SET_CURRENT_OUTRO_VIEW', payload: 'GAME_LESSON' });
+  };
 
   // Format strategies to objects with text property
   const formattedSelectedStrat = { text: selectedNarrative.strategy };
@@ -47,16 +51,16 @@ const ConclusionWrapUp = () => {
   return (
     <div className="conclusion-wrap-up">
       <div className="left-section">
-        <h2>Did you preserve the peace?</h2>
+        <h2>{t('conclusionWrapUp.didYouPreserve')}</h2>
         <div className="outcome-box">
-          <span>Election Outcome: </span>
+          <span>{t('conclusionWrapUp.electionOutcome')}</span>
           <span className="outcome-value">{getOutcomeText(conclusionContent?.effectiveness)}</span>
         </div>
-        <h3>Counternarrative Strength</h3>
+        <h3>{t('conclusionWrapUp.strengthOfCounter')}</h3>
         <div className="effectiveness-bar">
-          <div className={`segment red ${conclusionContent?.effectiveness?.toLowerCase() ? 'filled' : ''}`} />
-          <div className={`segment yellow ${conclusionContent?.effectiveness?.toLowerCase() === 'medium' ? 'filled' : ''}`} />
-          <div className={`segment green ${conclusionContent?.effectiveness?.toLowerCase() === 'strong' ? 'filled' : ''}`} />
+          <div className={`segment red ${conclusionContent?.effectiveness && conclusionContent?.effectiveness?.toLowerCase() ? 'filled' : ''}`} />
+          <div className={`segment yellow ${conclusionContent?.effectiveness && conclusionContent?.effectiveness?.toLowerCase() !== 'weak' ? 'filled' : ''}`} />
+          <div className={`segment green ${conclusionContent?.effectiveness && conclusionContent?.effectiveness?.toLowerCase() === 'strong' ? 'filled' : ''}`} />
         </div>
         <h3>Conclusion</h3>
         {isLoadingConclusion ? (
@@ -66,7 +70,7 @@ const ConclusionWrapUp = () => {
         )}
       </div>
       <div className="right-section">
-        <h3>Counternarrative</h3>
+        <h3>{t('common.counterNarrative')}</h3>
         <div className="conclusion-custom-box">
           <NarrativeBox narrative={selectedCounterNarrative} isSelected={true} disabled={true} container="center" />
         </div>
@@ -82,12 +86,12 @@ const ConclusionWrapUp = () => {
         </div>
         <div className="retry-button-container">
           {conclusionContent?.effectiveness !== 'strong' ? (
-            <button onClick={handleButtonClick}>{t('common.retry')}</button>
-          ) : (
             <>
-              <p>{t('common.chooseWeakerStrategyMessage')}</p>
-              <button onClick={handleButtonClick}>{t('common.goBack')}</button>
+              <button onClick={handleRetryClick}>{t('common.retry')}</button>
+              <p>{t('conclusionWrapUp.chooseStrongerStrategyMessage')}</p>
             </>
+          ) : (
+            <button onClick={handleFinishClick}>{t('conclusionWrapUp.finishGame')}</button>
           )}
         </div>
       </div>

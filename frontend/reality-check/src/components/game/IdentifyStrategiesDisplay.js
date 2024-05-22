@@ -21,7 +21,7 @@ return (
       <h2>{t('common.yourStrategy')} </h2>
       {selectedStrat && (
         <div className="selected-narrative">
-          <p>{selectedStrat.text}</p>
+          <p>{selectedNarrative.strategy}</p>
         </div>
       )}
       <h2>{t('common.yourUpdatedFacts')} </h2>

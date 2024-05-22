@@ -94,6 +94,7 @@
   justify-content: center;
   width: 100%;
   margin-top: 20px;
+  align-items: center;
 }
 
 .retry-button-container button {

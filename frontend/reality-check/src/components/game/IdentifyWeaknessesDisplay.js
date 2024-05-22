@@ -50,7 +50,7 @@ const IdentifyWeaknessesDisplay = () => {
       <button
         className="update-narrative"
         onClick={handleUpdateNarrative}
-        disabled={arraysAreEqual(updatedFactCombination, selectedFactCombination)}
+        disabled={arraysAreEqual(updatedFactCombination, selectedFactCombination) || updatedFactCombination.length < 3 }
       >
         {t('common.updateNarrative')} 
       </button>

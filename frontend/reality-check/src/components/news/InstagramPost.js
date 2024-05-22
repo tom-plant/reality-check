@@ -4,8 +4,6 @@ import template from '../../assets/instagram.PNG'
 
 const InstagramPost = ({ text }) => {
 
-    console.log('received text', text)
-
   return (
     <div className="instagram-post">
       <img src={template} alt="Instagram template" className="background-image" />

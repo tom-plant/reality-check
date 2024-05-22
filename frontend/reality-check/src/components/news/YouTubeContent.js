@@ -4,9 +4,6 @@ import template from '../../assets/youtube.PNG'
 
 const YouTubeContent = ({ thumbnail, description }) => {
 
-console.log('received thumbnail', thumbnail)
-console.log('received description', description)
-
   return (
     <div className="youtube-content">
       <img src={template} alt="YouTube thumbnail template" className="background-image" />

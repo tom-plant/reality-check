@@ -40,7 +40,7 @@ const IdentifyStrategies = () => {
           />
         ))}
       </div>
-      <button className="continue-button" onClick={handleContinue} disabled={!selectedCounterStrat}>
+      <button className="continue-button" onClick={handleContinue} disabled={selectedCounterStrat.length < 2}>
       {t('common.continue')} 
       </button>
     </div>

@@ -3,8 +3,6 @@ import './NewsArticle.css';
 
 const NewsArticle = ({ article, photo }) => {
 
-  console.log('received article', article)
-
   return (
     <div className="news-article">
       <h1 className="headline">{article.headline}</h1>

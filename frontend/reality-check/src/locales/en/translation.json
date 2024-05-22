@@ -37,7 +37,8 @@
     "pretest": ">> Please complete the short pre-test questionnaire before you start <<",
     "posttest": ">> Please complete the same post-test questionnaire before you finish <<", 
     "retry": "Retry", 
-    "goBack": "Go Back"
+    "goBack": "Go Back",
+    "counterNarrative": "Counter Narrative"
   },
   "expoInbox": {},
   "emailRecruitment": {
@@ -149,7 +150,13 @@
       "introduction": "filler",
       "reflection": "filler.",
       "closing": "The Civic Resilience Project Team",
-      "chooseWeakerStrategyMessage": "Choose a weaker strategy for a different outcome"
+      "chooseWeakerStrategyMessage": "Choose a weaker strategy for a different outcome",
+      "finishGame": "Finish Game",
+      "chooseStrongerStrategyMessage": "Choose a Stronger Strategy",
+      "strengthOfCounter": "Strength of Counternarrative",
+      "electionOutcome": "Election Outcome: ",
+      "didYouPreserve": "Did you preserve the peace?",
+      "closing": "The Civic Resilience Project Team"
     },
   "gameLesson": {
       "title": "Thank you for playing Reality Check!",

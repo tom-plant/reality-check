@@ -6,9 +6,9 @@ import logging
 import json
 import requests
 from flask import session, redirect, url_for, current_app
-from ai_calls import get_chatgpt_response, get_dalle2_response
-from prompts_assembly import generate_prompts
-from db_operations import *
+from backend.ai_calls import get_chatgpt_response, get_dalle2_response
+from backend.prompts_assembly import generate_prompts
+from backend.db_operations import *
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -178,7 +178,6 @@ def select_narrative_controller(selected_narrative, strategy):
     session.modified = True
 
     content_batch = {}
-    return
 
     # Generate news article
     prompts_news_article = generate_prompts(
@@ -491,8 +490,7 @@ def conclusion_controller(counter_narrative, strategy):
 
     # Save to Database 
     secondary_narrative = create_secondary_narrative(
-        # original_narrative_id=session['user_data']['primary_narrative_id'], 
-        original_narrative_id=69, 
+        original_narrative_id=session['user_data']['primary_narrative_id'], 
         user_id=session['user_data']['user_id'],
         updated_fact_combination_id=session['user_data']['updated_fact_combination_id'], 
         narrative_text=counter_narrative, 

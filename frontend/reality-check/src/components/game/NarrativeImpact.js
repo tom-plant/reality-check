@@ -17,7 +17,6 @@ const NarrativeImpact = () => {
   const dispatch = useGameDispatch();
   
   useEffect(() => {
-    console.log('Primary News Content at useEffect:', primaryNewsContent);
     if (primaryNewsContent && !isLoadingNews) {
       if (primaryNewsContent.error) {
         dispatch({ type: 'SET_CONTENT_ERROR', payload: true });

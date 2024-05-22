@@ -4,7 +4,7 @@ import './Timer.css';
 
 const Timer = ({ onTimeUp, startTimer }) => {
   const { introduceEventVisits } = useGameState(); 
-  const [seconds, setSeconds] = useState(introduceEventVisits === 1 ? 5 : 2); // Set initial seconds based on introduceEventVisits
+  const [seconds, setSeconds] = useState(introduceEventVisits === 1 ? 20 : 40); // Set initial seconds based on introduceEventVisits
   const secondsRef = useRef(seconds); 
   const intervalIdRef = useRef(null); 
 
@@ -39,9 +39,9 @@ const Timer = ({ onTimeUp, startTimer }) => {
   useEffect(() => {
     // Update the timer duration when introduceEventVisits changes
     if (introduceEventVisits === 1) {
-      setSeconds(5);
+      setSeconds(20);
     } else {
-      setSeconds(2);
+      setSeconds(40);
     }
   }, [introduceEventVisits]);
 

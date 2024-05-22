@@ -8,7 +8,7 @@ const GameDispatchContext = createContext();
 const GameFunctionContext = createContext(); 
 
 const initialState = {
-  currentPhase: 'game', 
+  currentPhase: 'intro', 
   currentIntroView: 'AUTH_LOGIN',
   currentView: 'SELECT_FACTS', 
   currentTurnPointView: 'ALERT',
@@ -161,7 +161,6 @@ const gameReducer = (state, action) => {
       };
 
     case 'SET_COUNTERNARRATIVE_OPTIONS':
-      console.log('Setting Counter Narrative Options:', action.payload); // Add this log to check the action payload
       return {
         ...state,
         counterNarrativeOptions: action.payload, 
@@ -472,7 +471,6 @@ const GameProvider = ({ children }) => {
         strategy: selectedNarrative.strategy 
       });
       dispatch({ type: 'SET_SELECTED_NARRATIVE_CONTENT', payload: content });
-      console.log('received narrative news content in context', content)
       dispatch({ type: 'SET_LOADING_NEWS', payload: false });
     } catch (error) {
       dispatch({ type: 'SET_SELECTED_NARRATIVE_CONTENT', payload: { error: 'An error occurred. Please try again.' } });
@@ -501,7 +499,6 @@ const GameProvider = ({ children }) => {
         text: weaknessesResponse[strategy],
         strategy: strategy  // Keeping track of which strategy each narrative corresponds to
       }));
-      console.log('Formatted Counter Narratives:', formattedCounterNarratives); // Add this log to check the response
       dispatch({ type: 'SET_COUNTERNARRATIVE_OPTIONS', payload: formattedCounterNarratives });
       dispatch({ type: 'SET_LOADING_NARRATIVES', payload: false });
     } catch (error) {
@@ -517,7 +514,6 @@ const GameProvider = ({ children }) => {
         narrative: selectedNarrative.text,
         strategy: selectedNarrative.strategy
       });
-      console.log("YAY CONCLUSION CONTENT", response);
       dispatch({
         type: 'SET_CONCLUSION_CONTENT',
         payload: response  // Directly setting the response object assuming it matches the expected structure.

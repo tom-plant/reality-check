@@ -3,7 +3,6 @@ import './ShortformContent.css';
 import template from '../../assets/shortform.PNG';
 
 const ShortformContent = ({ content, image }) => {
-  console.log('received content', content);
 
   return (
     <div className="shortform-content">

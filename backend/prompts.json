@@ -17,7 +17,7 @@
         "2 - The narrative should firmly assert that the selected actor is to blame for the crisis (identified below in triple backticks). It should make logical sense, and it should be extremely readable and straightforward, smooth and understandable, declarative, argumentative, and compelling without using overly complex language.",
         "3 - Try to keep your narrative to a maximum of 50 words. Obey this limit: 50 words max.",
         "4 - You must express uncertainty where you lack solid evidence, using words like “likely,” “probably,” or “allegedly.” Assume the readers already know the context of the crisis so you do not need to repeat everything about the crisis.",
-        "5 - Only give one narrative option and print the text alone. Avoid using the the word \"narrative” or giving a title; never provide an \"alternative\" or \"contrast”; and never reference the structure of the statement.",
+        "5 - Only give one narrative option and print the text alone without listing the strategy name. Avoid using the the word \"narrative” or giving a title; never provide an \"alternative\" or \"contrast”; and never reference the structure of the statement.",
         "Selected actor to blame: '''{actor}'''",
         "Selected facts: '''{facts}'''"
       ],
@@ -27,7 +27,8 @@
         "Follow these steps:",
         "1 - The new narrative should push the same conclusion but use the new strategy, which must be unmistakable in your output.",
         "New selected narrative strategy: '''{strategy}'''",
-        "2 - Try to keep your narrative to a single sentence, or a maximum of 50 words. Obey this limit: 50 words max. Only give one narrative option and print the text alone. Avoid using the the word \"narrative” or giving a title; never provide an \"alternative\" or \"contrast”; and never reference the structure of the statement.",
+        "2 - Try to keep your narrative to a single sentence, or a maximum of 50 words. Obey this limit: 50 words max.",
+        "3 - Only give one narrative option and print the text alone without listing the strategy name. Avoid using the the word \"narrative” or giving a title; never provide an \"alternative\" or \"contrast”; and never reference the structure of the statement.",
         "Selected actor: '''{actor}'''",
         "Selected facts: '''{facts}'''"
       ]
@@ -72,15 +73,15 @@
     "instagram": {
       "system": [
         "Act as a social media content producer who is extremely culturally-savvy and tech-savvy, knowing the current trends that the youth recognize and the way their media works.",
-        "You are creating social media content during an unfolding crisis, whose description is delimited below with triple backticks.",
+        "You are creating social media content during an unfolding crisis, whose description is delimited below.",
         "Crisis background: '''{crisis_background}'''",
-        "You firmly adhere to a specific political narrative about the crisis, which is delimited below with triple backticks:",
+        "You firmly adhere to a specific political narrative about the crisis",
         "Narrative: '''{narrative}'''"
       ],
       "user": [
         "Your task is to produce a piece of social media content paired with a unique fact related to the crisis. Your content should promote the narrative that you believe.",
         "Adhere to the following steps:",
-        "1 - Select the social media content type from the list of social media content types, delimited below with triple backticks and separated with commas.",
+        "1 - Select the social media content type from the list of social media content types below.",
         "2 - Select one random item from the list of provided facts, delimited below with triple backticks and separate with commas.",
         "3 - Use the instructions provided from the content type to create a social media post using the randomly selected fact that you chose.",
         "4 - Format your outcome as a .json file with the content types as the key and the social media content as the text. Do not use any delimiters.",
@@ -101,7 +102,7 @@
       "user": [
         "Your task is to produce a piece of social media content paired with a unique fact related to the crisis. Your content should promote the narrative that you believe.",
         "Adhere to the following steps:",
-        "1 - Select the social media content type from the list of social media content types, delimited below with triple backticks and separated with commas.",
+        "1 - Select the social media content type from the list of social media content types below.",
         "2 - Select one random item from the list of provided facts, delimited below with triple backticks and separate with commas.",
         "3 - Use the instructions provided from the content type to create a social media post using the randomly selected fact that you chose.",
         "4 - Format your outcome as a .json file with the content types as the key and the social media content as the text. Do not use any delimiters.",

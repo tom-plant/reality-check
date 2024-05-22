@@ -124,7 +124,7 @@ const ReviseStrategy = () => {
     return (
         <div className="revise-strategies">
             <div className="outcome-box">
-                <span>Election Outcome: </span>
+                <span>{t('conclusionWrapUp.electionOutcome')}</span>
                 <span className="outcome-value">{getOutcomeText(effectiveness)}</span>
             </div>
             <div className="effectiveness-bar">
