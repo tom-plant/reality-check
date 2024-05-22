@@ -28,7 +28,7 @@ EXPOSE 5000
 
 # Define environment variable
 ENV FLASK_APP=backend/app.py
-ENV FLASK_ENV=production
+ENV FLASK_ENV=development
 
 # Specify the script to be executed when the container starts
 ENTRYPOINT ["/app/entrypoint.sh"]

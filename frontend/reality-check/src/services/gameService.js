@@ -1,8 +1,8 @@
 // src/services/gameService.js
 import axios from 'axios';
 
-// const API_BASE_URL = 'http://localhost:5000'; 
-const API_BASE_URL = 'https://reality-check-game-f90e2fef9c33.herokuapp.com'; 
+const API_BASE_URL = 'http://localhost:5000'; 
+// const API_BASE_URL = 'https://reality-check-game-f90e2fef9c33.herokuapp.com'; 
 
 
 
@@ -140,19 +140,70 @@ export const buildNarrative = async (selectedActor, selectedStrategies) => {
   }
 };
 
-// Function to select a narrative based on selected facts
-export const selectNarrative = async (selectedNarrative) => {
+// Function to select news article content
+export const selectNewsArticleContent = async (selectedNarrative) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/game/select_narrative`, {
-      narrative: selectedNarrative.narrative,
+    const response = await axios.post(`${API_BASE_URL}/game/select_news_article`, {
+      narrative: selectedNarrative.text,
       strategy: selectedNarrative.strategy
     }, {
       withCredentials: true,
-      timeout: 80000, // 80 seconds timeout
     });
+    console.log('API service response: ', response)
     return response.data;
   } catch (error) {
-    console.error('Error selecting narrative:', error);
+    console.error('Error selecting news article content:', error);
+    throw error;
+  }
+};
+
+// Function to select Instagram content
+export const selectInstagramContent = async (selectedNarrative) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/game/select_instagram`, {
+      narrative: selectedNarrative.text,
+      strategy: selectedNarrative.strategy
+    }, {
+      withCredentials: true,
+    });
+    console.log('API service response: ', response)
+    return response.data
+  } catch (error) {
+    console.error('Error selecting Instagram content:', error);
+    throw error;
+  }
+};
+
+// Function to select YouTube content
+export const selectYouTubeContent = async (selectedNarrative) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/game/select_youtube`, {
+      narrative: selectedNarrative.text,
+      strategy: selectedNarrative.strategy
+    }, {
+      withCredentials: true,
+    });
+    console.log('API service response: ', response)
+    return response.data;
+  } catch (error) {
+    console.error('Error selecting YouTube content:', error);
+    throw error;
+  }
+};
+
+// Function to select shortform content
+export const selectShortformContent = async (selectedNarrative) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/game/select_shortform`, {
+      narrative: selectedNarrative.text,
+      strategy: selectedNarrative.strategy
+    }, {
+      withCredentials: true,
+    });
+    console.log('API service response: ', response)
+    return response.data;
+  } catch (error) {
+    console.error('Error selecting shortform content:', error);
     throw error;
   }
 };

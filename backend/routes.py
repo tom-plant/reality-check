@@ -1,6 +1,6 @@
 # routes.py
 from flask import jsonify, request, session, send_from_directory
-from backend.controllers import * 
+from controllers import * 
 
 def setup_routes(app):
 
@@ -102,17 +102,38 @@ def setup_routes(app):
         # Return response to frontend
         return jsonify(response_data)
 
-    # Selecting Narratives
-    @app.route('/game/select_narrative', methods=['POST'])
-    def select_narrative():
-        # Receive selected narrative and strategy from the frontend
+    @app.route('/game/select_news_article', methods=['POST'])
+    def select_news_article():
         data = request.get_json()
         narrative = data['narrative']
         strategy = data['strategy']
-        
-        # Call controller function to handle logic
-        response_data = select_narrative_controller(narrative, strategy)
+        response_data = select_news_article_controller(narrative, strategy)
         return jsonify(response_data)
+
+    @app.route('/game/select_instagram', methods=['POST'])
+    def select_instagram():
+        data = request.get_json()
+        narrative = data['narrative']
+        strategy = data['strategy']
+        response_data = select_instagram_controller(narrative, strategy)
+        return jsonify(response_data)
+
+    @app.route('/game/select_youtube', methods=['POST'])
+    def select_youtube():
+        data = request.get_json()
+        narrative = data['narrative']
+        strategy = data['strategy']
+        response_data = select_youtube_controller(narrative, strategy)
+        return jsonify(response_data)
+
+    @app.route('/game/select_shortform', methods=['POST'])
+    def select_shortform():
+        data = request.get_json()
+        narrative = data['narrative']
+        strategy = data['strategy']
+        response_data = select_shortform_controller(narrative, strategy)
+        return jsonify(response_data)
+
 
     # Introducing Follow-up Events
     @app.route('/game/introduce_event', methods=['POST'])

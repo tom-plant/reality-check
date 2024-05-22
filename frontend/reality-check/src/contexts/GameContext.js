@@ -1,14 +1,14 @@
 // src/context/GameContext.js
 
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
-import { authenticateUser, getFacts, getEvents, getActors, getStrats, getCounterStrats, setSelectedFacts, buildNarrative, selectNarrative, introduceEvent, identifyWeaknesses, conclusion } from '../services/gameService';
+import { authenticateUser, getFacts, getEvents, getActors, getStrats, getCounterStrats, setSelectedFacts, buildNarrative, selectNewsArticleContent, selectInstagramContent, selectYouTubeContent, selectShortformContent, introduceEvent, identifyWeaknesses, conclusion } from '../services/gameService';
 
 const GameStateContext = createContext();
 const GameDispatchContext = createContext();
 const GameFunctionContext = createContext(); 
 
 const initialState = {
-  currentPhase: 'intro', 
+  currentPhase: 'game', 
   currentIntroView: 'AUTH_LOGIN',
   currentView: 'SELECT_FACTS', 
   currentTurnPointView: 'ALERT',
@@ -39,6 +39,10 @@ const initialState = {
   primaryNewsContent: null,
   eventNewsContent: null,
   secondaryNewsContent: null,
+  newsArticleContent: null, 
+  instagramContent: null, 
+  youtubeContent: null, 
+  shortformContent: null,
   isUpdatedNarrativePopupVisible: false,
   isIntroPopupVisibile: true,
   timerHasEnded: false, 
@@ -300,6 +304,22 @@ const gameReducer = (state, action) => {
     case 'TOGGLE_EVENT_POPUP':
       return { ...state, isEventPopupVisible: !state.isEventPopupVisible, };
 
+    case 'SET_SELECTED_NEWS_ARTICLE_CONTENT':
+      console.log('setting newscontent')
+      return { ...state, newsArticleContent: action.payload };
+
+    case 'SET_SELECTED_INSTAGRAM_CONTENT':
+      console.log('setting insta content')
+      return { ...state, instagramContent: action.payload };
+
+    case 'SET_SELECTED_YOUTUBE_CONTENT':
+      console.log('setting youtube content')
+      return { ...state, youtubeContent: action.payload };
+
+    case 'SET_SELECTED_SHORTFORM_CONTENT':
+      console.log('setting shortform content')
+      return { ...state, shortformContent: action.payload };
+
       default:
         throw new Error(`Unhandled action type: ${action.type}`);
     }
@@ -465,12 +485,28 @@ const GameProvider = ({ children }) => {
 
   const selectNarrativeAndSetContent = async (selectedNarrative) => {
     try {
-      dispatch({ type: 'SET_LOADING_NEWS', payload: true }); 
-      const content = await selectNarrative({
-        narrative: selectedNarrative.text,
-        strategy: selectedNarrative.strategy 
-      });
-      dispatch({ type: 'SET_SELECTED_NARRATIVE_CONTENT', payload: content });
+      dispatch({ type: 'SET_LOADING_NEWS', payload: true });
+  
+      // Generate news article
+      const newsArticleContent = await selectNewsArticleContent(selectedNarrative);
+      console.log('Received newsArticleContent in Game Provider', newsArticleContent)
+      dispatch({ type: 'SET_SELECTED_NEWS_ARTICLE_CONTENT', payload: newsArticleContent });
+  
+      // Generate Instagram post
+      const instagramContent = await selectInstagramContent(selectedNarrative);
+      console.log('Received instagramContent in Game Provider', instagramContent)
+      dispatch({ type: 'SET_SELECTED_INSTAGRAM_CONTENT', payload: instagramContent });
+  
+      // Generate YouTube thumbnail and description
+      const youtubeContent = await selectYouTubeContent(selectedNarrative);
+      console.log('Received youtubeContent in Game Provider', youtubeContent)
+      dispatch({ type: 'SET_SELECTED_YOUTUBE_CONTENT', payload: youtubeContent });
+  
+      // Generate shortform content
+      const shortformContent = await selectShortformContent(selectedNarrative);
+      console.log('Received shortformContent in Game Provider', shortformContent)
+      dispatch({ type: 'SET_SELECTED_SHORTFORM_CONTENT', payload: shortformContent });
+  
       dispatch({ type: 'SET_LOADING_NEWS', payload: false });
     } catch (error) {
       dispatch({ type: 'SET_SELECTED_NARRATIVE_CONTENT', payload: { error: 'An error occurred. Please try again.' } });

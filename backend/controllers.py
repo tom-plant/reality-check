@@ -6,9 +6,9 @@ import logging
 import json
 import requests
 from flask import session, redirect, url_for, current_app
-from backend.ai_calls import get_chatgpt_response, get_dalle2_response
-from backend.prompts_assembly import generate_prompts
-from backend.db_operations import *
+from ai_calls import get_chatgpt_response, get_dalle2_response
+from prompts_assembly import generate_prompts
+from db_operations import *
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -166,37 +166,25 @@ def build_narrative_controller(selected_actor, selected_strategies):
 
     return chatgpt_responses
 
-def select_narrative_controller(selected_narrative, strategy):
-    # Ensure 'user_data' is initialized in session
-    current_app.logger.debug(f"Session Data: {session}")
-    if 'user_data' not in session:
-        return {"error": "User not logged in"}, 401
-
-    # Store the strategy in session for later use
-    strategy_id = get_strategy_id_by_strategy_name(strategy)
-    session['user_data']['strat_id'] = strategy_id
-    session.modified = True
-
+def select_news_article_controller(narrative, strategy):
     content_batch = {}
-
+    
     # Generate news article
     prompts_news_article = generate_prompts(
         category='news_article',
         prompt_type='both',
         dynamic_inserts={
-            'narrative': selected_narrative,
+            'narrative': narrative,
             'facts': get_fact_combination_by_id(session['user_data']['fact_combination_id'])
         })
 
     news_response = get_chatgpt_response(prompts_news_article)
     if "error" in news_response:
         return news_response, 500
-    current_app.logger.debug(f"Unparsed news_response: {news_response}")
+
     content_batch['news_article'] = handle_chatgpt_output(news_response)
-    current_app.logger.debug(f"Parsed news_response: {content_batch['news_article']}")
 
     headline = content_batch['news_article']['headline']
-    current_app.logger.debug(f"Headline: {headline}")
 
     # Intermediate call to generate image description
     prompts_image_description = generate_prompts(
@@ -209,7 +197,6 @@ def select_narrative_controller(selected_narrative, strategy):
     image_description_response = get_chatgpt_response(prompts_image_description)
     if "error" in image_description_response:
         return image_description_response, 500
-    current_app.logger.debug(f"Image description: {image_description_response}")
 
     # Generate news photo
     prompts_news_photo = generate_prompts(
@@ -222,8 +209,15 @@ def select_narrative_controller(selected_narrative, strategy):
     news_photo_response = get_dalle2_response(prompts_news_photo)
     if "error" in news_photo_response:
         return news_photo_response, 500
+
     content_batch['news_photo'] = news_photo_response
-    current_app.logger.debug(f"news_photo: {content_batch['news_photo']}")
+
+    current_app.logger.debug(f"Content batch from article: {content_batch}")
+    return content_batch
+
+
+def select_instagram_controller(narrative, strategy):
+    content_batch = {}
 
     # Generate instagram content
     prompts_instagram = generate_prompts(
@@ -237,49 +231,15 @@ def select_narrative_controller(selected_narrative, strategy):
     instagram_response = get_chatgpt_response(prompts_instagram)
     if "error" in instagram_response:
         return instagram_response, 500
+
     content_batch['instagram'] = handle_chatgpt_output(instagram_response)
-    current_app.logger.debug(f"Instagram response: {content_batch['instagram']}")
 
-    # Generate shortform content
-    prompts_shortform = generate_prompts(
-        category='shortform',
-        prompt_type='both',
-        dynamic_inserts={
-            'narrative': get_primary_narrative_by_id(session['user_data']['primary_narrative_id']),
-            'facts': get_fact_combination_by_id(session['user_data']['fact_combination_id']),
-        })
+    current_app.logger.debug(f"Content batch from insta: {content_batch}")
+    return content_batch
 
-    shortform_response = get_chatgpt_response(prompts_shortform)
-    if "error" in shortform_response:
-        return shortform_response, 500
-    content_batch['shortform'] = handle_chatgpt_output(shortform_response)
-    current_app.logger.debug(f"Shortform response: {content_batch['shortform']}")
 
-    # Intermediate call to generate shortform description
-    prompts_shortform_description = generate_prompts(
-        category='shortform_image_description',
-        prompt_type='both',
-        dynamic_inserts={
-            'shortform_text': shortform_response
-        })
-
-    shortform_image_description_response = get_chatgpt_response(prompts_shortform_description)
-    if "error" in shortform_image_description_response:
-        return shortform_image_description_response, 500
-    current_app.logger.debug(f"Thumbnail description: {shortform_image_description_response}")
-
-    #Generate shortform image
-    prompts_shortform_image = generate_prompts(
-        category='shortform_image',
-        prompt_type='system',
-        dynamic_inserts={
-            'shortform_image_description': shortform_image_description_response
-        })
-
-    shortform_image_response = get_dalle2_response(str(prompts_shortform_image))
-    if "error" in shortform_image_response:
-        return shortform_image_response, 500
-    content_batch['shortform_image'] = shortform_image_response
+def select_youtube_controller(narrative, strategy):
+    content_batch = {}
 
     # Generate youtube content
     prompts_youtube = generate_prompts(
@@ -293,11 +253,10 @@ def select_narrative_controller(selected_narrative, strategy):
     youtube_response = get_chatgpt_response(prompts_youtube)
     if "error" in youtube_response:
         return youtube_response, 500
+
     content_batch['youtube'] = handle_chatgpt_output(youtube_response)
-    current_app.logger.debug(f"Youtube response: {content_batch['youtube']}")
 
     video_title = content_batch['youtube']
-    current_app.logger.debug(f"video_title: {video_title}")
 
     # Intermediate call to generate image description
     prompts_thumbnail_description = generate_prompts(
@@ -310,9 +269,8 @@ def select_narrative_controller(selected_narrative, strategy):
     thumbnail_description_response = get_chatgpt_response(prompts_thumbnail_description)
     if "error" in thumbnail_description_response:
         return thumbnail_description_response, 500
-    current_app.logger.debug(f"Thumbnail description: {thumbnail_description_response}")
 
-    #Generate YouTube Thumbnail
+    # Generate YouTube Thumbnail
     prompts_youtube_thumbnail = generate_prompts(
         category='yt_thumbnail',
         prompt_type='system',
@@ -323,27 +281,79 @@ def select_narrative_controller(selected_narrative, strategy):
     youtube_thumbnail_response = get_dalle2_response(str(prompts_youtube_thumbnail))
     if "error" in youtube_thumbnail_response:
         return youtube_thumbnail_response, 500
+
     content_batch['youtube_thumbnail'] = youtube_thumbnail_response
 
-    # Commit Primary Narrative to Database
-    primary_narrative = create_primary_narrative(
-        fact_combination_id=session['user_data']['fact_combination_id'],
-        narrative_text=selected_narrative,  
-        user_id=session['user_data']['user_id'],
-        actor_id=session['user_data']['actor_id'], 
-        strat_id=strategy_id,
-        news=content_batch,
-        _session=None
-    )
-    db.session.add(primary_narrative)
-    db.session.commit()
-    session['user_data']['primary_narrative_id'] = primary_narrative.id
-    session.modified = True
+    current_app.logger.debug(f"Content batch from youtube: {content_batch}")
+    return content_batch
 
-    # Return the news data as a JSON response
-    content_json = safe_json_dumps(content_batch)
-    current_app.logger.debug(f"content_json: {content_json}")
-    return content_json
+
+def select_shortform_controller(narrative, strategy):
+    content_batch = {}
+
+    # Generate shortform content
+    prompts_shortform = generate_prompts(
+        category='shortform',
+        prompt_type='both',
+        dynamic_inserts={
+            'narrative': get_primary_narrative_by_id(session['user_data']['primary_narrative_id']),
+            'facts': get_fact_combination_by_id(session['user_data']['fact_combination_id']),
+        })
+
+    shortform_response = get_chatgpt_response(prompts_shortform)
+    if "error" in shortform_response:
+        return shortform_response, 500
+
+    content_batch['shortform'] = handle_chatgpt_output(shortform_response)
+
+    # Intermediate call to generate shortform description
+    prompts_shortform_description = generate_prompts(
+        category='shortform_image_description',
+        prompt_type='both',
+        dynamic_inserts={
+            'shortform_text': shortform_response
+        })
+
+    shortform_image_description_response = get_chatgpt_response(prompts_shortform_description)
+    if "error" in shortform_image_description_response:
+        return shortform_image_description_response, 500
+
+    # Generate shortform image
+    prompts_shortform_image = generate_prompts(
+        category='shortform_image',
+        prompt_type='system',
+        dynamic_inserts={
+            'shortform_image_description': shortform_image_description_response
+        })
+
+    shortform_image_response = get_dalle2_response(str(prompts_shortform_image))
+    if "error" in shortform_image_response:
+        return shortform_image_response, 500
+
+    content_batch['shortform_image'] = shortform_image_response
+
+    current_app.logger.debug(f"Content batch from shortform: {content_batch}")
+    return content_batch
+
+    # # Commit Primary Narrative to Database
+    # primary_narrative = create_primary_narrative(
+    #     fact_combination_id=session['user_data']['fact_combination_id'],
+    #     narrative_text=selected_narrative,  
+    #     user_id=session['user_data']['user_id'],
+    #     actor_id=session['user_data']['actor_id'], 
+    #     strat_id=strategy_id,
+    #     news=content_batch,
+    #     _session=None
+    # )
+    # db.session.add(primary_narrative)
+    # db.session.commit()
+    # session['user_data']['primary_narrative_id'] = primary_narrative.id
+    # session.modified = True
+
+    # # Return the news data as a JSON response
+    # content_json = safe_json_dumps(content_batch)
+    # current_app.logger.debug(f"content_json: {content_json}")
+    # return content_json
 
 def handle_chatgpt_output(chatgpt_response):
     # Check if the response is a string that looks like a JSON

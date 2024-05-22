@@ -14,6 +14,8 @@ const SelectNarratives = () => {
   const dispatch = useGameDispatch();
   const { t } = useTranslation();
 
+  console.log('selectnarrative', selectedNarrative)
+  
   // Generate news content upon narrative selection
   const handleNarrativeConfirmation = () => {
     if (!buttonClicked) { 
@@ -36,17 +38,17 @@ const SelectNarratives = () => {
           <h2>{t('selectNarratives.title')}</h2>
           <div className="narratives-list">
             {narrativeOptions && narrativeOptions.map((narrative) => (
-              <NarrativeBox 
-                key={narrative.id} 
+              <NarrativeBox
+                key={narrative.id}
                 narrative={narrative}
                 isSelected={selectedNarrative && narrative === selectedNarrative}
                 container="left"
               />
             ))}
           </div>
-          <button 
-            className="confirm-narrative" 
-            disabled={!selectedNarrative} 
+          <button
+            className="confirm-narrative"
+            disabled={!selectedNarrative}
             onClick={handleNarrativeConfirmation}
           >
             {t('common.promoteNarrative')}
@@ -58,5 +60,3 @@ const SelectNarratives = () => {
 };
 
 export default SelectNarratives;
-
-
