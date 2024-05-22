@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.6ce58dd5.css",
-    "main.js": "/static/js/main.d5e667ed.js",
+    "main.css": "/static/css/main.89d7c2e8.css",
+    "main.js": "/static/js/main.68282b4a.js",
     "static/js/453.77020481.chunk.js": "/static/js/453.77020481.chunk.js",
     "static/media/city1.PNG": "/static/media/city1.8e043ad423ac03da23a3.PNG",
     "static/media/city3.PNG": "/static/media/city3.fad4983d5304d98726dc.PNG",
@@ -11,21 +11,21 @@
     "static/media/shortform.PNG": "/static/media/shortform.62ffeca587291b7dfb39.PNG",
     "static/media/sky2.jpg": "/static/media/sky2.09e5a16b259e109fcb20.jpg",
     "static/media/sky3.jpg": "/static/media/sky3.e914b6f90126f81e45f7.jpg",
-    "static/media/sky4.jpg": "/static/media/sky4.675211c98168e3d5e59a.jpg",
+    "static/media/sky4.jpg": "/static/media/sky4.8ae4ae8b73b22e833310.jpg",
     "static/media/city5.PNG": "/static/media/city5.15193ff58f10ff7202da.PNG",
-    "static/media/sky5.jpg": "/static/media/sky5.9d01b1241ecc3c2ed28e.jpg",
+    "static/media/sky5.jpg": "/static/media/sky5.e2745552e950b2bac27a.jpg",
     "static/media/sky.jpg": "/static/media/sky.7b39915db57a588314b9.jpg",
     "static/media/gmail_message.png": "/static/media/gmail_message.ca51fd41920b15a9cbcc.png",
     "static/media/gmail_inbox.png": "/static/media/gmail_inbox.722a25c08e19c87fed89.png",
     "static/media/sun.PNG": "/static/media/sun.bdc81d8168e09944b2d9.PNG",
     "static/media/youtube.PNG": "/static/media/youtube.940bd2a2ba8d6b220833.PNG",
     "index.html": "/index.html",
-    "main.6ce58dd5.css.map": "/static/css/main.6ce58dd5.css.map",
-    "main.d5e667ed.js.map": "/static/js/main.d5e667ed.js.map",
+    "main.89d7c2e8.css.map": "/static/css/main.89d7c2e8.css.map",
+    "main.68282b4a.js.map": "/static/js/main.68282b4a.js.map",
     "453.77020481.chunk.js.map": "/static/js/453.77020481.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.6ce58dd5.css",
-    "static/js/main.d5e667ed.js"
+    "static/css/main.89d7c2e8.css",
+    "static/js/main.68282b4a.js"
   ]
 }
