@@ -147,7 +147,8 @@ export const selectNarrative = async (selectedNarrative) => {
       narrative: selectedNarrative.narrative,
       strategy: selectedNarrative.strategy
     }, {
-      withCredentials: true 
+      withCredentials: true,
+      timeout: 80000, // 80 seconds timeout
     });
     return response.data;
   } catch (error) {
