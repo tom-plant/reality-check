@@ -149,7 +149,6 @@ export const selectNewsArticleContent = async (selectedNarrative) => {
     }, {
       withCredentials: true,
     });
-    console.log('API service response: ', response)
     return response.data;
   } catch (error) {
     console.error('Error selecting news article content:', error);
@@ -166,7 +165,6 @@ export const selectInstagramContent = async (selectedNarrative) => {
     }, {
       withCredentials: true,
     });
-    console.log('API service response: ', response)
     return response.data
   } catch (error) {
     console.error('Error selecting Instagram content:', error);
@@ -183,7 +181,6 @@ export const selectYouTubeContent = async (selectedNarrative) => {
     }, {
       withCredentials: true,
     });
-    console.log('API service response: ', response)
     return response.data;
   } catch (error) {
     console.error('Error selecting YouTube content:', error);
@@ -200,7 +197,6 @@ export const selectShortformContent = async (selectedNarrative) => {
     }, {
       withCredentials: true,
     });
-    console.log('API service response: ', response)
     return response.data;
   } catch (error) {
     console.error('Error selecting shortform content:', error);

@@ -13,8 +13,6 @@ const SelectNarratives = () => {
   const [buttonClicked, setButtonClicked] = useState(false); 
   const dispatch = useGameDispatch();
   const { t } = useTranslation();
-
-  console.log('selectnarrative', selectedNarrative)
   
   // Generate news content upon narrative selection
   const handleNarrativeConfirmation = () => {

@@ -10,33 +10,36 @@ import YouTubeContent from '../news/YouTubeContent';
 import './NarrativeImpact.css';
 
 const NarrativeImpact = () => {
-  const { newsArticleContent, instagramContent, youtubeContent, shortformContent, selectedNarrative, isLoadingNews, contentError } = useGameState();
+  const { newsArticleContent, instagramContent, youtubeContent, shortformContent, selectedNarrative, contentError } = useGameState();
   const { selectNarrativeAndSetContent, selectNewsArticleContent, selectInstagramContent, selectYouTubeContent, selectShortformContent } = useGameFunction();
-  const [content, setContent] = useState(null);
+  const [loadingStates, setLoadingStates] = useState({
+    newsArticle: true,
+    instagram: true,
+    youtube: true,
+    shortform: true,
+  });
   const [retryCount, setRetryCount] = useState(0);
   const dispatch = useGameDispatch();
 
-  console.log('newsArticleContent', newsArticleContent)
-  console.log('instagramContent', instagramContent)
-  console.log('youtubeContent', youtubeContent)
-  console.log('shortformContent', shortformContent)
-
   const handleRetry = async (contentType) => {
     dispatch({ type: 'SET_CONTENT_ERROR', payload: false });
-    dispatch({ type: 'SET_LOADING_NEWS', payload: true });
 
     try {
       switch (contentType) {
         case 'news_article':
+          setLoadingStates((prevState) => ({ ...prevState, newsArticle: true }));
           await selectNewsArticleContent(selectedNarrative);
           break;
         case 'instagram':
+          setLoadingStates((prevState) => ({ ...prevState, instagram: true }));
           await selectInstagramContent(selectedNarrative);
           break;
         case 'youtube':
+          setLoadingStates((prevState) => ({ ...prevState, youtube: true }));
           await selectYouTubeContent(selectedNarrative);
           break;
         case 'shortform':
+          setLoadingStates((prevState) => ({ ...prevState, shortform: true }));
           await selectShortformContent(selectedNarrative);
           break;
         default:
@@ -46,24 +49,35 @@ const NarrativeImpact = () => {
       dispatch({ type: 'SET_CONTENT_ERROR', payload: true });
     }
 
-    dispatch({ type: 'SET_LOADING_NEWS', payload: false });
+    setLoadingStates((prevState) => ({ ...prevState, [contentType]: false }));
   };
 
   const handleRefresh = () => {
-    // window.location.reload();
-    dispatch({ type: 'SET_CURRENT_VIEW', payload: 'INTRODUCE_EVENT' });
+    window.location.reload();
+    // dispatch({ type: 'SET_CURRENT_VIEW', payload: 'INTRODUCE_EVENT' });
   };
+
+  useEffect(() => {
+    if (newsArticleContent) {
+      setLoadingStates((prevState) => ({ ...prevState, newsArticle: false }));
+    }
+    if (instagramContent) {
+      setLoadingStates((prevState) => ({ ...prevState, instagram: false }));
+    }
+    if (youtubeContent) {
+      setLoadingStates((prevState) => ({ ...prevState, youtube: false }));
+    }
+    if (shortformContent) {
+      setLoadingStates((prevState) => ({ ...prevState, shortform: false }));
+    }
+  }, [newsArticleContent, instagramContent, youtubeContent, shortformContent]);
+
 
   return (
     <div className="scrollable-container">
       <h1 className="news-feed-title">News Feed</h1>
       <div className="narrative-impact">
-        {isLoadingNews ? (
-          <div className="news-loading-container">
-            <LoadingIcon />
-            <p>Please wait for all news and social media content to generate. This may take up to a minute. Faster load times are in development.</p>
-          </div>
-        ) : contentError ? (
+        {contentError ? (
           <div className="news-loading-container">
             <p>An error occurred. Please try again.</p>
             <button onClick={() => handleRetry('news_article')}>Retry News Article</button>
@@ -74,26 +88,54 @@ const NarrativeImpact = () => {
           </div>
         ) : (
           <>
-            {newsArticleContent && (
-              <NewsArticle
-                article={newsArticleContent.news_article}
-                photo={newsArticleContent.news_photo}
-              />
+            {loadingStates.newsArticle ? (
+              <div className="news-loading-container">
+                <LoadingIcon />
+                <p>Generating news article...</p>
+              </div>
+            ) : (
+              newsArticleContent && (
+                <NewsArticle
+                  article={newsArticleContent.news_article}
+                  photo={newsArticleContent.news_photo}
+                />
+              )
             )}
-            {instagramContent && instagramContent.instagram && (
-              <InstagramPost text={instagramContent.instagram.instagram} />
+            {loadingStates.instagram ? (
+              <div className="news-loading-container">
+                <LoadingIcon />
+                <p>Generating Instagram post...</p>
+              </div>
+            ) : (
+              instagramContent && instagramContent.instagram && (
+                <InstagramPost text={instagramContent.instagram.instagram} />
+              )
             )}
-            {youtubeContent && youtubeContent.youtube && (
-              <YouTubeContent
-                thumbnail={youtubeContent.youtube_thumbnail}
-                description={youtubeContent.youtube.youtube}
-              />
+            {loadingStates.youtube ? (
+              <div className="news-loading-container">
+                <LoadingIcon />
+                <p>Generating YouTube content...</p>
+              </div>
+            ) : (
+              youtubeContent && youtubeContent.youtube && (
+                <YouTubeContent
+                  thumbnail={youtubeContent.youtube_thumbnail}
+                  description={youtubeContent.youtube.youtube}
+                />
+              )
             )}
-            {shortformContent && shortformContent.shortform && (
-              <ShortformContent
-                content={shortformContent.shortform.shortform}
-                image={shortformContent.shortform_image}
-              />
+            {loadingStates.shortform ? (
+              <div className="news-loading-container">
+                <LoadingIcon />
+                <p>Generating shortform content...</p>
+              </div>
+            ) : (
+              shortformContent && shortformContent.shortform && (
+                <ShortformContent
+                  content={shortformContent.shortform.shortform}
+                  image={shortformContent.shortform_image}
+                />
+              )
             )}
           </>
         )}
