@@ -2,12 +2,13 @@
 
 import React from 'react';
 import { useTranslation } from 'react-i18next'; 
-import { useGameState, useGameDispatch } from '../../contexts/GameContext';
+import { useGameState, useGameDispatch, useGameFunction } from '../../contexts/GameContext';
 import './NarrativeImpactDisplay.css'; 
 
 const NarrativeImpactDisplay = () => {
   const { selectedNarrative, selectedFactCombination, isLoadingNews, inCoda, introduceEventVisits, contentError } = useGameState();
   const { t } = useTranslation();
+  const { combineContentAndCommitPrimary } = useGameFunction(); 
   const dispatch = useGameDispatch();
 
   // Progress to next game phase
@@ -16,6 +17,10 @@ const NarrativeImpactDisplay = () => {
       // Second visit, show the event popup and clear the event news content
       dispatch({ type: 'TOGGLE_EVENT_POPUP' });
       dispatch({ type: 'CLEAR_EVENT_NEWS_CONTENT' });
+    }
+    if (introduceEventVisits === 0 && !inCoda) {
+      // First visit only, combine content and commit as primary narrative
+      combineContentAndCommitPrimary(selectedNarrative);
     }
     dispatch({ type: 'SET_CURRENT_VIEW', payload: 'INTRODUCE_EVENT' });
   };

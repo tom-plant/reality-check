@@ -134,6 +134,13 @@ def setup_routes(app):
         response_data = select_shortform_controller(narrative, strategy)
         return jsonify(response_data)
 
+    @app.route('/game/set_primary_content', methods=['POST'])
+    def set_primary_content():
+        data = request.get_json()
+        narrative = data['narrative']
+        strategy = data['strategy']
+        response_data = commit_primary_narrative_controller(narrative, strategy)
+        return jsonify(response_data)
 
     # Introducing Follow-up Events
     @app.route('/game/introduce_event', methods=['POST'])

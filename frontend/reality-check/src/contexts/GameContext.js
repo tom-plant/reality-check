@@ -1,7 +1,7 @@
 // src/context/GameContext.js
 
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
-import { authenticateUser, getFacts, getEvents, getActors, getStrats, getCounterStrats, setSelectedFacts, buildNarrative, selectNewsArticleContent, selectInstagramContent, selectYouTubeContent, selectShortformContent, introduceEvent, identifyWeaknesses, conclusion } from '../services/gameService';
+import { authenticateUser, getFacts, getEvents, getActors, getStrats, getCounterStrats, setSelectedFacts, buildNarrative, selectNewsArticleContent, selectInstagramContent, selectYouTubeContent, selectShortformContent, setPrimaryContent, introduceEvent, identifyWeaknesses, conclusion } from '../services/gameService';
 
 const GameStateContext = createContext();
 const GameDispatchContext = createContext();
@@ -501,8 +501,17 @@ const GameProvider = ({ children }) => {
   
       dispatch({ type: 'SET_LOADING_NEWS', payload: false });
     } catch (error) {
-      dispatch({ type: 'SET_SELECTED_NARRATIVE_CONTENT', payload: { error: 'An error occurred. Please try again.' } });
       dispatch({ type: 'SET_LOADING_NEWS', payload: false });
+    }
+  };
+
+  const combineContentAndCommitPrimary = async (selectedNarrative) => {
+    try {
+      const content = await setPrimaryContent(selectedNarrative);
+      dispatch({ type: 'SET_SELECTED_NARRATIVE_CONTENT', payload: content });
+      console.log('received all primary content in context', content)
+    } catch (error) {
+      dispatch({ type: 'SET_SELECTED_NARRATIVE_CONTENT', payload: { error: 'An error occurred. Please try again.' } });
     }
   };
 
@@ -556,7 +565,7 @@ const GameProvider = ({ children }) => {
   return (
     <GameStateContext.Provider value={state}>
       <GameDispatchContext.Provider value={dispatch}>
-        <GameFunctionContext.Provider value={{ fetchAndSetFacts, fetchAndSetEvents, fetchAndSetActors, fetchAndSetStrats, fetchAndSetCounterStrats, loginUser, setFactSelection, buildAndSetNarrative, selectNarrativeAndSetContent, selectEventAndSetContent, identifyWeaknessesAndSetContent, fetchAndSetConclusion, setCurrentPhase, setCurrentOutroView, setCurrentTurnPointView, setCurrentIntroView }}> 
+        <GameFunctionContext.Provider value={{ fetchAndSetFacts, fetchAndSetEvents, fetchAndSetActors, fetchAndSetStrats, fetchAndSetCounterStrats, loginUser, setFactSelection, buildAndSetNarrative, selectNarrativeAndSetContent, combineContentAndCommitPrimary, selectEventAndSetContent, identifyWeaknessesAndSetContent, fetchAndSetConclusion, setCurrentPhase, setCurrentOutroView, setCurrentTurnPointView, setCurrentIntroView }}> 
           {children}
           </GameFunctionContext.Provider>
       </GameDispatchContext.Provider>

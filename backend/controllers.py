@@ -24,6 +24,13 @@ def initialize_data_controller(user_id):
         'primary_narrative_id': None, 
         'secondary_narrative_id': None,
         'narrative_events_id': None,
+        'news_article': None,
+        'news_photo': None,
+        'instagram': None,
+        'youtube': None,
+        'youtube_thumbnail': None,
+        'shortform': None,
+        'shortform_image': None
     }
 
 def register_user_controller(username, email):
@@ -212,6 +219,11 @@ def select_news_article_controller(narrative, strategy):
 
     content_batch['news_photo'] = news_photo_response
 
+    # Save to session
+    session['user_data']['news_article'] = content_batch['news_article']
+    session['user_data']['news_photo'] = content_batch['news_photo']
+    session.modified = True
+
     current_app.logger.debug(f"Content batch from article: {content_batch}")
     return content_batch
 
@@ -233,6 +245,10 @@ def select_instagram_controller(narrative, strategy):
         return instagram_response, 500
 
     content_batch['instagram'] = handle_chatgpt_output(instagram_response)
+
+    # Save to session
+    session['user_data']['instagram'] = content_batch['instagram']
+    session.modified = True
 
     current_app.logger.debug(f"Content batch from insta: {content_batch}")
     return content_batch
@@ -284,6 +300,11 @@ def select_youtube_controller(narrative, strategy):
 
     content_batch['youtube_thumbnail'] = youtube_thumbnail_response
 
+    # Save to session
+    session['user_data']['youtube'] = content_batch['youtube']
+    session['user_data']['youtube_thumbnail'] = content_batch['youtube_thumbnail']
+    session.modified = True
+
     current_app.logger.debug(f"Content batch from youtube: {content_batch}")
     return content_batch
 
@@ -332,28 +353,49 @@ def select_shortform_controller(narrative, strategy):
 
     content_batch['shortform_image'] = shortform_image_response
 
+     # Save to session
+    session['user_data']['shortform'] = content_batch['shortform']
+    session['user_data']['shortform_image'] = content_batch['shortform_image']
+    session.modified = True
+
     current_app.logger.debug(f"Content batch from shortform: {content_batch}")
     return content_batch
 
-    # # Commit Primary Narrative to Database
-    # primary_narrative = create_primary_narrative(
-    #     fact_combination_id=session['user_data']['fact_combination_id'],
-    #     narrative_text=selected_narrative,  
-    #     user_id=session['user_data']['user_id'],
-    #     actor_id=session['user_data']['actor_id'], 
-    #     strat_id=strategy_id,
-    #     news=content_batch,
-    #     _session=None
-    # )
-    # db.session.add(primary_narrative)
-    # db.session.commit()
-    # session['user_data']['primary_narrative_id'] = primary_narrative.id
-    # session.modified = True
+def commit_primary_narrative_controller(selected_narrative, strategy):
+    user_data = session['user_data']
 
-    # # Return the news data as a JSON response
-    # content_json = safe_json_dumps(content_batch)
-    # current_app.logger.debug(f"content_json: {content_json}")
-    # return content_json
+    # Store the strategy in session for later use
+    strategy_id = get_strategy_id_by_strategy_name(strategy)
+    session['user_data']['strat_id'] = strategy_id
+    session.modified = True
+
+    # Combine all content batches
+    combined_content_batch = {
+        'news_article': user_data.get('news_article'),
+        'news_photo': user_data.get('news_photo'),
+        'instagram': user_data.get('instagram'),
+        'youtube': user_data.get('youtube'),
+        'youtube_thumbnail': user_data.get('youtube_thumbnail'),
+        'shortform': user_data.get('shortform'),
+        'shortform_image': user_data.get('shortform_image')
+    }
+
+    # Commit Primary Narrative to Database
+    primary_narrative = create_primary_narrative(
+        fact_combination_id=user_data['fact_combination_id'],
+        narrative_text=selected_narrative,  
+        user_id=user_data['user_id'],
+        actor_id=user_data['actor_id'], 
+        strat_id=strategy_id,
+        news=combined_content_batch,
+        _session=None
+    )
+    
+    db.session.add(primary_narrative)
+    db.session.commit()
+
+    session['user_data']['primary_narrative_id'] = primary_narrative.id
+    session.modified = True
 
 def handle_chatgpt_output(chatgpt_response):
     # Check if the response is a string that looks like a JSON
@@ -386,17 +428,22 @@ def introduce_event_controller(event_details):
     user_data = session['user_data']
     primary_narrative_id = user_data.get('primary_narrative_id')
     event_id = event_details.get('id')
+    current_app.logger.debug(f"got user data and primary narrative and event id: {user_data} and {primary_narrative_id} and {event_id}")
+
 
     # Check for necessary data
     if not primary_narrative_id or not event_id:
+        current_app.logger.debug("Missing data.")
         return {"error": "Missing data"}, 400
-
+    
     # 2. Check if narrative-event pair already exists
+    current_app.logger.debug("Check if narrative-event pair already exists.")
     narrative_event = NarrativeEvent.query.filter_by(
         narrative_id=primary_narrative_id, event_id=event_id
     ).first()
 
     # If it exists, return the existing event outcome text
+    current_app.logger.debug("If it exists, return the existing event outcome text")
     if narrative_event:
         current_app.logger.debug("Narrative event pair found, returning existing event outcome text.")
         return {"event_outcome_text": narrative_event.event_outcome_text}
@@ -404,8 +451,10 @@ def introduce_event_controller(event_details):
     # If it doesn't exist, generate the event outcome text using the ChatGPT call
     primary_narrative = get_primary_narrative_by_id(primary_narrative_id)
     if not primary_narrative:
+        current_app.logger.debug("Narrative not found")
         return {"error": "Narrative not found"}, 404
 
+    current_app.logger.debug("generating")
     prompts_event_outcomes = generate_prompts(
         category='event_outcome',
         prompt_type='both',
@@ -417,6 +466,7 @@ def introduce_event_controller(event_details):
     event_outcome_text = get_chatgpt_response(prompts_event_outcomes)
 
     # Create the narrative event entry in the database
+    current_app.logger.debug("add to dataset")
     narrative_event = NarrativeEvent(
         narrative_id=primary_narrative_id,
         event_id=event_id,
@@ -427,6 +477,7 @@ def introduce_event_controller(event_details):
     session['user_data']['narrative_events_id'] = narrative_event.id
     session.modified = True
 
+    current_app.logger.debug(f"final is {event_outcome_text}")
     return {"event_outcome_text": event_outcome_text}
 
 def identify_weaknesses_controller(updated_fact_combination, selected_strategies):    

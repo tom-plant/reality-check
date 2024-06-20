@@ -204,6 +204,23 @@ export const selectShortformContent = async (selectedNarrative) => {
   }
 };
 
+// Function to commit primary narrative content
+export const setPrimaryContent = async (selectedNarrative) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/game/set_primary_content`, {
+      narrative: selectedNarrative.text,
+      strategy: selectedNarrative.strategy
+    }, {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error committing primary narrative content:', error);
+    throw error;
+  }
+};
+
+
 // Function to introduce an event and retrieve news content
 export const introduceEvent = async (selectedEvent) => {
   try {
