@@ -6,7 +6,7 @@ import LoadingIcon from '../common/LoadingIcon';
 import './IntroduceEvent.css'; 
 
 const IntroduceEvent = () => {
-  const { eventNewsContent, isLoadingNews } = useGameState(); 
+  const { eventNewsContent, isLoadingNews, introduceEventVisits, inCoda, isEventPopupVisible } = useGameState(); 
   const [content, setContent] = useState(null);
 
   

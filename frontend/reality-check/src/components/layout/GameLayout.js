@@ -26,8 +26,7 @@ import GameInstructions from '../containers/GameInstructions'
 import './GameLayout.css'; 
 
 const GameLayout = () => {
-  const { currentView, isUpdatedNarrativePopupVisible, isIntroPopupVisible, isRepeatPopupVisible } = useGameState();
-  const [isEventPopupVisible, setIsEventPopupVisible] = useState(true); 
+  const { currentView, isUpdatedNarrativePopupVisible, isEventPopupVisible, isIntroPopupVisible, isRepeatPopupVisible } = useGameState();
   const dispatch = useGameDispatch();
 
   const renderLeftContent = () => {
@@ -77,7 +76,7 @@ const GameLayout = () => {
   };
 
   const closeEventPopup = () => {
-    setIsEventPopupVisible(false); 
+    dispatch({ type: 'TOGGLE_EVENT_POPUP' });
   };
 
   const closeUpdatedNarrativePopup = () => {
@@ -93,7 +92,7 @@ const GameLayout = () => {
       <GameInstructions />
       <LeftContainer>{renderLeftContent()}</LeftContainer>
       <RightContainer>{renderRightContent()}</RightContainer>
-      {currentView === 'INTRODUCE_EVENT' && isEventPopupVisible && (
+      {isEventPopupVisible && (
         <EventPopup onClose={closeEventPopup} />
         )}
       {isUpdatedNarrativePopupVisible && (

@@ -15,6 +15,8 @@ const initialState = {
   currentOutroView: 'CONCLUSION_WRAP_UP',
   introduceEventVisits: 0,
   isRepeatPopupVisible: false,
+  isEventPopupVisible: false,
+  isRevisePopupVisible: false,
   inCoda: false, 
   contentError: false, 
   username: null,
@@ -310,6 +312,9 @@ const gameReducer = (state, action) => {
     case 'TOGGLE_REPEAT_POPUP':
       return { ...state, isRepeatPopupVisible: !state.isRepeatPopupVisible };
     
+      case 'TOGGLE_REVISE_POPUP':
+      return { ...state, isRevisePopupVisible: !state.isRevisePopupVisible };
+      
     case 'TOGGLE_EVENT_POPUP':
       return { ...state, isEventPopupVisible: !state.isEventPopupVisible, };
 

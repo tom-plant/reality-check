@@ -38,7 +38,12 @@
     "posttest": ">> OPTIONAL: Complete the same questionnaire before you finish <<", 
     "retry": "Retry", 
     "goBack": "Go Back",
-    "counterNarrative": "Counter Narrative"
+    "counterNarrative": "Counternarrative",
+    "peace": "Peace",
+    "resolution": "Resolution",
+    "chaos": "Chaos",
+    "loading": "Loading",
+    "proceed": "Proceed"
   },
   "expoInbox": {},
   "emailRecruitment": {
@@ -145,7 +150,7 @@
     "instructions": "Choose two counterstrategies that you think would be the best to combat your narrative. But select carefully--some strategies work better than others. Your choice could determine whether the election ends in peace or conflict."
   },
   "updatedNarrativeImpact": {
-      "introduction": "Choose one counter narrative that you think most people will believe."
+      "introduction": "Choose one counternarrative that you think most people will believe."
     },
   "conclusionWrapUp": {
       "introduction": "filler",
@@ -167,6 +172,10 @@
   "repeatPopup": {
       "title": "Do you like how your story ended?",
       "instructions": "You will now repeat the first part of the game. Try to create a new election outcome by crafting a different narrative."
+  },
+  "revisePopup": {
+    "title": "How Can You Achieve Peace?",
+    "instructions": "You will now get a chance to choose a different counternarrative strategy. The left column shows the narrative strategy you chose when constructing your narrative. Match it with the most effective counternarrative strategy in the right column."
   }
 }
   

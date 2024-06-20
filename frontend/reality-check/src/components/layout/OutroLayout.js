@@ -1,15 +1,17 @@
 import React from 'react';
-import { useGameState, useGameFunction } from '../../contexts/GameContext';
+import { useGameState, useGameFunction, useGameDispatch } from '../../contexts/GameContext';
 import ConclusionWrapUp from '../game/ConclusionWrapUp';
 import GameLesson from '../game/GameLesson';
 import CenterContainer from '../containers/CenterContainer';
 import ReviseStrategy from '../game/ReviseStrategy';
 import MatchStrats from '../game/MatchStrats';
+import RevisePopup from '../popups/RevisePopup';
 import './OutroLayout.css'; 
 
 const OutroLayout = () => {
-  const { currentOutroView } = useGameState();
+  const { currentOutroView, isRevisePopupVisible } = useGameState();
   const { setCurrentOutroView, setCurrentPhase } = useGameFunction();
+  const dispatch = useGameDispatch();
 
   const renderOutroContent = () => {
     switch (currentOutroView) {
@@ -26,9 +28,17 @@ const OutroLayout = () => {
     }
   };
 
+  const closeRevisePopup = () => {
+    dispatch({ type: 'TOGGLE_REVISE_POPUP' });
+  };
+
+
   return (
     <div className="outro-layout">
       <CenterContainer>{renderOutroContent()}</CenterContainer>
+      {isRevisePopupVisible && (
+        <RevisePopup onClose={closeRevisePopup} />
+        )}
     </div>
   );
 };

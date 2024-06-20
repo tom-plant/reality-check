@@ -90,13 +90,13 @@ const ReviseStrategy = () => {
     const getOutcomeText = (effectiveness) => {
         switch (effectiveness.toLowerCase()) {
             case 'strong':
-                return t('Peace');
+                return t('common.peace');
             case 'medium':
-                return t('Resolution');
+                return t('common.resolution');
             case 'weak':
-                return t('Chaos');
+                return t('common.chaos');
             default:
-                return t('Loading');
+                return t('common.loading');
         }
     };
 
@@ -105,6 +105,7 @@ const ReviseStrategy = () => {
         dispatch({ type: 'CLEAR_COUNTERNARRATIVE_OPTIONS' });
 
         if (effectiveness === 'strong') {
+            console.log('effectivness is strong')
             setIsLoadingWeaknesses(true);
             try {
                 // Fetch new narrative content based on the updated strategy and counter-strategy
@@ -121,6 +122,8 @@ const ReviseStrategy = () => {
         }
     };
 
+    console.log("selectedcoutnerstrat", selectedCounterStrat)
+
     return (
         <div className="revise-strategies">
             <div className="outcome-box">
@@ -132,11 +135,9 @@ const ReviseStrategy = () => {
                 <div className={`segment yellow ${['medium', 'strong'].includes(effectiveness) ? 'filled' : ''}`} />
                 <div className={`segment green ${effectiveness === 'strong' ? 'filled' : ''}`} />
             </div>
-            <div className="effectiveness-text">
-                {getOutcomeText(effectiveness)}
-            </div>
             <div className="strategy-container">
                 <div className="strategies-section">
+                <h3>Narrative Strategy</h3>
                     {strats.map((strat, idx) => (
                         <StratBox
                             key={idx}
@@ -148,6 +149,7 @@ const ReviseStrategy = () => {
                     ))}
                 </div>
                 <div className="counter-strategies-section">
+                <h3>Counternarrative Strategy</h3>
                     {counterstrats.map((counterstrat, idx) => (
                         <CounterStratBox
                             key={idx}
@@ -165,7 +167,7 @@ const ReviseStrategy = () => {
                     onClick={handleProceedClick}
                     disabled={effectiveness !== 'strong'}
                 >
-                    {t('Proceed')}
+                    {t('common.proceed')}
                 </button>
             </div>
         </div>

@@ -14,8 +14,7 @@ const NarrativeImpactDisplay = () => {
   // Progress to next game phase
   const handleContinue = () => {
     if (introduceEventVisits === 1 && !inCoda) {
-      // Second visit, show the event popup and clear the event news content and clear all the individual content pieces 
-      dispatch({ type: 'TOGGLE_EVENT_POPUP' });
+      // Second visit, show the event popup and clear the event news content 
       dispatch({ type: 'CLEAR_EVENT_NEWS_CONTENT' });
     }
     if (introduceEventVisits === 0 && !inCoda) {
@@ -23,10 +22,11 @@ const NarrativeImpactDisplay = () => {
       combineContentAndCommitPrimary(selectedNarrative);
       dispatch({ type: 'CLEAR_SOCIAL_MEDIA_CONTENT' });
     }
+    dispatch({ type: 'TOGGLE_EVENT_POPUP' });
     dispatch({ type: 'SET_CURRENT_VIEW', payload: 'INTRODUCE_EVENT' });
   };
 
-    
+
   return (
     <div className="narrative-impact-display-container">
       <div className="narrative-impact-display">

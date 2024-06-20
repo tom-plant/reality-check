@@ -9,7 +9,7 @@ import NarrativeBox from '../common/NarrativeBox';
 import './ConclusionWrapUp.css';
 
 const ConclusionWrapUp = () => {
-  const { conclusionContent, isLoadingConclusion, selectedNarrative, selectedCounterNarrative } = useGameState();
+  const { conclusionContent, isLoadingConclusion, selectedNarrative, selectedCounterNarrative, selectedCounterStrat } = useGameState();
   const { t } = useTranslation();
   const [buttonClicked, setButtonClicked] = useState(false); 
   const dispatch = useGameDispatch();
@@ -18,6 +18,7 @@ const ConclusionWrapUp = () => {
   const handleRetryClick = () => {
     setButtonClicked(false);
     dispatch({ type: 'SET_CURRENT_OUTRO_VIEW', payload: 'REVISE_STRATEGY' });
+    // toggle isRevisePopupVisible
   };
 
   // Handle finish game
@@ -74,6 +75,7 @@ const ConclusionWrapUp = () => {
         <div className="conclusion-custom-box">
           <NarrativeBox narrative={selectedCounterNarrative} isSelected={true} disabled={true} container="center" />
         </div>
+        <h4>Counternarrative Strategy</h4>
         <div className="conclusion-custom-box">
           <CounterStratBox counterstrat={formattedSelectedCounterStrat} isSelected={true} disabled={true} container="center" />
         </div>
@@ -81,14 +83,14 @@ const ConclusionWrapUp = () => {
         <div className="conclusion-custom-box">
           <NarrativeBox narrative={selectedNarrative} isSelected={true} disabled={true} container="center" />
         </div>
+        <h4>Narrative Strategy</h4>
         <div className="conclusion-custom-box">
           <StratBox strat={formattedSelectedStrat} isSelected={true} disabled={true} container="center" />
         </div>
         <div className="retry-button-container">
           {conclusionContent?.effectiveness !== 'strong' ? (
             <>
-              <button onClick={handleRetryClick}>{t('common.retry')}</button>
-              <p>{t('conclusionWrapUp.chooseStrongerStrategyMessage')}</p>
+              <button onClick={handleRetryClick}>{t('conclusionWrapUp.chooseStrongerStrategyMessage')}</button>
             </>
           ) : (
             <button onClick={handleFinishClick}>{t('conclusionWrapUp.finishGame')}</button>
