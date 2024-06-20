@@ -16,9 +16,14 @@
     background-color: #fff;
     padding: 20px;
     color: black;
+    text-align: left;
     border-radius: 5px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: 80%; /* Adjust based on your preference */
     max-width: 400px; /* Adjust based on your preference */
   }
   
+  .left-aligned {
+    width: 100%;
+    text-align: left;
+}

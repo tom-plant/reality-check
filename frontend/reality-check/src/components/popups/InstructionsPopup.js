@@ -14,16 +14,20 @@ const InstructionsPopup = ({ onClose }) => {
         <h2>{t('introPopup.instructions.title')}</h2>
         <p>{t('introPopup.instructions.introduction')}</p>
         <h3>{t('introPopup.instructions.whatYouWillDoTitle')}</h3>
-        <p>{t('introPopup.instructions.engageScenarios')}</p>
-        <p>{t('introPopup.instructions.informedDecisionMaking')}</p>
-        <p>{t('introPopup.instructions.criticalAnalysis')}</p>
+        <div className="left-aligned-container">
+          <p>{t('introPopup.instructions.engageScenarios')}</p>
+          <p>{t('introPopup.instructions.informedDecisionMaking')}</p>
+          <p>{t('introPopup.instructions.criticalAnalysis')}</p>
+          <p>{t('introPopup.instructions.changeOutcome')}</p>
+        </div>
         <p>{t('introPopup.instructions.conclusion')}</p>
-          <button className="close-button" onClick={onClose}>
-            <FaTimesCircle />  
-          </button>
+        <button className="close-button" onClick={onClose}>
+          <FaTimesCircle />  
+        </button>
       </div>
     </div>
   );
 };
+
 
 export default InstructionsPopup;

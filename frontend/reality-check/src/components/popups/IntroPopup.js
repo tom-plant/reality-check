@@ -44,6 +44,7 @@ const IntroPopup = () => {
           <p>{screenData.engageScenarios}</p>
           <p>{screenData.informedDecisionMaking}</p>
           <p>{screenData.criticalAnalysis}</p>
+          <p>{screenData.changeOutcome}</p>
           <p>{screenData.conclusion}</p>
           <p><strong>{screenData.readyToBegin}</strong></p>
         </>

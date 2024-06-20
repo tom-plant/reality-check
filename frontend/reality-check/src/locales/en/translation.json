@@ -34,8 +34,8 @@
     "estonian": "Estonian (In Development)",
     "russian": "Russian (In Development)",
     "title": "Reality Check",
-    "pretest": ">> Please complete the short pre-test questionnaire before you start <<",
-    "posttest": ">> Please complete the same post-test questionnaire before you finish <<", 
+    "pretest": ">> OPTIONAL: Complete the short pre-test questionnaire before you start <<",
+    "posttest": ">> OPTIONAL: Complete the same questionnaire before you finish <<", 
     "retry": "Retry", 
     "goBack": "Go Back",
     "counterNarrative": "Counter Narrative"
@@ -46,33 +46,34 @@
     "sender": "The Civic Resilience Project",
     "address": "engage@civicresilience.org",
     "intro": "Dear Citizen,",
-    "request": "Your immediate participation is requested for our emergency crisis simulation. This simulation is designed to keep you safe from disinformation as our the current crisis unfolds.",
-    "information": "The Civic Resilience Project is at the forefront of strategies for effective crisis management and public education in times of uncertainty.",
-    "sendOff": "In this critical moment, your choices and insights can make a difference. Act now.",
+    "request": "Your immediate participation is requested for our emergency crisis simulation. This simulation is designed to keep you safe from disinformation and deception.",
+    "information": "The Civic Resilience Project is at the forefront of effective crisis management and public education in times of uncertainty.",
+    "sendOff": "Your choices and insights can make a difference. Act now.",
     "goodbye": "Sincerely,",
     "footer": "Empowering communities through knowledge and resilience."
   },
   "introPopup": {
       "instructions": {
         "title": "Welcome to the Civic Resilience Simulation",
-        "introduction": "This tool was developed by the Civic Resilience Project for times just like these—when disinformation threatens weaken our nation during an election.",
+        "introduction": "This tool was developed by the Civic Resilience Project for times just like these—when disinformation threatens our nation.",
         "whatYouWillDoTitle": "What You Will Do:",
         "engageScenarios": "1. Play a simulated version of the ongoing crisis.",
         "informedDecisionMaking": "2. Create a narrative about who's to blame.",
         "criticalAnalysis": "3. Watch your narrative change the outcome of the crisis—for better or for worse.",
+        "changeOutcome": "4. Revise your narrative to improve your story's outcome.",
         "conclusion": "This simulation is more than an exercise; it's a vital part of our country's response strategy.",
         "readyToBegin": "Are you ready to begin? Your help is crucial, now more than ever."
       },
       "briefing": {
           "title": "Crisis Overview",
           "introduction": "",
-          "note": "This briefing includes factual information from the government and trusted news outlets. NB! Due to the chaotic nature of the crisis, some details may change.",
+          "note": "This briefing includes factual information from the government and trusted news outlets. Due to the chaotic nature of the crisis, some details may change.",
           "keyPointsTitle": "Key Points:",
           "natureOfCrisis": {
-            "description": "1. Cyber attacks struck Eirist during our country's national elections. It is unclear who is behind the cyber attacks and why."
+            "description": "1. Cyber attacks struck Eirist during our country's national elections, which were supposed to occur today. It is unclear who is behind the cyber attacks and why."
           },
           "affectedAreas": {
-            "description": "2. The cyber attacks left rural Eirist without elecrity. The countryside is dark and chaos is emerging."
+            "description": "2. The cyber attacks cut rural Eirist's elecrity supply. The countryside is dark and chaos is emerging."
           },
           "responseMeasures": {
             "description": "3. Our election has been postponed. Authorities in Eirist are investigating who committed these attacks and why."
@@ -82,22 +83,22 @@
         },
       "selectFactsInstructions": {
           "title": "Instructions",
-          "introduction": "You are about to begin. Once you click \"Start\", you will be overwhelmed with information—just like real life. ",
+          "introduction": "You are about to begin. Once you click \"Start\", you will be overwhelmed with information—just like real life. To craft your misleading narrative: ",
           "steps": {
             "examine": {
               "title": "1. Read The Facts",
-              "description": "All of this information is true. However, you will learn to manipulate it."
+              "description": "All provided information is true. You will learn to manipulate it."
             },
             "selection": {
               "title": "2. Make Your Selection",
-              "description": "Choose 3 to 5 facts that you want to focus on to tell your misleading narrative."
+              "description": "Choose 3 to 5 facts to tell your misleading narrative."
             },
             "timely": {
               "title": "3. Be Timely",
-              "description": "You have a limited time to make your selections, reflecting the real-world pressure of decision-making during emergencies. If you run out of time, random facts will be automatically selected for you."
+              "description": "You have a limited time to make your selections (just like in real-life emergencies). If you run out of time, random facts will be automatically selected for you."
             }
           },
-          "impact": "Your choices will impact the simulation."
+          "impact": "Your choices will generate a storyline unique to you (and only you). Choose carefully."
       }
   },
   "selectFacts": {
@@ -107,7 +108,7 @@
   "buildNarratives": {
     "title": "Choose Someone to Blame",
     "display": "Choose Two Narrative Strategies",
-    "instructions": "Make your selections to build your unique narratives, which you will see on the next page."
+    "instructions": "Choose two strategies to create convincing narratives. You will see both options on the next page."
   },
   "selectNarratives": {
       "title": "Choose a Narrative",
