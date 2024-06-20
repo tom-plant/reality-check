@@ -28,6 +28,7 @@ const IntroduceEvent = () => {
         <div className="news-content">
           {/* Ensure content.event_outcome_text is not undefined before trying to render it */}
           <h1>{"How Your Narrative Ends"}</h1>
+          <h2>{"Outcome: Chaos"}</h2>
           <p>{content.event_outcome_text || "No event content available"}</p>
         </div>
       ) : null}

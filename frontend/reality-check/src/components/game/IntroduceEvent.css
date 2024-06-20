@@ -21,6 +21,13 @@
   margin-top: 0; /* Adjust the margin to bring the headline closer to the top */
 }
 
+.introduce-event h2 {
+  clear: both; /* Ensure the headline doesn't wrap around the floated image */
+  word-wrap: break-word;
+  font-size: 16px;
+  margin-top: 0; /* Adjust the margin to bring the headline closer to the top */
+}
+
 .introduce-event p {
   text-align: justify;
   font-size: 18px;

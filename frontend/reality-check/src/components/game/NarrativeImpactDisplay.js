@@ -21,10 +21,9 @@ const NarrativeImpactDisplay = () => {
     if (introduceEventVisits === 0 && !inCoda) {
       // First visit only, combine content and commit as primary narrative
       combineContentAndCommitPrimary(selectedNarrative);
-      dispatch({ type: 'SET_CURRENT_VIEW', payload: 'INTRODUCE_EVENT' });
-      console.log('cleairng social media content')
+      dispatch({ type: 'CLEAR_SOCIAL_MEDIA_CONTENT' });
     }
-    dispatch({ type: 'CLEAR_SOCIAL_MEDIA_CONTENT' });
+    dispatch({ type: 'SET_CURRENT_VIEW', payload: 'INTRODUCE_EVENT' });
   };
 
     
