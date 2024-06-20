@@ -212,6 +212,15 @@ const gameReducer = (state, action) => {
           conclusionContent: null, 
       };
 
+    case 'CLEAR_SOCIAL_MEDIA_CONTENT':
+      return {
+        ...state,
+        newsArticleContent: null,
+        instagramContent: null,
+        youtubeContent: null,
+        shortformContent: null,
+      };
+
     case 'SELECT_EVENT':
       return { ...state, selectedEvent: action.payload };
 

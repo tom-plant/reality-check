@@ -14,15 +14,17 @@ const NarrativeImpactDisplay = () => {
   // Progress to next game phase
   const handleContinue = () => {
     if (introduceEventVisits === 1 && !inCoda) {
-      // Second visit, show the event popup and clear the event news content
+      // Second visit, show the event popup and clear the event news content and clear all the individual content pieces 
       dispatch({ type: 'TOGGLE_EVENT_POPUP' });
       dispatch({ type: 'CLEAR_EVENT_NEWS_CONTENT' });
     }
     if (introduceEventVisits === 0 && !inCoda) {
       // First visit only, combine content and commit as primary narrative
       combineContentAndCommitPrimary(selectedNarrative);
+      dispatch({ type: 'SET_CURRENT_VIEW', payload: 'INTRODUCE_EVENT' });
+      console.log('cleairng social media content')
     }
-    dispatch({ type: 'SET_CURRENT_VIEW', payload: 'INTRODUCE_EVENT' });
+    dispatch({ type: 'CLEAR_SOCIAL_MEDIA_CONTENT' });
   };
 
     
