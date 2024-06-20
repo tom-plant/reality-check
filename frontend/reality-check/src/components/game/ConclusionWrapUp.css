@@ -3,7 +3,7 @@
   flex-direction: row;
   padding: 20px;
   overflow-y: auto;
-  height: calc(100vh - 120px); /* Adjust height to be responsive */
+  /* height: calc(100vh - 120px); Adjust height to be responsive */
   overflow: hidden; /* Prevent overflow of the entire container */
 }
 

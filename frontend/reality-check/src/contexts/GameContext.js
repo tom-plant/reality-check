@@ -509,7 +509,6 @@ const GameProvider = ({ children }) => {
     try {
       const content = await setPrimaryContent(selectedNarrative);
       dispatch({ type: 'SET_SELECTED_NARRATIVE_CONTENT', payload: content });
-      console.log('received all primary content in context', content)
     } catch (error) {
       dispatch({ type: 'SET_SELECTED_NARRATIVE_CONTENT', payload: { error: 'An error occurred. Please try again.' } });
     }
