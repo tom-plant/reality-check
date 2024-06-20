@@ -76,7 +76,7 @@
             "description": "2. The cyber attacks cut rural Eirist's elecrity supply. The countryside is dark and chaos is emerging."
           },
           "responseMeasures": {
-            "description": "3. Our election has been postponed. Authorities in Eirist are investigating who committed these attacks and why."
+            "description": "3. Our election has been postponed. Authorities in Eirist are investigating who committed these attacks and why. Some suspect the attack was from the Republic of Talme, our neighbor country and adversary. Others blame internal actors like political parties or militias."
           },
           "conclusion": "Use this information to guide your decisions.",
           "reminder": "And remember: stay alert to new developments as the crisis unfolds. We will provide live updates if necessary."
@@ -127,14 +127,14 @@
       "update": {
         "title": "SYSTEM ALERT: Live Update to Crisis",
         "spacer": "    *    *    *    *",
-        "introduction": "While you've been playing this simulation, the ongoing crisis has continued to unfold.",
+        "introduction": "While you've been playing this simulation, the ongoing crisis has continued to deteriorate. Power has still not been restored and panic is spreading online.",
         "challenge": "We have flagged your fictional narrative because it resembles one of the real narratives that is currently circulating on social media.",
         "response": "We will move you to a new stage of the game to strategize ways to combat this narrative."
       },
       "pivot": {
         "title": "SYSTEM ALERT: Live Update to Crisis",
-        "introduction": "Now, the aim has changed. You will 1) identify what is missing from the misleading narrative, and 2) come up with an effective correction.",
-        "task": "On the next screen, you will get the chance to revise your original fact selection from earlier. Try to selected facts that will help to disprove your narrative."
+        "introduction": "Now, the aim has changed. You will 1) think about what is missing from your misleading narrative, and 2) come up with an effective correction.",
+        "task": "On the next screen, you will revise your original fact selection. Choose facts that would help to disprove your original narrative."
       }
     },
   "identifyWeaknesses": {

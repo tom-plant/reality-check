@@ -18,7 +18,7 @@ const StratBox = ({ strat, isSelected, disabled, container }) => {
     if (!stratLimitReached) {
       dispatch({ type: actionType, payload: strat });
     } else {
-      alert("You can select a maximum of 2 strats."); // Feedback for the user when the limit is reached
+      alert("You can select a maximum of 2 strategies."); // Feedback for the user when the limit is reached
     }
   };
 
