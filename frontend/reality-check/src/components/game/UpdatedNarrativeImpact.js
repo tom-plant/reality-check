@@ -20,6 +20,7 @@ const UpdatedNarrativeImpact = () => {
       fetchAndSetConclusion(selectedCounterNarrative);
       setCurrentPhase('outro'); 
       dispatch({ type: 'SET_CURRENT_OUTRO_VIEW', payload: 'CONCLUSION_WRAP_UP' });
+      dispatch({ type: 'TOGGLE_OUTRO_POPUP' });
     }
   };
 

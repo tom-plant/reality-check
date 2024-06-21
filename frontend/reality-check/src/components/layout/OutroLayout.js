@@ -6,10 +6,11 @@ import CenterContainer from '../containers/CenterContainer';
 import ReviseStrategy from '../game/ReviseStrategy';
 import MatchStrats from '../game/MatchStrats';
 import RevisePopup from '../popups/RevisePopup';
+import OutroPopup from '../popups/OutroPopup';
 import './OutroLayout.css'; 
 
 const OutroLayout = () => {
-  const { currentOutroView, isRevisePopupVisible } = useGameState();
+  const { currentOutroView, isRevisePopupVisible, isOutroPopupVisible } = useGameState();
   const { setCurrentOutroView, setCurrentPhase } = useGameFunction();
   const dispatch = useGameDispatch();
 
@@ -32,6 +33,9 @@ const OutroLayout = () => {
     dispatch({ type: 'TOGGLE_REVISE_POPUP' });
   };
 
+  const closeOutroPopup = () => {
+    dispatch({ type: 'TOGGLE_OUTRO_POPUP' });
+  };
 
   return (
     <div className="outro-layout">
@@ -39,6 +43,9 @@ const OutroLayout = () => {
       {isRevisePopupVisible && (
         <RevisePopup onClose={closeRevisePopup} />
         )}
+      {isOutroPopupVisible && (
+        <OutroPopup onClose={closeOutroPopup} />
+      )}
     </div>
   );
 };

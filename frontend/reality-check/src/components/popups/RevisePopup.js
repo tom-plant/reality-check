@@ -11,7 +11,6 @@ const RevisePopup = ({ onClose }) => {
 
   const handleContinue = () => {
     dispatch({ type: 'TOGGLE_REVISE_POPUP' });
-    dispatch({ type: 'SET_CURRENT_VIEW', payload: 'SELECT_FACTS' });
   };
 
   return (

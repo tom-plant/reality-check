@@ -14,7 +14,8 @@ const NarrativeImpactDisplay = () => {
   // Progress to next game phase
   const handleContinue = () => {
     if (introduceEventVisits === 1 && !inCoda) {
-      // Second visit, show the event popup and clear the event news content 
+      // Second visit, show the event popup and clear the event news content
+      combineContentAndCommitPrimary(selectedNarrative);
       dispatch({ type: 'CLEAR_EVENT_NEWS_CONTENT' });
     }
     if (introduceEventVisits === 0 && !inCoda) {

@@ -14,28 +14,37 @@ const ConclusionWrapUp = () => {
   const [buttonClicked, setButtonClicked] = useState(false); 
   const dispatch = useGameDispatch();
 
-  // Handle retry or choose a stronger strategy
+  // Handle Choose a Stronger Strategy to change view and toggle popup
   const handleRetryClick = () => {
     setButtonClicked(false);
     dispatch({ type: 'SET_CURRENT_OUTRO_VIEW', payload: 'REVISE_STRATEGY' });
-    // toggle isRevisePopupVisible
+    dispatch({ type: 'TOGGLE_REVISE_POPUP' });
   };
 
-  // Handle finish game
+  // Handle finish game to change view
   const handleFinishClick = () => {
     setButtonClicked(true);
     dispatch({ type: 'SET_CURRENT_OUTRO_VIEW', payload: 'GAME_LESSON' });
   };
 
-  // Format strategies to objects with text property
+  // Format strategies to objects with text property so they can be rendered in boxes
   const formattedSelectedStrat = { text: selectedNarrative.strategy };
   const formattedSelectedCounterStrat = { text: selectedCounterNarrative.strategy };
 
+  // As soon as we get conclusion content, get the effectiveness value from it and translate it into an outcome value using the switch below
   const getOutcomeText = (effectiveness) => {
     if (!effectiveness) {
       return 'Loading';
-      console.log('effectiveness is', effectiveness);
     }
+
+    // console.log('effectiveness in ConclusionWrapUp is', effectiveness);
+    // console.log('that is because the conclusion content is', conclusionContent);
+    // console.log('and the effectiveness is because we have the following formatted strats against eachother, including strat: ', formattedSelectedStrat)
+    // console.log('and including counterstrat: ', formattedSelectedCounterStrat)
+    // console.log('For good measure, our narratives are as follows. Narrative:', selectedNarrative)
+    // console.log('Counternarrative:', selectedCounterNarrative)
+    // console.log('NOTE: THE MOST IMPORTANT THING TO CHECK IS THAT CONCLUSION CONTENT IS UPDATED SO THAT ITS EFFECTIVENESS REFELCTS THE CHANGE FROM REVISE STRATEGY')
+
 
     switch (effectiveness.toLowerCase()) {
       case 'strong':
@@ -89,9 +98,7 @@ const ConclusionWrapUp = () => {
         </div>
         <div className="retry-button-container">
           {conclusionContent?.effectiveness !== 'strong' ? (
-            <>
-              <button onClick={handleRetryClick}>{t('conclusionWrapUp.chooseStrongerStrategyMessage')}</button>
-            </>
+            <button onClick={handleRetryClick}>{t('conclusionWrapUp.chooseStrongerStrategyMessage')}</button>
           ) : (
             <button onClick={handleFinishClick}>{t('conclusionWrapUp.finishGame')}</button>
           )}

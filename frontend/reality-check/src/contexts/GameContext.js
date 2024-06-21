@@ -17,6 +17,7 @@ const initialState = {
   isRepeatPopupVisible: false,
   isEventPopupVisible: false,
   isRevisePopupVisible: false,
+  isOutroPopupVisible: false,
   inCoda: false, 
   contentError: false, 
   username: null,
@@ -311,8 +312,11 @@ const gameReducer = (state, action) => {
 
     case 'TOGGLE_REPEAT_POPUP':
       return { ...state, isRepeatPopupVisible: !state.isRepeatPopupVisible };
-    
-      case 'TOGGLE_REVISE_POPUP':
+
+    case 'TOGGLE_OUTRO_POPUP':
+      return { ...state, isOutroPopupVisible: !state.isOutroPopupVisible };
+          
+    case 'TOGGLE_REVISE_POPUP':
       return { ...state, isRevisePopupVisible: !state.isRevisePopupVisible };
       
     case 'TOGGLE_EVENT_POPUP':

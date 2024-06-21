@@ -166,8 +166,8 @@
     },
   "gameLesson": {
       "title": "Thank you for playing Reality Check!",
-      "introduction": "Even true facts can be manipulated into false stories. Your best defense against disinformation is recognizing what is being left out of the conversation—it's far more than only spotting lies.",
-      "conclusion": "Stay aware, stay critical. Information is data. Your attention matters more than you might realize."
+      "introduction": "Even true facts can be manipulated into a misleading story. That means your best defense isn't just spotting lies—it's also knowing what information is missing from the conversation.",
+      "conclusion": "Stay aware & stay critical. Your attention matters more than you might realize."
     },
   "repeatPopup": {
       "title": "Do you like how your story ended?",
@@ -176,6 +176,10 @@
   "revisePopup": {
     "title": "How Can You Achieve Peace?",
     "instructions": "You will now get a chance to choose a different counternarrative strategy. The left column shows the narrative strategy you chose when constructing your narrative. Match it with the most effective counternarrative strategy in the right column."
+  },
+  "outroPopup": {
+    "title": "Did Your Counternarrative Work?",
+    "instructions": "You attempted to debunk the misleading narrative, which is a challenging task because it was factually accurate but misleading. If your strategy didn't work, you'll have the chance to try again."
   }
 }
   
