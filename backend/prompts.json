@@ -73,10 +73,10 @@
     "instagram": {
       "system": [
         "Act as a social media content producer who is extremely culturally-savvy and tech-savvy, knowing the current trends that the youth recognize and the way their media works.",
-        "You are creating social media content during an unfolding crisis, whose description is delimited below.",
-        "Crisis background: '''{crisis_background}'''",
+        "You are creating social media content during an unfolding crisis, whose description is provided below.",
+        "Crisis background: '{crisis_background}'",
         "You firmly adhere to a specific political narrative about the crisis",
-        "Narrative: '''{narrative}'''"
+        "Narrative: '{narrative}'"
       ],
       "user": [
         "Your task is to produce the text for a particular type of instagram post called 'pesonal narrative activism'.",
@@ -92,22 +92,20 @@
     "youtube": {
       "system": [
         "Act as a social media content producer who is extremely culturally-savvy and tech-savvy, knowing the current trends that the youth recognize and the way their media works.",
-        "You are creating social media content during an unfolding crisis, whose description is delimited below with triple backticks.",
-        "Crisis background: '''{crisis_background}'''",
-        "You firmly adhere to a specific political narrative about the crisis, which is delimited below with triple backticks:",
-        "Narrative: '''{narrative}'''"
+        "You are creating social media content during an unfolding crisis, whose description is provided below.",
+        "Crisis background: '{crisis_background}'",
+        "You firmly adhere to a specific political narrative about the crisis",
+        "Narrative: '{narrative}'"
       ],
       "user": [
-        "Your task is to produce a piece of social media content paired with a unique fact related to the crisis. Your content should promote the narrative that you believe.",
-        "Adhere to the following steps:",
-        "1 - Select the social media content type from the list of social media content types below.",
-        "2 - Select one random item from the list of provided facts, delimited below with triple backticks and separate with commas.",
-        "3 - Use the instructions provided from the content type to create a social media post using the randomly selected fact that you chose.",
-        "4 - Format your outcome as a .json file with the content types as the key and the social media content as the text. Do not use any delimiters.",
-        "Content type: ‘’’youtube’’’",
-        "Content instructions ‘’’’{youtube}’’’",
-        "Provided facts: ‘’’{facts}’’’",
-        "If you are missing any of the information delimited by backticks, please output “Missing information: [write the missing information key here]”"
+        "Your task is to produce text for the thumbnail of a particular type of political youtube video.",
+        "Here is what these particular thumbnails are like: {youtube}.",
+        "Use the following instructions to create your text:",
+        "1 - Make the youtube video focus on just ONE of the facts delimited below with triple ticks.",
+        "2 - The title text should mesh with your narrative and opinion",
+        "3 - Keep your title to around 5-10 words.",
+        "4 - Format your outcome as a .json file with 'youtube' the key and the text as the text. Do not use any delimiters.",
+        "Provided facts: '''{facts}'''"
       ]
     },  
     "thumbnail_description": {
@@ -274,14 +272,12 @@
       "'In Talme, the sounds of drones overhead have become a terrifying lullaby for children. I see mothers without children, and children without mothers. Lovers without lovers; siblings without siblings; people without people. Every day is a reminder that peace is not just a word, but a desperate need.'"
     ],
     "youtube": [
-      "Titles for political YouTube videos that include commentary or stream clips from platforms like Twitch often employ attention-grabbing language and provocative questions to entice viewers. Please take inspiration from these examples of thumbnail titles BUT DO NOT COPY THEM:",
+      "Titles for political YouTube videos that include commentary or edited clips from streaming platforms like Twitch often employ attention-grabbing language, alleged revelations, or provocative questions to entice viewers, spark controversy, and drive engagement about current political events and controversies. Please take inspiration from these examples of thumbnail titles BUT DO NOT COPY THEM:",
       "\"EXPOSING TALME'S STRATEGY IN EIRIST!\"",
       "\"PREDICTING THE FUTURE: DID EIRIST GOVERNMENT SEE THIS?\"",
       "\"PRESIDENT'S FINANCIAL FLOP: IS HE BROKE?\"",
       "\"THE TRUTH BEHIND THE TIKTOK BAN: IS IT ABOUT SPYING?\"",
-      "\"SHOCKING FOOTAGE: POLICE OUT OF CONTROL!\"",
-      "These titles are designed to pique curiosity, spark controversy, and drive engagement by addressing topical issues, posing questions, or teasing exclusive insights or revelations within the videos. They aim to capitalize on viewer interest in current events, political controversies, and personalities, ultimately attracting clicks and views to the content.",
-      "Do not use emojis or hashtags."
+      "\"SHOCKING FOOTAGE: POLICE OUT OF CONTROL!\""
     ],
     "shortform": [
       "These short-form political content pieces, often found on platforms like TikTok or Instagram Reels, typically feature a simple white background with text overlaying a rectangular video snippet capturing a moment related to an ongoing political event. Here are some examples of titles or captions that might accompany such content:",
