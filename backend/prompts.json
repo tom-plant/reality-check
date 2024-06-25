@@ -79,16 +79,14 @@
         "Narrative: '''{narrative}'''"
       ],
       "user": [
-        "Your task is to produce a piece of social media content paired with a unique fact related to the crisis. Your content should promote the narrative that you believe.",
-        "Adhere to the following steps:",
-        "1 - Select the social media content type from the list of social media content types below.",
-        "2 - Select one random item from the list of provided facts, delimited below with triple backticks and separate with commas.",
-        "3 - Use the instructions provided from the content type to create a social media post using the randomly selected fact that you chose.",
-        "4 - Format your outcome as a .json file with the content types as the key and the social media content as the text. Do not use any delimiters.",
-        "Content type: ‘’’instagram’’’",
-        "Content instructions ‘’’’{instagram}’’’",
-        "Provided facts: ‘’’{facts}’’’",
-        "If you are missing any of the information delimited by backticks, please output “Missing information: [write the missing information key here]”"
+        "Your task is to produce the text for a particular type of instagram post called 'pesonal narrative activism'.",
+        "Definition: '{instagram}'",
+        "Use the following instructions to create your post:",
+        "1 - Make the anecdote from your post focus on just ONE of the facts delimited below with triple ticks.",
+        "2 - The more specific, the more realistic and better. Broad and vague stories should be avoided.",
+        "3 - Keep your text to around 40 words.",
+        "4 - Format your outcome as a .json file with 'instagram' as the key and the text as the text. Do not use any delimiters.",
+        "Provided facts: '''{facts}'''"
       ]
     },
     "youtube": {
@@ -271,9 +269,9 @@
       "International Community: Description: Global entities and foreign nations observing and potentially intervening in Eirist's crisis. Motivations: Ensure stability, support democratic processes, and prevent escalation into wider conflict. Narrative Against: Some factions within Eirist accuse international actors of interference, either to support the government or the opposition."
     ],
     "instagram": [
-      "These types of posts on Instagram typically fall into the category of 'personal narrative activism.' They often feature a visually appealing image overlaid with text, presenting a quote that recounts a personal experience or anecdote during a political event, providing humanizing insight. The use of emotive language to evoke feelings of empathy, solidarity, or urgency among viewers. These posts aim to mobilize people by providing a human perspective on a particular issue or event, fostering empathy and understanding among viewers.",
-      "Here is an example, delimited with triple backticks:",
-      "‘’’In Talme, the sounds of drones overhead have become a terrifying lullaby for children. I see mothers without children, and children without mothers. Lovers without lovers; siblings without siblings; people without people. Every day is a reminder that peace is not just a word, but a desperate need.’’’"
+      "Personal narrative activism posts feature an image with text presenting a quote about a personal experience or anecdote during a political event that humanizes the crisis. These posts use emotive language to evoke empathy, solidarity, or urgency, aiming to mobilize people by providing a human perspective on an issue or event.",
+      "Here is an example:",
+      "'In Talme, the sounds of drones overhead have become a terrifying lullaby for children. I see mothers without children, and children without mothers. Lovers without lovers; siblings without siblings; people without people. Every day is a reminder that peace is not just a word, but a desperate need.'"
     ],
     "youtube": [
       "Titles for political YouTube videos that include commentary or stream clips from platforms like Twitch often employ attention-grabbing language and provocative questions to entice viewers. Please take inspiration from these examples of thumbnail titles BUT DO NOT COPY THEM:",

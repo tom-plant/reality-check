@@ -1,8 +1,8 @@
 // src/services/gameService.js
 import axios from 'axios';
 
-// const API_BASE_URL = 'http://localhost:5000'; 
-const API_BASE_URL = 'https://reality-check-game-f90e2fef9c33.herokuapp.com'; 
+const API_BASE_URL = 'http://localhost:5000'; 
+// const API_BASE_URL = 'https://reality-check-game-f90e2fef9c33.herokuapp.com'; 
 
 
 
