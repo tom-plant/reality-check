@@ -31,7 +31,7 @@
   overflow-y: auto; /* Allows scrolling within the text content div */
 }
 
-.button-container {
+.intro-popup-button-container {
   display: flex;
   justify-content: center; 
   margin-top: 15px;
@@ -48,8 +48,13 @@
   margin-bottom: 20px; /* Spacing between text and buttons */
 }
 
-.start-button, .next-button, .prev-button {
-  background-color: #007bff; /* Green */
+.intro-popup-start-button, .intro-popup-next-button, .intro-popup-prev-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 10px; /* Spacing between buttons */
+  background-color: #007bff;
   color: white;
   transition: background-color 0.3s;
   &:hover {

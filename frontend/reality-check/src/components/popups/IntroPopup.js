@@ -82,18 +82,18 @@ const IntroPopup = () => {
     <div className="popup-overlay">
       <div className="intro-popup-content">
         {renderScreenContent(screens[currentScreen])}
-        <div className="button-container"> 
+        <div className="intro-popup-button-container"> 
           {currentScreen > 0 && (
-            <button className="prev-button" onClick={handlePrev}>
+            <button className="intro-popup-prev-button" onClick={handlePrev}>
               {t('common.previous')}
             </button>
           )}
           {currentScreen < screens.length - 1 ? (
-            <button className="next-button" onClick={handleNext}>
+            <button className="intro-popup-next-button" onClick={handleNext}>
               {t('common.next')}
             </button>
           ) : (
-            <button className="start-button" onClick={handleContinue}>
+            <button className="intro-popup-start-button" onClick={handleContinue}>
               {t('common.start')}
             </button>
           )}

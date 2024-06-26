@@ -37,6 +37,15 @@ body {
   object-fit: cover; 
 }
 
+.stars {
+  top: 0;
+  position: absolute;
+  z-index: -3;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
 .city {
   z-index: -1;
   height: auto;
