@@ -1,10 +1,9 @@
 import React from 'react';
 import './NewsArticle.css';  
 
-const NewsArticle = ({ article, photo }) => {
-
+const NewsArticle = ({ article, photo, isModal }) => {
   return (
-    <div className="news-article">
+    <div className={`news-article ${isModal ? 'modal' : ''}`}>
       <h1 className="headline">{article.headline}</h1>
       <div className="article-content">
         {photo && <img src={photo} alt="News Visual" className="news-photo" />}
@@ -15,5 +14,3 @@ const NewsArticle = ({ article, photo }) => {
 };
 
 export default NewsArticle;
-
-

@@ -6,6 +6,11 @@
     overflow: hidden;
 }
 
+.news-article.modal {
+    color: black; /* Override text color for modal */
+    padding: 10px;
+}
+
 .headline {
     font-size: 24px;
     font-weight: bold;

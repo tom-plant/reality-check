@@ -7,6 +7,7 @@ import NewsArticle from '../news/NewsArticle';
 import InstagramPost from '../news/InstagramPost';
 import ShortformContent from '../news/ShortformContent';
 import YouTubeContent from '../news/YouTubeContent';
+import Modal from '../popups/Modal'; 
 import './NarrativeImpact.css';
 
 const NarrativeImpact = () => {
@@ -19,6 +20,8 @@ const NarrativeImpact = () => {
     shortform: true,
   });
   const [retryCount, setRetryCount] = useState(0);
+  const [modalContent, setModalContent] = useState(null); 
+  const [showModal, setShowModal] = useState(false);  
   const dispatch = useGameDispatch();
 
   const handleRetry = async (contentType) => {
@@ -55,6 +58,16 @@ const NarrativeImpact = () => {
   const handleRefresh = () => {
     window.location.reload();
     // dispatch({ type: 'SET_CURRENT_VIEW', payload: 'INTRODUCE_EVENT' });
+  };
+
+  const handleContentClick = (content) => {
+    setModalContent(content);
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    setModalContent(null);
   };
 
   useEffect(() => {
@@ -95,10 +108,19 @@ const NarrativeImpact = () => {
               </div>
             ) : (
               newsArticleContent && (
-                <NewsArticle
-                  article={newsArticleContent.news_article}
-                  photo={newsArticleContent.news_photo}
-                />
+                <div onClick={() => handleContentClick(
+                  <NewsArticle
+                    article={newsArticleContent.news_article}
+                    photo={newsArticleContent.news_photo}
+                    isModal={true}
+                  />
+                )}>
+                  <NewsArticle
+                    article={newsArticleContent.news_article}
+                    photo={newsArticleContent.news_photo}
+                    isModal={false}
+                  />
+                </div>
               )
             )}
             {loadingStates.instagram ? (
@@ -108,7 +130,11 @@ const NarrativeImpact = () => {
               </div>
             ) : (
               instagramContent && instagramContent.instagram && (
-                <InstagramPost text={instagramContent.instagram.instagram} />
+                <div onClick={() => handleContentClick(
+                  <InstagramPost text={instagramContent.instagram.instagram} isModal={true} />
+                )}>
+                  <InstagramPost text={instagramContent.instagram.instagram} isModal={false} />
+                </div>
               )
             )}
             {loadingStates.youtube ? (
@@ -118,10 +144,19 @@ const NarrativeImpact = () => {
               </div>
             ) : (
               youtubeContent && youtubeContent.youtube && (
-                <YouTubeContent
-                  thumbnail={youtubeContent.youtube_thumbnail}
-                  description={youtubeContent.youtube.youtube}
-                />
+                <div onClick={() => handleContentClick(
+                  <YouTubeContent
+                    thumbnail={youtubeContent.youtube_thumbnail}
+                    description={youtubeContent.youtube.youtube}
+                    isModal={true} 
+                  />
+                )}>
+                  <YouTubeContent
+                    thumbnail={youtubeContent.youtube_thumbnail}
+                    description={youtubeContent.youtube.youtube}
+                    isModal={false} 
+                  />
+                </div>
               )
             )}
             {loadingStates.shortform ? (
@@ -131,15 +166,27 @@ const NarrativeImpact = () => {
               </div>
             ) : (
               shortformContent && shortformContent.shortform && (
-                <ShortformContent
-                  content={shortformContent.shortform.shortform}
-                  image={shortformContent.shortform_image}
-                />
+                <div onClick={() => handleContentClick(
+                  <ShortformContent
+                    content={shortformContent.shortform.shortform}
+                    image={shortformContent.shortform_image}
+                    isModal={true}
+                  />
+                )}>
+                  <ShortformContent
+                    content={shortformContent.shortform.shortform}
+                    image={shortformContent.shortform_image}
+                    isModal={false}
+                  />
+                </div>
               )
             )}
           </>
         )}
       </div>
+      <Modal show={showModal} onClose={closeModal}>
+        {modalContent}
+      </Modal>
     </div>
   );
 };

@@ -1,46 +1,57 @@
-.shortform-content {
+/* ShortformContent.css */
+:root {
+    --shortform-text-size: 20px; /* Default text size */
+    --overlay-image-width: 100%; /* Default overlay image width */
+  }
+  
+  .shortform-content {
     display: block;
     position: relative;
     width: 100%;
-}
-
-.background-image {
+  }
+  
+  .shortform-content.modal {
+    --shortform-text-size: 25px; /* Larger text size for modal */
+    --overlay-image-width: 80%; /* Adjusted overlay image width for modal */
+  }
+  
+  .background-image {
     width: 100%;
-    height: auto; 
-    display: block; 
-}
-
-.shortform-text {
+    height: auto;
+    display: block;
+  }
+  
+  .shortform-text {
     position: absolute;
-    top: 20%; 
-    left: 50%; 
+    top: 20%;
+    left: 50%;
     transform: translate(-50%, -50%);
     font-family: 'Arial', sans-serif;
-    font-size: 20px;
+    font-size: var(--shortform-text-size); /* Use CSS variable for font size */
     color: black;
-    text-shadow: 
-        0 0 4px yellow,
-        0 0 4px yellow,
-        0 0 4px yellow,
-        0 0 4px yellow,
-        0 0 4px yellow;    
+    text-shadow:
+      0 0 4px yellow,
+      0 0 4px yellow,
+      0 0 4px yellow,
+      0 0 4px yellow,
+      0 0 4px yellow;
     width: 80%;
-    text-align: center; 
-}
-
-.shortform-content::after {
+    text-align: center;
+  }
+  
+  .shortform-content::after {
     content: "";
     display: block;
     clear: both;
-}
-
-.overlay-image {
+  }
+  
+  .overlay-image {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 100%; /* Adjust the width as needed */
-    height: auto; /* Maintain aspect ratio */
+    width: var(--overlay-image-width); /* Use CSS variable for width */
+    height: auto;
     display: block;
-}
-
+  }
+  

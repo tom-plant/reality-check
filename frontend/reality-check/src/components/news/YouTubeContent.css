@@ -1,29 +1,44 @@
-.youtube-content {
+/* YouTubeContent.css */
+:root {
+    --youtube-text-size: clamp(8px, 3vw, 12px); /* Default text size */
+    --youtube-thumbnail-width: calc(100% - 62%); /* Default thumbnail width */
+    --youtube-thumbnail-height: calc(80% - 0%); /* Default thumbnail height */
+    --youtube-thumbnail-top: 10.5%; /* Default thumbnail top position */
+    --youtube-thumbnail-left: 4.5%; /* Default thumbnail left position */
+  }
+  
+  .youtube-content {
     display: block; 
     position: relative;
     width: 100%;
-}
-
-.background-image {
+  }
+  
+  .youtube-content.modal {
+    --youtube-text-size: clamp(16px, 6vw, 40px); /* Larger text size for modal */
+    --youtube-thumbnail-width: calc(100% - 62%); /* Larger thumbnail width for modal */
+    --youtube-thumbnail-height: calc(85% - 0%); /* Adjusted thumbnail height for modal */
+    --youtube-thumbnail-top: 8%; /* Adjusted thumbnail top position for modal */
+    --youtube-thumbnail-left: 4%; /* Adjusted thumbnail left position for modal */
+  }
+  
+  .background-image {
     width: 100%;
     height: auto; /* Adjust height automatically to preserve aspect ratio */
     display: block; /* Ensures no extra space below the image */
-}
-
-.actual-thumbnail {
+  }
+  
+  .actual-thumbnail {
     position: absolute;
-    top: 10.5%; /* Adjust this value to position the thumbnail within the template */
-    left: 4.5%; /* Adjust this value to center the thumbnail horizontally */
-    width: 20%; /* You might adjust this to fit the placeholder in the template */
-    height: auto; /* Maintain aspect ratio */
+    top: var(--youtube-thumbnail-top); /* Use CSS variable for top position */
+    left: var(--youtube-thumbnail-left); /* Use CSS variable for left position */
+    width: var(--youtube-thumbnail-width); /* Use CSS variable for width */
+    height: var(--youtube-thumbnail-height); /* Use CSS variable for height */
     transform: translateY(-0%); /* Optionally adjust vertical centering based on 'top' */
     object-fit: cover; /* Ensure the image covers the entire space */
     object-position: center; /* Center the image within the space */
-    width: calc(100% - 62%); /* Adjust to fill the desired width, minus the left and right offset */
-    height: calc(80% - 0%); 
-}
-
-.youtube-description {
+  }
+  
+  .youtube-description {
     position: absolute;
     text-align: left;
     bottom: 10%;
@@ -31,7 +46,7 @@
     left: 45%;
     right: 10px;
     font-family: 'Verdana', sans-serif;
-    font-size: clamp(8px, 3vw, 12px); /* Adjusted for better readability */
+    font-size: var(--youtube-text-size); /* Use CSS variable for font size */
     color: white;
     padding: 0 10px;
     box-sizing: border-box;
@@ -44,4 +59,5 @@
     line-height: 1.2em; /* Adjust line height for better text spacing */
     max-height: 3.6em; /* Should be 3 * line-height */
     white-space: normal; /* Ensure text wraps within the box */
-}
+  }
+  

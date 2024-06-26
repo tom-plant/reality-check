@@ -1,8 +1,17 @@
+/* InstagramPost.css */
+:root {
+    --instagram-text-size: clamp(8px, 4vw, 16px); /* Default text size */
+}
+
 .instagram-post {
     position: relative; 
     width: 100%; 
     display: block;
     height: auto; 
+}
+
+.instagram-post.modal {
+    --instagram-text-size: clamp(10px, 6vw, 18px); /* Larger text size for modal */
 }
 
 .background-image {
@@ -18,7 +27,7 @@
     transform: translateY(-20%); 
     font-family: 'Courier New', Courier, monospace; 
     font-weight: bold;
-    font-size: clamp(8px, 4vw, 12px); 
+    font-size: var(--instagram-text-size); /* Use CSS variable for font size */
     color: white;
     width: 80%; 
     padding: 10px; 
@@ -30,5 +39,3 @@
     display: block;
     clear: both;
 }
-
-

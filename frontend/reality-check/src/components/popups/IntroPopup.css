@@ -48,14 +48,6 @@
   margin-bottom: 20px; /* Spacing between text and buttons */
 }
 
-button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin: 0 10px; /* Spacing between buttons */
-}
-
 .start-button, .next-button, .prev-button {
   background-color: #007bff; /* Green */
   color: white;

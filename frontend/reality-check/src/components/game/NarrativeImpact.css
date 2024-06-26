@@ -12,9 +12,34 @@
   height: 100%;
   overflow-y: auto; /* Enables vertical scrolling */
   position: relative; /* Establishes stacking context if needed */
-  max-width: 320px; /* Ensures it matches the width of the NarrativeImpact if necessary */
-  margin: 0 auto; /* Centers the container horizontally */
+  margin: 0 ; /* Centers the container horizontally */
   padding: 0px;
+}
+
+
+/* Custom Scrollbar for WebKit-based browsers */
+.scrollable-container::-webkit-scrollbar {
+  width: 12px; /* Width of the entire scrollbar */
+}
+
+.scrollable-container::-webkit-scrollbar-track {
+  background: transparent; /* Background of the scrollbar track */
+}
+
+.scrollable-container::-webkit-scrollbar-thumb {
+  background-color: #333; /* Color of the scrollbar handle */
+  border-radius: 10px; /* Roundness of the scrollbar handle */
+  border: 3px solid transparent; /* Padding around the scrollbar handle */
+}
+
+.scrollable-container::-webkit-scrollbar-thumb:hover {
+  background: transparent; /* Color of the scrollbar handle on hover */
+}
+
+/* Custom Scrollbar for Firefox */
+.scrollable-container {
+  scrollbar-width: thin; /* Thin scrollbar */
+  scrollbar-color: #333 transparent; /* Scrollbar handle and track */
 }
 
 
