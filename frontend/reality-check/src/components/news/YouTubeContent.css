@@ -1,6 +1,6 @@
 /* YouTubeContent.css */
 :root {
-    --youtube-text-size: clamp(8px, 3vw, 12px); /* Default text size */
+    --youtube-text-size: clamp(15px, 3vw, 14px); /* Default text size */
     --youtube-thumbnail-width: calc(100% - 62%); /* Default thumbnail width */
     --youtube-thumbnail-height: calc(80% - 0%); /* Default thumbnail height */
     --youtube-thumbnail-top: 10.5%; /* Default thumbnail top position */
@@ -41,7 +41,7 @@
   .youtube-description {
     position: absolute;
     text-align: left;
-    bottom: 10%;
+    bottom: 5%;
     top: 5%;
     left: 45%;
     right: 10px;
@@ -54,10 +54,10 @@
     overflow: hidden;
     display: -webkit-box; /* Use the webkit line clamp approach */
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3; /* Limit text to three lines */
+    -webkit-line-clamp: 4; /* Limit text to three lines */
     text-overflow: ellipsis; /* Adds ellipsis after the clamp limit */
     line-height: 1.2em; /* Adjust line height for better text spacing */
-    max-height: 3.6em; /* Should be 3 * line-height */
+    max-height: 4.6em; /* Should be 3 * line-height */
     white-space: normal; /* Ensure text wraps within the box */
   }
   

@@ -10,6 +10,14 @@ import YouTubeContent from '../news/YouTubeContent';
 import Modal from '../popups/Modal'; 
 import './NarrativeImpact.css';
 
+import template1 from '../../assets/instagram1.PNG';
+import template2 from '../../assets/instagram2.PNG';
+import template3 from '../../assets/instagram3.PNG';
+import template4 from '../../assets/instagram4.PNG';
+import template5 from '../../assets/instagram5.PNG';
+import template6 from '../../assets/instagram6.PNG';
+import template7 from '../../assets/instagram7.PNG';
+
 const NarrativeImpact = () => {
   const { newsArticleContent, instagramContent, youtubeContent, shortformContent, selectedNarrative, contentError } = useGameState();
   const { selectNarrativeAndSetContent, selectNewsArticleContent, selectInstagramContent, selectYouTubeContent, selectShortformContent } = useGameFunction();
@@ -22,6 +30,7 @@ const NarrativeImpact = () => {
   const [retryCount, setRetryCount] = useState(0);
   const [modalContent, setModalContent] = useState(null); 
   const [showModal, setShowModal] = useState(false);  
+  const [instagramTemplate, setInstagramTemplate] = useState(null);
   const dispatch = useGameDispatch();
 
   const handleRetry = async (contentType) => {
@@ -76,6 +85,9 @@ const NarrativeImpact = () => {
     }
     if (instagramContent) {
       setLoadingStates((prevState) => ({ ...prevState, instagram: false }));
+      if (!instagramTemplate) {
+        setInstagramTemplate(getRandomTemplate());
+      }
     }
     if (youtubeContent) {
       setLoadingStates((prevState) => ({ ...prevState, youtube: false }));
@@ -84,6 +96,13 @@ const NarrativeImpact = () => {
       setLoadingStates((prevState) => ({ ...prevState, shortform: false }));
     }
   }, [newsArticleContent, instagramContent, youtubeContent, shortformContent]);
+
+  const templates = [template1, template2, template3, template4, template5, template6, template7];
+  
+  const getRandomTemplate = () => {
+    const randomIndex = Math.floor(Math.random() * templates.length);
+    return templates[randomIndex];
+  };
 
 
   return (
@@ -131,9 +150,9 @@ const NarrativeImpact = () => {
             ) : (
               instagramContent && instagramContent.instagram && (
                 <div onClick={() => handleContentClick(
-                  <InstagramPost text={instagramContent.instagram.instagram} isModal={true} />
+                  <InstagramPost text={instagramContent.instagram.instagram} template={instagramTemplate} isModal={true} />
                 )}>
-                  <InstagramPost text={instagramContent.instagram.instagram} isModal={false} />
+                  <InstagramPost text={instagramContent.instagram.instagram} template={instagramTemplate} isModal={false} />
                 </div>
               )
             )}
