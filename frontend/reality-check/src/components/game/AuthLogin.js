@@ -29,6 +29,7 @@ const AuthLogin = ({ setCurrentIntroView }) => {
       await loginUser(localUsername, localEmail); // loginUser function from your context
       setIsLoggedIn(true); // Set login status to true upon successful login
       setCurrentIntroView('EXPO_INBOX');
+      dispatch({ type: 'TOGGLE_EMAIL_POPUP' });
     } else {
       // Trigger bump animation if fields are empty
       setBump(true);

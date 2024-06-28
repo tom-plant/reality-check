@@ -45,7 +45,7 @@ const BuildNarrativeDisplay = () => {
     }
   };
   
-    const isButtonEnabled = selectedActor && Array.isArray(selectedStrat) && selectedStrat.length === 2;
+    const isButtonEnabled = selectedActor && Object.keys(selectedActor).length > 0 && Array.isArray(selectedStrat) && selectedStrat.length === 2;
     
     return (
       <div className="build-narratives-display">

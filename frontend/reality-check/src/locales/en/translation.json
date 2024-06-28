@@ -63,11 +63,11 @@
         "introduction": "This tool was developed by the Civic Resilience Project for times just like these—when disinformation threatens our nation.",
         "whatYouWillDoTitle": "What You Will Do:",
         "engageScenarios": "1. Play a simulated version of the ongoing crisis.",
-        "informedDecisionMaking": "2. Create a narrative about who's to blame.",
+        "informedDecisionMaking": "2. Create a misleading narrative about who's to blame.",
         "criticalAnalysis": "3. Watch your narrative change the outcome of the crisis—for better or for worse.",
         "changeOutcome": "4. Revise your narrative to improve your story's outcome.",
         "conclusion": "This simulation is more than an exercise; it's a vital part of our country's response strategy.",
-        "readyToBegin": "Are you ready to begin? Your help is crucial, now more than ever."
+        "readyToBegin": "Are you ready to begin?"
       },
       "briefing": {
           "title": "Crisis Overview",
@@ -161,8 +161,7 @@
       "chooseStrongerStrategyMessage": "Choose a Stronger Strategy",
       "strengthOfCounter": "Strength of Counternarrative",
       "electionOutcome": "Election Outcome: ",
-      "didYouPreserve": "Did you preserve the peace?",
-      "closing": "The Civic Resilience Project Team"
+      "didYouPreserve": "Did you preserve the peace?"
     },
   "gameLesson": {
       "title": "Thank you for playing Reality Check!",
@@ -180,6 +179,10 @@
   "outroPopup": {
     "title": "Did Your Counternarrative Work?",
     "instructions": "You attempted to debunk the misleading narrative, which is a challenging task because it was factually accurate but misleading. If your strategy didn't work, you'll have the chance to try again."
+  },
+  "emailPopup": {
+    "title": "Today is election day.",
+    "instructions": "As you wake up and check your email, you discover that something went wrong."
   }
 }
   

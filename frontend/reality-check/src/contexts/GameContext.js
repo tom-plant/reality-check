@@ -10,7 +10,7 @@ const GameFunctionContext = createContext();
 const initialState = {
   currentPhase: 'game', 
   currentIntroView: 'AUTH_LOGIN',
-  currentView: 'SELECT_FACTS', 
+  currentView: 'NARRATIVE_IMPACT', 
   currentTurnPointView: 'ALERT',
   currentOutroView: 'CONCLUSION_WRAP_UP',
   introduceEventVisits: 0,
@@ -18,6 +18,7 @@ const initialState = {
   isEventPopupVisible: false,
   isRevisePopupVisible: false,
   isOutroPopupVisible: false,
+  isEmailPopupVisible: false,
   inCoda: false, 
   contentError: false, 
   username: null,
@@ -50,7 +51,7 @@ const initialState = {
   isIntroPopupVisibile: true,
   timerHasEnded: false, 
   isLoadingNarratives: false,
-  isLoadingNews: false,
+  isLoadingNews: true,
   isLoadingConclusion: false,
   userLanguage: 'English', 
 };
@@ -315,6 +316,9 @@ const gameReducer = (state, action) => {
 
     case 'TOGGLE_OUTRO_POPUP':
       return { ...state, isOutroPopupVisible: !state.isOutroPopupVisible };
+    
+    case 'TOGGLE_EMAIL_POPUP':
+      return { ...state, isEmailPopupVisible: !state.isEmailPopupVisible };
           
     case 'TOGGLE_REVISE_POPUP':
       return { ...state, isRevisePopupVisible: !state.isRevisePopupVisible };

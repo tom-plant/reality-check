@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useGameState } from '../../contexts/GameContext'; 
 import { useTranslation } from 'react-i18next'; 
 import gmailBackground from '../../assets/gmail_inbox.png';
 import EmailRow from '../common/EmailRow'; 
@@ -6,6 +7,7 @@ import './ExpoInbox.css';
 
 
 const ExpoInbox = ({ setCurrentIntroView }) => {
+  const { isEmailPopupVisible } = useGameState();
   const { t } = useTranslation();
 
   const newEmail = {
@@ -34,12 +36,14 @@ const ExpoInbox = ({ setCurrentIntroView }) => {
   const [combinedEmails, setCombinedEmails] = useState(initialEmails);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setCombinedEmails([newEmail, ...initialEmails]);
-    }, 2000); // delay
-
-    return () => clearTimeout(timer);
-  }, [initialEmails, newEmail]);
+    if (!isEmailPopupVisible) {
+      const timer = setTimeout(() => {
+        setCombinedEmails([newEmail, ...initialEmails]);
+      }, 2000); // delay
+  
+      return () => clearTimeout(timer);
+    }
+  }, [initialEmails, newEmail, isEmailPopupVisible]);
 
   
   return (

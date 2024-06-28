@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useGameState, useGameDispatch, useGameFunction } from '../../contexts/GameContext';
 import LoadingIcon from '../common/LoadingIcon';
+import SkeletonWrapper from '../common/SkeletonWrapper';
 import NewsArticle from '../news/NewsArticle';
 import InstagramPost from '../news/InstagramPost';
 import ShortformContent from '../news/ShortformContent';
@@ -122,8 +123,7 @@ const NarrativeImpact = () => {
           <>
             {loadingStates.newsArticle ? (
               <div className="news-loading-container">
-                <LoadingIcon />
-                <p>Generating news article...</p>
+                <SkeletonWrapper type="news-article" lines={4} squares={1} image />
               </div>
             ) : (
               newsArticleContent && (
@@ -144,8 +144,7 @@ const NarrativeImpact = () => {
             )}
             {loadingStates.instagram ? (
               <div className="news-loading-container">
-                <LoadingIcon />
-                <p>Generating Instagram post...</p>
+                <SkeletonWrapper type="instagram" image />
               </div>
             ) : (
               instagramContent && instagramContent.instagram && (
@@ -158,8 +157,7 @@ const NarrativeImpact = () => {
             )}
             {loadingStates.youtube ? (
               <div className="news-loading-container">
-                <LoadingIcon />
-                <p>Generating YouTube content...</p>
+                <SkeletonWrapper type="youtube" image />
               </div>
             ) : (
               youtubeContent && youtubeContent.youtube && (
@@ -180,8 +178,7 @@ const NarrativeImpact = () => {
             )}
             {loadingStates.shortform ? (
               <div className="news-loading-container">
-                <LoadingIcon />
-                <p>Generating shortform content...</p>
+                <SkeletonWrapper type="shortform" image />
               </div>
             ) : (
               shortformContent && shortformContent.shortform && (
