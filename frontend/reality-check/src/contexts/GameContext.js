@@ -8,9 +8,9 @@ const GameDispatchContext = createContext();
 const GameFunctionContext = createContext(); 
 
 const initialState = {
-  currentPhase: 'game', 
+  currentPhase: 'intro', 
   currentIntroView: 'AUTH_LOGIN',
-  currentView: 'NARRATIVE_IMPACT', 
+  currentView: 'SELECT_FACTS', 
   currentTurnPointView: 'ALERT',
   currentOutroView: 'CONCLUSION_WRAP_UP',
   introduceEventVisits: 0,
@@ -51,7 +51,7 @@ const initialState = {
   isIntroPopupVisibile: true,
   timerHasEnded: false, 
   isLoadingNarratives: false,
-  isLoadingNews: true,
+  isLoadingNews: false,
   isLoadingConclusion: false,
   userLanguage: 'English', 
 };

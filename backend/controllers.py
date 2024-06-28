@@ -202,6 +202,7 @@ def select_news_article_controller(narrative, strategy):
         })
 
     image_description_response = get_chatgpt_response(prompts_image_description)
+    current_app.logger.debug(f"News Image Description: {prompts_image_description}")
     if "error" in image_description_response:
         return image_description_response, 500
 
@@ -283,6 +284,7 @@ def select_youtube_controller(narrative, strategy):
         })
 
     thumbnail_description_response = get_chatgpt_response(prompts_thumbnail_description)
+    current_app.logger.debug(f"YouTube Thumbnail Description: {prompts_thumbnail_description}")
     if "error" in thumbnail_description_response:
         return thumbnail_description_response, 500
 
@@ -336,6 +338,7 @@ def select_shortform_controller(narrative, strategy):
         })
 
     shortform_image_description_response = get_chatgpt_response(prompts_shortform_description)
+    current_app.logger.debug(f"ShortForm Image Description: {prompts_shortform_description}")
     if "error" in shortform_image_description_response:
         return shortform_image_description_response, 500
 

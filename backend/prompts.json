@@ -13,7 +13,7 @@
         "Follow these steps:",
         "1 - Write your narrative by using this strategy (but never mention the strategy's name): '{strategy}'",
         "2 - Firmly assert that the selected actor, {actor}, is to blame for the crisis.",
-        "3 - Make the narrative logical, extremely readable, straightforward, smooth, declarative, argumentative, and compelling without overly complex language.",
+        "3 - Make the narrative logical, extremely readable, straightforward, smooth, declarative, argumentative, and compelling without overly complex language. Prioritize clarity and flow.",
         "4 - Only reference one or more selected facts (below with triple backticks) if necessary. Avoid disrupting the narrative's flow.",
         "5 - Assume readers know the context of the crisis; do not repeat it.",
         "6 - Keep your narrative to a maximum of 50 words.",
@@ -51,10 +51,10 @@
     },
     "image_description": {
       "system": [
-        "Act as a creative content writer who specializes in generating vivid and detailed descriptions for images."
+        "Act as an senior prompt engineer for image-generating AI."
       ],
       "user": [
-        "Your task is to generate a vivid and detailed description of a photo that you would likely see accompanying the given headline, delimited below with triple backticks.",
+        "Your task is to generate a description of a photo that you would likely see accompanying the given headline, delimited below with triple backticks. This description will be used within a prompt for image-generating AI.",
         "Adhere to the following guidelines:",
         "1 - The description should capture the essence and context of the headline, providing a visual scenario that aligns with the headline.",
         "2 - The scene should resemble a contemporary photograph taken by a photojournalist. Avoid any fictional elements, people, or text.",
@@ -65,7 +65,7 @@
     },
     "news_photo": {
       "system": [
-        "Produce an image based on the following description:",
+        "Produce a photorealistic image based on the following description:",
         "Image description: {image_description}"
       ]
     },
@@ -109,10 +109,10 @@
     },  
     "thumbnail_description": {
       "system": [
-        "Act as a creative content writer who specializes in generating vivid and detailed descriptions for images."
+        "Act as an senior prompt engineer for image-generating AI."
       ],
       "user": [
-        "Your task is to generate a vivid and detailed description for a YouTube thumbnail that you would likely see accompanying the given video title.",
+        "Your task is to generate a description for a YouTube thumbnail that you would likely see accompanying the given video title. This description will be used within a prompt for image-generating AI.",
         "Adhere to the following guidelines:",
         "1 - The description should depict a scene related to the title, providing a visual scenario that aligns with the video content.",
         "2 - The scene should resemble a contemporary and eye-catching image suitable for a YouTube thumbnail. Avoid any fictional elements, people, or text.",
@@ -150,10 +150,10 @@
     },
     "shortform_image_description": {
       "system": [
-        "Act as a creative content writer who specializes in generating vivid and detailed descriptions for images."
+        "Act as an senior prompt engineer for image-generating AI."
       ],
       "user": [
-        "Your task is to generate a vivid and detailed description of a photo you would see used in a TikTok or some other short-form content.",
+        "Your task is to generate a vivid and detailed description of a photo you would see used in a TikTok or some other short-form content. This description will be used within a prompt for image-generating AI.",
         "Adhere to the following guidelines:",
         "1 - The description should capture a real-life scene related to the text, providing a visual scenario that aligns with the content.",
         "2 - The scene should resemble a contemporary photograph taken by a photojournalist. Avoid any fictional elements, people, or text.",        
@@ -164,7 +164,7 @@
     },
     "shortform_image": {
       "system": [
-        "Produce an image based on the following description:",
+        "Produce an photorealistic image based on the following description:",
         "Short form image description: '''{shortform_image_description}'''"
       ]
     },
@@ -181,7 +181,7 @@
         "2 - Imagine how society would respond to the escalation of the crisis in light of the widespread adherence to the selected narrative delimited below with triple backticks.",
         "3 - Create a concise and definitive end to the election crisis that plays out how the crisis ends based on specific reactions that society took to the escalation based on their pre-existing beliefs and suspicions motivated by the selected narrative. The crisis should end according to how the event-narrative pair would most likely correspond to one of the potential outcomes below, delimited by triple backticks.",
         "4 - Your outcome should be rich in concrete details and seek to build a believable world.",
-        "5 - Keep your response to around 100 words total or 4 sentences, making sure to adequately wrap up the story and tell how the election crisis ultimately concludes.",
+        "5 - Keep your response to around 80 words total or 3 sentences, making sure to adequately wrap up the story and tell how the election crisis ultimately concludes.",
         "Crisis escalation: '''{event}'''",
         "Selected narrative: '''{narrative}'''",
         "Potential outcomes: '''{outcomes}'''"
@@ -189,40 +189,33 @@
     },
     "counter_narrative": {
       "system": [
-        "Act as a senior governmental strategic communications lead working to counter information warfare who writes using concise language that straightforwardly for a broad audience and conveys information without sacrificing detail or precision.",
-        "You are working to counter misleading political narratives during an unfolding crisis, whose description is delimited below with triple backticks.",
-        "Crisis background: '''{crisis_background}'''",
-        "Within this crisis are multiple actors, who have taken various actions already, whose descriptions are delimited below with triple backticks:",
-        "Actor background: '''{actor_background}'''"
+        "Act as a political commentator who effortlessly captures the gist of a situation using straightforward language that conveys information without sacrificing detail or precision.",
+        "You are working to counter misleading political narratives during an unfolding crisis.",
+        "Crisis background: '{crisis_background}'",
+        "Within this crisis are multiple actors, who have taken various actions already, whose descriptions are given below.",
+        "Actor backgrounds: '{actor_background}'"
       ],
       "user": [
-        "Your task is to generate a concise and straightforward “political counter-narrative” about the crisis, whose definition is delimited below with triple backticks.",
-        "Definition of a political counter-narrative: '''{counternarrative_def}'''",
-        "Construct a readable and clear political counternarrative in one single straightforward sentence about the crisis. You should write your according to the selected counter narrative strategies and using the additional context to combat the flawed narrative, all of which are delimited below with triple backticks.",
-        "Adhere to the following guidelines, listed as steps:",
-        "1 - Select the provided counternarrative strategy delimited with triple backticks below to guide how you will write your counternarrative.",
-        "2 - Your counternarrative should be extremely readable and straightforward, smooth and understandable, declarative, argumentative, and compelling without using overly complex language. Keep your narrative to a single sentence, with a maximum of 30 words.",
-        "3 - If specified in the narrative strategy, use the additional context to support your counter-narrative.",
-        "4 - Avoid using the word \"counter-narrative”; never provide an \"alternative\" or \"contrast”; and never reference the structure of the statement.",
-        "5 - Only give one narrative option and avoid using the the word \"narrative” or giving a title; never provide an \"alternative\" or \"contrast”; and never reference the structure of the statement.",
-        "Selected counter-narrative strategies: '''{counter_strategy}'''",
-        "Additional context: '''{updated_facts}",
-        "Flawed narrative: '''{narrative}'''"
+        "Your task is to generate a concise and straightforward 'political counter-narrative' about the crisis to combat the flawed narrative delimited below with triple backticks. Definition: '{counternarrative_def}'",
+        "Follow these steps:",
+        "1 - Write your counternarrative by using this strategy (but never mention the strategy's name): '{counter_strategy}'.",
+        "2 - Your counternarrative should be extremely readable and straightforward, smooth and understandable, declarative, argumentative, and compelling without using overly complex language. Prioritize clarity and flow.",
+        "3 - If and only if necessary, reference the additional context (below with triple backticks) to support your counternarrative. Avoid disrupting the narrative's flow.",
+        "4 - Keep your narrative to a maximum of 50 words.",
+        "5 - Print the text alone. Avoid saying the strategy name, using the word 'narrative', giving a title, providing an 'alternative' or 'contrast', and referencing the statement's structure",
+        "Flawed narrative: '''{narrative}'''",
+        "Additional context: '''{updated_facts}'''"
       ],
       "user_followup": [
-        "You just generated a political counternarrative about a selected strategy. Now, you will use a different selected narrative strategy delimited below with triple backticks, you will generate a wholly unique narrative.",
-        "Definition of a political counter-narrative: '''{counternarrative_def}'''",
-        "Construct a readable and clear political counternarrative in one single straightforward sentence about the crisis. You should write your according to the selected counter narrative strategies and using the additional context to combat the flawed narrative, all of which are delimited below with triple backticks.",
+        "You just generated a political counternarrative with a particular counternarrative strategy. Now, you have to make a fundamentally distinct version using a new counternarrative-writing strategy. However, you must never mention the new strategy name. ",
         "Follow these steps:",
-        "1 - Select the provided counternarrative strategy delimited with triple backticks below to guide how you will write your counternarrative. Lean into the strategy and make sure your output adheres to it.",
-        "2 - Your counternarrative should be extremely readable and straightforward, smooth and understandable, declarative, argumentative, and compelling without using overly complex language. Keep your narrative to a single sentence, with a maximum of 30 words.",
-        "3 - If specified in the narrative strategy, use the additional context to support your counter-narrative.",
-        "4 - Avoid using the word \"counter-narrative”; never provide an \"alternative\" or \"contrast”; and never reference the structure of the statement.",
-        "5 - Only give one narrative option and avoid using the the word \"narrative” or giving a title; never provide an \"alternative\" or \"contrast”; and never reference the structure of the statement.",
-        "6 - Only give one narrative option and print the text alone. Avoid using the the word \"narrative” or giving a title; never provide an \"alternative\" or \"contrast”; and never reference the structure of the statement.",
-        "Selected counter-narrative strategies: '''{counter_strategy}'''",
-        "Additional context: '''{updated_facts}",
-        "Flawed narrative: '''{narrative}'''"
+        "1 - Write your counternarrative by using this strategy (but never mention the strategy's name): '{counter_strategy}'. Lean into it.",
+        "2 - Your counternarrative should be extremely readable and straightforward, smooth and understandable, declarative, argumentative, and compelling without using overly complex language. Prioritize clarity and flow.",
+        "3 - If and only if necessary, reference the additional context (below with triple backticks) to support your counternarrative. Avoid disrupting the narrative's flow.",
+        "4 - Keep your narrative to a maximum of 50 words.",
+        "5 - Print the text alone. Avoid saying the strategy name, using the word 'narrative', giving a title, providing an 'alternative' or 'contrast', and referencing the statement's structure",
+        "Flawed narrative: '''{narrative}'''",
+        "Additional context: '''{updated_facts}'''"
       ]
     },
     "election_outcome": {
@@ -257,11 +250,11 @@
     "narrative_def": "A political narrative is a definitive and incisive framing of an event that presents a compelling story by weaving together facts in a way that creates a logical cause-and-effect sequence and an implicit evaluation of what is good and what is bad according to the intent and strategy of the author.",
     "counternarrative_def": "A counter-narrative is a strategic response to a flawed narrative and seeks to challenge and rectify its inaccuracies or biases. It offers an alternative perspective or interpretation of events, often by highlighting overlooked facts, emphasizing different causal relationships, or discrediting the source and intentions of the original narrative.",
     "actor_background": [
-      "Eirist Government: Description: The ruling body of Eirist, currently holding emergency powers. Motivations: Maintain order, control the narrative, and preserve peace and security amidst the crisis. Narrative Against: Accused of either orchestrating the crisis to delay elections and extend power or failing to protect the nation from foreign cyberattacks.",
-      "Rural Militias: Description: Loosely organized groups formed in rural areas, consisting of conservative voters and immigrant populations. Motivations: Protect their communities, restore order, and oppose the government's emergency measures if they overstep reasonable boundaries. Narrative Against: Seen as potential instigators of violence or being manipulated by foreign powers to destabilize Eirist.",
-      "Republic of Talme: Description: Foreign nation suspected of orchestrating the cyberattacks to destabilize Eirist. Motivations: Undermine Eirist's democracy, sow discord, and expand its own geopolitical influence. Narrative Against: Unconfirmed, but the suspected mastermind behind the cyberattacks and power outages, exploiting Eirist's vulnerabilities.",
-      "Eirist Opposition Parties: Description: Political parties opposing the current Eirist government, seeking to gain power in the upcoming elections. Motivations: Capitalize on the government's perceived failures to gain public support and win the postponed elections. Narrative Against: Accused by some of conspiring to create a crisis that discredits the ruling party and forces an electoral shift.",
-      "International Community: Description: Global entities and foreign nations observing and potentially intervening in Eirist's crisis. Motivations: Ensure stability, support democratic processes, and prevent escalation into wider conflict. Narrative Against: Some factions within Eirist accuse international actors of interference, either to support the government or the opposition."
+      "- Eirist Government: Description: The ruling body of Eirist, currently holding emergency powers. Motivations: Maintain order, control the narrative, and preserve peace and security amidst the crisis. Narrative Against: Accused of either orchestrating the crisis to delay elections and extend power or failing to protect the nation from foreign cyberattacks.",
+      "- Rural Militias: Description: Loosely organized groups formed in rural areas, consisting of conservative voters and immigrant populations. Motivations: Protect their communities, restore order, and oppose the government's emergency measures if they overstep reasonable boundaries. Narrative Against: Seen as potential instigators of violence or being manipulated by foreign powers to destabilize Eirist.",
+      "- Republic of Talme: Description: Foreign nation suspected of orchestrating the cyberattacks to destabilize Eirist. Motivations: Undermine Eirist's democracy, sow discord, and expand its own geopolitical influence. Narrative Against: Unconfirmed, but the suspected mastermind behind the cyberattacks and power outages, exploiting Eirist's vulnerabilities.",
+      "- Eirist Opposition Parties: Description: Political parties opposing the current Eirist government, seeking to gain power in the upcoming elections. Motivations: Capitalize on the government's perceived failures to gain public support and win the postponed elections. Narrative Against: Accused by some of conspiring to create a crisis that discredits the ruling party and forces an electoral shift.",
+      "- International Community: Description: Global entities and foreign nations observing and potentially intervening in Eirist's crisis. Motivations: Ensure stability, support democratic processes, and prevent escalation into wider conflict—even if that means meddling in another country's affairs. Narrative Against: Some factions within Eirist accuse international actors of interference, either to support the government or the opposition in a calculated political move."
     ],
     "instagram": [
       "Personal narrative activism posts feature an image with text presenting a quote about a personal experience or anecdote during a political event that humanizes the crisis. These posts use emotive language to evoke empathy, solidarity, or urgency, aiming to mobilize people by providing a human perspective on an issue or event.",
@@ -314,31 +307,30 @@
     },
     "counter_strategies": {
       "logic_based": [
-        "Offering an Alternative Explanation (logic-based)",
+        "Offering an Alternative Explanation (logic-based):",
         "This correction strategy presents an alternative explanation to misinformation. It should:",
-        "a - Provide a causal, plausible, simple, and memorable alternative explanation that fills in details to reduce subsequent recalls of misinformation.",
-        "b - Ensure the alternative explanation is more effective than a simple retraction, especially if it involves evidence-based reasoning (e.g., a counter for 'the fire was from arson' could be, 'there is evidence for a lightning strike')."
+        "You must provide a causal, plausible, simple, and memorable alternative explanation that fills in details to reduce subsequent recalls of misinformation.",
+        "Ensure the alternative explanation actually offers another explanation. For example, a counter for 'the fire was from arson' could be, 'there is evidence for a lightning strike'."
       ],
       "fact_based": [
-        "Debunking the False Claim (fact-based)",
-        "This correction strategy thoroughly refutes false information. It should:",
-        "a - Offer a detailed explanation of why the misinformation is false, providing total reasoning for overturning the falsehood.",
-        "b - Provide a causal, plausible, simple, and memorable alternative explanation to reduce subsequent recall of the retracted misinformation, utilizing fact-based, logic-based, or source-based refutations."
+        "Debunking the False Claim (fact-based):",
+        "This correction strategy thoroughly refutes false information.",
+        "You must offer a detailed explanation of why the misinformation is false, providing total reasoning for overturning the falsehood.",
+        "Provide a causal, plausible, simple, and memorable alternative explanation to reduce subsequent recall of the retracted misinformation, utilizing fact-based, logic-based, or source-based refutations."
       ],
       "emotion_based": [
-        "Recalibrating Emotions and Framing (emotions-based)",
-        "This correction strategy aims to recalibrate emotions and framing around misinformation. Follow these guidelines:",
-        "a - Provide corrections that offer a more accurate risk evaluation by showing people how they may have overestimated or overlooked the real threat, downwardly adjust emotional arousal. This is meant to quell emotions such as anger and fear.",
-        "b - Validate the same framing that produces misinformation but explain why the narrative is misleading, potentially involving identity affirmations to protect and strengthen the correction recipient’s self-esteem.",
-        "c - Complement the reader's worldview by reassuring them that the misinformation is false and the truth aligns with their interests. (For example, people denying climate change over economic reasons should be reassured that taking action against climate change now can reduce economic risks and actually create new business opportunities.)"
+        "Recalibrating Emotions and Framing (emotions-based):",
+        "This correction strategy aims to recalibrate emotions and framing around misinformation.",
+        "You must provide corrections that offer a more accurate risk evaluation by showing people how they may have overestimated or overlooked the real threat, downwardly adjusting emotional arousal to quell emotions such as anger and fear.",
+        "This means that you should validate the same framing that produces misinformation but explain why the narrative is misleading, potentially involving identity affirmations to protect and strengthen the correction recipient's self-esteem.",
+        "Complement the reader's worldview by reassuring them that the misinformation is false and the truth aligns with their interests. (For example, people denying climate change over economic reasons should be reassured that taking action against climate change now can reduce economic risks and actually create new business opportunities.)"
       ],
       "source_based": [
-        "Bringing in More Data (source-based)",
+        "Bringing in More Data (source-based):",
         "This correction strategy involves offering more data and evidence to refute misinformation. Adhere to these guidelines:",
-        "a - Offer evidence suggesting overwhelming support from credible sources, including expert consensus and social norms (e.g., 'doctors and medical societies around the world agree that vaccinations are important and safe').",
-        "b - Pair corrections with relevant social norms, including injunctive norms (e.g., 'protecting the vulnerable by getting vaccinated is the right thing to do') and descriptive norms (e.g., 'over 90% of parents are vaccinating their children').",
-        "c - Enhance institutional credibility by naming real institutions and explaining their corrections.",
-        "d - Undermine the plausibility of misinformation or the credibility of its source by explaining why the misinformation source might have a vested interest in spreading disinformation, as it might enrich them, further their political goals, reflect their funding sources, etc."
+        "You must offer evidence suggesting overwhelming support from credible sources, including expert consensus and social norms. For example, 'doctors and medical societies around the world agree that vaccinations are important and safe'.",
+        "Please pair corrections with relevant social norms, including injunctive norms (e.g., 'protecting the vulnerable by getting vaccinated is the right thing to do') and descriptive norms (e.g., 'over 90% of parents are vaccinating their children').",
+        "Also, undermine the plausibility of misinformation or the credibility of its source by explaining why the misinformation source might have a vested interest in spreading disinformation, as it might enrich them, further their political goals, reflect their funding sources, etc."
       ]
     },
     "outcomes": [
