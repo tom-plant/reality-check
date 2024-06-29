@@ -1,7 +1,7 @@
 # app.py
 
 from flask import Flask, session, jsonify, redirect, url_for, render_template, request, send_from_directory
-from config import Config, DevelopmentConfig, TestingConfig, ProductionConfig
+from backend.config import Config, DevelopmentConfig, TestingConfig, ProductionConfig
 from flask_cors import CORS
 from flask_session import Session 
 import uuid
