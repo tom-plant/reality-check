@@ -2,7 +2,7 @@
 
 from sqlalchemy import select, func, and_, or_
 import os
-from database import db
+from backend.database import db
 from backend.models import User, Fact, Event, Actor, Strat, Strat, CounterStrat, StrategyEffectiveness, FactCombination, PrimaryNarrative, NarrativeEvent, SecondaryNarrative
 
 # User Operations
