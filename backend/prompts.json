@@ -9,15 +9,15 @@
         "Actor backgrounds: '{actor_background}'"
       ],
       "user": [
-        "Your task is to generate a concise and straightforward 'Political Narrative' about the crisis. Definition: '{narrative_def}'.",
+        "Generate a concise and straightforward 'Political Narrative' about the unfolding crisis for Eirist citizens. Definition: '{narrative_def}'.",
         "Follow these steps:",
         "1 - Write your narrative by using this strategy (but never mention the strategy's name): '{strategy}'",
-        "2 - Firmly assert that the selected actor, {actor}, is to blame for the crisis.",
-        "3 - Make the narrative logical, extremely readable, straightforward, smooth, declarative, argumentative, and compelling without overly complex language. Prioritize clarity and flow.",
+        "2 - Firmly assert that the selected actor, {actor}, is to blame for causing the crisis.",
+        "3 - Make the narrative extremely readable, straightforward, smooth, declarative, logical, argumentative, and compelling without overly complex language. Prioritize clarity and flow.",
         "4 - Only reference one or more selected facts (below with triple backticks) if necessary. Avoid disrupting the narrative's flow.",
         "5 - Assume readers know the context of the crisis; do not repeat it.",
         "6 - Keep your narrative to a maximum of 50 words.",
-        "7 - Express uncertainty where you lack solid evidence, using words like 'likely,' 'probably,' or 'allegedly' to avoid lying.",
+        "7 - Avoid lying and express uncertainty where you lack solid evidence, using words like 'likely,' 'probably,' or 'allegedly'.",
         "8 - Print the text alone. Avoid saying the strategy name, using the word 'narrative', giving a title, providing an 'alternative' or 'contrast', and referencing the statement's structure.",
         "Selected facts: '''{facts}'''"
       ],
@@ -54,12 +54,12 @@
         "Act as an senior prompt engineer for image-generating AI."
       ],
       "user": [
-        "Your task is to generate a description of a photo that you would likely see accompanying the given headline, delimited below with triple backticks. This description will be used within a prompt for image-generating AI.",
+        "Your task is to generate a brief description of a photo that you would likely see accompanying the given headline, delimited below with triple backticks. This description will be used within a prompt for image-generating AI.",
         "Adhere to the following guidelines:",
         "1 - The description should capture the essence and context of the headline, providing a visual scenario that aligns with the headline.",
-        "2 - The scene should resemble a contemporary photograph taken by a photojournalist. Avoid any fictional elements, people, or text.",
-        "3 - Make the description detailed, engaging, and suitable for an AI to generate an image.",
-        "4 - Keep the description concise, within 50 words.",
+        "2 - The scene should include things you'd find in a contemporary photograph taken by a photojournalist. EXCLUDE text.",
+        "3 - Make the description concrete and definitive, and follow the best practices for AI image prompts.",
+        "4 - Keep the description concise, with a maximum of 40 words.",
         "Headline: '''{headline}'''"
       ]
     },
@@ -83,7 +83,7 @@
         "Use the following instructions to create your post:",
         "1 - Make the anecdote from your post focus on just ONE of the facts delimited below with triple ticks.",
         "2 - The more specific, the more realistic and better. Broad and vague stories should be avoided.",
-        "3 - Keep your text to around 40 words.",
+        "4 - Keep the description concise, with a maximum of 40 words.",
         "4 - Format your outcome as a .json file with 'instagram' as the key and the text as the text. Do not use any delimiters.",
         "Provided facts: '''{facts}'''"
       ]
@@ -115,9 +115,9 @@
         "Your task is to generate a description for a YouTube thumbnail that you would likely see accompanying the given video title. This description will be used within a prompt for image-generating AI.",
         "Adhere to the following guidelines:",
         "1 - The description should depict a scene related to the title, providing a visual scenario that aligns with the video content.",
-        "2 - The scene should resemble a contemporary and eye-catching image suitable for a YouTube thumbnail. Avoid any fictional elements, people, or text.",
-        "3 - Make the description detailed, engaging, and suitable for an AI to generate an image.",
-        "3 - Keep the description concise, within 50 words.",
+        "2 - The scene should contain things you'd find in a contemporary and eye-catching image suitable for a YouTube thumbnail. EXCLUDE text.",
+        "3 - Make the description concrete and definitive, and follow the best practices for AI image prompts.",
+        "4 - Keep the description concise, with a maximum of 40 words.",
         "Video title: '''{video_title}'''"
       ]
     },
@@ -153,11 +153,11 @@
         "Act as an senior prompt engineer for image-generating AI."
       ],
       "user": [
-        "Your task is to generate a vivid and detailed description of a photo you would see used in a TikTok or some other short-form content. This description will be used within a prompt for image-generating AI.",
+        "Your task is to generate a description of a photo you would see used in a TikTok or some other short-form content. This description will be used within a prompt for image-generating AI.",
         "Adhere to the following guidelines:",
         "1 - The description should capture a real-life scene related to the text, providing a visual scenario that aligns with the content.",
-        "2 - The scene should resemble a contemporary photograph taken by a photojournalist. Avoid any fictional elements, people, or text.",        
-        "3 - Make the description detailed, engaging, and suitable for an AI to generate an image.",
+        "2 - The scene should include things you'd find in a contemporary photograph taken by a photojournalist. EXCLUDE text.",    
+        "3 - Make the description concrete and definitive, and follow the best practices for AI image prompts.",
         "4 - Keep the description concise, within 50 words.",
         "Short form text: '''{shortform_text}'''"
       ]

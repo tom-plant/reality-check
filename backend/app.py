@@ -15,7 +15,7 @@ from backend.database import db, init_app
 from backend.models import *
 from backend.controllers import *
 from backend.db_operations import *
-from backend.routes import setup_routes
+from backend.outes import setup_routes
 
 # Initialize Flask app in a factory function to avoid circular imports
 def create_app():
