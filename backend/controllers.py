@@ -119,8 +119,6 @@ def handle_fact_combination(selected_facts):
     return fact_combination_id
 
 def build_narrative_controller(selected_actor, selected_strategies):
-    if 'user_data' not in session:
-        return {"error": "User not logged in"}, 401  
 
     current_app.logger.debug("Entered build narative controller.")
     prompts_narrative = {}

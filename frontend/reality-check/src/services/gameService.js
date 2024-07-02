@@ -146,6 +146,7 @@ export const buildNarrative = async (selectedActor, selectedStrategies) => {
       selected_actor: selectedActor,
       selected_strategies: selectedStrategies,
     }, { withCredentials: true });
+    console.log('Build narrative response:', response.data);
     return response.data;
   } catch (error) {
     console.error('Error building narrative:', error);

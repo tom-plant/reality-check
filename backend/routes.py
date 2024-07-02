@@ -92,6 +92,11 @@ def setup_routes(app):
     # Building Narrative
     @app.route('/game/build_narrative', methods=['POST'])
     def build_narrative():
+        
+        # Debugging: Log incoming request data and session data
+        app.logger.debug(f"Request data: {request.json}")
+        app.logger.debug(f"Session before processing: {dict(session)}")
+
         # Receive selected actor and strategies from the frontend
         selected_actor = request.json.get('selected_actor')
         selected_strategies = request.json.get('selected_strategies')
