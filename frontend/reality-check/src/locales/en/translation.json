@@ -118,7 +118,7 @@
   "selectNarratives": {
       "title": "Choose a Narrative",
       "instructions" : {
-        "introduction": "Choose one narrative that you think will cause the most dangerous impact on society."
+        "introduction": "Choose the most convincing misleading narrative."
       }
     },
   "narrativeImpact": {

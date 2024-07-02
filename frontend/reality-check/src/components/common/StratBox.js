@@ -1,6 +1,8 @@
 // StratBox.js
 import React from 'react';
 import { useGameDispatch, useGameState } from '../../contexts/GameContext'; 
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css'; // Import SweetAlert2 styles
 import './StratBox.css'; 
 
 const StratBox = ({ strat, isSelected, disabled, container }) => {
@@ -18,7 +20,11 @@ const StratBox = ({ strat, isSelected, disabled, container }) => {
     if (!stratLimitReached) {
       dispatch({ type: actionType, payload: strat });
     } else {
-      alert("You can select a maximum of 2 strategies."); // Feedback for the user when the limit is reached
+      Swal.fire({
+        text: 'You can select a maximum of 2 strategies. To deselect a strategy, click it again.',
+        icon: 'warning',
+        confirmButtonText: 'OK'
+      });
     }
   };
 

@@ -164,7 +164,7 @@
     },
     "shortform_image": {
       "system": [
-        "Produce an photorealistic image based on the following description:",
+        "Produce an photorealistic photograph based on the following description:",
         "Short form image description: '''{shortform_image_description}'''"
       ]
     },

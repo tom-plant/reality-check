@@ -2,8 +2,21 @@
 import axios from 'axios';
 
 // const API_BASE_URL = 'http://localhost:5000'; 
-const API_BASE_URL = 'https://reality-check-game-f90e2fef9c33.herokuapp.com'; 
+// const API_BASE_URL = 'https://reality-check-game-f90e2fef9c33.herokuapp.com'; 
 
+const getApiBaseUrl = () => {
+  if (window.location.hostname === 'localhost') {
+    return 'http://localhost:5000';
+  } else if (window.location.hostname === 'realitycheckgame.com') {
+    return 'https://realitycheckgame.com';
+  } else if (window.location.hostname === 'www.realitycheckgame.com') {
+    return 'https://www.realitycheckgame.com';
+  } else {
+    return 'https://reality-check-game-f90e2fef9c33.herokuapp.com';
+  }
+};
+
+const API_BASE_URL = getApiBaseUrl();
 
 
 // Function to authenticate (register or login) the user

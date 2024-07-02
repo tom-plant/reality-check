@@ -21,10 +21,19 @@ from backend.routes import setup_routes
 def create_app():
     app = Flask(__name__, static_folder='build/static')
 
-    # Load environment configurations
-    CORS(app, supports_credentials=True, resources={r"/*": {"origins": os.environ.get('ALLOWED_ORIGINS')}})
     # Session(app)
     load_dotenv()
+
+    # Load environment configurations
+    allowed_origins = os.getenv('ALLOWED_ORIGINS').split(',')
+    CORS(app, supports_credentials=True, resources={r"/*": {"origins": allowed_origins}})
+
+    # Session settings
+    app.config.update(
+        SESSION_COOKIE_SECURE=True,
+        SESSION_COOKIE_DOMAIN=".realitycheckgame.com",
+        SESSION_COOKIE_SAMESITE='Lax'
+    )
 
     # Set the configuration for SQLAlchemy directly after loading environment variables
     app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
