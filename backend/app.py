@@ -32,8 +32,15 @@ def create_app():
     app.config.update(
         SESSION_COOKIE_SECURE=True,
         SESSION_COOKIE_DOMAIN=".realitycheckgame.com",
-        SESSION_COOKIE_SAMESITE='Lax'
+        SESSION_COOKIE_SAMESITE='Lax',
+        SESSION_TYPE='filesystem',
+        SESSION_PERMANENT=False,
+        SESSION_USE_SIGNER=True,
+        SESSION_FILE_THRESHOLD=100,
+        SECRET_KEY=os.getenv('SECRET_KEY')
     )
+
+    Session(app)  # Ensure Session is initialized with the app
 
     # Set the configuration for SQLAlchemy directly after loading environment variables
     app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')

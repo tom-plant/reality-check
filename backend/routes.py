@@ -1,6 +1,8 @@
 # routes.py
 from flask import jsonify, request, session, send_from_directory
 from backend.controllers import * 
+import logging
+
 
 def setup_routes(app):
 
@@ -92,11 +94,13 @@ def setup_routes(app):
     # Building Narrative
     @app.route('/game/build_narrative', methods=['POST'])
     def build_narrative():
-        
-        # Debugging: Log incoming request data and session data
         app.logger.debug(f"Request data: {request.json}")
         app.logger.debug(f"Session before processing: {dict(session)}")
 
+        if 'user_data' not in session:
+            app.logger.error("Session does not contain 'user_data'")
+            return jsonify({"error": "User not logged in"}), 401
+        
         # Receive selected actor and strategies from the frontend
         selected_actor = request.json.get('selected_actor')
         selected_strategies = request.json.get('selected_strategies')
@@ -104,6 +108,7 @@ def setup_routes(app):
         # Call the build_narrative_controller function to handle the logic
         response_data = build_narrative_controller(selected_actor, selected_strategies)
         
+        app.logger.debug(f"Session after processing: {dict(session)}")
         # Return response to frontend
         return jsonify(response_data)
 

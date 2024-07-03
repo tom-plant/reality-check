@@ -32,6 +32,8 @@ def initialize_data_controller(user_id):
         'shortform': None,
         'shortform_image': None
     }
+    session.modified = True
+
 
 def register_user_controller(username, email):
     new_user = create_user(username=username, email=email)
@@ -40,6 +42,7 @@ def register_user_controller(username, email):
         db.session.commit()
         initialize_data_controller(new_user.id)
         session['user_id'] = new_user.id
+        session.modified = True
         return {"message": "User registered successfully", "user_id": new_user.id}
     else:
         return {"error": "User registration failed"}
