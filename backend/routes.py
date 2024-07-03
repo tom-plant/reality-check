@@ -36,6 +36,8 @@ def setup_routes(app):
                 # Proceed with login
                 initialize_data_controller(existing_user.id)
                 session['user_id'] = existing_user.id
+                session.modified = True  # Ensure the session is marked as modified
+                app.logger.debug(f"Session after auth login: {dict(session)}")
                 return jsonify({"message": "User logged in successfully", "user_id": existing_user.id})
             else:
                 # Username does not match the existing record
@@ -44,6 +46,7 @@ def setup_routes(app):
             # Proceed with registration if the user does not exist
             try:
                 response = register_user_controller(username, email)
+                app.logger.debug(f"Session after auth register: {dict(session)}")
                 return jsonify(response)
             except Exception as e:
                 return jsonify({"error": "User registration failed", "details": str(e)})
