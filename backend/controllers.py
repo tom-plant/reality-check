@@ -14,6 +14,7 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 def initialize_data_controller(user_id):
+    current_app.logger.debug("Trying to initialize user data.")
     session['user_data'] = {
         'user_id': user_id,
         'fact_combination_id': None,
@@ -36,6 +37,7 @@ def initialize_data_controller(user_id):
 
 
 def register_user_controller(username, email):
+    current_app.logger.debug("In the register user controller.")
     new_user = create_user(username=username, email=email)
     if new_user:
         db.session.add(new_user)

@@ -63,6 +63,11 @@ def create_app():
     init_app(app)
     setup_routes(app)
 
+    @app.after_request
+    def log_session_data(response):
+        app.logger.debug(f"Session data after request: {dict(session)}")
+        return response
+
     return app
 
 app = create_app()

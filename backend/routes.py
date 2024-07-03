@@ -24,6 +24,7 @@ def setup_routes(app):
 
     @app.route('/auth', methods=['POST'])
     def auth():
+        app.logger.debug("Auth route called")
         username = request.json.get('username')
         email = request.json.get('email')
 
@@ -31,8 +32,10 @@ def setup_routes(app):
         existing_user = get_user_by_email(email)
 
         if existing_user:
+            app.logger.debug("User exists")
             # If the user exists, check if the username matches
             if existing_user.username == username:
+                app.logger.debug("Username matches")
                 # Proceed with login
                 initialize_data_controller(existing_user.id)
                 session['user_id'] = existing_user.id
@@ -40,15 +43,18 @@ def setup_routes(app):
                 app.logger.debug(f"Session after auth login: {dict(session)}")
                 return jsonify({"message": "User logged in successfully", "user_id": existing_user.id})
             else:
+                app.logger.debug("Username does not match")
                 # Username does not match the existing record
                 return jsonify({"error": "Username and email do not match."})
         else:
+            app.logger.debug("User does not exist, registering")
             # Proceed with registration if the user does not exist
             try:
                 response = register_user_controller(username, email)
                 app.logger.debug(f"Session after auth register: {dict(session)}")
                 return jsonify(response)
             except Exception as e:
+                app.logger.debug(f"Registration failed: {str(e)}")
                 return jsonify({"error": "User registration failed", "details": str(e)})
 
 
